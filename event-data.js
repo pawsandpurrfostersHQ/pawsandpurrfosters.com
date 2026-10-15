@@ -22,13 +22,13 @@ window.PAWS_EVENT_DATA = {
       {
         name: "Pittsburg PetSmart",
         timing: "1st & 3rd Saturday of each month",
-        address: "4655 Century Blvd, Pittsburg, CA 94565"
+        address: "4655 Century Blvd, Pittsburg, CA 94565",
         mapsUrl: "https://maps.app.goo.gl/FSasx3ZRVWMepJCB7"
       },
       {
         name: "Antioch PetSmart",
         timing: "2nd Saturday & Sunday of each month",
-        address: "5879 Lone Tree Way, Antioch, CA 94531"
+        address: "5879 Lone Tree Way, Antioch, CA 94531",
         mapsUrl: "https://maps.app.goo.gl/bDa3qbVxZ8EPSCqG6"
       }
     ]
