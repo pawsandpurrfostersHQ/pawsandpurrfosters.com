@@ -8,7 +8,7 @@ window.PAWS_EVENT_DATA = {
     title: "Where to Find Us",
     location: "Pet Food Express",
     date: "Saturday, October 17, 2026",
-    time: "11 a.m.–2 p.m.",
+    time: "11 a.m. – 2 p.m.",
     address: "5829 Lone Tree Wy, Antioch, CA 94531",
     mapsUrl: "",
     attendingKittens: ["Diego", "Valentina", "Harvey", "Melody", "Raymond", "Wally"],
@@ -23,11 +23,13 @@ window.PAWS_EVENT_DATA = {
         name: "Pittsburg PetSmart",
         timing: "1st & 3rd Saturday of each month",
         address: "4655 Century Blvd, Pittsburg, CA 94565"
+        mapsUrl: "https://maps.app.goo.gl/FSasx3ZRVWMepJCB7"
       },
       {
         name: "Antioch PetSmart",
         timing: "2nd Saturday & Sunday of each month",
         address: "5879 Lone Tree Way, Antioch, CA 94531"
+        mapsUrl: "https://maps.app.goo.gl/bDa3qbVxZ8EPSCqG6"
       }
     ]
   },
