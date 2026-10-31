@@ -222,13 +222,15 @@ function renderEvents() {
   const eligibleNames = new Set(kittens.filter(k => availableStatuses.has(k.status || k.adoptionStatus)).map(k => k.name));
   const attending = (event.attendingKittens || []).filter(name => eligibleNames.has(name));
   const eventDate = event.date ? new Date(event.date) : null;
-  if (eventDate) eventDate.setHours(23, 59, 59, 999);
+  if (eventDate && !Number.isNaN(eventDate.getTime())) eventDate.setHours(23, 59, 59, 999);
+  else if (eventDate) eventDate.setTime(NaN);
   const eventPassed = Boolean(eventDate && new Date() > eventDate);
   const allTooYoung = kittens.length > 0 && !kittens.some(k => availableStatuses.has(k.status || k.adoptionStatus));
+  const allNotReady = kittens.length > 0 && kittens.every(k => ["Coming Soon", "Almost Available", "Adopted", "Pre-Adopted"].includes(k.status || k.adoptionStatus));
   const mapAnchor = (address, url) => address
     ? `<a class="event-address" href="${escapeHTML(url || mapsLink(address))}" target="_blank" rel="noopener noreferrer">${escapeHTML(address)}</a>`
     : "";
-  const currentEvent = event.active && !eventPassed && !allTooYoung;
+  const currentEvent = event.active && !eventPassed && !allTooYoung && !allNotReady;
   if (featured) {
     if (currentEvent) {
       const attendingMarkup = attending.length
@@ -241,8 +243,8 @@ function renderEvents() {
         ${mapAnchor(event.address,event.mapsUrl)}${attendingMarkup}</div>
       </article>`;
     } else {
-      const heading = allTooYoung
-        ? "Our current fosters are still growing and learning, so they are not quite ready for adoption events yet. Please give them a little more time and check back soon."
+      const heading = allTooYoung || allNotReady
+        ? "Our current foster kittens are still growing, learning, and getting ready for their next chapter. They are not quite ready for adoption events yet. Please give them a little more time and check back soon."
         : "Our next adoption location is being arranged. We’ll post the details here as soon as they’re confirmed. In the meantime, see our regular adoption schedule below.";
       featured.innerHTML = `<article class="event-card event-card--compact event-coming-soon">
         <div><p class="eyebrow">Adoption locations</p><h2>Next Location Coming Soon</h2><p>${heading}</p><a class="text-link" href="#regular-schedule">View our regular adoption schedule →</a></div>
