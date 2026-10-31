@@ -36,7 +36,7 @@ window.PAWS_EVENT_DATA = {
    specialEvent: {
     active: true,
     title: "Kitty Adoption Event & Yoga",
-    description: "Come meet some of our adorable adoptable foster kittens at Diamond Hills Sports Club & Spa on Monday, November 9! The adoption event is open to everyone from 10 a.m. to 4 p.m. Stop by to meet the kittens, learn about adoption, and discover the wonderful cats looking for their forever homes. Diamond Hills Sports Club & Spa members can also enjoy a special Kitty Yoga class at 11:30 a.m., featuring some furry friends!",
+    description: "Join us Monday, November 9, at Diamond Hills Sports Club & Spa for two special activities. The kitten adoption event is open to everyone from 10 a.m. to 4 p.m. Members can also enjoy Kitty Yoga at 11:30 a.m., featuring some furry friends!",
     location: "Diamond Hills Sports Club & Spa",
     date: "Monday, November 9, 2026",
     time: "Adoption Event: 10 a.m. – 4 p.m. | Kitty Yoga: 11:30 a.m. (Members Only)",
