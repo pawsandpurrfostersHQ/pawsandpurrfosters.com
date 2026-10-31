@@ -37,6 +37,7 @@ appRoot.PAWS_KITTENS = [
     photos: [
   "assets/kittens/diego-main.png",
   "assets/kittens/Diego-2.jpg",
+  "assets/kittens/Diego-3.jpg",
   "assets/kittens/Diego-Paw.jpg",
   "assets/kittens/Diego-collage.jpg",
   "assets/kittens/Diego-4.png",
