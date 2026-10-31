@@ -216,7 +216,7 @@ function renderProfile(kitten) {
 
   const profileTraits = getProfileTraits(kitten);
   const traits = profileTraits.length
-    ? `<section class="profile-detail"><h2>Personality</h2><ul class="profile-traits">${profileTraits.map(trait => `<li>${escapeHTML(trait)}</li>`).join("")}</ul></section>`
+    ? `<section class="profile-detail profile-personality"><h2><span class="detail-kicker">A little about</span> Personality</h2><ul class="profile-traits">${profileTraits.map(trait => `<li>${escapeHTML(trait)}</li>`).join("")}</ul></section>`
     : "";
 
   const compatibilityEntries = [
@@ -231,11 +231,12 @@ function renderProfile(kitten) {
       <h2>Ideal Home</h2>
       ${kitten.idealHome ? `<p class="profile-ideal-description">${escapeHTML(kitten.idealHome)}</p>` : ""}
       ${kitten.idealHomeNote ? `<p>${escapeHTML(kitten.idealHomeNote)}</p>` : ""}
-      ${compatibilityEntries.length ? `<div class="compatibility-list">${compatibilityEntries.map(([label, value]) => `<div class="compatibility-item"><span>${escapeHTML(label)}:</span> <strong>${escapeHTML(formatCompatibilityValue(value))}</strong></div>`).join("")}</div>` : ""}
+      ${compatibilityEntries.length ? `<div class="compatibility-list">${compatibilityEntries.map(([label, value]) => `<div class="compatibility-item"><span>${escapeHTML(label)}</span> <strong class="compatibility-value compatibility-${formatCompatibilityValue(value).toLowerCase().startsWith("yes") ? "yes" : formatCompatibilityValue(value).toLowerCase().startsWith("no") ? "no" : "unknown"}">${escapeHTML(formatCompatibilityValue(value).startsWith("Possibly") || formatCompatibilityValue(value).startsWith("Unknown") ? "Unknown" : formatCompatibilityValue(value).split(" — ")[0])}</strong></div>`).join("")}</div>` : ""}
     </section>
   `;
 
-  const health = `<section class="profile-detail"><h2>Health</h2><ul>${normalizeHealthChecklist(kitten).map(item => `<li>${escapeHTML(item)}</li>`).join("")}</ul></section>`;
+  const healthIcons = { "Spayed": "✿", "Neutered": "✦", "Fully vaccinated": "＋", "Dewormed": "♡", "Flea treated": "✧", "Microchipped": "⌁", "Fostered and socialized": "♥" };
+  const health = `<section class="profile-detail profile-health"><h2>Health &amp; Care</h2><div class="health-tiles">${normalizeHealthChecklist(kitten).map(item => `<div class="health-tile"><span aria-hidden="true">${healthIcons[item] || "✓"}</span><strong>${escapeHTML(item)}</strong></div>`).join("")}</div></section>`;
 
   const requirements = kitten.adoptionRequirements?.length
     ? `<section class="profile-detail"><h2>Adoption requirements</h2><ul>${kitten.adoptionRequirements.map(item => `<li>${escapeHTML(item)}</li>`).join("")}</ul></section>`
@@ -249,7 +250,7 @@ function renderProfile(kitten) {
     ? `<section class="profile-detail profile-pairing"><h2>Adoption Pairing</h2><p>Must be adopted with a suitable sibling or foster sibling. No specific companion is required.</p></section>`
     : `<section class="profile-detail profile-pairing">
         <h2>${pairingData.type === "bonded" ? "Bonded Pair" : "Preferred Pair"}</h2>
-        ${pairingData.kittenId ? `<p><a class="text-link" href="${escapeHTML(`profile-template.html?id=${pairingData.kittenId}`)}">${escapeHTML(pairingData.kittenName)}</a></p>` : ""}
+        ${pairingData.kittenId ? `<a class="pair-partner-link" href="${escapeHTML(`profile-template.html?id=${pairingData.kittenId}`)}"><span class="pair-partner-label">Meet their companion</span><strong>${escapeHTML(pairingData.kittenName)}</strong><span>View profile →</span></a>` : ""}
         ${pairingDescription ? `<p class="profile-pairing-copy">${escapeHTML(pairingDescription)}</p>` : ""}
         ${pairingData.kittenId ? `<p><a class="text-link" href="${escapeHTML(`profile-template.html?id=${pairingData.kittenId}`)}">Get to Know ${escapeHTML(pairingData.kittenName)} →</a></p>` : ""}
       </section>`;
@@ -357,7 +358,8 @@ function renderProfile(kitten) {
   `;
 
   document.title = `${kitten.name} | Paws & Purr Fosters`;
-  root.innerHTML = `<div class="profile-layout">
+  root.innerHTML = `<a class="profile-back-link" href="../all-kittens/" aria-label="Back to current fosters">← <span>Current Fosters</span></a>
+  <div class="profile-layout">
     <div>${photoGallery}</div>
     <div class="profile-intro">
       <h1>${escapeHTML(kitten.name)}</h1>
