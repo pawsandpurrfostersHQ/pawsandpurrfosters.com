@@ -1032,9 +1032,9 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
   border-color:#718b72;
 }
 
-/* Special-event address button on the Events page */
-.events-page .special-event-panel .event-address {
-  display:inline-flex!important;
+/* Rounded, slightly larger address link on the homepage special-event card */
+.home-special-event .event-address {
+  display:inline-flex;
   align-items:center;
   justify-content:center;
   padding:12px 21px;
@@ -1048,8 +1048,8 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
   text-decoration:none;
   box-shadow:0 5px 16px rgba(62,67,57,.08);
 }
-.events-page .special-event-panel .event-address:hover,
-.events-page .special-event-panel .event-address:focus-visible {
+.home-special-event .event-address:hover,
+.home-special-event .event-address:focus-visible {
   background:var(--purple-light);
   color:var(--purple-dark)!important;
   text-decoration:none;
