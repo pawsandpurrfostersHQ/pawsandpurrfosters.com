@@ -798,3 +798,45 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
   .events-page .events-intro { font-size:16px; }
   .events-page #event-featured .event-card--compact { padding:22px 18px; }
 }
+
+/* Final Events page typography and contrast refinements. */
+.events-page .events-page-banner .eyebrow {
+  color:var(--purple);
+  font-family:"Playfair Display",serif;
+  font-size:14px;
+  font-weight:800;
+  letter-spacing:.16em;
+}
+.events-page .events-page-banner h1 {
+  font-family:"Playfair Display",serif;
+  font-size:clamp(48px,6vw,76px);
+  font-weight:600;
+  color:var(--purple-dark);
+  line-height:1.12;
+}
+.events-page #event-featured .event-card--compact {
+  background:linear-gradient(135deg,#eee6f6 0%,#f7f2fb 58%,#e9e1f1 100%);
+}
+.events-page #event-featured .event-card--compact .event-address,
+.events-page #event-featured .event-card--compact .event-address:link,
+.events-page #event-featured .event-card--compact .event-address:visited {
+  background:#765f91;
+  color:#fff!important;
+  border:1px solid #654d82;
+  font-weight:800;
+  text-decoration:none;
+  transition:background-color .18s ease, color .18s ease, box-shadow .18s ease;
+}
+.events-page #event-featured .event-card--compact .event-address:hover,
+.events-page #event-featured .event-card--compact .event-address:focus-visible,
+.events-page #event-featured .event-card--compact .event-address:active {
+  background:#5c456f;
+  color:#fff!important;
+  text-decoration:none;
+  box-shadow:0 8px 20px rgba(87,69,111,.24);
+  outline:2px solid rgba(118,95,145,.25);
+  outline-offset:2px;
+}
+@media(max-width:640px) {
+  .events-page .events-page-banner h1 { font-size:clamp(40px,10vw,52px); }
+}
