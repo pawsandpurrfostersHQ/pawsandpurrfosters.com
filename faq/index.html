@@ -100,13 +100,13 @@
     const subject = "Paws & Purr Fosters website question";
     const body = [
       "Name: " + data.get("name"),
-      "Email or phone: " + data.get("contact"),
+      "Email: " + data.get("contact"),
       "Kitten(s): " + (data.get("kittens") || "Not specified"),
       "",
       "Question:",
       data.get("question")
-    ].join("\\n");
-    const link = "mailto:nopawsleftbehindkittyrescue@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    ].join("\n");
+    const link = "mailto:pawsandpurrfosters@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
     document.getElementById("faq-form-status").textContent = "Your email app should open with your message. Please review it and press Send.";
     window.location.href = link;
   });
