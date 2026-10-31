@@ -513,3 +513,19 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 /* Temporary alumni notices should not be trapped by mandatory snap points on phones. */
 .alumni-litter--temporary .alumni-cards { scroll-snap-type: none; }
 .alumni-litter--temporary .alumni-cards > * { scroll-snap-align: none; }
+
+/* Events page cards follow the same wide, stacked rhythm as the rest of the site. */
+.events-page .event-panels { display:flex; flex-direction:column; gap:22px; }
+.events-page #event-featured,
+.events-page .schedule-panel,
+.events-page .special-event-panel { width:100%; min-width:0; height:auto; }
+.events-page #event-featured .event-card--compact { min-height:0; padding:30px clamp(24px,4vw,42px); }
+.events-page #event-featured .event-card--compact h2 { font-size:clamp(27px,3vw,34px); }
+.events-page #event-featured .event-date { font-size:17px; line-height:1.6; }
+.events-page #event-featured .event-location-name { font-size:19px; margin:12px 0 2px; }
+.events-page #event-featured .event-address { color:#f4eaff; background:var(--purple-dark); display:inline-block; padding:8px 12px; border-radius:9px; margin-top:7px; }
+.events-page #event-featured .event-attending { font-size:14px; margin-top:13px; }
+.events-page .special-event-panel { padding:30px clamp(24px,4vw,42px); }
+.events-page .special-event-panel h2 { font-size:clamp(27px,3vw,34px); }
+.events-page .special-event-panel .event-address { color:var(--purple-dark); background:#f1eafa; padding:8px 12px; border-radius:9px; }
+.events-page .schedule-panel { padding:30px clamp(24px,4vw,42px); }
