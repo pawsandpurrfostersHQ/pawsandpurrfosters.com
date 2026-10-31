@@ -289,13 +289,3 @@ renderFosterPhotoCarousel();
 renderKittenCards();
 renderEvents();
 
-function renderEventAttendanceNotice(event, noticeData) {
-  if (!noticeData?.schedule?.enabled) return "";
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 8, 25);
-  const end = new Date(now.getFullYear(), 10, 15);
-  const active = noticeData.active || (now >= start && now <= end);
-  if (!active) return "";
-  const names = Array.isArray(event.notAttendingKittens) ? event.notAttendingKittens.filter(Boolean) : [];
-  return `<p class="event-special-note">${names.length ? `Please note: ${escapeHTML(names.join(", "))} will not be attending this event due to our seasonal adoption guidelines.` : escapeHTML(noticeData.genericMessage || "Some kittens may be temporarily unavailable for adoption or may not attend events during this seasonal period.")}</p>`;
-}
