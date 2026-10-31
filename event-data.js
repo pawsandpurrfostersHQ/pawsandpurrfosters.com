@@ -44,12 +44,12 @@ window.PAWS_EVENT_DATA = {
     mapsUrl: "https://www.google.com/maps/search/?api=1&query=Diamond+Hills+Sports+Club+%26+Spa%2C+1510+Neroly+Road%2C+Oakley%2C+CA"
   },
   octoberNotice: {
-    active: false,
-    title: "October Adoption Notice",
-    messages: [
-      "During the month of October, the rescue we foster with is temporarily pausing adoptions of black kittens from September 30 through November 5 to help protect them from potential harm during this time.",
-      "As a result, Claudia will not be attending adoption events until after the first week of November. Paloma, her bonded pair, will also likely miss most adoption events during these weeks, though she may attend select events when appropriate.",
-      "Thank you for understanding as we prioritize the safety and well-being of our foster kittens."
-    ]
-  }
+  active: false,
+  title: "October Adoption Notice",
+  messages: [
+    "During the month of October, the rescue we foster with temporarily pauses adoptions of black kittens from [start date] through [end date] to help protect them from potential harm during this time.",
+    "As a result, some foster kittens will temporarily not attend adoption events. Their preferred or bonded pairs will most likely miss adoption events during this period as well, so they can be adopted together.",
+    "Thank you for understanding as we prioritize the safety and well-being of our foster kittens."
+  ]
+}
 };
