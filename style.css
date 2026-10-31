@@ -665,3 +665,67 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .events-page #event-featured .event-card-content > * { text-align:center!important; margin-left:auto!important; margin-right:auto!important; }
 .events-page #event-featured .event-attending { text-align:center!important; width:100%; }
 .events-page #event-featured .event-address { display:inline-block!important; margin:10px auto!important; }
+
+
+/* Dedicated Events page — featured adoption event spotlight.
+   These rules intentionally target only the Events page, never the homepage card. */
+.events-page #event-featured { margin: 12px auto 34px; }
+.events-page #event-featured .event-card--compact {
+  position:relative; isolation:isolate; overflow:hidden;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:14px; width:100%; min-height:360px; padding:clamp(32px,5vw,58px);
+  text-align:center; color:var(--purple-dark);
+  border:1px solid rgba(117,98,141,.22); border-radius:32px;
+  background:
+    radial-gradient(circle at 12% 10%,rgba(156,175,145,.24),transparent 28%),
+    linear-gradient(135deg,#f4f0f8 0%,#fff 55%,#edf2e9 100%);
+  box-shadow:0 18px 48px rgba(62,67,57,.09);
+}
+.events-page #event-featured .event-card--compact::before {
+  content:"🐾"; display:grid; place-items:center; width:58px; height:58px;
+  border-radius:50%; background:#fff; color:var(--purple); font-size:27px;
+  box-shadow:0 8px 22px rgba(87,69,111,.12);
+}
+.events-page #event-featured .event-card--compact .event-card-content {
+  display:flex!important; flex-direction:column!important; align-items:center!important;
+  justify-content:center!important; width:min(100%,820px); gap:10px; text-align:center!important;
+}
+.events-page #event-featured .event-card--compact .eyebrow {
+  margin:0; color:var(--sage-dark); font-size:12px; letter-spacing:.17em;
+}
+.events-page #event-featured .event-card--compact h2 {
+  margin:0 0 6px; color:var(--purple-dark); font-size:clamp(34px,5vw,52px);
+  font-weight:800; line-height:1.1; text-align:center;
+}
+.events-page #event-featured .event-card--compact .event-date {
+  margin:8px 0 0; color:var(--purple-dark); font-size:clamp(22px,3vw,30px);
+}
+.events-page #event-featured .event-card--compact .event-time {
+  margin:0; color:var(--sage-dark); font-size:20px; font-weight:800;
+}
+.events-page #event-featured .event-card--compact .event-location-name {
+  margin:10px 0 0; color:var(--ink); font-size:21px;
+}
+.events-page #event-featured .event-card--compact .event-address {
+  display:inline-flex; align-items:center; justify-content:center;
+  margin:3px auto 0; padding:11px 19px; border-radius:999px;
+  background:var(--purple); color:#fff; font-size:14px; font-weight:700;
+  text-align:center; text-decoration:none; box-shadow:0 6px 18px rgba(87,69,111,.15);
+}
+.events-page #event-featured .event-card--compact .event-address:hover {
+  background:var(--purple-dark); text-decoration:underline;
+}
+.events-page #event-featured .event-card--compact .event-attending {
+  margin:12px 0 0; padding-top:14px; width:100%;
+  border-top:1px solid rgba(117,98,141,.18); color:var(--muted);
+  text-align:center!important;
+}
+.events-page #event-featured .event-card--compact .event-attending strong { color:var(--purple-dark); }
+.events-page #event-featured .event-card--compact.event-coming-soon {
+  background:linear-gradient(135deg,#edf2e9,#fff 58%,#f2eef7);
+}
+@media(max-width:640px) {
+  .events-page #event-featured .event-card--compact { min-height:0; padding:30px 20px; border-radius:24px; }
+  .events-page #event-featured .event-card--compact h2 { font-size:34px; }
+  .events-page #event-featured .event-card--compact .event-address { max-width:100%; }
+}
