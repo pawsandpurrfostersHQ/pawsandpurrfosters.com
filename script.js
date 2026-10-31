@@ -234,10 +234,10 @@ function renderEvents() {
   if (featured) {
     if (currentEvent) {
       const attendingMarkup = attending.length
-        ? `<p class="event-attending"><strong>Expected to attend:</strong> ${escapeHTML(attending.join(", "))}</p>`
+        ? `<p class="event-attending"><strong>Kittens attending:</strong> ${escapeHTML(attending.join(", "))}</p>`
         : "";
       featured.innerHTML = `<article class="event-card event-card--compact">
-        <div><p class="eyebrow"><span aria-hidden="true">🐾</span> Where to Find Us</p><h2>Upcoming Adoption Event</h2>
+        <div class="event-card-content"><p class="eyebrow"><span aria-hidden="true">🐾</span> Where to Find Us</p><h2>Upcoming Adoption Event</h2>
         <p class="event-date"><strong>${escapeHTML(event.date || "")}</strong></p><p class="event-time"><strong>${escapeHTML(event.time || "")}</strong></p>
         <p class="event-location-name"><strong>${escapeHTML(event.location || "")}</strong></p>
         ${mapAnchor(event.address,event.mapsUrl)}${attendingMarkup}</div>
@@ -247,7 +247,7 @@ function renderEvents() {
         ? "Our current foster kittens are still growing, learning, and getting ready for their next chapter. They are not quite ready for adoption events yet. Please give them a little more time and check back soon."
         : "Our next adoption location is being arranged. We’ll post the details here as soon as they’re confirmed. In the meantime, see our regular adoption schedule below.";
       featured.innerHTML = `<article class="event-card event-card--compact event-coming-soon">
-        <div><p class="eyebrow">Adoption locations</p><h2>Next Location Coming Soon</h2><p>${heading}</p><a class="text-link" href="#regular-schedule">View our regular adoption schedule →</a></div>
+        <div class="event-card-content"><p class="eyebrow">Adoption locations</p><h2>Next Location Coming Soon</h2><p>${heading}</p><a class="text-link" href="#regular-schedule">View our regular adoption schedule →</a></div>
       </article>`;
     }
     featured.hidden = false;
@@ -270,7 +270,7 @@ function renderEvents() {
     special.innerHTML = `<p class="eyebrow">Special event</p><h2>${escapeHTML(e.title || "Special Adoption Event")}</h2>
       <p class="special-event-date"><strong>${escapeHTML(e.date || "")}</strong></p><div class="special-event-activities"><p><span class="event-activity-icon" aria-hidden="true">🐈</span><strong>Kitten Adoption Event</strong><br>${escapeHTML(e.adoptionTime || "")} <span class="event-audience">Open to everyone</span></p><p><span class="event-activity-icon" aria-hidden="true">🧘</span><strong>Kitty Yoga</strong><br>${escapeHTML(e.yogaTime || "")} <span class="members-only">(Members only)</span></p></div>
       <p><strong>${escapeHTML(e.location || "")}</strong></p>${mapAnchor(e.address,e.mapsUrl)}
-      <p>${escapeHTML(e.description || "")}</p>`;
+      <p>No Paws Left Behind Kitty Rescue is hosting this event. Our foster kittens will be there alongside other adoptable kittens from the rescue. Come meet them, say hello, and learn more about adoption.</p>`;
     special.hidden = false;
   }
 
