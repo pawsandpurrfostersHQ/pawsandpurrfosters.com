@@ -37,9 +37,9 @@ appRoot.PAWS_KITTENS = [
     photos: [
   "assets/kittens/diego-main.png",
   "assets/kittens/Diego-2.jpg",
-  "assets/kittens/Diego-4.png",
   "assets/kittens/Diego-Paw.jpg",
-  "assets/kittens/Diego-collage.jpg"
+  "assets/kittens/Diego-collage.jpg",
+  "assets/kittens/Diego-4.png",
 ],
     personalityTraits: ["Outgoing", "Playful", "Social", "Active", "Attention-loving", "Loves other cats"],
     idealHome: "Diego will do best in a loving home where he can get plenty of attention, affection, and opportunities to play. He's a playful, cuddly boy who would be happy with a single person or a family, with or without children. He should be fine with other cats with a proper introduction, and while he hasn't had direct experience with dogs, he may do well with a calm, cat-friendly dog if introductions are handled patiently. Most of all, Diego wants a home where he'll be loved, included, and given all the cuddles and attention he could ask for.",
