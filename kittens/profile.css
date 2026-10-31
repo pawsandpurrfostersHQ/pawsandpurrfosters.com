@@ -99,3 +99,14 @@
 }
 .profile-october-notice h2 { color: #98501f; }
 .profile-october-notice p { color: #75543d; }
+
+
+/* Adoption handoff information and clearer contact prompt */
+.profile-going-home { grid-column: 1 / -1; border-top-color:#6d91c6; background:linear-gradient(135deg,#f2f6fc,#fff); }
+.going-home-heading { display:flex; align-items:center; gap:16px; margin-bottom:12px; }
+.folder-emoji { display:grid; place-items:center; width:58px; height:58px; flex:0 0 58px; border-radius:16px; background:#e3ecf9; font-size:30px; }
+.going-home-heading .eyebrow { margin:0 0 4px; color:#5778a8; }
+.going-home-heading h2 { margin:0; }
+.going-home-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px 28px; margin:14px 0 0; padding-left:20px; color:var(--muted); }
+.adoption-question strong { color:var(--sage-dark); }
+@media(max-width:760px) { .going-home-list { grid-template-columns:1fr; } }
