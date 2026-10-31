@@ -45,6 +45,11 @@ window.PAWS_EVENT_DATA = {
   },
   octoberNotice: {
   active: false,
+  schedule: {
+    enabled: true,
+    start: "last-monday-of-september",
+    end: "friday-before-second-weekend-of-november"
+  },
   title: "October Adoption Notice",
   messages: [
     "During the month of October, the rescue we foster with temporarily pauses adoptions of black kittens from [start date] through [end date] to help protect them from potential harm during this time.",
