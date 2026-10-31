@@ -195,6 +195,10 @@ function renderProfile(kitten) {
 
   const returnFrom = new URLSearchParams(window.location.search).get("from") || "current";
   const pairingData = getPairingData(kitten);
+  const pairing = pairingData
+    ? `<section class="profile-detail profile-pairing"><p class="eyebrow">Companion</p><h2>Better together</h2><a class="pair-partner-link" href="profile-template.html?id=${escapeHTML(pairingData.kittenId)}"><strong>${escapeHTML(pairingData.kittenName)}</strong><span>Meet ${escapeHTML(pairingData.kittenName)} →</span></a></section>`
+    : "";
+  const requirements = "";
   const photoSet = [...new Set([kitten.image, ...(kitten.photos || [])].filter(Boolean))];
   const galleryPhotos = photoSet.length ? photoSet : [];
   const mainImage = galleryPhotos[0] ? profilePhotoSource(galleryPhotos[0]) : "";
