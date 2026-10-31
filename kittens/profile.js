@@ -199,7 +199,7 @@ function renderProfile(kitten) {
   const pairingData = getPairingData(kitten);
   const pairingDescription = pairingData.type !== "single" ? getPairingDescription(kitten, pairingData) : "";
   const pairing = pairingData.type !== "single"
-    ? `<section class="profile-detail profile-pairing"><p class="eyebrow">Companion</p><h2>Better together</h2><a class="pair-partner-link" href="profile-template.html?id=${escapeHTML(pairingData.kittenId)}"><strong>${escapeHTML(pairingData.kittenName)}</strong><span>Meet ${escapeHTML(pairingData.kittenName)} →</span></a>${pairingDescription ? `<p class="pairing-description">${escapeHTML(pairingDescription)}</p>` : ""}</section>`
+    ? `<section class="profile-detail profile-pairing"><p class="eyebrow">Bonded Pair</p><h2>Better together</h2><a class="pair-partner-link" href="profile-template.html?id=${escapeHTML(pairingData.kittenId)}"><strong>${escapeHTML(pairingData.kittenName)}</strong><span>Meet ${escapeHTML(pairingData.kittenName)} →</span></a>${pairingDescription ? `<p class="pairing-description">${escapeHTML(pairingDescription)}</p>` : ""}</section>`
     : "";
   const requirements = "";
   const photoSet = [...new Set([kitten.image, ...(kitten.photos || [])].filter(Boolean))];
