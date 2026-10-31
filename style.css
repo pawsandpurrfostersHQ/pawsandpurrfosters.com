@@ -1020,3 +1020,14 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .hero-faq-link:focus-visible {
   outline:2px solid var(--purple); outline-offset:3px;
 }
+
+/* Green companion button for adoptable kittens */
+.hero-actions .adoptable-green {
+  background:var(--sage);
+  color:#fff;
+  border-color:var(--sage);
+}
+.hero-actions .adoptable-green:hover {
+  background:#718b72;
+  border-color:#718b72;
+}
