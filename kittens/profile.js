@@ -243,7 +243,7 @@ function renderProfile(kitten) {
   `;
 
   const healthIcons = { "Spayed": "✿", "Neutered": "♂️", "Spayed": "♀️", "Fully vaccinated": "💉", "Dewormed": "🧪", "Flea treated": "🐜", "Microchipped": "🖥️", "Fostered and socialized": "❤️" };
-  const health = `<section class="profile-detail profile-health"><h2>Health &amp; Care</h2><div class="health-tiles">${normalizeHealthChecklist(kitten).map(item => `<div class="health-tile"><span aria-hidden="true">${healthIcons[item] || "✓"}</span><strong>${escapeHTML(item)}</strong></div>`).join("")}</div><div class="health-folder-note"><p class="eyebrow">Included in their take-home folder</p><ul><li>Spay or neuter paperwork</li><li>Vaccine card</li><li>Microchip number and registration website</li><li>Foster contact information</li><li>Kitten care guide</li></ul></div></section>`;
+  const health = `<section class="profile-detail profile-health"><h2>Health &amp; Care</h2><div class="health-tiles">${normalizeHealthChecklist(kitten).map(item => `<div class="health-tile"><span aria-hidden="true">${healthIcons[item] || "✓"}</span><strong>${escapeHTML(item)}</strong></div>`).join("")}</div><div class="health-folder-note"><p class="eyebrow">Included in their take-home folder</p><ul><li>Spay or neuter paperwork</li><li>Vaccine card</li><li>Microchip number and registration website</li><li>Foster contact information</li><li>Kitten care guide</li><li>Adoption certificate</li><li>Available store coupons (PetSmart coupon booklet when applicable)</li></ul></div></section>`;
 
 
   const octoberDates = getOctoberNoticeDates(typeof window !== "undefined" ? window.PAWS_EVENT_DATA?.octoberNotice : null);
