@@ -64,11 +64,12 @@ appRoot.PAWS_KITTENS = [
     litterNumber: 11,
     bio: "Meet Valentina! She's a confident and playful kitten who loves exploring and being curious about everything around her. Valentina is not afraid of much and will often walk right up to people asking for attention. She enjoys being around people and is very social, often purring almost instantly when being pet. She's affectionate and playful and truly the best of both worlds. Valentina is also a chatterbox and loves talking to people. She's very vocal and always has something to say. She also absolutely loves walking on a harness and is amazing with it.",
     photos: [
-      "https://i.ibb.co/ZzP2svry/IMG-2234.jpg",
-      "https://i.ibb.co/6cfLNPNG/Take-Me-Cards-17.jpg",
-      "https://i.ibb.co/rKTZ99qW/Kitten-Paw-Prints-43.jpg",
-      "https://i.ibb.co/HL2YrjMQ/57-B3-E63-C-2-C83-4533-8519-5-E4-AC1-F462-B2.jpg",
-      "https://i.ibb.co/QjfhQZ7B/C98-C2165-A5-E8-49-B8-BC3-A-18-E31-E074194.png"
+      "assets/kittens/Valentina-1.PNG"
+"assets/kittens/Valentina-2.JPG"
+"assets/kittens/Valentina-Paw.JPG"
+"assets/kittens/Valentina-collage.JPG"
+"assets/kittens/Valentina.3.PNG"
+"assets/kittens/Valentina.4.JPG"
     ],
     personalityTraits: ["Confident", "Playful", "Curious", "Social", "Affectionate", "Vocal"],
     idealHome: "Valentina will do best in a loving home where she can get plenty of attention, affection, and cuddles. She's a sweet, affectionate girl who would be happy with a single person or a family, with or without children. She may do well with children, although she hasn't had direct experience with them. She should be fine with other cats with a proper introduction, and while she hasn't had direct experience with dogs, she may do well with a calm, cat-friendly dog if introductions are handled patiently. Most of all, Valentina wants a home where she'll be loved, included, and given all the cuddles and attention she could ask for.",
