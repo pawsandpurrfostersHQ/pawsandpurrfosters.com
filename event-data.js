@@ -11,7 +11,7 @@ window.PAWS_EVENT_DATA = {
     time: "11 a.m. – 3 p.m.",
     address: "5879 Lone Tree Way, Antioch, CA 94531",
     mapsUrl: "https://maps.app.goo.gl/MjBjSfjpJHPXh89h7",
-    attendingKittens: ["Diego", "Valentina", "Harvey", "Melody", "Raymond", "Wally"],
+    attendingKittens: ["Diego", "Valentina", "Paloma", "Claudia", "Harvey", "Melody", "Raymond", "Wally"],
     description: "",
     notAttendingKittens: []
   },
@@ -44,20 +44,5 @@ window.PAWS_EVENT_DATA = {
     yogaTime: "11:30 a.m.",
     address: "1510 Neroly Road, Oakley, CA",
     mapsUrl: "https://www.google.com/maps/search/?api=1&query=Diamond+Hills+Sports+Club+%26+Spa%2C+1510+Neroly+Road%2C+Oakley%2C+CA"
-  },
-  octoberNotice: {
-  active: false,
-  schedule: {
-    enabled: true,
-    start: "last-monday-of-september",
-    end: "friday-before-second-weekend-of-november"
-  },
-  title: "October Adoption Notice",
-  genericMessage: "Some kittens may be temporarily unavailable for adoption or may not attend events during this seasonal period. Thank you for your understanding as we prioritize their safety and well-being.",
-  messages: [
-    "During the month of October, the rescue we foster with temporarily pauses adoptions of black kittens from [start date] through [end date] to help protect them from potential harm during this time.",
-    "As a result, some foster kittens will temporarily not attend adoption events. Their preferred or bonded pairs will most likely miss adoption events during this period as well, so they can be adopted together.",
-    "Thank you for understanding as we prioritize the safety and well-being of our foster kittens."
-  ]
-}
+  }
 };
