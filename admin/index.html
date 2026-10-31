@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Private Editor | Paws &amp; Purr Fosters</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="../"><span class="mark">P&amp;P</span><span><strong>Paws &amp; Purr</strong><small>PRIVATE SITE EDITOR</small></span></a>
+      <a class="site-link" href="../" target="_blank" rel="noopener">View public website ↗</a>
+    </header>
+    <section id="login" class="panel login-panel">
+      <p class="eyebrow">Private access</p>
+      <h1>Your foster website, in your hands.</h1>
+      <p>Sign in with your authorized GitHub account to manage photos, kitten profiles, events, and alumni.</p>
+      <button id="sign-in" class="primary" type="button">Continue with GitHub</button>
+      <p id="login-message" class="muted" role="status">Private sign-in is being connected. This editor is not enabled until server-side access control is configured.</p>
+    </section>
+    <section id="dashboard" hidden>
+      <div class="welcome"><div><p class="eyebrow">Your workspace</p><h1>What would you like to update?</h1><p class="muted">Changes will be previewed before they are published.</p></div><button id="sign-out" class="quiet" type="button">Sign out</button></div>
+      <nav class="tabs" aria-label="Editor sections">
+        <button class="tab active" data-view="kittens">Kitten profiles</button>
+        <button class="tab" data-view="photos">Homepage photos</button>
+        <button class="tab" data-view="events">Events</button>
+        <button class="tab" data-view="alumni">Foster alumni</button>
+      </nav>
+      <section id="view-kittens" class="panel view">
+        <div class="section-head"><div><p class="eyebrow">Profiles</p><h2>Current fosters</h2><p class="muted">Choose a kitten to edit their details and photo gallery.</p></div></div>
+        <div id="kitten-list" class="record-list"></div>
+      </section>
+      <section id="view-photos" class="panel view" hidden><p class="eyebrow">Homepage carousel</p><h2>Foster photos</h2><p class="muted">Add, remove, and reorder the photos shown on the homepage.</p><div id="hero-photo-list"></div><p class="notice">Photo uploads and saving will become available after secure publishing is connected.</p></section>
+      <section id="view-events" class="panel view" hidden><p class="eyebrow">Adoption events</p><h2>Events and locations</h2><p class="muted">Update featured events, special events, and regular adoption schedules.</p><div id="event-summary"></div></section>
+      <section id="view-alumni" class="panel view" hidden><p class="eyebrow">Adoption milestones</p><h2>Foster alumni</h2><p class="muted">When a kitten is adopted, prepare their alumni card using the information already saved on their profile.</p><div id="alumni-summary"></div></section>
+      <div class="publish-bar"><span id="save-status">Preview mode — no changes are being published.</span><button id="preview" class="secondary" type="button">Preview changes</button><button id="publish" class="primary" type="button" disabled>Publish changes</button></div>
+    </section>
+  </main>
+  <dialog id="preview-dialog" class="preview-dialog"><div class="dialog-head"><h2>Preview</h2><button id="close-preview" class="quiet" type="button">Close</button></div><div id="preview-content"></div></dialog>
+  <script src="../kitten-data.js"></script>
+  <script src="../event-data.js"></script>
+  <script src="../alumni-data.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
