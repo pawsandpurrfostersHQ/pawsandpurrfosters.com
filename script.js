@@ -214,37 +214,39 @@ function mapsLink(address, mapsUrl = "") {
 function renderEvents() {
   const data = window.PAWS_EVENT_DATA;
   if (!data) return;
-
   const featured = document.querySelector("#event-featured");
   const homeSpecial = document.querySelector("#home-special-event");
   const event = data.featuredEvent || {};
+  const kittens = Array.isArray(window.PAWS_KITTENS) ? window.PAWS_KITTENS : [];
+  const availableStatuses = window.PAWS_AVAILABLE_KITTEN_STATUSES || new Set(["Available", "Returned — Available", "Pending Interest"]);
+  const eligibleNames = new Set(kittens.filter(k => availableStatuses.has(k.status || k.adoptionStatus)).map(k => k.name));
+  const attending = (event.attendingKittens || []).filter(name => eligibleNames.has(name));
+  const eventDate = event.date ? new Date(event.date) : null;
+  if (eventDate) eventDate.setHours(23, 59, 59, 999);
+  const eventPassed = Boolean(eventDate && new Date() > eventDate);
+  const allTooYoung = kittens.length > 0 && !kittens.some(k => availableStatuses.has(k.status || k.adoptionStatus));
+  const mapAnchor = (address, url) => address
+    ? `<a class="event-address" href="${escapeHTML(url || mapsLink(address))}" target="_blank" rel="noopener noreferrer">${escapeHTML(address)}</a>`
+    : "";
+  const currentEvent = event.active && !eventPassed && !allTooYoung;
   if (featured) {
-    if (event.active) {
-      const attendees = event.attendingKittens?.length
-        ? `<p><strong>Attending kittens:</strong> ${escapeHTML(event.attendingKittens.join(", "))}</p>`
+    if (currentEvent) {
+      const attendingMarkup = attending.length
+        ? `<p class="event-attending"><strong>Expected to attend:</strong> ${escapeHTML(attending.join(", "))}</p>`
         : "";
-      const notice = renderEventAttendanceNotice(event, data.octoberNotice);
-      const dateAndTime = [event.date, event.time].filter(Boolean).map(escapeHTML).join(" · ");
-      const address = event.address
-        ? `<a class="event-address" href="${escapeHTML(mapsLink(event.address, event.mapsUrl))}" target="_blank" rel="noopener noreferrer">${escapeHTML(event.address)}</a>`
-        : "";
-      const location = event.location
-        ? `<strong>${escapeHTML(event.location)}</strong>${address}`
-        : address;
-      featured.innerHTML = `<div class="event-card">
-        <div><p class="eyebrow">This weekend</p><h2>Where to Find Us</h2>
-          ${dateAndTime ? `<p class="event-date">${dateAndTime}</p>` : ""}
-          ${event.description ? `<p>${escapeHTML(event.description)}</p>` : ""}${attendees}${notice}
-        </div>
-        <div class="event-location">${location || "<span>See the regular schedule below for our usual locations.</span>"}</div>
-      </div>`;
+      featured.innerHTML = `<article class="event-card event-card--compact">
+        <div><p class="eyebrow">Upcoming adoption event</p><h2>Where to Find Us</h2>
+        <p class="event-date"><strong>${escapeHTML(event.date || "")}</strong> · ${escapeHTML(event.time || "")}</p>
+        <p class="event-location-name"><strong>${escapeHTML(event.location || "")}</strong></p>
+        ${mapAnchor(event.address,event.mapsUrl)}${attendingMarkup}</div>
+      </article>`;
     } else {
-      featured.innerHTML = `<div class="event-card event-coming-soon">
-        <div><p class="eyebrow">This weekend</p><h2>Where to Find Us</h2><h3 class="placement-location">Weekend placement: Coming soon</h3>
-          <p>Our weekend location will be posted here as soon as it is available.</p>
-        </div>
-        <div class="event-location"><strong>Weekend placement: Coming soon</strong><span>Our weekend location will be posted here as soon as it is available.</span></div>
-      </div>`;
+      const heading = allTooYoung
+        ? "Our current fosters are still growing and learning, so they are not quite ready for adoption events yet. Please give them a little more time and check back soon."
+        : "Our next adoption location is being arranged. We’ll post the details here as soon as they’re confirmed. In the meantime, see our regular adoption schedule below.";
+      featured.innerHTML = `<article class="event-card event-card--compact event-coming-soon">
+        <div><p class="eyebrow">Adoption locations</p><h2>Next Location Coming Soon</h2><p>${heading}</p><a class="text-link" href="#regular-schedule">View our regular adoption schedule →</a></div>
+      </article>`;
     }
     featured.hidden = false;
   }
@@ -253,94 +255,33 @@ function renderEvents() {
   if (schedule && data.regularSchedule?.active) {
     const locations = data.regularSchedule.locations.map(location => `
       <article class="schedule-location"><h3>${escapeHTML(location.name)}</h3>
-        <p>${escapeHTML(location.timing)}</p>
-        ${location.address ? `<a class="schedule-address" href="${escapeHTML(mapsLink(location.address, location.mapsUrl))}" target="_blank" rel="noopener noreferrer">${escapeHTML(location.address)}</a>` : ""}</article>`
-    ).join("");
-    schedule.innerHTML = `<p class="eyebrow">Find us regularly</p><h2>Regular Adoption Schedule</h2>
-      <div class="schedule-locations">${locations}</div>
-      <p class="schedule-note">${escapeHTML(data.regularSchedule.note)}</p>`;
+      <p>${escapeHTML(location.timing)}</p>${mapAnchor(location.address,location.mapsUrl)}</article>`).join("");
+    schedule.innerHTML = `<p class="eyebrow">Plan a visit</p><h2>Regular Adoption Schedule</h2><div class="schedule-locations">${locations}</div><p class="schedule-note">${escapeHTML(data.regularSchedule.note || "Schedule is subject to change.")}</p>`;
     schedule.hidden = false;
   }
 
   const special = document.querySelector("#special-event");
-  if (special && data.specialEvent?.active) {
-    const place = data.specialEvent.address
-      ? `<a class="event-address" href="${escapeHTML(mapsLink(data.specialEvent.address, data.specialEvent.mapsUrl))}" target="_blank" rel="noopener noreferrer">${escapeHTML(data.specialEvent.address)}</a>`
-      : "";
-    special.innerHTML = `<p class="eyebrow">Special Event</p><h2>${escapeHTML(data.specialEvent.title)}</h2>
-      <p>${escapeHTML(data.specialEvent.description)}</p>
-      <p>${[data.specialEvent.date, data.specialEvent.time, data.specialEvent.location].filter(Boolean).map(escapeHTML).join(" · ")}</p>${place}`;
+  const e = data.specialEvent || {};
+  const specialDate = e.date ? new Date(e.date) : null;
+  if (specialDate) specialDate.setHours(23,59,59,999);
+  if (special && e.active && (!specialDate || new Date() <= specialDate)) {
+    special.innerHTML = `<p class="eyebrow">Special event</p><h2>${escapeHTML(e.title || "Special Adoption Event")}</h2>
+      <p>${escapeHTML(e.date || "")}</p><p><strong>Adoption event:</strong> ${escapeHTML(e.adoptionTime || "")}<br><strong>Kitty Yoga:</strong> ${escapeHTML(e.yogaTime || "")} <span class="members-only">(Members only)</span></p>
+      <p><strong>${escapeHTML(e.location || "")}</strong></p>${mapAnchor(e.address,e.mapsUrl)}
+      <p>${escapeHTML(e.description || "")}</p>`;
     special.hidden = false;
   }
 
-  if (homeSpecial && data.specialEvent?.active) {
-    const e = data.specialEvent;
-    homeSpecial.innerHTML = `<div class="home-special-event-copy"><p class="eyebrow">Special event</p><h2>${escapeHTML(e.title)}</h2><p><strong>${escapeHTML(e.date)}</strong></p><p>Adoption event: ${escapeHTML(e.adoptionTime || "10 a.m. – 4 p.m.")}<br>Kitty Yoga: ${escapeHTML(e.yogaTime || "11:30 a.m.")} <strong>(Members only)</strong></p><p><strong>${escapeHTML(e.location)}</strong><br>${escapeHTML(e.address || "")}</p><a class="text-link" href="events/">Learn more about this event →</a></div>`;
+  if (homeSpecial && e.active && (!specialDate || new Date() <= specialDate)) {
+    homeSpecial.innerHTML = `<div class="home-special-event-copy"><p class="eyebrow">Special event</p><h2>${escapeHTML(e.title || "")}</h2>
+      <p><strong>${escapeHTML(e.date || "")}</strong> · Adoption event: ${escapeHTML(e.adoptionTime || "")}</p>
+      <p>Kitty Yoga: ${escapeHTML(e.yogaTime || "")} <strong>(Members only)</strong></p>
+      <p><strong>${escapeHTML(e.location || "")}</strong><br>${mapAnchor(e.address,e.mapsUrl)}</p>
+      <a class="text-link" href="events/">Learn more →</a></div>`;
     homeSpecial.hidden = false;
   }
-
- const notice = document.querySelector("#october-notice");
-const octoberNotice = data.octoberNotice;
-
-if (notice && octoberNotice) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const getLastMondayOfSeptember = (year) => {
-    const date = new Date(year, 8, 30);
-    date.setDate(date.getDate() - ((date.getDay() + 6) % 7));
-    return date;
-  };
-
-    const getFridayBeforeSecondWeekendOfNovember = (year) => {
-    const novemberFirst = new Date(year, 10, 1);
-    const firstSaturday = new Date(
-      year,
-      10,
-      1 + ((6 - novemberFirst.getDay() + 7) % 7)
-    );
-    const friday = new Date(firstSaturday);
-    friday.setDate(firstSaturday.getDate() - 1);
-    return friday;
-  };
-
-  let year = today.getFullYear();
-  let startDate = getLastMondayOfSeptember(year);
-  let endDate = getFridayBeforeSecondWeekendOfNovember(year);
-
-  if (today > endDate) {
-    year++;
-    startDate = getLastMondayOfSeptember(year);
-    endDate = getFridayBeforeSecondWeekendOfNovember(year);
-  }
-
-  const isWithinSchedule = today >= startDate && today <= endDate;
-  const shouldShow = octoberNotice.active || (octoberNotice.schedule?.enabled && isWithinSchedule);
-
-  if (shouldShow) {
-    const formatDate = (date) =>
-      date.toLocaleDateString("en-US", {
-        month: "long",
-        day: "numeric",
-        year: "numeric"
-      });
-
-    const affected = Array.isArray(data.featuredEvent?.notAttendingKittens) ? data.featuredEvent.notAttendingKittens.filter(Boolean) : [];
-    const messages = (affected.length ? octoberNotice.messages : [octoberNotice.genericMessage || "Some kittens may be temporarily unavailable for adoption or may not attend events during this seasonal period. Thank you for your understanding as we prioritize their safety and well-being."]).map(message =>
-      message
-        .replace("[start date]", formatDate(startDate))
-        .replace("[end date]", formatDate(endDate))
-    );
-
-    notice.innerHTML = `<h2>${escapeHTML(octoberNotice.title)}</h2>${affected.length ? `<p><strong>Affected kittens:</strong> ${escapeHTML(affected.join(", "))}</p>` : ""}
-      ${messages.map(message => `<p>${escapeHTML(message)}</p>`).join("")}`;
-    notice.hidden = false;
-  } else {
-    notice.hidden = true;
-  }
 }
-}
-  
+
 renderAbout();
 renderFosterPhotoCarousel();
 renderKittenCards();
