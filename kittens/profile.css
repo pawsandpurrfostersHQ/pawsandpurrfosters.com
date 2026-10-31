@@ -47,3 +47,7 @@
   .profile-detail dl div { grid-template-columns: 1fr; gap: 2px; }
   .compatibility-item { display: block; }
 }
+
+.profile-october-notice { padding: 20px 22px; border: 1px solid rgba(117, 98, 141, .28); border-top: 3px solid var(--purple, #75628d); border-radius: 16px; background: linear-gradient(135deg, var(--sage-light), var(--purple-light)); }
+.profile-october-notice h2 { margin-top: 0; }
+.profile-october-notice p:last-child { margin-bottom: 0; }
