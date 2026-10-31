@@ -329,7 +329,8 @@ if (notice && octoberNotice) {
     notice.hidden = true;
   }
 }
-
+}
+  
 renderAbout();
 renderFosterPhotoCarousel();
 renderKittenCards();
