@@ -46,7 +46,7 @@ The adoption steps are in `how-to-adopt/index.html`. The separate FAQ page is `f
 
 ### Add your logo
 
-The real logo is stored at `assets/logo.jpg` and is used in the homepage and kitten-profile headers. Replace that file if the logo changes.
+The site logo is stored at `assets/main-logo.PNG` and is used in the page headers. Replace that file if the logo changes.
 
 ## Main Files
 
