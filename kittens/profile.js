@@ -237,6 +237,8 @@ function renderProfile(kitten) {
   const healthIcons = { "Spayed": "✿", "Neutered": "♂️", "Spayed": "♀️", "Fully vaccinated": "💉", "Dewormed": "🧪", "Flea treated": "🐜", "Microchipped": "🖥️", "Fostered and socialized": "❤️" };
   const health = `<section class="profile-detail profile-health"><h2>Health &amp; Care</h2><div class="health-tiles">${normalizeHealthChecklist(kitten).map(item => `<div class="health-tile"><span aria-hidden="true">${healthIcons[item] || "✓"}</span><strong>${escapeHTML(item)}</strong></div>`).join("")}</div></section>`;
 
+  const folderCard = `<section class="profile-detail profile-going-home"><div class="going-home-heading"><span class="folder-emoji" aria-hidden="true">📁</span><div><p class="eyebrow">A thoughtful start at home</p><h2>Every kitten goes home with a care folder</h2></div></div><p>At adoption, each kitten leaves with a blue folder containing important information to help their transition home feel informed and supported.</p><ul class="going-home-list"><li>Medical history and records</li><li>Vaccine record</li><li>Microchip number and information</li><li>Kitten care guide</li><li>Foster contact information</li></ul></section>`;
+
   const requirements = kitten.adoptionRequirements?.length
     ? `<section class="profile-detail"><h2>Adoption requirements</h2><ul>${kitten.adoptionRequirements.map(item => `<li>${escapeHTML(item)}</li>`).join("")}</ul></section>`
     : "";
