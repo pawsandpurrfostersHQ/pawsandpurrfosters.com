@@ -278,11 +278,55 @@ function renderEvents() {
     special.hidden = false;
   }
 
-  const notice = document.querySelector("#october-notice");
-  if (notice && data.octoberNotice?.active) {
-    notice.innerHTML = `<h2>${escapeHTML(data.octoberNotice.title)}</h2>
-      ${data.octoberNotice.messages.map(message => `<p>${escapeHTML(message)}</p>`).join("")}`;
+ const notice = document.querySelector("#october-notice");
+const octoberNotice = data.octoberNotice;
+
+if (notice && octoberNotice) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const getLastMondayOfSeptember = (year) => {
+    const date = new Date(year, 8, 30);
+    date.setDate(date.getDate() - ((date.getDay() + 6) % 7));
+    return date;
+  };
+
+  const getFridayBeforeSecondWeekendOfNovember = (year) => {
+    const novemberFirst = new Date(year, 10, 1);
+    const firstSaturday = new Date(year, 10, 1 + ((6 - novemberFirst.getDay() + 7) % 7));
+    const secondSaturday = new Date(firstSaturday);
+    secondSaturday.setDate(firstSaturday.getDate() + 7);
+    const friday = new Date(secondSaturday);
+    friday.setDate(secondSaturday.getDate() - 1);
+    return friday;
+  };
+
+  const year = today.getFullYear();
+  const startDate = getLastMondayOfSeptember(year);
+  const endDate = getFridayBeforeSecondWeekendOfNovember(year);
+
+  const isWithinSchedule = today >= startDate && today <= endDate;
+  const shouldShow = octoberNotice.active || (octoberNotice.schedule?.enabled && isWithinSchedule);
+
+  if (shouldShow) {
+    const formatDate = (date) =>
+      date.toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+      });
+
+    const messages = octoberNotice.messages.map(message =>
+      message
+        .replace("[start date]", formatDate(startDate))
+        .replace("[end date]", formatDate(endDate))
+    );
+
+    notice.innerHTML = `<h2>${escapeHTML(octoberNotice.title)}</h2>
+      ${messages.map(message => `<p>${escapeHTML(message)}</p>`).join("")}`;
     notice.hidden = false;
+  } else {
+    notice.hidden = true;
   }
 }
 
