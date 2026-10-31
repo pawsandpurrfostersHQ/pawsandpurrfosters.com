@@ -128,3 +128,11 @@
 .profile-pairing { grid-column:1/-1; }
 .profile-pairing .pairing-description { margin:14px 0 0; line-height:1.7; }
 @media(max-width:760px) { .profile-details { grid-template-columns:1fr; } .profile-pairing { grid-column:auto; } }
+
+/* Companion and adoption panels are matching cards, not a full-width banner. */
+.profile-details .profile-pairing,
+.profile-details .profile-reminder:not(.profile-october-notice) { grid-column:auto!important; width:100%; min-width:0; height:100%; box-sizing:border-box; }
+.profile-details .profile-pairing { display:flex; flex-direction:column; align-items:center; text-align:center; }
+.profile-details .profile-pairing .pairing-description { text-align:center; }
+.profile-details .profile-reminder .adoption-question { margin:14px 0; }
+.profile-details .profile-reminder .adoption-question strong { color:var(--sage-dark,#55765e)!important; font-weight:800; }
