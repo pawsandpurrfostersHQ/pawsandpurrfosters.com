@@ -237,24 +237,7 @@ function renderProfile(kitten) {
   const healthIcons = { "Spayed": "✿", "Neutered": "♂️", "Spayed": "♀️", "Fully vaccinated": "💉", "Dewormed": "🧪", "Flea treated": "🐜", "Microchipped": "🖥️", "Fostered and socialized": "❤️" };
   const health = `<section class="profile-detail profile-health"><h2>Health &amp; Care</h2><div class="health-tiles">${normalizeHealthChecklist(kitten).map(item => `<div class="health-tile"><span aria-hidden="true">${healthIcons[item] || "✓"}</span><strong>${escapeHTML(item)}</strong></div>`).join("")}</div></section>`;
 
-  const folderCard = `<section class="profile-detail profile-going-home profile-going-home--compact"><div class="going-home-heading"><span class="folder-emoji" aria-hidden="true">📁</span><div><p class="eyebrow">Included at adoption</p><h2>Blue take-home folder</h2></div></div><p>Each kitten goes home with a folder of helpful records and resources:</p><ul class="going-home-list"><li>Spay or neuter paperwork</li><li>Vaccine card</li><li>Medical history and records</li><li>Microchip number and registration website</li><li>Foster contact information</li><li>Kitten care guide</li></ul></section>`
-
-  const requirements = kitten.adoptionRequirements?.length
-    ? `<section class="profile-detail"><h2>Adoption requirements</h2><ul>${kitten.adoptionRequirements.map(item => `<li>${escapeHTML(item)}</li>`).join("")}</ul></section>`
-    : "";
-
-  const pairingData = getPairingData(kitten);
-  const pairingDescription = getPairingDescription(kitten, pairingData);
-  const pairing = pairingData.type === "single"
-    ? `<section class="profile-detail profile-pairing"><h2>Adoption Pairing</h2><p>Can be adopted individually.</p></section>`
-    : pairingData.type === "any-sibling"
-    ? `<section class="profile-detail profile-pairing"><h2>Adoption Pairing</h2><p>Must be adopted with a suitable sibling or foster sibling. No specific companion is required.</p></section>`
-    : `<section class="profile-detail profile-pairing">
-        <h2>${pairingData.type === "bonded" ? "Bonded Pair" : "Preferred Pair"}</h2>
-        ${pairingData.kittenId ? `<a class="pair-partner-link" href="${escapeHTML(`profile-template.html?id=${pairingData.kittenId}&from=${returnFrom || "current"}`)}"><span class="pair-partner-label">Meet their companion</span><strong>${escapeHTML(pairingData.kittenName)}</strong><span>View profile →</span></a>` : ""}
-        ${pairingDescription ? `<p class="profile-pairing-copy">${escapeHTML(pairingDescription)}</p>` : ""}
-        ${pairingData.kittenId ? `<p><a class="text-link" href="${escapeHTML(`profile-template.html?id=${pairingData.kittenId}&from=${returnFrom || "current"}`)}">Get to Know ${escapeHTML(pairingData.kittenName)} →</a></p>` : ""}
-      </section>`;
+  const folderCard = `<section class="profile-detail profile-going-home profile-going-home--compact"><div class="going-home-heading"><span class="folder-emoji" aria-hidden="true">📁</span><div><p class="eyebrow">Included at adoption</p><h2>Blue take-home folder</h2></div></div><p>Each kitten goes home with:</p><ul class="going-home-list"><li>Spay or neuter paperwork</li><li>Vaccine card</li><li>Medical history and records</li><li>Microchip number and registration website</li><li>Foster contact information</li><li>Kitten care guide</li></ul></section>`;
 
   const octoberDates = getOctoberNoticeDates(typeof window !== "undefined" ? window.PAWS_EVENT_DATA?.octoberNotice : null);
   const adoptionNotices = getProfileAdoptionNotices(kitten, pairingData, octoberDates);
