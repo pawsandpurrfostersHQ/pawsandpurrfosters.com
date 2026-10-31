@@ -88,3 +88,14 @@
 .profile-reminder .button { margin-top:8px; }
 .profile-detail.profile-ideal-home { border-top-color:var(--sage-dark); }
 @media(max-width:760px) { .profile-main { padding:28px 18px 54px; } .profile-details { gap:18px; margin-top:30px; } .profile-detail { padding:20px 18px; } .health-tiles { grid-template-columns:repeat(2,minmax(0,1fr)); } .compatibility-list { grid-template-columns:1fr; } .profile-intro h1 { font-size:clamp(46px,13vw,64px); } }
+
+
+/* Seasonal adoption reminder: warm Halloween accent */
+.profile-october-notice {
+  border: 1px solid rgba(219, 126, 55, .28);
+  border-top: 4px solid #d9823b;
+  background: linear-gradient(135deg, #fff7ed, #fff0df);
+  box-shadow: 0 10px 26px rgba(171, 94, 39, .08);
+}
+.profile-october-notice h2 { color: #98501f; }
+.profile-october-notice p { color: #75543d; }
