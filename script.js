@@ -272,7 +272,7 @@ function renderEvents() {
     const place = data.specialEvent.address
       ? `<a class="event-address" href="${escapeHTML(mapsLink(data.specialEvent.address, data.specialEvent.mapsUrl))}" target="_blank" rel="noopener noreferrer">${escapeHTML(data.specialEvent.address)}</a>`
       : "";
-    special.innerHTML = `<p class="eyebrow">One-time opportunity</p><h2>${escapeHTML(data.specialEvent.title)}</h2>
+    special.innerHTML = `<p class="eyebrow">Special Event</p><h2>${escapeHTML(data.specialEvent.title)}</h2>
       <p>${escapeHTML(data.specialEvent.description)}</p>
       <p>${[data.specialEvent.date, data.specialEvent.time, data.specialEvent.location].filter(Boolean).map(escapeHTML).join(" · ")}</p>${place}`;
     special.hidden = false;
