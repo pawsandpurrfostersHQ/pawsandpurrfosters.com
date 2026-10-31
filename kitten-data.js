@@ -51,7 +51,7 @@ appRoot.PAWS_KITTENS = [
     whereToMeet: "",
     videoUrl: "",
     eventInformation: "",
-    pairing: { type: "must", kittenId: "valentina" }
+    pairing: { type: "bonded", kittenId: "valentina" }
   },
   {
     id: "valentina",
@@ -82,7 +82,7 @@ appRoot.PAWS_KITTENS = [
     whereToMeet: "",
     videoUrl: "",
     eventInformation: "",
-    pairing: { type: "must", kittenId: "diego" }
+    pairing: { type: "bonded", kittenId: "diego" }
   },
   {
     id: "claudia",
@@ -112,7 +112,8 @@ appRoot.PAWS_KITTENS = [
     whereToMeet: "",
     videoUrl: "",
     eventInformation: "",
-    pairing: { type: "must", kittenId: "paloma" },
+    pairing: { type: "bonded", kittenId: "paloma" },
+    blackCatAdoptionNotice: true,
     pairingDescription: "Claudia and Paloma are biological sisters who are incredibly bonded and are always together. They love playing, chasing each other, and curling up together for naps. You will often find one right behind the other, and their close bond makes them an extra special pair to welcome into your home."
   },
   {
@@ -143,12 +144,8 @@ appRoot.PAWS_KITTENS = [
     whereToMeet: "",
     videoUrl: "",
     eventInformation: "",
-    pairing: { type: "must", kittenId: "claudia" },
-    pairingDescription: "Claudia and Paloma are sisters with a special bond and are rarely far apart. They follow each other everywhere, love chasing and playing together, and curl up side by side for naps. They are two super sweet kittens with so much love to give to their future family.",
-    adoptionNotice: {
-      title: "Adoption Event Notice",
-      message: "From September 30 through November 5, Claudia cannot attend adoption events during the rescue's black-cat safety period. Because Paloma must be adopted with Claudia, Paloma will not attend events during this period either. Adoption inquiries for the pair may resume after November 5."
-    }
+    pairing: { type: "bonded", kittenId: "claudia" },
+    pairingDescription: "Claudia and Paloma are sisters with a special bond and are rarely far apart. They follow each other everywhere, love chasing and playing together, and curl up side by side for naps. They are two super sweet kittens with so much love to give to their future family."
   },
   {
     id: "harvey",
@@ -178,7 +175,7 @@ appRoot.PAWS_KITTENS = [
     whereToMeet: "",
     videoUrl: "",
     eventInformation: "",
-    pairing: { type: "must", kittenId: "melody" },
+    pairing: { type: "bonded", kittenId: "melody" },
     pairingDescription: "Harvey and Melody are siblings, and these two tuxedo kittens are the sweetest twin duo! They love grooming each other, napping together, and playing side by side. When you see one, the other is never far behind."
   },
   {
@@ -210,7 +207,7 @@ appRoot.PAWS_KITTENS = [
     whereToMeet: "",
     videoUrl: "",
     eventInformation: "",
-    pairing: { type: "must", kittenId: "harvey" },
+    pairing: { type: "bonded", kittenId: "harvey" },
     pairingDescription: "Melody and Harvey are brother and sister, and they are the sweetest twin tuxedo kitten pair ever! They are very bonded and enjoy grooming one another, playing together, and curling up for naps. When one is around, the other is usually close by."
   },
   {
@@ -240,7 +237,7 @@ appRoot.PAWS_KITTENS = [
     whereToMeet: "",
     videoUrl: "",
     eventInformation: "",
-    pairing: { type: "must", kittenId: "raymond" },
+    pairing: { type: "bonded", kittenId: "raymond" },
     pairingDescription: "Wally and Raymond have been together since they were about 10 weeks old and have formed an incredibly strong bond. Raymond helps Wally feel confident and comfortable, while Wally is happiest when his brother is nearby. They play together, nap together, and look to each other for comfort, so they need to find a home together."
   },
   {
@@ -270,7 +267,7 @@ appRoot.PAWS_KITTENS = [
     whereToMeet: "",
     videoUrl: "",
     eventInformation: "",
-    pairing: { type: "must", kittenId: "wally" },
+    pairing: { type: "bonded", kittenId: "wally" },
     pairingDescription: "Raymond and Wally are foster brothers who have been together since they were 10 weeks old and bonded almost right away. As a bonded pair, they are deeply attached and count on each other to feel confident and comfortable; they do just about everything together. They should not be separated and need to be adopted as a pair."
   }
 ];
