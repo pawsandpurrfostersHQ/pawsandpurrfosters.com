@@ -206,7 +206,7 @@ h3 { font-family: "Playfair Display", serif; font-size: 27px; margin: 6px 0; }
   background: white; border: 1px solid var(--line); border-radius: var(--radius);
   overflow: hidden; box-shadow: 0 8px 30px rgba(62,67,57,.04);
 }
-.kitten-track { display: flex; gap: 22px; overflow-x: auto; padding: 2px 2px 18px; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-color: var(--sage) var(--sage-light); scrollbar-width: thin; -webkit-overflow-scrolling: touch; }
+.kitten-track { display: flex; gap: 22px; overflow-x: auto; padding: 2px 2px 18px; scroll-snap-type: x proximity; scroll-behavior: smooth; scrollbar-color: var(--sage) var(--sage-light); scrollbar-width: thin; -webkit-overflow-scrolling: touch; }
 .kitten-track .kitten-card { flex: 0 0 calc((100% - 44px) / 3); min-width: 260px; scroll-snap-align: start; }
 .kitten-carousel-controls { display: flex; gap: 8px; }
 .carousel-button { width: 42px; height: 42px; flex: 0 0 auto; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: white; color: var(--purple-dark); font-size: 27px; line-height: 1; cursor: pointer; }
@@ -493,4 +493,13 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 }
 .alumni-litter--temporary .alumni-temporary-notice--pair {
   flex-basis: min(84vw, 440px);
+}
+
+/* Mobile: allow natural horizontal swiping through every alumni notice/card */
+.alumni-cards { touch-action: pan-x pan-y; overscroll-behavior-x: contain; scroll-snap-stop: normal; }
+.alumni-litter--temporary .alumni-cards { scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; }
+.alumni-litter--temporary .alumni-temporary-notice { scroll-snap-align: start; }
+@media (max-width: 760px) {
+  .alumni-litter--temporary .alumni-cards { padding-right: 20px; }
+  .alumni-temporary-notice--eleventh { flex: 0 0 min(84vw, 340px); }
 }
