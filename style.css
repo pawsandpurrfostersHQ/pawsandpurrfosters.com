@@ -729,3 +729,72 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
   .events-page #event-featured .event-card--compact h2 { font-size:34px; }
   .events-page #event-featured .event-card--compact .event-address { max-width:100%; }
 }
+
+/* Events page hero now follows the same typography and hierarchy as other inner pages. */
+.events-page .events-page-banner {
+  max-width:860px;
+  margin:0 auto 18px;
+  padding:10px 0 0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  color:var(--ink);
+  text-align:center;
+}
+.events-page .events-page-banner .eyebrow {
+  margin:0 0 10px;
+  color:var(--sage-dark);
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.events-page .events-page-banner h1 {
+  margin:0 0 14px;
+  color:var(--purple-dark);
+  font-family:var(--heading-font, Georgia, serif);
+  font-size:clamp(40px,5vw,58px);
+  font-weight:800;
+  line-height:1.12;
+  letter-spacing:normal;
+  text-align:center;
+}
+.events-page .events-intro {
+  max-width:860px;
+  margin:0 auto 32px;
+  color:var(--muted);
+  font-size:17px;
+  line-height:1.7;
+  text-align:center;
+}
+.events-page .events-intro > p:first-child { margin:0 0 18px; }
+.events-page .events-gentle-note {
+  margin:0;
+  padding:15px 20px;
+  border:1px solid rgba(156,175,145,.35);
+  border-left:3px solid var(--sage);
+  border-radius:14px;
+  background:var(--sage-light);
+  color:var(--muted);
+  font-size:15px;
+  line-height:1.65;
+  text-align:center;
+}
+/* Keep the upcoming event card visually balanced with the special-event card. */
+.events-page #event-featured .event-card--compact {
+  min-height:0;
+  padding:24px clamp(22px,3.5vw,34px);
+}
+.events-page #event-featured .event-card--compact h2 {
+  font-size:clamp(25px,3vw,33px)!important;
+  line-height:1.18;
+}
+.events-page #event-featured .event-card--compact .event-date {
+  font-size:18px;
+}
+@media(max-width:640px) {
+  .events-page { padding-top:48px; }
+  .events-page .events-page-banner h1 { font-size:clamp(36px,9vw,44px); }
+  .events-page .events-intro { font-size:16px; }
+  .events-page #event-featured .event-card--compact { padding:22px 18px; }
+}
