@@ -67,10 +67,10 @@ appRoot.PAWS_KITTENS = [
    photos: [
   "assets/kittens/Valentina-1.png",
   "assets/kittens/Valentina-2.jpg",
+  "assets/kittens/Valentina.4.jpg",
   "assets/kittens/Valentina-Paw.jpg",
   "assets/kittens/Valentina-collage.jpg",
-  "assets/kittens/Valentina.3.png",
-  "assets/kittens/Valentina.4.jpg"
+  "assets/kittens/Valentina.3.png"
 ],
     personalityTraits: ["Confident", "Playful", "Curious", "Social", "Affectionate", "Vocal"],
     idealHome: "Valentina will do best in a loving home where she can get plenty of attention, affection, and cuddles. She's a sweet, affectionate girl who would be happy with a single person or a family, with or without children. She may do well with children, although she hasn't had direct experience with them. She should be fine with other cats with a proper introduction, and while she hasn't had direct experience with dogs, she may do well with a calm, cat-friendly dog if introductions are handled patiently. Most of all, Valentina wants a home where she'll be loved, included, and given all the cuddles and attention she could ask for.",
