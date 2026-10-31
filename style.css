@@ -655,3 +655,13 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .events-page #event-featured .event-location-name { text-align:center!important; align-items:center; justify-content:center; margin-left:auto; margin-right:auto; }
 .events-page #event-featured .event-card-content { display:flex; flex-direction:column; width:100%; }
 .events-page #event-featured .event-address { margin-left:auto; margin-right:auto; }
+
+/* Dedicated Events page: center every element inside Where to Find Us, not just its heading. */
+.events-page #event-featured { text-align:center!important; }
+.events-page #event-featured .event-card,
+.events-page #event-featured .event-card--compact,
+.events-page #event-featured .event-card-content { width:100%; text-align:center!important; }
+.events-page #event-featured .event-card-content { display:flex!important; flex-direction:column!important; align-items:center!important; justify-content:center!important; }
+.events-page #event-featured .event-card-content > * { text-align:center!important; margin-left:auto!important; margin-right:auto!important; }
+.events-page #event-featured .event-attending { text-align:center!important; width:100%; }
+.events-page #event-featured .event-address { display:inline-block!important; margin:10px auto!important; }
