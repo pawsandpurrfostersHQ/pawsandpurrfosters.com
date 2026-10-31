@@ -961,3 +961,45 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .faq-question-form select:focus-visible {
   outline:2px solid rgba(117,98,141,.25); border-color:var(--purple);
 }
+
+/* Clickable kitten choices for the FAQ contact form */
+.faq-question-form .faq-field-label {
+  display:block; margin-top:8px; color:var(--ink); font-weight:700;
+}
+.faq-question-form .faq-field-label > span {
+  color:var(--muted); font-weight:400; font-size:.9em;
+}
+.faq-kitten-options {
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px;
+}
+.faq-question-form .faq-kitten-choice {
+  position:relative; display:block; margin:0; cursor:pointer;
+}
+.faq-kitten-choice input {
+  position:absolute; width:1px; height:1px; opacity:0; pointer-events:none;
+}
+.faq-kitten-choice span {
+  display:flex; align-items:center; gap:9px; min-height:44px;
+  padding:10px 13px; border:1px solid #d9d5df; border-radius:12px;
+  background:#fff; color:var(--ink); font-weight:600;
+  transition:background .15s ease,border-color .15s ease,box-shadow .15s ease;
+}
+.faq-kitten-choice span::before {
+  content:""; width:17px; height:17px; flex:0 0 17px;
+  border:1.5px solid #aaa2b2; border-radius:5px; background:#fff;
+}
+.faq-kitten-choice input:checked + span {
+  border-color:var(--purple); background:#f5f0fa;
+}
+.faq-kitten-choice input:checked + span::before {
+  content:"✓"; display:grid; place-items:center; color:#fff;
+  background:var(--purple); border-color:var(--purple); font-size:12px; font-weight:800;
+}
+.faq-kitten-choice input:focus-visible + span {
+  outline:2px solid var(--purple); outline-offset:2px;
+}
+.faq-kitten-choice span:hover { border-color:var(--purple); }
+@media(max-width:420px) {
+  .faq-kitten-options { grid-template-columns:1fr 1fr; gap:7px; }
+  .faq-kitten-choice span { padding:9px 10px; }
+}
