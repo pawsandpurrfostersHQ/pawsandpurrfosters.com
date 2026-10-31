@@ -6,11 +6,11 @@ window.PAWS_EVENT_DATA = {
   featuredEvent: {
     active: true,
     title: "Where to Find Us",
-    location: "Pet Food Express",
-    date: "Saturday, October 17, 2026",
-    time: "11 a.m. – 2 p.m.",
-    address: "5829 Lone Tree Wy, Antioch, CA 94531",
-    mapsUrl: "",
+    location: "Antioch PetSmart",
+    date: "Sunday, November 1, 2026",
+    time: "11 a.m. – 3 p.m.",
+    address: "5879 Lone Tree Way, Antioch, CA 94531",
+    mapsUrl: "https://maps.app.goo.gl/MjBjSfjpJHPXh89h7",
     attendingKittens: ["Diego", "Valentina", "Harvey", "Melody", "Raymond", "Wally"],
     description: "",
     specialNotice: "Claudia and Paloma will not be attending this event. Please see the October Adoption Notice below to learn why. Come check back after the first week of November."
@@ -27,7 +27,7 @@ window.PAWS_EVENT_DATA = {
       },
       {
         name: "Antioch PetSmart",
-        timing: "2nd Saturday & Sunday of each month",
+        timing: "2nd & 4th Saturday & Sunday of each month",
         address: "5879 Lone Tree Way, Antioch, CA 94531",
         mapsUrl: "https://maps.app.goo.gl/bDa3qbVxZ8EPSCqG6"
       }
