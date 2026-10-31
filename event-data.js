@@ -13,7 +13,7 @@ window.PAWS_EVENT_DATA = {
     mapsUrl: "https://maps.app.goo.gl/MjBjSfjpJHPXh89h7",
     attendingKittens: ["Diego", "Valentina", "Harvey", "Melody", "Raymond", "Wally"],
     description: "",
-    specialNotice: "Claudia and Paloma will not be attending this event. Please see the October Adoption Notice below to learn why. Come check back after the first week of November."
+    notAttendingKittens: []
   },
   regularSchedule: {
     active: true,
@@ -40,6 +40,8 @@ window.PAWS_EVENT_DATA = {
     location: "Diamond Hills Sports Club & Spa",
     date: "Monday, November 9, 2026",
     time: "Adoption Event: 10 a.m. – 4 p.m. | Kitty Yoga: 11:30 a.m. (Members Only)",
+    adoptionTime: "10 a.m. – 4 p.m.",
+    yogaTime: "11:30 a.m.",
     address: "1510 Neroly Road, Oakley, CA",
     mapsUrl: "https://www.google.com/maps/search/?api=1&query=Diamond+Hills+Sports+Club+%26+Spa%2C+1510+Neroly+Road%2C+Oakley%2C+CA"
   },
@@ -51,6 +53,7 @@ window.PAWS_EVENT_DATA = {
     end: "friday-before-second-weekend-of-november"
   },
   title: "October Adoption Notice",
+  genericMessage: "Some kittens may be temporarily unavailable for adoption or may not attend events during this seasonal period. Thank you for your understanding as we prioritize their safety and well-being.",
   messages: [
     "During the month of October, the rescue we foster with temporarily pauses adoptions of black kittens from [start date] through [end date] to help protect them from potential harm during this time.",
     "As a result, some foster kittens will temporarily not attend adoption events. Their preferred or bonded pairs will most likely miss adoption events during this period as well, so they can be adopted together.",
