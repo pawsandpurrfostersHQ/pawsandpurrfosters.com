@@ -588,3 +588,47 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .events-page .schedule-location h3 { color:var(--purple-dark); }
 .events-page .schedule-location a { color:var(--purple-dark); font-weight:700; text-underline-offset:3px; }
 @media(max-width:760px) { .events-page { padding:40px 18px 64px; } .events-page .schedule-locations { grid-template-columns:1fr; } }
+
+/* Event card refinement: the featured adoption card is purple; the special event is sage green. */
+#events #event-featured .event-card--compact,
+.events-page #event-featured .event-card--compact {
+  background:linear-gradient(125deg,var(--purple-dark),var(--purple) 58%,#fff 145%);
+  color:#fff; border:0; box-shadow:0 10px 26px rgba(76,53,98,.13);
+  border-radius:22px; text-align:center; padding:24px 26px;
+}
+#events #event-featured .event-card--compact h2,
+.events-page #event-featured .event-card--compact h2 { color:#fff; font-size:clamp(22px,2.1vw,27px); margin:5px 0 10px; }
+#events #event-featured .event-card--compact .eyebrow,
+.events-page #event-featured .event-card--compact .eyebrow { color:#f5eafa; font-size:13px; letter-spacing:.08em; }
+#events #event-featured .event-card--compact p,
+.events-page #event-featured .event-card--compact p { color:#fff; }
+#events #event-featured .event-card--compact .event-date { font-size:20px; line-height:1.35; margin:9px 0 3px; }
+#events #event-featured .event-card--compact .event-time { font-size:19px; font-weight:700; margin:2px 0 10px; }
+#events #event-featured .event-card--compact .event-location-name { font-size:18px; margin:9px 0 2px; }
+#events #event-featured .event-card--compact .event-address { background:rgba(255,255,255,.92); color:var(--purple-dark)!important; font-weight:800; }
+#events #event-featured .event-card--compact .event-attending { font-size:13px; line-height:1.5; max-width:100%; overflow-wrap:anywhere; text-align:center; }
+#events #home-special-event,
+.events-page .special-event-panel {
+  background:linear-gradient(125deg,#dcebdc,#f4f8f0 62%,#fff 145%);
+  border:1px solid #c8dec8; color:#294c35; border-radius:22px;
+}
+#events #home-special-event h2,
+.events-page .special-event-panel h2 { color:#315c3d; }
+#events #home-special-event p,
+.events-page .special-event-panel p:not(.eyebrow) { color:#425b48; }
+#events #home-special-event .eyebrow,
+.events-page .special-event-panel .eyebrow { color:#426e4c; }
+#events #home-special-event .event-address,
+.events-page .special-event-panel .event-address { background:#fff; color:#315c3d!important; border:1px solid #c8dec8; }
+.events-page #event-featured { padding:0; border:0; background:transparent; box-shadow:none; }
+.events-page .event-panels { display:flex; flex-direction:column; }
+.events-page #event-featured .event-card--compact { min-height:0; }
+.events-page .special-event-panel { text-align:center; }
+.special-event-date { font-size:19px; margin:12px 0 15px; color:#315c3d!important; }
+.special-event-activities { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; max-width:720px; margin:0 auto 16px; }
+.special-event-activities > p { background:rgba(255,255,255,.75); border:1px solid #d6e5d5; border-radius:15px; padding:15px 12px; margin:0!important; }
+.event-activity-icon { display:block; font-size:23px; margin-bottom:6px; }
+.event-audience { font-size:12px; font-weight:700; display:inline-block; margin-top:5px; }
+.events-page .special-event-panel > p { text-align:center; }
+.events-page .special-event-panel > p:last-child { max-width:760px; margin:16px auto 0; }
+@media(max-width:600px) { .special-event-activities { grid-template-columns:1fr; } }
