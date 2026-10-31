@@ -63,14 +63,14 @@ appRoot.PAWS_KITTENS = [
     birthday: "2026-03-24",
     litterNumber: 11,
     bio: "Meet Valentina! She's a confident and playful kitten who loves exploring and being curious about everything around her. Valentina is not afraid of much and will often walk right up to people asking for attention. She enjoys being around people and is very social, often purring almost instantly when being pet. She's affectionate and playful and truly the best of both worlds. Valentina is also a chatterbox and loves talking to people. She's very vocal and always has something to say. She also absolutely loves walking on a harness and is amazing with it.",
-    photos: [
-      "assets/kittens/Valentina-1.PNG"
-"assets/kittens/Valentina-2.JPG"
-"assets/kittens/Valentina-Paw.JPG"
-"assets/kittens/Valentina-collage.JPG"
-"assets/kittens/Valentina.3.PNG"
-"assets/kittens/Valentina.4.JPG"
-    ],
+   photos: [
+  "assets/kittens/Valentina-1.PNG",
+  "assets/kittens/Valentina-2.JPG",
+  "assets/kittens/Valentina-Paw.JPG",
+  "assets/kittens/Valentina-collage.JPG",
+  "assets/kittens/Valentina.3.PNG",
+  "assets/kittens/Valentina.4.JPG"
+],
     personalityTraits: ["Confident", "Playful", "Curious", "Social", "Affectionate", "Vocal"],
     idealHome: "Valentina will do best in a loving home where she can get plenty of attention, affection, and cuddles. She's a sweet, affectionate girl who would be happy with a single person or a family, with or without children. She may do well with children, although she hasn't had direct experience with them. She should be fine with other cats with a proper introduction, and while she hasn't had direct experience with dogs, she may do well with a calm, cat-friendly dog if introductions are handled patiently. Most of all, Valentina wants a home where she'll be loved, included, and given all the cuddles and attention she could ask for.",
     compatibility: { dogs: "Unknown — no direct experience", cats: "Yes — with proper introduction", youngerChildren: "Possibly — no direct experience", olderChildren: "Yes" },
