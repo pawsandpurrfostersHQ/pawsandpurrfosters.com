@@ -194,6 +194,7 @@ function renderProfile(kitten) {
   }
 
   const returnFrom = new URLSearchParams(window.location.search).get("from") || "current";
+  const pairingData = getPairingData(kitten);
   const photoSet = [...new Set([kitten.image, ...(kitten.photos || [])].filter(Boolean))];
   const galleryPhotos = photoSet.length ? photoSet : [];
   const mainImage = galleryPhotos[0] ? profilePhotoSource(galleryPhotos[0]) : "";
