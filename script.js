@@ -237,8 +237,8 @@ function renderEvents() {
         ? `<p class="event-attending"><strong>Expected to attend:</strong> ${escapeHTML(attending.join(", "))}</p>`
         : "";
       featured.innerHTML = `<article class="event-card event-card--compact">
-        <div><p class="eyebrow">Upcoming adoption event</p><h2>Where to Find Us</h2>
-        <p class="event-date"><strong>${escapeHTML(event.date || "")}</strong> · ${escapeHTML(event.time || "")}</p>
+        <div><p class="eyebrow"><span aria-hidden="true">🐾</span> Where to Find Us</p><h2>Upcoming Adoption Event</h2>
+        <p class="event-date"><strong>${escapeHTML(event.date || "")}</strong></p><p class="event-time"><strong>${escapeHTML(event.time || "")}</strong></p>
         <p class="event-location-name"><strong>${escapeHTML(event.location || "")}</strong></p>
         ${mapAnchor(event.address,event.mapsUrl)}${attendingMarkup}</div>
       </article>`;
@@ -268,14 +268,14 @@ function renderEvents() {
   if (specialDate) specialDate.setHours(23,59,59,999);
   if (special && e.active && (!specialDate || new Date() <= specialDate)) {
     special.innerHTML = `<p class="eyebrow">Special event</p><h2>${escapeHTML(e.title || "Special Adoption Event")}</h2>
-      <p>${escapeHTML(e.date || "")}</p><p><strong>Adoption event:</strong> ${escapeHTML(e.adoptionTime || "")}<br><strong>Kitty Yoga:</strong> ${escapeHTML(e.yogaTime || "")} <span class="members-only">(Members only)</span></p>
+      <p class="special-event-date"><strong>${escapeHTML(e.date || "")}</strong></p><div class="special-event-activities"><p><span class="event-activity-icon" aria-hidden="true">🐈</span><strong>Kitten Adoption Event</strong><br>${escapeHTML(e.adoptionTime || "")} <span class="event-audience">Open to everyone</span></p><p><span class="event-activity-icon" aria-hidden="true">🧘</span><strong>Kitty Yoga</strong><br>${escapeHTML(e.yogaTime || "")} <span class="members-only">(Members only)</span></p></div>
       <p><strong>${escapeHTML(e.location || "")}</strong></p>${mapAnchor(e.address,e.mapsUrl)}
       <p>${escapeHTML(e.description || "")}</p>`;
     special.hidden = false;
   }
 
   if (homeSpecial && e.active && (!specialDate || new Date() <= specialDate)) {
-    homeSpecial.innerHTML = `<div class="home-special-event-copy"><p class="eyebrow">Special event</p><h2>${escapeHTML(e.title || "")}</h2>
+    homeSpecial.innerHTML = `<div class="home-special-event-copy"><p class="eyebrow"><span aria-hidden="true">✦</span> Special Event</p><h2>${escapeHTML(e.title || "")}</h2>
       <p><strong>${escapeHTML(e.date || "")}</strong> · Adoption event: ${escapeHTML(e.adoptionTime || "")}</p>
       <p>Kitty Yoga: ${escapeHTML(e.yogaTime || "")} <strong>(Members only)</strong></p>
       <p><strong>${escapeHTML(e.location || "")}</strong><br>${mapAnchor(e.address,e.mapsUrl)}</p>
