@@ -193,6 +193,7 @@ function renderProfile(kitten) {
     return;
   }
 
+  const returnFrom = new URLSearchParams(window.location.search).get("from") || "current";
   const photoSet = [...new Set([kitten.image, ...(kitten.photos || [])].filter(Boolean))];
   const galleryPhotos = photoSet.length ? photoSet : [];
   const mainImage = galleryPhotos[0] ? profilePhotoSource(galleryPhotos[0]) : "";
@@ -356,7 +357,6 @@ function renderProfile(kitten) {
   `;
 
   document.title = `${kitten.name} | Paws & Purr Fosters`;
-  const returnFrom = new URLSearchParams(window.location.search).get("from") || "current";
   const backHref = returnFrom === "home" ? "../#kittens" : "../all-kittens/";
   const backLabel = returnFrom === "home" ? "Our Fosters" : "Current Fosters";
   root.innerHTML = `<a class="profile-back-link" href="${backHref}" aria-label="Back to ${backLabel}">← <span>${backLabel}</span></a>
