@@ -632,3 +632,16 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .events-page .special-event-panel > p { text-align:center; }
 .events-page .special-event-panel > p:last-child { max-width:760px; margin:16px auto 0; }
 @media(max-width:600px) { .special-event-activities { grid-template-columns:1fr; } }
+
+/* Events page typography and alignment follow the inner-page hero pattern. */
+.events-page-banner { text-align:center; border:0; padding:10px 0 20px; margin:0 auto 18px; }
+.events-page-banner .eyebrow { color:var(--sage-dark); font-weight:800; letter-spacing:.12em; text-transform:uppercase; margin:0 0 10px; }
+.events-page-banner h1 { text-align:center; font-family:var(--heading-font, Georgia,serif); font-weight:800; font-size:clamp(36px,5vw,54px); line-height:1.12; color:var(--purple-dark); }
+.events-page .events-intro { text-align:center; max-width:900px; margin:0 auto 28px; }
+.events-page .events-gentle-note { text-align:center; }
+.events-page #event-featured .event-card-content { width:100%; text-align:center; display:flex; flex-direction:column; align-items:center; }
+.events-page #event-featured .event-attending { text-align:center; max-width:100%; }
+.events-page .special-event-panel { text-align:center; }
+.events-page .special-event-panel > p { text-align:center; }
+.events-page .special-event-panel .event-address { border-radius:14px; }
+.events-page #event-featured .event-address { border-radius:14px; }
