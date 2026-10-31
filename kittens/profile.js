@@ -195,8 +195,9 @@ function renderProfile(kitten) {
 
   const returnFrom = new URLSearchParams(window.location.search).get("from") || "current";
   const pairingData = getPairingData(kitten);
-  const pairing = pairingData
-    ? `<section class="profile-detail profile-pairing"><p class="eyebrow">Companion</p><h2>Better together</h2><a class="pair-partner-link" href="profile-template.html?id=${escapeHTML(pairingData.kittenId)}"><strong>${escapeHTML(pairingData.kittenName)}</strong><span>Meet ${escapeHTML(pairingData.kittenName)} →</span></a></section>`
+  const pairingDescription = pairingData.type !== "single" ? getPairingDescription(kitten, pairingData) : "";
+  const pairing = pairingData.type !== "single"
+    ? `<section class="profile-detail profile-pairing"><p class="eyebrow">Companion</p><h2>Better together</h2><a class="pair-partner-link" href="profile-template.html?id=${escapeHTML(pairingData.kittenId)}"><strong>${escapeHTML(pairingData.kittenName)}</strong><span>Meet ${escapeHTML(pairingData.kittenName)} →</span></a>${pairingDescription ? `<p class="pairing-description">${escapeHTML(pairingDescription)}</p>` : ""}</section>`
     : "";
   const requirements = "";
   const photoSet = [...new Set([kitten.image, ...(kitten.photos || [])].filter(Boolean))];
@@ -240,9 +241,8 @@ function renderProfile(kitten) {
   `;
 
   const healthIcons = { "Spayed": "✿", "Neutered": "♂️", "Spayed": "♀️", "Fully vaccinated": "💉", "Dewormed": "🧪", "Flea treated": "🐜", "Microchipped": "🖥️", "Fostered and socialized": "❤️" };
-  const health = `<section class="profile-detail profile-health"><h2>Health &amp; Care</h2><div class="health-tiles">${normalizeHealthChecklist(kitten).map(item => `<div class="health-tile"><span aria-hidden="true">${healthIcons[item] || "✓"}</span><strong>${escapeHTML(item)}</strong></div>`).join("")}</div></section>`;
+  const health = `<section class="profile-detail profile-health"><h2>Health &amp; Care</h2><div class="health-tiles">${normalizeHealthChecklist(kitten).map(item => `<div class="health-tile"><span aria-hidden="true">${healthIcons[item] || "✓"}</span><strong>${escapeHTML(item)}</strong></div>`).join("")}</div><div class="health-folder-note"><p class="eyebrow">Included in their take-home folder</p><ul><li>Spay or neuter paperwork</li><li>Vaccine card</li><li>Microchip number and registration website</li><li>Foster contact information</li><li>Kitten care guide</li></ul></div></section>`;
 
-  const folderCard = `<section class="profile-detail profile-going-home profile-going-home--compact"><div class="going-home-heading"><span class="folder-emoji" aria-hidden="true">📁</span><div><p class="eyebrow">Included at adoption</p><h2>Blue take-home folder</h2></div></div><p>Each kitten goes home with:</p><ul class="going-home-list"><li>Spay or neuter paperwork</li><li>Vaccine card</li><li>Medical history and records</li><li>Microchip number and registration website</li><li>Foster contact information</li><li>Kitten care guide</li></ul></section>`;
 
   const octoberDates = getOctoberNoticeDates(typeof window !== "undefined" ? window.PAWS_EVENT_DATA?.octoberNotice : null);
   const adoptionNotices = getProfileAdoptionNotices(kitten, pairingData, octoberDates);
@@ -363,7 +363,7 @@ function renderProfile(kitten) {
     </div>
   </div>
   <div class="profile-details">
-    ${health}${folderCard}${idealHomeBlock}${pairing}${adoptionReminder}${requirements}${meeting}${video}
+    ${health}${idealHomeBlock}${pairing}${adoptionReminder}${requirements}${meeting}${video}
   </div>`;
 
   const lightbox = document.querySelector("#photo-lightbox");
