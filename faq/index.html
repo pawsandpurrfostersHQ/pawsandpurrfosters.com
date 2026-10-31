@@ -74,17 +74,20 @@
       <p class="eyebrow">We’re happy to help</p>
       <h2 id="faq-contact-title">Still have a question?</h2>
       <p>If your question wasn’t answered above, or you have a question about one of our kittens, send us a message below. For questions about application decisions, contracts, or adoption fees, please contact No Paws Left Behind Kitty Rescue directly.</p>
-      <form id="faq-question-form" class="faq-question-form">
+      <form id="faq-question-form" class="faq-question-form" action="https://formsubmit.co/ajax/pawsandpurrfosters@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="New question from Paws &amp; Purr Fosters website">
+        <input type="hidden" name="_template" value="table">
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="faq-honeypot">
         <label for="faq-name">First and last name</label>
         <input id="faq-name" name="name" type="text" autocomplete="name" required>
         <label for="faq-contact-info">Your email address</label>
-        <input id="faq-contact-info" name="contact" type="email" autocomplete="email" required>
+        <input id="faq-contact-info" name="email" type="email" autocomplete="email" required>
         <label for="faq-kittens">Which kitten(s) is your question about? <span>(Optional)</span></label>
         <input id="faq-kittens" name="kittens" type="text" placeholder="Kitten name(s)">
         <label for="faq-question">Your question</label>
         <textarea id="faq-question" name="question" rows="5" required></textarea>
-        <button type="submit" class="button button-primary">Email your question</button>
-        <p class="faq-form-note">This opens your email app with your message ready to send. Please review and press Send in your email app.</p>
+        <button id="faq-submit-button" type="submit" class="button button-primary">Send your question</button>
+        <p class="faq-form-note">Your message will be sent securely through our website. You won’t need to open your email app.</p>
         <p id="faq-form-status" class="faq-form-status" role="status" aria-live="polite"></p>
       </form>
     </section>
@@ -95,22 +98,33 @@
   </footer>
   <script src="navigation.js"></script>
 <script>
-  document.getElementById("faq-question-form")?.addEventListener("submit", function(event) {
+  document.getElementById("faq-question-form")?.addEventListener("submit", async function(event) {
     event.preventDefault();
     const form = event.currentTarget;
-    const data = new FormData(form);
-    const subject = "Paws & Purr Fosters website question";
-    const body = [
-      "Name: " + data.get("name"),
-      "Email: " + data.get("contact"),
-      "Kitten(s): " + (data.get("kittens") || "Not specified"),
-      "",
-      "Question:",
-      data.get("question")
-    ].join("\n");
-    const link = "mailto:pawsandpurrfosters@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
-    document.getElementById("faq-form-status").textContent = "Your email app should open with your message. Please review it and press Send.";
-    window.location.href = link;
+    const status = document.getElementById("faq-form-status");
+    const button = document.getElementById("faq-submit-button");
+    if (!form.reportValidity()) return;
+    button.disabled = true;
+    button.textContent = "Sending…";
+    status.textContent = "Sending your message. Please wait.";
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { "Accept": "application/json" }
+      });
+      const result = await response.json();
+      if (!response.ok || result.success === "false" || result.success === false) {
+        throw new Error(result.message || "The message could not be sent.");
+      }
+      form.reset();
+      status.textContent = "Thank you! Your question has been sent to Paws & Purr Fosters.";
+    } catch (error) {
+      status.textContent = "Sorry, your message could not be sent right now. Please try again later or email pawsandpurrfosters@gmail.com directly.";
+    } finally {
+      button.disabled = false;
+      button.textContent = "Send your question";
+    }
   });
 </script>
 </body>
