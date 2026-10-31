@@ -509,3 +509,7 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 }
 #events #event-featured .event-card--compact h2 { font-size:23px; margin:3px 0 7px; }
 #events #event-featured .event-card--compact p { margin:4px 0; font-size:14px; }
+
+/* Temporary alumni notices should not be trapped by mandatory snap points on phones. */
+.alumni-litter--temporary .alumni-cards { scroll-snap-type: none; }
+.alumni-litter--temporary .alumni-cards > * { scroll-snap-align: none; }
