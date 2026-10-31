@@ -1031,3 +1031,26 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
   background:#718b72;
   border-color:#718b72;
 }
+
+/* Special-event address button on the Events page */
+.events-page .special-event-panel .event-address {
+  display:inline-flex!important;
+  align-items:center;
+  justify-content:center;
+  padding:12px 21px;
+  min-height:46px;
+  border-radius:999px;
+  background:#fff;
+  color:var(--purple-dark)!important;
+  border:1px solid rgba(117,98,141,.28);
+  font-size:15px;
+  font-weight:800;
+  text-decoration:none;
+  box-shadow:0 5px 16px rgba(62,67,57,.08);
+}
+.events-page .special-event-panel .event-address:hover,
+.events-page .special-event-panel .event-address:focus-visible {
+  background:var(--purple-light);
+  color:var(--purple-dark)!important;
+  text-decoration:none;
+}
