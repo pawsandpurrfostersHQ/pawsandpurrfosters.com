@@ -118,3 +118,13 @@
 .profile-going-home--compact > p { margin: 7px 0 9px; font-size: 13px; }
 .profile-going-home--compact .going-home-list { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 5px 18px; margin: 0; padding-left: 18px; font-size: 13px; }
 @media(max-width:600px) { .profile-going-home--compact .going-home-list { grid-template-columns:1fr; } }
+
+/* Health and Ideal Home sit side by side; take-home folder list stays inside Health & Care. */
+.profile-details { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:22px; align-items:start; }
+.profile-health,.profile-ideal-home { min-width:0; height:100%; }
+.health-folder-note { margin-top:17px; padding-top:13px; border-top:1px solid var(--line,#e8e2eb); }
+.health-folder-note .eyebrow { margin:0 0 7px; font-size:11px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:var(--sage-dark,#55765e); }
+.health-folder-note ul { margin:0; padding-left:18px; display:grid; grid-template-columns:1fr; gap:4px; font-size:13px; line-height:1.45; }
+.profile-pairing { grid-column:1/-1; }
+.profile-pairing .pairing-description { margin:14px 0 0; line-height:1.7; }
+@media(max-width:760px) { .profile-details { grid-template-columns:1fr; } .profile-pairing { grid-column:auto; } }
