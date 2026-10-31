@@ -112,7 +112,7 @@ function renderFosterPhotoCarousel() {
   const previous = document.querySelector("#hero-previous");
   const next = document.querySelector("#hero-next");
   const dots = document.querySelector("#hero-dots");
-  if (!slides || !empty || !previous || !next || !dots) return;
+  if (!slides || !empty || !previous || !next) return;
 
   const photoPaths = FOSTER_CAROUSEL_PHOTOS.filter(Boolean).map(filename => `assets/hero/${filename}`);
   if (!photoPaths.length) return;
@@ -129,19 +129,13 @@ function renderFosterPhotoCarousel() {
   const showSlide = index => {
     activeIndex = (index + images.length) % images.length;
     images.forEach((image, imageIndex) => image.classList.toggle("is-active", imageIndex === activeIndex));
-    dots.querySelectorAll("button").forEach((dot, dotIndex) => {
-      dot.classList.toggle("is-active", dotIndex === activeIndex);
-      dot.setAttribute("aria-current", String(dotIndex === activeIndex));
-    });
+
   };
 
-  dots.innerHTML = images.map((_, index) =>
-    `<button type="button" aria-label="Show photo ${index + 1}" aria-current="${index === 0}"></button>`
-  ).join("");
-  dots.querySelectorAll("button").forEach((dot, index) => dot.addEventListener("click", () => showSlide(index)));
+
   previous.hidden = images.length < 2;
   next.hidden = images.length < 2;
-  dots.hidden = images.length < 2;
+  if (dots) dots.hidden = true;
   previous.addEventListener("click", () => showSlide(activeIndex - 1));
   next.addEventListener("click", () => showSlide(activeIndex + 1));
 
@@ -163,7 +157,7 @@ function renderFosterPhotoCarousel() {
       empty.hidden = false;
       previous.hidden = true;
       next.hidden = true;
-      dots.hidden = true;
+      if (dots) dots.hidden = true;
     }
   }));
 }
@@ -222,13 +216,14 @@ function renderEvents() {
   if (!data) return;
 
   const featured = document.querySelector("#event-featured");
+  const homeSpecial = document.querySelector("#home-special-event");
   const event = data.featuredEvent || {};
   if (featured) {
     if (event.active) {
       const attendees = event.attendingKittens?.length
         ? `<p><strong>Attending kittens:</strong> ${escapeHTML(event.attendingKittens.join(", "))}</p>`
         : "";
-      const notice = event.specialNotice ? `<p class="event-special-note">${escapeHTML(event.specialNotice)}</p>` : "";
+      const notice = renderEventAttendanceNotice(event, data.octoberNotice);
       const dateAndTime = [event.date, event.time].filter(Boolean).map(escapeHTML).join(" · ");
       const address = event.address
         ? `<a class="event-address" href="${escapeHTML(mapsLink(event.address, event.mapsUrl))}" target="_blank" rel="noopener noreferrer">${escapeHTML(event.address)}</a>`
@@ -278,6 +273,12 @@ function renderEvents() {
     special.hidden = false;
   }
 
+  if (homeSpecial && data.specialEvent?.active) {
+    const e = data.specialEvent;
+    homeSpecial.innerHTML = `<div class="home-special-event-copy"><p class="eyebrow">Special event</p><h2>${escapeHTML(e.title)}</h2><p><strong>${escapeHTML(e.date)}</strong></p><p>Adoption event: ${escapeHTML(e.adoptionTime || "10 a.m. – 4 p.m.")}<br>Kitty Yoga: ${escapeHTML(e.yogaTime || "11:30 a.m.")} <strong>(Members only)</strong></p><p><strong>${escapeHTML(e.location)}</strong><br>${escapeHTML(e.address || "")}</p><a class="text-link" href="events/">Learn more about this event →</a></div>`;
+    homeSpecial.hidden = false;
+  }
+
  const notice = document.querySelector("#october-notice");
 const octoberNotice = data.octoberNotice;
 
@@ -303,7 +304,7 @@ if (notice && octoberNotice) {
     return friday;
   };
 
-  let year = Math.max(today.getFullYear(), 2027);
+  let year = today.getFullYear();
   let startDate = getLastMondayOfSeptember(year);
   let endDate = getFridayBeforeSecondWeekendOfNovember(year);
 
@@ -324,13 +325,14 @@ if (notice && octoberNotice) {
         year: "numeric"
       });
 
-    const messages = octoberNotice.messages.map(message =>
+    const affected = Array.isArray(data.featuredEvent?.notAttendingKittens) ? data.featuredEvent.notAttendingKittens.filter(Boolean) : [];
+    const messages = (affected.length ? octoberNotice.messages : [octoberNotice.genericMessage || "Some kittens may be temporarily unavailable for adoption or may not attend events during this seasonal period. Thank you for your understanding as we prioritize their safety and well-being."]).map(message =>
       message
         .replace("[start date]", formatDate(startDate))
         .replace("[end date]", formatDate(endDate))
     );
 
-    notice.innerHTML = `<h2>${escapeHTML(octoberNotice.title)}</h2>
+    notice.innerHTML = `<h2>${escapeHTML(octoberNotice.title)}</h2>${affected.length ? `<p><strong>Affected kittens:</strong> ${escapeHTML(affected.join(", "))}</p>` : ""}
       ${messages.map(message => `<p>${escapeHTML(message)}</p>`).join("")}`;
     notice.hidden = false;
   } else {
@@ -343,3 +345,14 @@ renderAbout();
 renderFosterPhotoCarousel();
 renderKittenCards();
 renderEvents();
+
+function renderEventAttendanceNotice(event, noticeData) {
+  if (!noticeData?.schedule?.enabled) return "";
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 8, 25);
+  const end = new Date(now.getFullYear(), 10, 15);
+  const active = noticeData.active || (now >= start && now <= end);
+  if (!active) return "";
+  const names = Array.isArray(event.notAttendingKittens) ? event.notAttendingKittens.filter(Boolean) : [];
+  return `<p class="event-special-note">${names.length ? `Please note: ${escapeHTML(names.join(", "))} will not be attending this event due to our seasonal adoption guidelines.` : escapeHTML(noticeData.genericMessage || "Some kittens may be temporarily unavailable for adoption or may not attend events during this seasonal period.")}</p>`;
+}
