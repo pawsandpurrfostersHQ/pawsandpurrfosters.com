@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/33066855/README.md)
 # Paws & Purr Fosters
 
 This is the static website published with GitHub Pages. It uses plain HTML, CSS, and JavaScript, so no build step is needed.
@@ -9,7 +8,6 @@ This is the static website published with GitHub Pages. It uses plain HTML, CSS,
 
 Open `event-data.js` and edit the `featuredEvent` values near the top. Set `active: true` and fill in the current weekend's location, date, time, address, description, and attending kittens. When there is no confirmed placement, leave `active: false`; the homepage displays “Coming soon” and the regular schedule. The address automatically links to Google Maps.
 
-### Add or remove foster photos
 ### Add or remove foster photos
 
 Put your own foster photos in `assets/hero/`. Open `script.js` and add each filename to the `FOSTER_CAROUSEL_PHOTOS` list near the top, such as `"photo1.jpg"`. Remove a filename from that list to stop showing that photo. With an empty list, the homepage displays a placeholder.
@@ -42,9 +40,9 @@ The page calculates zodiac signs, current age, birthday-month cake symbols, and 
 
 Open `script.js` and find the `ABOUT STORY — EDIT HERE` block near the top. Its paragraphs are kept together there.
 
-### Update How to Adopt information
+### Update How to Adopt and FAQ information
 
-The adoption steps are in `how-to-adopt/index.html`; `how-to-adopt.html` is kept as a legacy URL. To update the rescue name, official website, Petfinder link, or application instructions, edit the clearly labeled values in `adoption-data.js`. Leave a link blank to omit it from the page.
+The adoption steps are in `how-to-adopt/index.html`. The separate FAQ page is `faq/index.html`. Update the application links, instructions, email address, adoption-fee wording, and FAQ answers in those files when the rescue's process changes. The rescue handles application review and approval, contracts, adoption fees, and final adoptions; the foster team provides the kittens' foster care and helps adopters find a good match.
 
 ### Add your logo
 
@@ -57,6 +55,5 @@ The real logo is stored at `assets/logo.jpg` and is used in the homepage and kit
 - `script.js` — carousels, navigation, homepage rendering, and About story
 - `kitten-data.js` — homepage kitten cards and future profile details
 - `event-data.js` — featured event, regular schedule, and optional notices
-- `all-kittens/index.html`, `available-kittens/index.html`, `foster-alumni/index.html`, and `how-to-adopt/index.html` — clean page URLs (legacy `.html` files remain available)
-- `adoption-data.js` — editable rescue information for the adoption page
+- `all-kittens/index.html`, `available-kittens/index.html`, `foster-alumni/index.html`, `how-to-adopt/index.html`, and `faq/index.html` — clean page URLs
 - `kittens/profile-template.html` — reusable kitten profile layout
