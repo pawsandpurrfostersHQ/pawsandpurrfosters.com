@@ -233,7 +233,7 @@ function renderProfile(kitten) {
     </section>
   `;
 
-  const healthIcons = { "Spayed": "✿", "Neutered": "✦", "Fully vaccinated": "💉", "Dewormed": "🧪", "Flea treated": "🐜", "Microchipped": "▦", "Fostered and socialized": "♥" };
+  const healthIcons = { "Spayed": "✿", "Neutered": "♂️", "Spayed": "♀️", "Fully vaccinated": "💉", "Dewormed": "🧪", "Flea treated": "🐜", "Microchipped": "🖥️", "Fostered and socialized": "❤️" };
   const health = `<section class="profile-detail profile-health"><h2>Health &amp; Care</h2><div class="health-tiles">${normalizeHealthChecklist(kitten).map(item => `<div class="health-tile"><span aria-hidden="true">${healthIcons[item] || "✓"}</span><strong>${escapeHTML(item)}</strong></div>`).join("")}</div></section>`;
 
   const requirements = kitten.adoptionRequirements?.length
@@ -248,9 +248,9 @@ function renderProfile(kitten) {
     ? `<section class="profile-detail profile-pairing"><h2>Adoption Pairing</h2><p>Must be adopted with a suitable sibling or foster sibling. No specific companion is required.</p></section>`
     : `<section class="profile-detail profile-pairing">
         <h2>${pairingData.type === "bonded" ? "Bonded Pair" : "Preferred Pair"}</h2>
-        ${pairingData.kittenId ? `<a class="pair-partner-link" href="${escapeHTML(`profile-template.html?id=${pairingData.kittenId}`)}"><span class="pair-partner-label">Meet their companion</span><strong>${escapeHTML(pairingData.kittenName)}</strong><span>View profile →</span></a>` : ""}
+        ${pairingData.kittenId ? `<a class="pair-partner-link" href="${escapeHTML(`profile-template.html?id=${pairingData.kittenId}&from=${returnFrom || "current"}`)}"><span class="pair-partner-label">Meet their companion</span><strong>${escapeHTML(pairingData.kittenName)}</strong><span>View profile →</span></a>` : ""}
         ${pairingDescription ? `<p class="profile-pairing-copy">${escapeHTML(pairingDescription)}</p>` : ""}
-        ${pairingData.kittenId ? `<p><a class="text-link" href="${escapeHTML(`profile-template.html?id=${pairingData.kittenId}`)}">Get to Know ${escapeHTML(pairingData.kittenName)} →</a></p>` : ""}
+        ${pairingData.kittenId ? `<p><a class="text-link" href="${escapeHTML(`profile-template.html?id=${pairingData.kittenId}&from=${returnFrom || "current"}`)}">Get to Know ${escapeHTML(pairingData.kittenName)} →</a></p>` : ""}
       </section>`;
 
   const octoberDates = getOctoberNoticeDates(typeof window !== "undefined" ? window.PAWS_EVENT_DATA?.octoberNotice : null);
@@ -272,8 +272,8 @@ function renderProfile(kitten) {
     <section class="profile-detail profile-reminder">
       <h2>Interested in adopting Wally?</h2>
       <p>Wally must be adopted with his bonded brother, <a class="text-link" href="profile-template.html?id=raymond">Raymond</a>. If you're interested in making them part of your family, you can learn more about Raymond below and review the adoption process to see what comes next.</p>
-      <p>Have questions or want to see if Wally is a good fit for your home?</p>
-      <p>Reach out to <strong><a href="https://www.nopawsleftbehindkittyrescue.com/">No Paws Left Behind Kitty Rescue</a></strong> with questions or to ask about scheduling a meet-and-greet. You can also visit our <a class="text-link" href="../#events">Events</a> page to find out where Wally will be this weekend. If you have questions about the adoption process, No Paws Left Behind Kitty Rescue is always happy to help. For smaller questions or foster-specific details, you can also email us directly at <a href="mailto:PawsAndPurrFosters@gmail.com">PawsAndPurrFosters@gmail.com</a>.</p>
+      <p class="adoption-question"><strong>Have questions or want to see if Wally is a good fit for your home?</strong></p>
+      <p>Reach out to <strong><a href="https://www.nopawsleftbehindkittyrescue.com/">No Paws Left Behind Kitty Rescue</a></strong> with questions or to ask about scheduling a meet and greet. You can also visit our <a class="text-link" href="../#events">Events</a> page to find out where Wally will be this weekend. If you have questions about the adoption process, No Paws Left Behind Kitty Rescue is always happy to help. For smaller questions or foster-specific details, you can also email us directly at <a href="mailto:PawsAndPurrFosters@gmail.com">PawsAndPurrFosters@gmail.com</a>.</p>
       <a class="button primary" href="../how-to-adopt/">Learn How to Adopt</a>
     </section>
   `
@@ -356,7 +356,7 @@ function renderProfile(kitten) {
   `;
 
   document.title = `${kitten.name} | Paws & Purr Fosters`;
-  const returnFrom = new URLSearchParams(window.location.search).get("from");
+  const returnFrom = new URLSearchParams(window.location.search).get("from") || "current";
   const backHref = returnFrom === "home" ? "../#kittens" : "../all-kittens/";
   const backLabel = returnFrom === "home" ? "Our Fosters" : "Current Fosters";
   root.innerHTML = `<a class="profile-back-link" href="${backHref}" aria-label="Back to ${backLabel}">← <span>${backLabel}</span></a>
@@ -373,7 +373,7 @@ function renderProfile(kitten) {
     </div>
   </div>
   <div class="profile-details">
-    ${health}${idealHomeBlock}${pairing}${adoptionReminder}${requirements}${meeting}${video}
+    ${health}${idealHomeBlock}${pairing}${adoptionReminder}${folderCard}${requirements}${meeting}${video}
   </div>`;
 
   const lightbox = document.querySelector("#photo-lightbox");
