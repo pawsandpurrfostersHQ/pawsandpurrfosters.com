@@ -291,19 +291,27 @@ if (notice && octoberNotice) {
     return date;
   };
 
-  const getFridayBeforeSecondWeekendOfNovember = (year) => {
+    const getFridayBeforeSecondWeekendOfNovember = (year) => {
     const novemberFirst = new Date(year, 10, 1);
-    const firstSaturday = new Date(year, 10, 1 + ((6 - novemberFirst.getDay() + 7) % 7));
-    const secondSaturday = new Date(firstSaturday);
-    secondSaturday.setDate(firstSaturday.getDate() + 7);
-    const friday = new Date(secondSaturday);
-    friday.setDate(secondSaturday.getDate() - 1);
+    const firstSaturday = new Date(
+      year,
+      10,
+      1 + ((6 - novemberFirst.getDay() + 7) % 7)
+    );
+    const friday = new Date(firstSaturday);
+    friday.setDate(firstSaturday.getDate() - 1);
     return friday;
   };
 
-  const year = today.getFullYear();
-  const startDate = getLastMondayOfSeptember(year);
-  const endDate = getFridayBeforeSecondWeekendOfNovember(year);
+  let year = Math.max(today.getFullYear(), 2027);
+  let startDate = getLastMondayOfSeptember(year);
+  let endDate = getFridayBeforeSecondWeekendOfNovember(year);
+
+  if (today > endDate) {
+    year++;
+    startDate = getLastMondayOfSeptember(year);
+    endDate = getFridayBeforeSecondWeekendOfNovember(year);
+  }
 
   const isWithinSchedule = today >= startDate && today <= endDate;
   const shouldShow = octoberNotice.active || (octoberNotice.schedule?.enabled && isWithinSchedule);
