@@ -75,7 +75,7 @@ function getOctoberNoticeDates(notice, today = new Date()) {
     result.setDate(result.getDate() - 1);
     return result;
   };
-  let year = Math.max(date.getFullYear(), 2027);
+  let year = date.getFullYear();
   let start = lastMondayOfSeptember(year);
   let end = fridayBeforeSecondWeekendOfNovember(year);
   if (date > end) {
