@@ -215,9 +215,7 @@ function renderProfile(kitten) {
     : `<p class="profile-meta-label"><strong>Petfinder:</strong> Coming Soon</p>`;
 
   const profileTraits = getProfileTraits(kitten);
-  const traits = profileTraits.length
-    ? `<section class="profile-detail profile-personality"><h2><span class="detail-kicker">A little about</span> Personality</h2><ul class="profile-traits">${profileTraits.map(trait => `<li>${escapeHTML(trait)}</li>`).join("")}</ul></section>`
-    : "";
+  const traits = "";
 
   const compatibilityEntries = [
     ["Cats", kitten.compatibility?.cats],
@@ -235,7 +233,7 @@ function renderProfile(kitten) {
     </section>
   `;
 
-  const healthIcons = { "Spayed": "✿", "Neutered": "✦", "Fully vaccinated": "＋", "Dewormed": "♡", "Flea treated": "✧", "Microchipped": "⌁", "Fostered and socialized": "♥" };
+  const healthIcons = { "Spayed": "✿", "Neutered": "✦", "Fully vaccinated": "💉", "Dewormed": "🧪", "Flea treated": "🐜", "Microchipped": "▦", "Fostered and socialized": "♥" };
   const health = `<section class="profile-detail profile-health"><h2>Health &amp; Care</h2><div class="health-tiles">${normalizeHealthChecklist(kitten).map(item => `<div class="health-tile"><span aria-hidden="true">${healthIcons[item] || "✓"}</span><strong>${escapeHTML(item)}</strong></div>`).join("")}</div></section>`;
 
   const requirements = kitten.adoptionRequirements?.length
@@ -358,7 +356,10 @@ function renderProfile(kitten) {
   `;
 
   document.title = `${kitten.name} | Paws & Purr Fosters`;
-  root.innerHTML = `<a class="profile-back-link" href="../all-kittens/" aria-label="Back to current fosters">← <span>Current Fosters</span></a>
+  const returnFrom = new URLSearchParams(window.location.search).get("from");
+  const backHref = returnFrom === "home" ? "../#kittens" : "../all-kittens/";
+  const backLabel = returnFrom === "home" ? "Our Fosters" : "Current Fosters";
+  root.innerHTML = `<a class="profile-back-link" href="${backHref}" aria-label="Back to ${backLabel}">← <span>${backLabel}</span></a>
   <div class="profile-layout">
     <div>${photoGallery}</div>
     <div class="profile-intro">
@@ -368,10 +369,11 @@ function renderProfile(kitten) {
       ${kitten.gender ? `<p><strong>Gender:</strong> ${escapeHTML(kitten.gender)}</p>` : ""}
       ${bioMarkup}
       ${petfinderText}
+      ${safetyNotice}
     </div>
   </div>
   <div class="profile-details">
-    ${traits}${idealHomeBlock}${health}${requirements}${pairing}${meeting}${video}${safetyNotice}${adoptionReminder}
+    ${health}${idealHomeBlock}${pairing}${adoptionReminder}${requirements}${meeting}${video}
   </div>`;
 
   const lightbox = document.querySelector("#photo-lightbox");
