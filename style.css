@@ -1003,3 +1003,20 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
   .faq-kitten-options { grid-template-columns:1fr 1fr; gap:7px; }
   .faq-kitten-choice span { padding:9px 10px; }
 }
+
+/* Small FAQ link beneath the homepage foster-team introduction */
+.hero-faq-link {
+  display:inline-flex; align-items:center; gap:8px;
+  margin-top:15px; padding:8px 15px;
+  border:1px solid rgba(117,98,141,.25); border-radius:999px;
+  background:rgba(255,255,255,.82); color:var(--purple-dark);
+  font-size:13px; font-weight:700; text-decoration:none;
+  transition:background .18s ease,border-color .18s ease,transform .18s ease;
+}
+.hero-faq-link:hover {
+  background:var(--purple-light); border-color:var(--purple);
+  transform:translateY(-1px); text-decoration:none;
+}
+.hero-faq-link:focus-visible {
+  outline:2px solid var(--purple); outline-offset:3px;
+}
