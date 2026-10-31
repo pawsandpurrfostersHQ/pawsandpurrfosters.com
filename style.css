@@ -476,3 +476,21 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
  .events-page .schedule-panel { grid-column:auto; }
  .events-page-banner { padding:21px 20px; }
 }
+
+
+/* Prevent mobile carousel snapping from trapping temporary alumni notices */
+.alumni-litter--temporary .alumni-cards,
+.alumni-litter:has(.alumni-temporary-notice) .alumni-cards {
+  scroll-snap-type: none !important;
+  overscroll-behavior-x: contain;
+  touch-action: pan-x pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+.alumni-litter--temporary .alumni-temporary-notice,
+.alumni-litter .alumni-temporary-notice {
+  scroll-snap-align: none !important;
+  flex-shrink: 0;
+}
+.alumni-litter--temporary .alumni-temporary-notice--pair {
+  flex-basis: min(84vw, 440px);
+}
