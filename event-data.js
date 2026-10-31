@@ -43,7 +43,6 @@ window.PAWS_EVENT_DATA = {
     address: "1510 Neroly Road, Oakley, CA",
     mapsUrl: "https://www.google.com/maps/search/?api=1&query=Diamond+Hills+Sports+Club+%26+Spa%2C+1510+Neroly+Road%2C+Oakley%2C+CA"
   },
-  },
   octoberNotice: {
     active: true,
     title: "October Adoption Notice",
