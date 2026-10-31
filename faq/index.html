@@ -84,18 +84,17 @@
         <input id="faq-last-name" name="last_name" type="text" autocomplete="family-name" maxlength="60" pattern="(?=.*[A-Za-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ'’ -]+" title="Please enter a valid last name using letters only." required>
         <label for="faq-contact-info">Your email address</label>
         <input id="faq-contact-info" name="email" type="email" autocomplete="email" maxlength="254" required>
-        <label for="faq-kittens">Which kitten(s) is your question about? <span>(Optional — select all that apply)</span></label>
-        <select id="faq-kittens" name="kittens[]" multiple size="4" aria-describedby="faq-kittens-help">
-          <option value="Diego">Diego</option>
-          <option value="Valentina">Valentina</option>
-          <option value="Claudia">Claudia</option>
-          <option value="Paloma">Paloma</option>
-          <option value="Harvey">Harvey</option>
-          <option value="Melody">Melody</option>
-          <option value="Wally">Wally</option>
-          <option value="Raymond">Raymond</option>
-        </select>
-        <p id="faq-kittens-help" class="faq-form-status">On a computer, hold Ctrl (Windows) or Command (Mac) while selecting multiple names. On a phone, tap each name you want to include.</p>
+        <span class="faq-field-label">Which kitten(s) is your question about? <span>(Optional — select all that apply)</span></span>
+        <div class="faq-kitten-options" aria-label="Choose kitten names">
+          <label class="faq-kitten-choice"><input type="checkbox" name="kittens[]" value="Diego"><span>Diego</span></label>
+          <label class="faq-kitten-choice"><input type="checkbox" name="kittens[]" value="Valentina"><span>Valentina</span></label>
+          <label class="faq-kitten-choice"><input type="checkbox" name="kittens[]" value="Claudia"><span>Claudia</span></label>
+          <label class="faq-kitten-choice"><input type="checkbox" name="kittens[]" value="Paloma"><span>Paloma</span></label>
+          <label class="faq-kitten-choice"><input type="checkbox" name="kittens[]" value="Harvey"><span>Harvey</span></label>
+          <label class="faq-kitten-choice"><input type="checkbox" name="kittens[]" value="Melody"><span>Melody</span></label>
+          <label class="faq-kitten-choice"><input type="checkbox" name="kittens[]" value="Wally"><span>Wally</span></label>
+          <label class="faq-kitten-choice"><input type="checkbox" name="kittens[]" value="Raymond"><span>Raymond</span></label>
+        </div>
         <label for="faq-question">Your question(s)</label>
         <textarea id="faq-question" name="question" rows="5" required></textarea>
         <button id="faq-submit-button" type="submit" class="button button-primary">Send your question</button>
