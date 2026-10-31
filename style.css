@@ -950,3 +950,14 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .faq-question-form button { justify-self:start; margin-top:12px; cursor:pointer; }
 .faq-form-note,.faq-form-status { margin:2px 0 0; color:var(--muted); font-size:.9rem; }
 @media(max-width:640px) { .faq-contact { padding:20px 16px; } .faq-question-form button { width:100%; } }
+
+/* FAQ form refinements */
+.faq-honeypot { display:none !important; }
+.faq-question-form select {
+  width:100%; min-height:112px; padding:10px 12px;
+  border:1px solid #d9d5df; border-radius:12px;
+  background:#fff; color:var(--ink); font:inherit;
+}
+.faq-question-form select:focus-visible {
+  outline:2px solid rgba(117,98,141,.25); border-color:var(--purple);
+}
