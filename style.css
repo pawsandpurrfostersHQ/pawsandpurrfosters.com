@@ -445,3 +445,34 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .home-special-event-copy .eyebrow { color:var(--purple-dark); font-weight:800; }
 .event-page-link { margin:20px auto 0; text-align:center; }
 .event-special-note { margin-top:14px; padding:12px 15px; border-radius:12px; background:#fff5e9; color:#8a542a; }
+
+
+/* Adoption events page: wide title banner, balanced location and special-event cards */
+.events-page { max-width:1120px; padding-top:36px; }
+.events-page-banner { width:100%; margin:0 0 24px; padding:25px clamp(22px,4vw,44px); border-radius:20px; background:linear-gradient(105deg,var(--purple-dark),var(--purple)); color:white; }
+.events-page-banner h1 { margin:0; color:white; font-size:clamp(27px,4vw,40px); letter-spacing:-.025em; }
+.events-intro { max-width:980px; margin:0 auto 30px; color:var(--muted); line-height:1.75; }
+.events-intro a { color:var(--purple-dark); font-weight:800; text-underline-offset:3px; }
+.events-gentle-note { padding:15px 18px; border-left:3px solid var(--sage); border-radius:0 12px 12px 0; background:var(--sage-light); }
+.events-page .event-panels { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px; align-items:stretch; }
+.events-page #event-featured, .events-page .special-event-panel { min-width:0; height:100%; }
+.events-page .event-card--compact { min-height:100%; padding:26px; border-radius:22px; }
+.events-page .event-card--compact h2 { font-size:clamp(25px,2.5vw,32px); }
+.events-page .special-event-panel { padding:26px; }
+.events-page .special-event-panel h2 { font-size:clamp(25px,2.5vw,32px); }
+.events-page .schedule-panel { grid-column:1/-1; }
+.events-page .event-address { display:inline-block; margin-top:5px; color:var(--purple-dark); text-underline-offset:3px; font-weight:700; }
+.events-page .event-location-name { margin-bottom:2px; }
+.members-only { color:var(--purple-dark); font-weight:800; }
+.home-special-event { padding:17px 21px; }
+.home-special-event h2 { font-size:23px; margin:3px 0 7px; }
+.home-special-event p { margin:4px 0; font-size:14px; }
+.home-special-event .event-address { color:var(--purple-dark); text-underline-offset:3px; font-weight:700; }
+#event-featured .event-card--compact { padding:18px 22px; }
+#event-featured .event-card--compact h2 { font-size:23px; }
+#event-featured .event-date, #event-featured .event-attending { font-size:14px; margin:5px 0; }
+@media(max-width:760px) {
+ .events-page .event-panels { grid-template-columns:1fr; }
+ .events-page .schedule-panel { grid-column:auto; }
+ .events-page-banner { padding:21px 20px; }
+}
