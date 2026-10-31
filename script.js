@@ -177,7 +177,7 @@ function renderKittenCards() {
       ? `<img src="${escapeHTML(kitten.image)}" alt="${escapeHTML(kitten.name)}" loading="lazy">`
       : `<div class="photo-placeholder card-photo"><span>Photo coming soon</span></div>`;
     const profileAction = kitten.profileUrl
-      ? `<a href="${escapeHTML(kitten.profileUrl)}" class="card-link">Meet ${escapeHTML(kitten.name)} →</a>`
+      ? `<a href="${escapeHTML(`${kitten.profileUrl}${kitten.profileUrl.includes("?") ? "&" : "?"}from=home`)}" class="card-link">Meet ${escapeHTML(kitten.name)} →</a>`
       : `<span class="card-link profile-coming-soon">Profile coming soon</span>`;
     const status = kitten.adoptionStatus || kitten.status || "Available";
     const returnedStatusClass = status === "Returned — Available" ? " status-returned" : "";
