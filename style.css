@@ -645,3 +645,13 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .events-page .special-event-panel > p { text-align:center; }
 .events-page .special-event-panel .event-address { border-radius:14px; }
 .events-page #event-featured .event-address { border-radius:14px; }
+
+/* Center the entire Where to Find Us card on the dedicated Events page. */
+.events-page #event-featured .event-card-content,
+.events-page #event-featured .event-card--compact,
+.events-page #event-featured .event-attending,
+.events-page #event-featured .event-date,
+.events-page #event-featured .event-time,
+.events-page #event-featured .event-location-name { text-align:center!important; align-items:center; justify-content:center; margin-left:auto; margin-right:auto; }
+.events-page #event-featured .event-card-content { display:flex; flex-direction:column; width:100%; }
+.events-page #event-featured .event-address { margin-left:auto; margin-right:auto; }
