@@ -78,16 +78,27 @@
         <input type="hidden" name="_subject" value="New question from Paws &amp; Purr Fosters website">
         <input type="hidden" name="_template" value="table">
         <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="faq-honeypot">
-        <label for="faq-name">First and last name</label>
-        <input id="faq-name" name="name" type="text" autocomplete="name" required>
+        <label for="faq-first-name">First name</label>
+        <input id="faq-first-name" name="first_name" type="text" autocomplete="given-name" maxlength="60" pattern="(?=.*[A-Za-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ'’ -]+" title="Please enter a valid first name using letters only." required>
+        <label for="faq-last-name">Last name</label>
+        <input id="faq-last-name" name="last_name" type="text" autocomplete="family-name" maxlength="60" pattern="(?=.*[A-Za-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ'’ -]+" title="Please enter a valid last name using letters only." required>
         <label for="faq-contact-info">Your email address</label>
-        <input id="faq-contact-info" name="email" type="email" autocomplete="email" required>
-        <label for="faq-kittens">Which kitten(s) is your question about? <span>(Optional)</span></label>
-        <input id="faq-kittens" name="kittens" type="text" placeholder="Kitten name(s)">
-        <label for="faq-question">Your question</label>
+        <input id="faq-contact-info" name="email" type="email" autocomplete="email" maxlength="254" required>
+        <label for="faq-kittens">Which kitten(s) is your question about? <span>(Optional — select all that apply)</span></label>
+        <select id="faq-kittens" name="kittens[]" multiple size="4" aria-describedby="faq-kittens-help">
+          <option value="Diego">Diego</option>
+          <option value="Valentina">Valentina</option>
+          <option value="Claudia">Claudia</option>
+          <option value="Paloma">Paloma</option>
+          <option value="Harvey">Harvey</option>
+          <option value="Melody">Melody</option>
+          <option value="Wally">Wally</option>
+          <option value="Raymond">Raymond</option>
+        </select>
+        <p id="faq-kittens-help" class="faq-form-status">On a computer, hold Ctrl (Windows) or Command (Mac) while selecting multiple names. On a phone, tap each name you want to include.</p>
+        <label for="faq-question">Your question(s)</label>
         <textarea id="faq-question" name="question" rows="5" required></textarea>
         <button id="faq-submit-button" type="submit" class="button button-primary">Send your question</button>
-        <p class="faq-form-note">Your message will be sent securely through our website. You won’t need to open your email app.</p>
         <p id="faq-form-status" class="faq-form-status" role="status" aria-live="polite"></p>
       </form>
     </section>
@@ -118,7 +129,7 @@
         throw new Error(result.message || "The message could not be sent.");
       }
       form.reset();
-      status.textContent = "Thank you! Your question has been sent to Paws & Purr Fosters.";
+      status.textContent = "Thank you! Your question has been sent to Paws & Purr Fosters. We’ll be in touch soon.";
     } catch (error) {
       status.textContent = "Sorry, your message could not be sent right now. Please try again later or email pawsandpurrfosters@gmail.com directly.";
     } finally {
