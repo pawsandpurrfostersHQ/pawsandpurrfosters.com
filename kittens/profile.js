@@ -38,26 +38,75 @@ function kittenAge(dateString, today = new Date()) {
 
 function getPairingData(kitten) {
   const pairing = kitten.pairing || kitten.mustBeAdoptedWith || kitten.preferredPair;
-  if (!pairing) return null;
-
+  if (!pairing) return { type: "single" };
   if (typeof pairing === "string") {
     const pairedKitten = window.PAWS_KITTENS?.find(item => item.id === pairing || item.name === pairing);
-    return { type: "must", kittenId: pairedKitten?.id || pairing, kittenName: pairedKitten?.name || pairing };
+    return { type: "bonded", kittenId: pairedKitten?.id || pairing, kittenName: pairedKitten?.name || pairing };
   }
-
   if (typeof pairing === "object") {
+    const type = ["bonded", "preferred", "any-sibling", "single"].includes(pairing.type)
+      ? pairing.type
+      : "bonded";
     const pairedKitten = pairing.kittenId
       ? window.PAWS_KITTENS?.find(item => item.id === pairing.kittenId)
       : window.PAWS_KITTENS?.find(item => item.id === pairing.id || item.name === pairing.name || item.name === pairing.kittenName);
-
     return {
-      type: pairing.type === "preferred" ? "preferred" : "must",
-      kittenId: pairedKitten?.id || pairing.kittenId || pairing.id || pairing.kittenName || pairing.name,
-      kittenName: pairedKitten?.name || pairing.kittenName || pairing.name || pairing.kittenId || pairing.id
+      type,
+      kittenId: pairedKitten?.id || pairing.kittenId || pairing.id || pairing.kittenName || pairing.name || "",
+      kittenName: pairedKitten?.name || pairing.kittenName || pairing.name || pairing.kittenId || pairing.id || ""
     };
   }
+  return { type: "single" };
+}
 
-  return null;
+function getOctoberNoticeDates(notice, today = new Date()) {
+  if (!notice) return null;
+  const date = new Date(today);
+  date.setHours(0, 0, 0, 0);
+  const lastMondayOfSeptember = year => {
+    const result = new Date(year, 8, 30);
+    result.setDate(result.getDate() - ((result.getDay() + 6) % 7));
+    return result;
+  };
+  const fridayBeforeSecondWeekendOfNovember = year => {
+    const novemberFirst = new Date(year, 10, 1);
+    const firstSaturday = new Date(year, 10, 1 + ((6 - novemberFirst.getDay() + 7) % 7));
+    const result = new Date(firstSaturday);
+    result.setDate(result.getDate() - 1);
+    return result;
+  };
+  let year = Math.max(date.getFullYear(), 2027);
+  let start = lastMondayOfSeptember(year);
+  let end = fridayBeforeSecondWeekendOfNovember(year);
+  if (date > end) {
+    year += 1;
+    start = lastMondayOfSeptember(year);
+    end = fridayBeforeSecondWeekendOfNovember(year);
+  }
+  const active = Boolean(notice.active || (notice.schedule?.enabled && date >= start && date <= end));
+  const format = value => value.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+  return { active, start: format(start), end: format(end) };
+}
+
+function getProfileAdoptionNotices(kitten, pairingData, dates) {
+  if (!dates?.active) return [];
+  const notices = [];
+  if (kitten.blackCatAdoptionNotice) {
+    notices.push({
+      title: "October Adoption Notice",
+      message: `From ${dates.start} through ${dates.end}, ${kitten.name} will be temporarily unavailable for adoption in accordance with the rescue's October adoption guidelines. Adoptions for ${kitten.name} will resume after ${dates.end}.`
+    });
+  }
+  if (pairingData?.type === "bonded" && pairingData.kittenId) {
+    const partner = window.PAWS_KITTENS?.find(item => item.id === pairingData.kittenId);
+    if (partner) {
+      notices.push({
+        title: "October Adoption Notice",
+        message: `From ${dates.start} through ${dates.end}, ${kitten.name} and ${partner.name} will be temporarily unavailable for adoption in accordance with the rescue's October adoption guidelines. As this pair is required to be adopted together, both kittens will remain unavailable during this period. Adoptions for this pair will resume after ${dates.end}.`
+      });
+    }
+  }
+  return notices;
 }
 
 function getProfileTraits(kitten) {
@@ -128,7 +177,7 @@ function getPairingDescription(kitten, pairingData) {
     }
     return "Diego and Valentina are biological siblings who have been together since they were born. They love playing, cuddling, and simply being near each other. They have such similar personalities and do wonderfully as a pair, making them a sweet duo to welcome into a home together.";
   }
-  if (pairingData.type === "must") {
+  if (pairingData.type === "bonded") {
     return `${kitten.name} and ${pairingData.kittenName} are a bonded pair and do best together.`;
   }
   return `${kitten.name} is happiest with ${pairingData.kittenName} and would thrive in a home that keeps them together.`;
@@ -193,28 +242,23 @@ function renderProfile(kitten) {
     : "";
 
   const pairingData = getPairingData(kitten);
-  const pairingDescription = pairingData ? getPairingDescription(kitten, pairingData) : "";
-  const pairing = pairingData
-    ? `<section class="profile-detail profile-pairing">
-        <h2>${pairingData.type === "must" ? "Must Be Adopted With" : "Preferred Pair"}</h2>
-        <p><a class="text-link" href="${escapeHTML(`profile-template.html?id=${pairingData.kittenId}`)}">${escapeHTML(pairingData.kittenName)}</a></p>
+  const pairingDescription = getPairingDescription(kitten, pairingData);
+  const pairing = pairingData.type === "single"
+    ? `<section class="profile-detail profile-pairing"><h2>Adoption Pairing</h2><p>Can be adopted individually.</p></section>`
+    : pairingData.type === "any-sibling"
+    ? `<section class="profile-detail profile-pairing"><h2>Adoption Pairing</h2><p>Must be adopted with a suitable sibling or foster sibling. No specific companion is required.</p></section>`
+    : `<section class="profile-detail profile-pairing">
+        <h2>${pairingData.type === "bonded" ? "Bonded Pair" : "Preferred Pair"}</h2>
+        ${pairingData.kittenId ? `<p><a class="text-link" href="${escapeHTML(`profile-template.html?id=${pairingData.kittenId}`)}">${escapeHTML(pairingData.kittenName)}</a></p>` : ""}
         ${pairingDescription ? `<p class="profile-pairing-copy">${escapeHTML(pairingDescription)}</p>` : ""}
-        <p><a class="text-link" href="${escapeHTML(`profile-template.html?id=${pairingData.kittenId}`)}">Get to Know ${escapeHTML(pairingData.kittenName)} →</a></p>
-      </section>`
-    : "";
+        ${pairingData.kittenId ? `<p><a class="text-link" href="${escapeHTML(`profile-template.html?id=${pairingData.kittenId}`)}">Get to Know ${escapeHTML(pairingData.kittenName)} →</a></p>` : ""}
+      </section>`;
 
-  const octoberNotice = typeof window !== "undefined" ? window.PAWS_EVENT_DATA?.octoberNotice : null;
-  const safetyNotice = kitten.adoptionNotice
-    ? `<section class="profile-detail profile-reminder">
-        <h2>${escapeHTML(kitten.adoptionNotice.title)}</h2>
-        <p>${escapeHTML(kitten.adoptionNotice.message)}</p>
-      </section>`
-    : kitten.id === "claudia" && octoberNotice?.active
-    ? `<section class="profile-detail profile-reminder">
-        <h2>${escapeHTML(octoberNotice.title)}</h2>
-        ${(octoberNotice.messages || []).map(message => `<p>${escapeHTML(message)}</p>`).join("")}
-      </section>`
-    : "";
+  const octoberDates = getOctoberNoticeDates(typeof window !== "undefined" ? window.PAWS_EVENT_DATA?.octoberNotice : null);
+  const adoptionNotices = getProfileAdoptionNotices(kitten, pairingData, octoberDates);
+  const safetyNotice = adoptionNotices.map(notice => `<section class="profile-detail profile-reminder profile-october-notice">
+      <h2>${escapeHTML(notice.title)}</h2><p>${escapeHTML(notice.message)}</p>
+    </section>`).join("");
 
   const meeting = kitten.whereToMeet || kitten.eventInformation
     ? `<section class="profile-detail"><h2>Where to meet ${escapeHTML(kitten.name)}</h2>${kitten.whereToMeet ? `<p>${escapeHTML(kitten.whereToMeet)}</p>` : ""}${kitten.eventInformation ? `<p>${escapeHTML(kitten.eventInformation)}</p>` : ""}</section>`
@@ -307,7 +351,7 @@ function renderProfile(kitten) {
     : `
     <section class="profile-detail profile-reminder">
       <h2>Interested in adopting ${escapeHTML(kitten.name)}?</h2>
-      ${pairingData ? `<p>${escapeHTML(kitten.name)} ${pairingData.type === "must" ? "must be adopted with" : "is happiest with"} <a class="text-link" href="${escapeHTML(`profile-template.html?id=${pairingData.kittenId}`)}">${escapeHTML(pairingData.kittenName)}</a>.</p>` : "<p>We would love to hear from you.</p>"}
+      ${pairingData ? `<p>${escapeHTML(kitten.name)} ${pairingData.type === "bonded" ? "must be adopted with" : "is happiest with"} <a class="text-link" href="${escapeHTML(`profile-template.html?id=${pairingData.kittenId}`)}">${escapeHTML(pairingData.kittenName)}</a>.</p>` : "<p>We would love to hear from you.</p>"}
       <a class="button primary" href="../how-to-adopt/">Learn How to Adopt</a>
     </section>
   `;
@@ -408,6 +452,8 @@ if (typeof globalThis !== "undefined") {
   globalThis.formatBirthday = formatBirthday;
   globalThis.kittenAge = kittenAge;
   globalThis.getPairingData = getPairingData;
+  globalThis.getOctoberNoticeDates = getOctoberNoticeDates;
+  globalThis.getProfileAdoptionNotices = getProfileAdoptionNotices;
   globalThis.getProfileTraits = getProfileTraits;
   globalThis.normalizeHealthChecklist = normalizeHealthChecklist;
   globalThis.formatCompatibilityValue = formatCompatibilityValue;
@@ -426,6 +472,8 @@ if (typeof module !== "undefined") {
     formatBirthday,
     kittenAge,
     getPairingData,
+    getOctoberNoticeDates,
+    getProfileAdoptionNotices,
     getProfileTraits,
     normalizeHealthChecklist,
     formatCompatibilityValue,
