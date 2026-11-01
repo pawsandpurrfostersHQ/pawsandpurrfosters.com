@@ -232,8 +232,11 @@ function renderEvents() {
     : "";
   const currentEvent = event.active && !eventPassed;
   if (featured) {
+    const attendingLines = attending.length > 4
+      ? [attending.slice(0,4), attending.slice(4,8)].filter(line => line.length).map(line => line.map(escapeHTML).join(", ")).join("<br>")
+      : attending.map(escapeHTML).join(", ");
     const attendingMarkup = attending.length
-      ? `<p class="event-attending"><strong>Kittens attending:</strong> ${escapeHTML(attending.join(", "))}</p>`
+      ? `<p class="event-attending"><strong>Kittens attending:</strong><br>${attendingLines}</p>`
       : "";
     const value = currentEvent
       ? { date:event.date || "Coming Soon", time:event.time || "Coming Soon", location:event.location || "Coming Soon", address:event.address || "Coming Soon" }
