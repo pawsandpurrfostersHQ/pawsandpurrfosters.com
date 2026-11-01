@@ -118,9 +118,10 @@
   publishButton.disabled = true;
 
   function replaceAssignedArray(source, assignment, value) {
-    const pattern = new RegExp(assignment + String.raw`\\s*=\\s*\\[[\\s\\S]*?\\n\\];`);
-    if (!pattern.test(source)) throw new Error("Could not prepare " + assignment + " for saving.");
-    return source.replace(pattern, assignment + " = " + JSON.stringify(value, null, 2) + ";");
+    const start = source.indexOf(assignment);
+    const end = source.indexOf("];", start);
+    if (start < 0 || end < 0) throw new Error("Could not prepare " + assignment + " for saving.");
+    return source.slice(0, start) + assignment + " = " + JSON.stringify(value, null, 2) + ";" + source.slice(end + 2);
   }
 
   async function buildDraftFiles() {
