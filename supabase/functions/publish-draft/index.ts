@@ -78,30 +78,6 @@ Deno.serve(async (req) => {
   };
   const api = `https://api.github.com/repos/${repository}/contents`;
   const results = [];
-  for (const [path, content] of entries) {
-    const current = await fetch(`${api}/${path}?ref=${TARGET_BRANCH}`, { headers });
-    let sha: string | undefined;
-    if (current.ok) sha = (await current.json()).sha;
-    else if (current.status !== 404) return json({ error: "Could not read the current draft branch file." }, 502);
-
-    const response = await fetch(`${api}/${path}`, {
-      method: "PUT",
-      headers,
-      body: JSON.stringify({
-        message: payload.message?.slice(0, 120) || "Update foster website draft from private editor",
-        content: btoa(unescape(encodeURIComponent(content))),
-        branch: TARGET_BRANCH,
-        ...(sha ? { sha } : {}),
-      }),
-    });
-    if (!response.ok) {
-      const detail = await response.text();
-      console.error("GitHub commit failed", response.status, detail);
-      return json({ error: "GitHub could not save the draft. No live-site changes were made." }, 502);
-    }
-    const result = await response.json();
-    results.push({ path, commit: result.commit?.sha });
-  }
   for (const upload of uploads) {
     const current = await fetch(`${api}/${upload.path}?ref=${TARGET_BRANCH}`, { headers });
     let sha: string | undefined;
@@ -127,5 +103,29 @@ Deno.serve(async (req) => {
     results.push({ path: upload.path, commit: result.commit?.sha });
   }
 
+  for (const [path, content] of entries) {
+    const current = await fetch(`${api}/${path}?ref=${TARGET_BRANCH}`, { headers });
+    let sha: string | undefined;
+    if (current.ok) sha = (await current.json()).sha;
+    else if (current.status !== 404) return json({ error: "Could not read the current draft branch file." }, 502);
+
+    const response = await fetch(`${api}/${path}`, {
+      method: "PUT",
+      headers,
+      body: JSON.stringify({
+        message: payload.message?.slice(0, 120) || "Update foster website draft from private editor",
+        content: btoa(unescape(encodeURIComponent(content))),
+        branch: TARGET_BRANCH,
+        ...(sha ? { sha } : {}),
+      }),
+    });
+    if (!response.ok) {
+      const detail = await response.text();
+      console.error("GitHub commit failed", response.status, detail);
+      return json({ error: "GitHub could not save the draft. No live-site changes were made." }, 502);
+    }
+    const result = await response.json();
+    results.push({ path, commit: result.commit?.sha });
+  }
   return json({ ok: true, branch: TARGET_BRANCH, files: results });
 });
