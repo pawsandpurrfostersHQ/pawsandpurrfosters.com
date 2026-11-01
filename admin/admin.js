@@ -80,15 +80,15 @@
     $("#kitten-editor")?.remove();
     const form=document.createElement("section");form.id="kitten-editor";form.className="editor-form";
     const fields=[["name","Name"],["birthday","Birthday","date"],["gender","Gender"],["litterNumber","Foster litter number","number"],["description","Card description"],["bio","Bio","textarea"],["idealHome","Ideal home","textarea"],["petfinderUrl","Petfinder link"],["status","Adoption status"]];
-    form.innerHTML=`<div class="form-heading"><div><p class="eyebrow">Editing profile</p><h3>${esc(k.name)}</h3></div><button type="button" class="quiet" id="close-kitten">Close</button></div><div class="fields">${fields.map(([key,label,type])=>`<label>${label}${type==="textarea"?`<textarea data-field="${key}" rows="5">${esc(k[key])}</textarea>`:`<input data-field="${key}" type="${type||"text"}" value="${esc(k[key])}">`}</label>`).join("")}<label>Dogs<select data-compat="dogs">${options(["Unknown — no direct experience","Yes","Yes — with proper introduction","No","Possibly — no direct experience"],k.compatibility?.dogs)}</select></label><label>Cats<select data-compat="cats">${options(["Unknown — no direct experience","Yes","Yes — with proper introduction","No","Prefers to be the only cat"],k.compatibility?.cats)}</select></label><label>Younger children<select data-compat="youngerChildren">${options(["Unknown — no direct experience","Yes","Possibly — no direct experience","No"],k.compatibility?.youngerChildren)}</select></label><label>Older children<select data-compat="olderChildren">${options(["Unknown — no direct experience","Yes","Possibly — no direct experience","No"],k.compatibility?.olderChildren)}</select></label></div><h4>Profile photo gallery</h4><p class="muted">Reorder photos with the arrows. Upload and permanent saving will be connected through the secure publishing service.</p><div id="profile-photos"></div><label class="upload-label">Choose additional photos<input id="profile-upload" type="file" accept="image/*" multiple></label><button type="button" class="primary" id="save-kitten-draft">Save profile draft</button>`;
+    form.innerHTML=`<div class="form-heading"><div><p class="eyebrow">Editing profile</p><h3>${esc(k.name)}</h3></div><button type="button" class="quiet" id="close-kitten">Close</button></div><div class="fields">${fields.map(([key,label,type])=>`<label>${label}${type==="textarea"?`<textarea data-field="${key}" rows="5">${esc(k[key])}</textarea>`:`<input data-field="${key}" type="${type||"text"}" value="${esc(k[key])}">`}</label>`).join("")}<label>Dogs<select data-compat="dogs">${options(["Unknown — no direct experience","Yes","Yes — with proper introduction","No","Possibly — no direct experience"],k.compatibility?.dogs)}</select></label><label>Cats<select data-compat="cats">${options(["Unknown — no direct experience","Yes","Yes — with proper introduction","No","Prefers to be the only cat"],k.compatibility?.cats)}</select></label><label>Younger children<select data-compat="youngerChildren">${options(["Unknown — no direct experience","Yes","Possibly — no direct experience","No"],k.compatibility?.youngerChildren)}</select></label><label>Older children<select data-compat="olderChildren">${options(["Unknown — no direct experience","Yes","Possibly — no direct experience","No"],k.compatibility?.olderChildren)}</select></label></div><h4>Profile photo gallery</h4><p class="muted">Add photos from your device. They will be saved to the private draft branch when you publish.</p><div id="profile-photos"></div><label class="upload-label">Choose additional photos<input id="profile-upload" type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple></label><button type="button" class="primary" id="save-kitten-draft">Save profile draft</button>`;
     $("#view-kittens").append(form);
     $("#close-kitten").onclick=()=>form.remove();
     form.querySelectorAll("[data-field]").forEach(input=>input.addEventListener("input",()=>{k[input.dataset.field]=input.type==="number"?Number(input.value):input.value;}));
     form.querySelectorAll("[data-compat]").forEach(input=>input.addEventListener("change",()=>{k.compatibility ||= {};k.compatibility[input.dataset.compat]=input.value;}));
-    const renderPhotos=()=>{$("#profile-photos").innerHTML=(k.photos||[]).map((p,i)=>`<div class="photo-row"><img src="../${esc(p)}" alt=""><span>${esc(p.split("/").pop())}</span><button type="button" data-up="${i}" ${i===0?"disabled":""}>↑</button><button type="button" data-down="${i}" ${i===k.photos.length-1?"disabled":""}>↓</button><button type="button" data-remove="${i}">Remove</button></div>`).join("");form.querySelectorAll("[data-up]").forEach(b=>b.onclick=()=>move(Number(b.dataset.up),-1));form.querySelectorAll("[data-down]").forEach(b=>b.onclick=()=>move(Number(b.dataset.down),1));form.querySelectorAll("[data-remove]").forEach(b=>b.onclick=()=>{k.photos.splice(Number(b.dataset.remove),1);renderPhotos();});};
+    const renderPhotos=()=>{$("#profile-photos").innerHTML=(k.photos||[]).map((p,i)=>`<div class="photo-row"><img src="${p.startsWith("blob:")?esc(p):"../"+esc(p)}" alt=""><span>${esc(p.split("/").pop())}</span><button type="button" data-up="${i}" ${i===0?"disabled":""}>↑</button><button type="button" data-down="${i}" ${i===k.photos.length-1?"disabled":""}>↓</button><button type="button" data-remove="${i}">Remove</button></div>`).join("");form.querySelectorAll("[data-up]").forEach(b=>b.onclick=()=>move(Number(b.dataset.up),-1));form.querySelectorAll("[data-down]").forEach(b=>b.onclick=()=>move(Number(b.dataset.down),1));form.querySelectorAll("[data-remove]").forEach(b=>b.onclick=()=>{const removed=k.photos.splice(Number(b.dataset.remove),1)[0];if(removed?.startsWith("blob:")){URL.revokeObjectURL(removed);pendingPhotoUploads.delete(removed);}renderPhotos();markDirty();});};
     function move(i,d){[k.photos[i],k.photos[i+d]]=[k.photos[i+d],k.photos[i]];renderPhotos();}
     renderPhotos();
-    $("#profile-upload").onchange=e=>{[...e.target.files].forEach(file=>{const local=URL.createObjectURL(file);k.photos.push(local);});renderPhotos();markDirty();};
+    $("#profile-upload").onchange=e=>{const files=[...e.target.files];for(const file of files){if(!["image/jpeg","image/png","image/webp","image/gif"].includes(file.type)){alert("Please choose a JPG, PNG, WEBP, or GIF image.");continue;}if(file.size>12*1024*1024){alert("Each photo must be 12 MB or smaller. You can resize larger photos before adding them.");continue;}const local=URL.createObjectURL(file);pendingPhotoUploads.set(local,{file,kittenId:String(k.id||"kitten")});k.photos.push(local);}renderPhotos();markDirty();e.target.value="";};
     $("#save-kitten-draft").onclick=()=>{markDirty();renderKittenList();$("#save-status").textContent=k.name+" profile draft saved in this session. Not published.";};
   }
   function options(values,current){return values.map(v=>`<option ${v===current?"selected":""}>${esc(v)}</option>`).join("");}
@@ -124,6 +124,13 @@
     return source.slice(0, start) + assignment + " = " + JSON.stringify(value, null, 2) + ";" + source.slice(end + 2);
   }
 
+  const pendingPhotoUploads = new Map();
+
+  async function photoToBase64(file) {
+    const dataUrl = await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(new Error("Could not read one of the selected photos."));reader.readAsDataURL(file);});
+    return String(dataUrl).split(",")[1] || "";
+  }
+
   async function buildDraftFiles() {
     const [kittenSource, eventSource, alumniSource, scriptSource] = await Promise.all([
       fetch("../kitten-data.js", { cache: "no-store" }).then(r => { if (!r.ok) throw new Error("Could not load kitten data."); return r.text(); }),
@@ -131,8 +138,18 @@
       fetch("../alumni-data.js", { cache: "no-store" }).then(r => { if (!r.ok) throw new Error("Could not load alumni data."); return r.text(); }),
       fetch("../script.js", { cache: "no-store" }).then(r => { if (!r.ok) throw new Error("Could not load homepage settings."); return r.text(); })
     ]);
-    if (draft.kittens.some(k => (k.photos || []).some(p => String(p).startsWith("blob:")))) {
-      throw new Error("Newly selected profile photos are temporary previews. Permanent photo uploads are not connected yet; remove those temporary photos before publishing.");
+    const uploads = [];
+    for (const kitten of draft.kittens) {
+      kitten.photos = await Promise.all((kitten.photos || []).map(async photo => {
+        if (!String(photo).startsWith("blob:")) return photo;
+        const pending = pendingPhotoUploads.get(photo);
+        if (!pending) throw new Error("A selected photo is no longer available. Please choose it again.");
+        const ext = ({ "image/jpeg":"jpg", "image/png":"png", "image/webp":"webp", "image/gif":"gif" })[pending.file.type];
+        const safeId = String(kitten.id || pending.kittenId || "kitten").toLowerCase().replace(/[^a-z0-9-]+/g,"-").replace(/^-|-$/g,"").slice(0,40) || "kitten";
+        const filename = `${safeId}-${Date.now()}-${uploads.length+1}.${ext}`;
+        uploads.push({ path:`assets/kittens/${filename}`, contentType:pending.file.type, contentBase64:await photoToBase64(pending.file) });
+        return `assets/kittens/${filename}`;
+      }));
     }
     const kittens = replaceAssignedArray(kittenSource, "appRoot.PAWS_KITTENS", draft.kittens);
     const eventsMatch = eventSource.match(/window\.PAWS_EVENT_DATA\s*=\s*\{[\s\S]*\};\s*$/);
@@ -140,7 +157,7 @@
     const events = eventSource.replace(eventsMatch[0], "window.PAWS_EVENT_DATA = " + JSON.stringify(draft.events, null, 2) + ";\n");
     const alumni = replaceAssignedArray(alumniSource, "alumniRoot.PAWS_FOSTER_ALUMNI", draft.alumni);
     const hero = replaceAssignedArray(scriptSource, "const FOSTER_CAROUSEL_PHOTOS", draft.heroPhotos);
-    return { "kitten-data.js": kittens, "event-data.js": events, "alumni-data.js": alumni, "script.js": hero };
+    return { files: { "kitten-data.js": kittens, "event-data.js": events, "alumni-data.js": alumni, "script.js": hero }, uploads };
   }
 
   publishButton.addEventListener("click", async () => {
@@ -149,9 +166,9 @@
     publishButton.disabled = true;
     $("#save-status").textContent = "Sending your approved draft to the private branch…";
     try {
-      const files = await buildDraftFiles();
+      const draftPayload = await buildDraftFiles();
       const { data, error } = await supabaseClient.functions.invoke("publish-draft", {
-        body: { files, message: "Update foster website draft from private editor" }
+        body: { ...draftPayload, message: "Update foster website draft from private editor" }
       });
       if (error) {
         let detail = error.message || "Publishing request failed.";
