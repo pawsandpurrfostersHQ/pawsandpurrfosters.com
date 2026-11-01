@@ -88,7 +88,7 @@
     const renderPhotos=()=>{$("#profile-photos").innerHTML=(k.photos||[]).map((p,i)=>`<div class="photo-row"><img src="${p.startsWith("blob:")?esc(p):"../"+esc(p)}" alt=""><span>${esc(p.split("/").pop())}</span><button type="button" data-up="${i}" ${i===0?"disabled":""}>↑</button><button type="button" data-down="${i}" ${i===k.photos.length-1?"disabled":""}>↓</button><button type="button" data-remove="${i}">Remove</button></div>`).join("");form.querySelectorAll("[data-up]").forEach(b=>b.onclick=()=>move(Number(b.dataset.up),-1));form.querySelectorAll("[data-down]").forEach(b=>b.onclick=()=>move(Number(b.dataset.down),1));form.querySelectorAll("[data-remove]").forEach(b=>b.onclick=()=>{const removed=k.photos.splice(Number(b.dataset.remove),1)[0];if(removed?.startsWith("blob:")){URL.revokeObjectURL(removed);pendingPhotoUploads.delete(removed);}renderPhotos();markDirty();});};
     function move(i,d){[k.photos[i],k.photos[i+d]]=[k.photos[i+d],k.photos[i]];renderPhotos();}
     renderPhotos();
-    $("#profile-upload").onchange=e=>{const files=[...e.target.files];for(const file of files){if(!["image/jpeg","image/png","image/webp","image/gif"].includes(file.type)){alert("Please choose a JPG, PNG, WEBP, or GIF image.");continue;}if(file.size>12*1024*1024){alert("Each photo must be 12 MB or smaller. You can resize larger photos before adding them.");continue;}const local=URL.createObjectURL(file);pendingPhotoUploads.set(local,{file,kittenId:String(k.id||"kitten")});k.photos.push(local);}renderPhotos();markDirty();e.target.value="";};
+    $("#profile-upload").onchange=e=>{const files=[...e.target.files];for(const file of files){if(!["image/jpeg","image/png","image/webp","image/gif"].includes(file.type)){alert("Please choose a JPG, PNG, WEBP, or GIF image.");continue;}if(file.size>20*1024*1024){alert("Please choose a photo smaller than 20 MB.");continue;}const local=URL.createObjectURL(file);pendingPhotoUploads.set(local,{file,kittenId:String(k.id||"kitten")});k.photos.push(local);}renderPhotos();markDirty();e.target.value="";};
     $("#save-kitten-draft").onclick=()=>{markDirty();renderKittenList();$("#save-status").textContent=k.name+" profile draft saved in this session. Not published.";};
   }
   function options(values,current){return values.map(v=>`<option ${v===current?"selected":""}>${esc(v)}</option>`).join("");}
@@ -131,6 +131,23 @@
     return String(dataUrl).split(",")[1] || "";
   }
 
+  async function preparePhoto(file) {
+    if (!window.createImageBitmap) {
+      if (file.size > 3 * 1024 * 1024) throw new Error("This photo is too large for a reliable upload. Please choose a smaller image (under 3 MB).");
+      return { file, contentType:file.type };
+    }
+    const bitmap = await createImageBitmap(file);
+    const scale = Math.min(1, 1600 / Math.max(bitmap.width, bitmap.height));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+    canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+    canvas.getContext("2d").drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+    bitmap.close?.();
+    const blob = await new Promise(resolve=>canvas.toBlob(resolve,"image/jpeg",0.78));
+    if (!blob || blob.size > 4 * 1024 * 1024) throw new Error("This photo could not be compressed small enough. Please choose another image.");
+    return { file:new File([blob],file.name.replace(/\\.[^.]+$/,"")+".jpg",{type:"image/jpeg"}), contentType:"image/jpeg" };
+  }
+
   async function buildDraftFiles() {
     const [kittenSource, eventSource, alumniSource, scriptSource] = await Promise.all([
       fetch("../kitten-data.js", { cache: "no-store" }).then(r => { if (!r.ok) throw new Error("Could not load kitten data."); return r.text(); }),
@@ -139,25 +156,30 @@
       fetch("../script.js", { cache: "no-store" }).then(r => { if (!r.ok) throw new Error("Could not load homepage settings."); return r.text(); })
     ]);
     const uploads = [];
-    for (const kitten of draft.kittens) {
+    const photoMap = {};
+    const kittensDraft = clone(draft.kittens);
+    for (const kitten of kittensDraft) {
       kitten.photos = await Promise.all((kitten.photos || []).map(async photo => {
         if (!String(photo).startsWith("blob:")) return photo;
         const pending = pendingPhotoUploads.get(photo);
         if (!pending) throw new Error("A selected photo is no longer available. Please choose it again.");
-        const ext = ({ "image/jpeg":"jpg", "image/png":"png", "image/webp":"webp", "image/gif":"gif" })[pending.file.type];
+        const prepared = await preparePhoto(pending.file);
+        const ext = "jpg";
         const safeId = String(kitten.id || pending.kittenId || "kitten").toLowerCase().replace(/[^a-z0-9-]+/g,"-").replace(/^-|-$/g,"").slice(0,40) || "kitten";
         const filename = `${safeId}-${Date.now()}-${uploads.length+1}.${ext}`;
-        uploads.push({ path:`assets/kittens/${filename}`, contentType:pending.file.type, contentBase64:await photoToBase64(pending.file) });
-        return `assets/kittens/${filename}`;
+        const savedPath = `assets/kittens/${filename}`;
+        uploads.push({ path:savedPath, contentType:prepared.contentType, contentBase64:await photoToBase64(prepared.file) });
+        photoMap[photo] = savedPath;
+        return savedPath;
       }));
     }
-    const kittens = replaceAssignedArray(kittenSource, "appRoot.PAWS_KITTENS", draft.kittens);
+    const kittens = replaceAssignedArray(kittenSource, "appRoot.PAWS_KITTENS", kittensDraft);
     const eventsMatch = eventSource.match(/window\.PAWS_EVENT_DATA\s*=\s*\{[\s\S]*\};\s*$/);
     if (!eventsMatch) throw new Error("Could not prepare event data for saving.");
     const events = eventSource.replace(eventsMatch[0], "window.PAWS_EVENT_DATA = " + JSON.stringify(draft.events, null, 2) + ";\n");
     const alumni = replaceAssignedArray(alumniSource, "alumniRoot.PAWS_FOSTER_ALUMNI", draft.alumni);
     const hero = replaceAssignedArray(scriptSource, "const FOSTER_CAROUSEL_PHOTOS", draft.heroPhotos);
-    return { files: { "kitten-data.js": kittens, "event-data.js": events, "alumni-data.js": alumni, "script.js": hero }, uploads };
+    return { files: { "kitten-data.js": kittens, "event-data.js": events, "alumni-data.js": alumni, "script.js": hero }, uploads, photoMap };
   }
 
   publishButton.addEventListener("click", async () => {
@@ -178,6 +200,14 @@
       if (!data?.ok || data.branch !== "private-editor-foundation") {
         throw new Error(data?.error || "The service did not confirm a private-branch save.");
       }
+      for (const kitten of draft.kittens) kitten.photos = (kitten.photos || []).map(photo => {
+        const savedPath = draftPayload.photoMap[photo];
+        if (!savedPath) return photo;
+        URL.revokeObjectURL(photo);
+        pendingPhotoUploads.delete(photo);
+        return savedPath;
+      });
+      renderKittenList();
       dirty = false;
       $("#save-status").textContent = "Draft saved to private-editor-foundation. The public website has not changed.";
     } catch (error) {
