@@ -284,8 +284,8 @@ function renderEvents() {
       ${description}</article>`;
   };
   const renderHomeSpecial = item => `<div class="home-special-event-copy"><p class="eyebrow"><span aria-hidden="true">✦</span> Special Event</p><h2>${escapeHTML(item.title || "Special Adoption Event")}</h2>
-    <p><strong>${escapeHTML(item.date || "Date coming soon")}</strong>${item.adoptionTime ? " · Adoption event: " + escapeHTML(item.adoptionTime) : ""}</p>
-    ${item.yogaTime ? `<p>Kitty Yoga: ${escapeHTML(item.yogaTime)} <strong>(Members only)</strong></p>` : item.time ? `<p>${escapeHTML(item.time)}</p>` : ""}
+    <p class="home-special-event-date"><strong>${escapeHTML(item.date || "Date coming soon")}</strong></p>
+    ${item.adoptionTime || item.yogaTime ? `<p class="home-special-event-times">${item.adoptionTime ? `<span><strong>Kitten Adoption Event:</strong> ${escapeHTML(item.adoptionTime)}</span>` : ""}${item.yogaTime ? `<span><strong>Kitty Yoga:</strong> ${escapeHTML(item.yogaTime)} <strong>(Members only)</strong></span>` : ""}</p>` : item.time ? `<p class="home-special-event-times">${escapeHTML(item.time)}</p>` : ""}
     <p><strong>${escapeHTML(item.location || "Location coming soon")}</strong><br>${mapAnchor(item.address,item.mapsUrl)}</p>
     <a class="text-link" href="events/">Learn more →</a></div>`;
   const special = document.querySelector("#special-event");
