@@ -362,7 +362,7 @@ appRoot.PAWS_KITTENS = [
       "assets/kittens/wally-photo-2.png",
       "assets/kittens/wally-photo-3.png",
       "assets/kittens/wally-photo-4.png",
-      "assets/kittens/wally-1793504031889-4.jpg",
+      "assets/kittens/wally-1793504213675-1.jpg",
       "assets/kittens/wally-1793504031889-4.jpg"
     ],
     "personalityTraits": [
