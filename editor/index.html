@@ -67,7 +67,7 @@ async function loadEditor(token) {
 })();
 form.addEventListener("submit", async event => {
   event.preventDefault();
-  if (document.getElementById("username").value.trim().toLowerCase() !== "pawsandpurrfostershq") {
+  if (document.getElementById("username").value.trim().toLowerCase() !== "pawsandpurrfosters") {
     message.textContent = "That username is not authorized."; return;
   }
   button.disabled = true; message.textContent = "Signing in securely…";
