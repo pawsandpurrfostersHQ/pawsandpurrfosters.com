@@ -1,1 +1,85 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Private Editor</title></head><body><main><h1>Paws &amp; Purr Private Editor</h1><p>Sign-in page setup is in progress.</p></main></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Private Editor Sign In | Paws &amp; Purr Fosters</title>
+<style>
+:root{--sage:#9caf91;--sage-dark:#536b58;--sage-light:#e8eee4;--purple:#75628d;--purple-dark:#57456f;--purple-light:#eee9f4;--cream:#faf9f5;--ink:#30312f;--muted:#70736e;--line:#e1e3dc}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.55 system-ui,sans-serif}
+.shell{max-width:1100px;margin:auto;padding:22px clamp(16px,4vw,44px) 110px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 0 24px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}.mark{display:grid;place-items:center;width:48px;height:48px;border-radius:16px;background:var(--purple-light);color:var(--purple-dark);font-weight:900}
+.brand strong,.brand small{display:block}.brand strong{font:600 19px Georgia,serif}.brand small,.eyebrow{font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--sage-dark)}
+.site-link{color:var(--purple-dark);font-weight:700;text-decoration:none}
+.panel{max-width:620px;margin:12vh auto 0;padding:clamp(20px,4vw,36px);border:1px solid var(--line);border-radius:24px;background:white;box-shadow:0 12px 35px #3e43390b}
+h1{font:600 clamp(32px,5vw,46px)/1.12 Georgia,serif;margin:8px 0 14px}.intro{color:var(--muted)}
+form{margin-top:22px;padding:20px;border:1px solid var(--line);border-radius:18px;background:#fcfcfa}
+label{display:grid;gap:6px;margin:12px 0;color:var(--sage-dark);font-size:13px;font-weight:750}
+input{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:11px;background:white;color:var(--ink);font:inherit}
+button{font:inherit;cursor:pointer;border:0;border-radius:999px;padding:12px 20px;font-weight:750;background:var(--purple);color:white}
+button:disabled{opacity:.5;cursor:wait}.error{color:#9a3c3c;min-height:24px}
+@media(max-width:600px){.topbar{align-items:flex-start}.site-link{font-size:13px}.panel{margin-top:8vh}}
+</style>
+</head>
+<body>
+<main class="shell">
+<header class="topbar">
+<a class="brand" href="https://michelle11holguin.github.io/pawsandpurrfosters.com/"><span class="mark">P&amp;P</span><span><strong>Paws &amp; Purr</strong><small>PRIVATE SITE EDITOR</small></span></a>
+<a class="site-link" href="https://michelle11holguin.github.io/pawsandpurrfosters.com/" target="_blank" rel="noopener">View public website ↗</a>
+</header>
+<section class="panel">
+<p class="eyebrow">Private access</p><h1>Your foster website, in your hands.</h1>
+<p class="intro">Sign in with your private editor username and password.</p>
+<form id="login-form">
+<label>Username<input id="username" autocomplete="username" required></label>
+<label>Password<input id="password" type="password" autocomplete="current-password" required></label>
+<button id="submit" type="submit">Sign in</button><p id="message" class="error" role="status"></p>
+</form>
+</section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://ovnbbpcrwbvotyevghcx.supabase.co";
+const SUPABASE_KEY = "sb_publishable_" + "ZXH8vHOT0p3-rgQgK280uw_BWsMJzAK";
+const EDITOR_URL = SUPABASE_URL + "/functions/v1/private-editor?view=app";
+const auth = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const form = document.getElementById("login-form");
+const message = document.getElementById("message");
+const button = document.getElementById("submit");
+async function loadEditor(token) {
+  const response = await fetch(EDITOR_URL, {method:"GET",headers:{Authorization:"Bearer "+token},cache:"no-store"});
+  if (!response.ok) throw new Error("Your account is not authorized to open this editor.");
+  const html = await response.text();
+  if (!html.trim().toLowerCase().startsWith("<!doctype html")) throw new Error("The editor returned an unexpected response. Please try again.");
+  document.open(); document.write(html); document.close();
+}
+(async function restoreLogin() {
+  const {data} = await auth.auth.getSession();
+  if (data.session) {
+    try { await loadEditor(data.session.access_token); }
+    catch (error) { await auth.auth.signOut(); message.textContent = error.message; }
+  }
+})();
+form.addEventListener("submit", async event => {
+  event.preventDefault();
+  if (document.getElementById("username").value.trim().toLowerCase() !== "pawsandpurrfosters") {
+    message.textContent = "That username is not authorized."; return;
+  }
+  button.disabled = true; message.textContent = "Signing in securely…";
+  try {
+    const {data,error} = await auth.auth.signInWithPassword({
+      email:"pawsandpurrfosters@gmail.com",
+      password:document.getElementById("password").value
+    });
+    if (error) throw error;
+    if (data.user?.email?.toLowerCase() !== "pawsandpurrfosters@gmail.com") throw new Error("This account is not authorized.");
+    await loadEditor(data.session.access_token);
+  } catch (error) {
+    message.textContent = error.message || "Sign-in failed."; button.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
