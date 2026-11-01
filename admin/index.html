@@ -16,9 +16,13 @@
     <section id="login" class="panel login-panel">
       <p class="eyebrow">Private access</p>
       <h1>Your foster website, in your hands.</h1>
-      <p>Sign in with your authorized GitHub account to manage photos, kitten profiles, events, and alumni.</p>
-      <button id="sign-in" class="primary" type="button">Continue with GitHub</button>
-      <p id="login-message" class="muted" role="status">Private sign-in is being connected. This editor is not enabled until server-side access control is configured.</p>
+      <p>Sign in with your private editor username and password.</p>
+      <form id="login-form" class="editor-form">
+        <label>Username<input id="login-username" name="username" autocomplete="username" required></label>
+        <label>Password<input id="login-password" name="password" type="password" autocomplete="current-password" required></label>
+        <button id="sign-in" class="primary" type="submit">Sign in</button>
+      </form>
+      <p id="login-message" class="muted" role="status">Secure sign-in setup is in progress. Your password is sent directly to Supabase Auth, not stored by this page.</p>
     </section>
     <section id="dashboard" hidden>
       <div class="welcome"><div><p class="eyebrow">Your workspace</p><h1>What would you like to update?</h1><p class="muted">Changes will be previewed before they are published.</p></div><button id="sign-out" class="quiet" type="button">Sign out</button></div>
@@ -42,6 +46,8 @@
   <script src="../kitten-data.js"></script>
   <script src="../event-data.js"></script>
   <script src="../alumni-data.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
   <script src="admin.js"></script>
 </body>
 </html>
