@@ -9,7 +9,7 @@ window.PAWS_EVENT_DATA = {
     "location": "Antioch PetSmart",
     "date": "Sunday, November 1, 2026",
     "time": "11 a.m. – 3 p.m.",
-    "address": "5879 Lone Tree Way, Antioch, CA 94531",
+    "address": "5879 Lone Tree Way, Antioch, CA",
     "mapsUrl": "https://maps.app.goo.gl/MjBjSfjpJHPXh89h7",
     "attendingKittens": [
       "Diego",
