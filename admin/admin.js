@@ -9,10 +9,64 @@
     heroPhotos: [...(window.FOSTER_CAROUSEL_PHOTOS || [])]
   };
   let selectedId = null, dirty = false;
+  const authConfig = window.PAWS_SUPABASE_CONFIG || {};
+  const supabaseReady = !!(window.supabase && authConfig.url && authConfig.publishableKey &&
+    !String(authConfig.url).includes("YOUR_") && !String(authConfig.publishableKey).includes("YOUR_"));
+  const supabaseClient = supabaseReady
+    ? window.supabase.createClient(authConfig.url, authConfig.publishableKey)
+    : null;
+  const ADMIN_USERNAME = "pawsandpurrfosters";
+  const ADMIN_EMAIL = "pawsandpurrfosters@gmail.com";
+  async function restoreSession() {
+    if (!supabaseClient) return;
+    const { data, error } = await supabaseClient.auth.getSession();
+    if (error) return;
+    if (data.session && data.session.user?.email?.toLowerCase() === ADMIN_EMAIL) {
+      $("#login").hidden = true;
+      $("#dashboard").hidden = false;
+    } else if (data.session) {
+      await supabaseClient.auth.signOut();
+    }
+  }
+  $("#login-form")?.addEventListener("submit", async event => {
+    event.preventDefault();
+    const username = $("#login-username").value.trim().toLowerCase();
+    const password = $("#login-password").value;
+    const message = $("#login-message");
+    if (!supabaseClient) {
+      message.textContent = "Supabase connection is not configured yet. The editor remains locked.";
+      return;
+    }
+    if (username !== ADMIN_USERNAME) {
+      message.textContent = "That username is not authorized.";
+      return;
+    }
+    $("#sign-in").disabled = true;
+    message.textContent = "Signing in securely…";
+    try {
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email: ADMIN_EMAIL, password });
+      if (error) throw error;
+      if (data.user?.email?.toLowerCase() !== ADMIN_EMAIL) {
+        await supabaseClient.auth.signOut();
+        throw new Error("This account is not authorized for the private editor.");
+      }
+      $("#login").hidden = true;
+      $("#dashboard").hidden = false;
+      message.textContent = "";
+      $("#login-password").value = "";
+    } catch (error) {
+      message.textContent = error.message || "Sign-in failed. Please check your details.";
+    } finally {
+      $("#sign-in").disabled = false;
+    }
+  });
   const esc = value => String(value ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const markDirty = () => { dirty=true; $("#save-status").textContent="You have unpublished draft changes in this session."; };
-  $("#sign-in").addEventListener("click",()=>{$("#login-message").textContent="Secure sign-in is not connected yet. This page does not collect or store your GitHub password or token.";});
-  $("#sign-out").addEventListener("click",()=>{ $("#dashboard").hidden=true; $("#login").hidden=false; });
+  $("#sign-out").addEventListener("click",async()=>{
+    if (supabaseClient) await supabaseClient.auth.signOut();
+    $("#dashboard").hidden=true; $("#login").hidden=false;
+  });
+  restoreSession();
   document.querySelectorAll(".tab").forEach(tab=>tab.addEventListener("click",()=>{
     document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===tab));
     document.querySelectorAll(".view").forEach(x=>x.hidden=x.id!=="view-"+tab.dataset.view);
