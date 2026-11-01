@@ -134,9 +134,9 @@
       throw new Error("Newly selected profile photos are temporary previews. Permanent photo uploads are not connected yet; remove those temporary photos before publishing.");
     }
     const kittens = replaceAssignedArray(kittenSource, "appRoot.PAWS_KITTENS", draft.kittens);
-    const eventsMatch = eventSource.match(/window\\.PAWS_EVENT_DATA\\s*=\\s*\\{[\\s\\S]*\\};\\s*$/);
+    const eventsMatch = eventSource.match(/window\.PAWS_EVENT_DATA\s*=\s*\{[\s\S]*\};\s*$/);
     if (!eventsMatch) throw new Error("Could not prepare event data for saving.");
-    const events = eventSource.replace(eventsMatch[0], "window.PAWS_EVENT_DATA = " + JSON.stringify(draft.events, null, 2) + ";\\n");
+    const events = eventSource.replace(eventsMatch[0], "window.PAWS_EVENT_DATA = " + JSON.stringify(draft.events, null, 2) + ";\n");
     const alumni = replaceAssignedArray(alumniSource, "alumniRoot.PAWS_FOSTER_ALUMNI", draft.alumni);
     const hero = replaceAssignedArray(scriptSource, "const FOSTER_CAROUSEL_PHOTOS", draft.heroPhotos);
     return { "kitten-data.js": kittens, "event-data.js": events, "alumni-data.js": alumni, "script.js": hero };
