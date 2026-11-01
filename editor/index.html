@@ -17,7 +17,7 @@
 h1{font:600 clamp(32px,5vw,46px)/1.12 Georgia,serif;margin:8px 0 14px}.intro{color:var(--muted)}
 form{margin-top:22px;padding:20px;border:1px solid var(--line);border-radius:18px;background:#fcfcfa}
 label{display:grid;gap:6px;margin:12px 0;color:var(--sage-dark);font-size:13px;font-weight:750}
-input{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:11px;background:white;color:var(--ink);font:inherit}
+input{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:11px;background:white;color:var(--ink);font:inherit}.password-wrap{display:flex;position:relative}.password-wrap input{padding-right:52px}.eye-button{position:absolute;right:5px;top:50%;transform:translateY(-50%);width:40px;height:38px;padding:5px;background:transparent;color:var(--purple-dark)}
 button{font:inherit;cursor:pointer;border:0;border-radius:999px;padding:12px 20px;font-weight:750;background:var(--purple);color:white}
 button:disabled{opacity:.5;cursor:wait}.error{color:#9a3c3c;min-height:24px}
 @media(max-width:600px){.topbar{align-items:flex-start}.site-link{font-size:13px}.panel{margin-top:8vh}}
@@ -30,11 +30,11 @@ button:disabled{opacity:.5;cursor:wait}.error{color:#9a3c3c;min-height:24px}
 <a class="site-link" href="https://pawsandpurrfostersHQ.github.io/pawsandpurrfosters.com/" target="_blank" rel="noopener">View public website ↗</a>
 </header>
 <section class="panel">
-<p class="eyebrow">Private access</p><h1>Your foster website, in your hands.</h1>
-<p class="intro">Sign in with your private editor username and password.</p>
+<p class="eyebrow">Private access</p><h1>Let’s give your foster site a little love.</h1>
+<p class="intro">Log in to update your kittens, photos, and adoption events.</p>
 <form id="login-form">
 <label>Username<input id="username" autocomplete="username" required></label>
-<label>Password<input id="password" type="password" autocomplete="current-password" required></label>
+<label>Password<span class="password-wrap"><input id="password" type="password" autocomplete="current-password" required><button class="eye-button" id="toggle-password" type="button" aria-label="Show password">◉</button></span></label>
 <button id="submit" type="submit">Sign in</button><p id="message" class="error" role="status"></p>
 </form>
 </section>
@@ -48,6 +48,9 @@ const auth = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const form = document.getElementById("login-form");
 const message = document.getElementById("message");
 const button = document.getElementById("submit");
+const passwordInput = document.getElementById("password");
+const togglePassword = document.getElementById("toggle-password");
+togglePassword.addEventListener("click", () => { const show = passwordInput.type === "password"; passwordInput.type = show ? "text" : "password"; togglePassword.textContent = show ? "⊘" : "◉"; togglePassword.setAttribute("aria-label", show ? "Hide password" : "Show password"); });
 async function loadEditor(token) {
   const response = await fetch(EDITOR_URL, {method:"GET",headers:{Authorization:"Bearer "+token},cache:"no-store"});
   if (!response.ok) throw new Error("Your account is not authorized to open this editor.");
@@ -64,17 +67,17 @@ async function loadEditor(token) {
 })();
 form.addEventListener("submit", async event => {
   event.preventDefault();
-  if (document.getElementById("username").value.trim().toLowerCase() !== "pawsandpurrfosters") {
+  if (document.getElementById("username").value.trim().toLowerCase() !== "pawsandpurrfostershq") {
     message.textContent = "That username is not authorized."; return;
   }
   button.disabled = true; message.textContent = "Signing in securely…";
   try {
     const {data,error} = await auth.auth.signInWithPassword({
-      email:"pawsandpurrfosters@gmail.com",
+      email:"michelle11holguin@gmail.com",
       password:document.getElementById("password").value
     });
     if (error) throw error;
-    if (data.user?.email?.toLowerCase() !== "pawsandpurrfosters@gmail.com") throw new Error("This account is not authorized.");
+    if (data.user?.email?.toLowerCase() !== "michelle11holguin@gmail.com") throw new Error("This account is not authorized.");
     await loadEditor(data.session.access_token);
   } catch (error) {
     message.textContent = error.message || "Sign-in failed."; button.disabled = false;
