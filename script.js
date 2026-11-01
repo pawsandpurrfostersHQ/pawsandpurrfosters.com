@@ -227,65 +227,74 @@ function renderEvents() {
   if (eventDate && !Number.isNaN(eventDate.getTime())) eventDate.setHours(23, 59, 59, 999);
   else if (eventDate) eventDate.setTime(NaN);
   const eventPassed = Boolean(eventDate && new Date() > eventDate);
-  const allTooYoung = kittens.length > 0 && !kittens.some(k => availableStatuses.has(k.status || k.adoptionStatus));
-  const allNotReady = kittens.length > 0 && kittens.every(k => ["Coming Soon", "Almost Available", "Adopted", "Pre-Adopted"].includes(k.status || k.adoptionStatus));
   const mapAnchor = (address, url) => address
     ? `<a class="event-address" href="${escapeHTML(url || mapsLink(address))}" target="_blank" rel="noopener noreferrer">${escapeHTML(address)}</a>`
     : "";
-  const currentEvent = event.active && !eventPassed && !allTooYoung && !allNotReady;
+  const currentEvent = event.active && !eventPassed;
   if (featured) {
-    if (currentEvent) {
-      const attendingMarkup = attending.length
-        ? `<p class="event-attending"><strong>Kittens attending:</strong> ${escapeHTML(attending.join(", "))}</p>`
-        : "";
-      featured.innerHTML = `<article class="event-card event-card--compact">
-        <div class="event-card-content"><p class="eyebrow"><span aria-hidden="true">🐾</span> Where to Find Us</p><h2>Upcoming Adoption Event</h2>
-        <p class="event-date"><strong>${escapeHTML(event.date || "")}</strong></p><p class="event-time"><strong>${escapeHTML(event.time || "")}</strong></p>
-        <p class="event-location-name"><strong>${escapeHTML(event.location || "")}</strong></p>
-        ${mapAnchor(event.address,event.mapsUrl)}${attendingMarkup}</div>
-      </article>`;
-    } else {
-      const heading = allTooYoung || allNotReady
-        ? "Our current foster kittens are still growing, learning, and getting ready for their next chapter. They are not quite ready for adoption events yet. Please give them a little more time and check back soon."
-        : "Our next adoption location is being arranged. We’ll post the details here as soon as they’re confirmed. In the meantime, see our regular adoption schedule below.";
-      featured.innerHTML = `<article class="event-card event-card--compact event-coming-soon">
-        <div class="event-card-content"><p class="eyebrow">Adoption locations</p><h2>Next Location Coming Soon</h2><p>${heading}</p><a class="text-link" href="#regular-schedule">View our regular adoption schedule →</a></div>
-      </article>`;
-    }
+    const attendingMarkup = attending.length
+      ? `<p class="event-attending"><strong>Kittens attending:</strong> ${escapeHTML(attending.join(", "))}</p>`
+      : "";
+    const value = currentEvent
+      ? { date:event.date || "Coming Soon", time:event.time || "Coming Soon", location:event.location || "Coming Soon", address:event.address || "Coming Soon" }
+      : { date:"Coming Soon", time:"Coming Soon", location:"Coming Soon", address:"Coming Soon" };
+    const addressMarkup = currentEvent ? mapAnchor(event.address,event.mapsUrl) : '<span class="event-address">Address and map link coming soon</span>';
+    featured.innerHTML = `<article class="event-card event-card--compact${currentEvent ? "" : " event-coming-soon"}">
+      <div class="event-card-content"><p class="eyebrow"><span aria-hidden="true">🐾</span> Where to Find Us</p><h2>Upcoming Adoption Event</h2>
+      <p class="event-date"><strong>${escapeHTML(value.date)}</strong></p><p class="event-time"><strong>${escapeHTML(value.time)}</strong></p>
+      <p class="event-location-name"><strong>${escapeHTML(value.location)}</strong></p>
+      ${addressMarkup}${attendingMarkup}</div>
+    </article>`;
     featured.hidden = false;
   }
 
   const schedule = document.querySelector("#regular-schedule");
   if (schedule && data.regularSchedule?.active) {
-    const locations = data.regularSchedule.locations.map(location => `
+    const locations = (data.regularSchedule.locations || []).slice(0,2).map(location => `
       <article class="schedule-location"><h3>${escapeHTML(location.name)}</h3>
       <p>${escapeHTML(location.timing)}</p>${mapAnchor(location.address,location.mapsUrl)}</article>`).join("");
     schedule.innerHTML = `<p class="eyebrow">Plan a visit</p><h2>Regular Adoption Schedule</h2><div class="schedule-locations">${locations}</div><p class="schedule-note">${escapeHTML(data.regularSchedule.note || "Schedule is subject to change.")}</p>`;
     schedule.hidden = false;
   }
 
+  const specialEvents = [data.specialEvent, ...(Array.isArray(data.additionalSpecialEvents) ? data.additionalSpecialEvents : [])]
+    .filter(item => item && item.active !== false)
+    .filter(item => {
+      const date = item.date ? new Date(item.date) : null;
+      if (!date || Number.isNaN(date.getTime())) return true;
+      date.setHours(23,59,59,999);
+      return new Date() <= date;
+    });
+  const renderSpecial = item => {
+    const activities = [
+      item.adoptionTime ? `<p><span class="event-activity-icon" aria-hidden="true">🐈</span><strong>Kitten Adoption Event</strong><br>${escapeHTML(item.adoptionTime)} <span class="event-audience">Open to everyone</span></p>` : "",
+      item.yogaTime ? `<p><span class="event-activity-icon" aria-hidden="true">🧘</span><strong>Kitty Yoga</strong><br>${escapeHTML(item.yogaTime)} <span class="members-only">(Members only)</span></p>` : "",
+      !item.adoptionTime && !item.yogaTime && item.time ? `<p><strong>${escapeHTML(item.time)}</strong></p>` : ""
+    ].filter(Boolean).join("");
+    const description = item.description
+      ? `<p>${escapeHTML(item.description)}</p>`
+      : '<p>Come meet our foster kittens and learn more about this special event.</p>';
+    return `<article class="special-event-entry"><p class="eyebrow">Special event</p><h2>${escapeHTML(item.title || "Special Adoption Event")}</h2>
+      <p class="special-event-date"><strong>${escapeHTML(item.date || "Date coming soon")}</strong></p>
+      <div class="special-event-activities">${activities}</div>
+      <p><strong>${escapeHTML(item.location || "Location coming soon")}</strong></p>${mapAnchor(item.address,item.mapsUrl)}
+      ${description}</article>`;
+  };
+  const renderHomeSpecial = item => `<div class="home-special-event-copy"><p class="eyebrow"><span aria-hidden="true">✦</span> Special Event</p><h2>${escapeHTML(item.title || "Special Adoption Event")}</h2>
+    <p><strong>${escapeHTML(item.date || "Date coming soon")}</strong>${item.adoptionTime ? " · Adoption event: " + escapeHTML(item.adoptionTime) : ""}</p>
+    ${item.yogaTime ? `<p>Kitty Yoga: ${escapeHTML(item.yogaTime)} <strong>(Members only)</strong></p>` : item.time ? `<p>${escapeHTML(item.time)}</p>` : ""}
+    <p><strong>${escapeHTML(item.location || "Location coming soon")}</strong><br>${mapAnchor(item.address,item.mapsUrl)}</p>
+    <a class="text-link" href="events/">Learn more →</a></div>`;
   const special = document.querySelector("#special-event");
-  const e = data.specialEvent || {};
-  const specialDate = e.date ? new Date(e.date) : null;
-  if (specialDate) specialDate.setHours(23,59,59,999);
-  if (special && e.active && (!specialDate || new Date() <= specialDate)) {
-    special.innerHTML = `<p class="eyebrow">Special event</p><h2>${escapeHTML(e.title || "Special Adoption Event")}</h2>
-      <p class="special-event-date"><strong>${escapeHTML(e.date || "")}</strong></p><div class="special-event-activities"><p><span class="event-activity-icon" aria-hidden="true">🐈</span><strong>Kitten Adoption Event</strong><br>${escapeHTML(e.adoptionTime || "")} <span class="event-audience">Open to everyone</span></p><p><span class="event-activity-icon" aria-hidden="true">🧘</span><strong>Kitty Yoga</strong><br>${escapeHTML(e.yogaTime || "")} <span class="members-only">(Members only)</span></p></div>
-      <p><strong>${escapeHTML(e.location || "")}</strong></p>${mapAnchor(e.address,e.mapsUrl)}
-      <p>No Paws Left Behind Kitty Rescue is hosting this event. Our foster kittens will be there alongside other adoptable kittens from the rescue. Come meet them, say hello, and learn more about adoption.</p>`;
+  if (special && specialEvents.length) {
+    special.innerHTML = specialEvents.map(renderSpecial).join("");
     special.hidden = false;
   }
-
-  if (homeSpecial && e.active && (!specialDate || new Date() <= specialDate)) {
-    homeSpecial.innerHTML = `<div class="home-special-event-copy"><p class="eyebrow"><span aria-hidden="true">✦</span> Special Event</p><h2>${escapeHTML(e.title || "")}</h2>
-      <p><strong>${escapeHTML(e.date || "")}</strong> · Adoption event: ${escapeHTML(e.adoptionTime || "")}</p>
-      <p>Kitty Yoga: ${escapeHTML(e.yogaTime || "")} <strong>(Members only)</strong></p>
-      <p><strong>${escapeHTML(e.location || "")}</strong><br>${mapAnchor(e.address,e.mapsUrl)}</p>
-      <a class="text-link" href="events/">Learn more →</a></div>`;
+  if (homeSpecial && specialEvents.length) {
+    homeSpecial.innerHTML = specialEvents.map(renderHomeSpecial).join("");
     homeSpecial.hidden = false;
   }
 }
-
 renderAbout();
 renderFosterPhotoCarousel();
 renderKittenCards();
