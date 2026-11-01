@@ -28,6 +28,7 @@ const FOSTER_CAROUSEL_PHOTOS = [
   "foster-22.png",
   "foster-23.png"
 ];
+if (typeof window !== "undefined") window.FOSTER_CAROUSEL_PHOTOS = FOSTER_CAROUSEL_PHOTOS;
 
 // ==========================================
 // ABOUT STORY — EDIT HERE
