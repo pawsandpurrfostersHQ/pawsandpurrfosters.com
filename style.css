@@ -1089,3 +1089,28 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
   word-break: normal;
   text-align: center;
 }
+
+
+/* Final homepage-only event alignment and special-event typography. */
+@media (min-width:761px) {
+  #events #event-featured .event-card-content {
+    transform: translateX(14px);
+  }
+}
+#events #home-special-event .home-special-event-date {
+  font-size:20px;
+  line-height:1.35;
+  font-weight:700;
+}
+#events #home-special-event .home-special-event-times {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:baseline;
+  gap:4px 16px;
+  font-size:15px;
+  line-height:1.5;
+}
+#events #home-special-event .home-special-event-times span {
+  display:inline-block;
+}
