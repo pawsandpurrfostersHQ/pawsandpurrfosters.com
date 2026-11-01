@@ -61,7 +61,7 @@
     }
   });
   const esc = value => String(value ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-  const markDirty = () => { dirty=true; $("#save-status").textContent="You have unpublished draft changes in this session."; };
+  let markDirty = () => { dirty=true; $("#save-status").textContent="You have unpublished draft changes in this session."; };
   $("#sign-out").addEventListener("click",async()=>{
     if (supabaseClient) await supabaseClient.auth.signOut();
     $("#dashboard").hidden=true; $("#login").hidden=false;
@@ -114,6 +114,62 @@
   }
   $("#preview").onclick=()=>{const changed=draft.kittens.filter((k,i)=>JSON.stringify(k)!==JSON.stringify(window.PAWS_KITTENS[i]));$("#preview-content").innerHTML=`<p><strong>Draft preview</strong> — nothing has been published.</p><h3>Kitten profiles (${draft.kittens.length})</h3><ul>${draft.kittens.map(k=>`<li>${esc(k.name)} — ${esc(k.status)} · ${(k.photos||[]).length} gallery photos</li>`).join("")}</ul><h3>Homepage photos</h3><p>${draft.heroPhotos.length} photos in the draft carousel.</p><h3>Events</h3><p>${esc(draft.events.featuredEvent?.location)} — ${esc(draft.events.featuredEvent?.date)}</p><p>${esc(draft.events.specialEvent?.title)} — ${esc(draft.events.specialEvent?.date)}</p><h3>Alumni</h3><p>${draft.alumni.length} existing alumni records. New adoption entries are preview-only at this stage.</p><p>${changed.length} kitten profile(s) differ from the loaded site data.</p>`;$("#preview-dialog").showModal();};
   $("#close-preview").onclick=()=>$("#preview-dialog").close();
-  $("#publish").disabled=true;
+  const publishButton = $("#publish");
+  publishButton.disabled = true;
+
+  function replaceAssignedArray(source, assignment, value) {
+    const pattern = new RegExp(assignment + String.raw`\\s*=\\s*\\[[\\s\\S]*?\\n\\];`);
+    if (!pattern.test(source)) throw new Error("Could not prepare " + assignment + " for saving.");
+    return source.replace(pattern, assignment + " = " + JSON.stringify(value, null, 2) + ";");
+  }
+
+  async function buildDraftFiles() {
+    const [kittenSource, eventSource, alumniSource, scriptSource] = await Promise.all([
+      fetch("../kitten-data.js", { cache: "no-store" }).then(r => { if (!r.ok) throw new Error("Could not load kitten data."); return r.text(); }),
+      fetch("../event-data.js", { cache: "no-store" }).then(r => { if (!r.ok) throw new Error("Could not load event data."); return r.text(); }),
+      fetch("../alumni-data.js", { cache: "no-store" }).then(r => { if (!r.ok) throw new Error("Could not load alumni data."); return r.text(); }),
+      fetch("../script.js", { cache: "no-store" }).then(r => { if (!r.ok) throw new Error("Could not load homepage settings."); return r.text(); })
+    ]);
+    if (draft.kittens.some(k => (k.photos || []).some(p => String(p).startsWith("blob:")))) {
+      throw new Error("Newly selected profile photos are temporary previews. Permanent photo uploads are not connected yet; remove those temporary photos before publishing.");
+    }
+    const kittens = replaceAssignedArray(kittenSource, "appRoot.PAWS_KITTENS", draft.kittens);
+    const eventsMatch = eventSource.match(/window\\.PAWS_EVENT_DATA\\s*=\\s*\\{[\\s\\S]*\\};\\s*$/);
+    if (!eventsMatch) throw new Error("Could not prepare event data for saving.");
+    const events = eventSource.replace(eventsMatch[0], "window.PAWS_EVENT_DATA = " + JSON.stringify(draft.events, null, 2) + ";\\n");
+    const alumni = replaceAssignedArray(alumniSource, "alumniRoot.PAWS_FOSTER_ALUMNI", draft.alumni);
+    const hero = replaceAssignedArray(scriptSource, "const FOSTER_CAROUSEL_PHOTOS", draft.heroPhotos);
+    return { "kitten-data.js": kittens, "event-data.js": events, "alumni-data.js": alumni, "script.js": hero };
+  }
+
+  publishButton.addEventListener("click", async () => {
+    if (!supabaseClient || publishButton.disabled) return;
+    if (!window.confirm("Publish these approved changes to the private editor branch? The public website will not change.")) return;
+    publishButton.disabled = true;
+    $("#save-status").textContent = "Sending your approved draft to the private branch…";
+    try {
+      const files = await buildDraftFiles();
+      const { data, error } = await supabaseClient.functions.invoke("publish-draft", {
+        body: { files, message: "Update foster website draft from private editor" }
+      });
+      if (error) {
+        let detail = error.message || "Publishing request failed.";
+        try { const body = await error.context?.json(); if (body?.error) detail = body.error; } catch {}
+        throw new Error(detail);
+      }
+      if (!data?.ok || data.branch !== "private-editor-foundation") {
+        throw new Error(data?.error || "The service did not confirm a private-branch save.");
+      }
+      dirty = false;
+      $("#save-status").textContent = "Draft saved to private-editor-foundation. The public website has not changed.";
+    } catch (error) {
+      $("#save-status").textContent = "Draft was not confirmed as saved: " + (error.message || "Unknown error.");
+      publishButton.disabled = false;
+    }
+  });
+
+  function updatePublishAvailability() { publishButton.disabled = !dirty || !supabaseClient; }
+  const originalMarkDirty = markDirty;
+  markDirty = () => { originalMarkDirty(); updatePublishAvailability(); };
   renderKittenList();renderPhotos();renderEvents();renderAlumni();
 })();
