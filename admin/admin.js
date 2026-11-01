@@ -168,7 +168,10 @@
         const safeId = String(kitten.id || pending.kittenId || "kitten").toLowerCase().replace(/[^a-z0-9-]+/g,"-").replace(/^-|-$/g,"").slice(0,40) || "kitten";
         const filename = `${safeId}-${Date.now()}-${uploads.length+1}.${ext}`;
         const savedPath = `assets/kittens/${filename}`;
-        uploads.push({ path:savedPath, contentType:prepared.contentType, contentBase64:await photoToBase64(prepared.file) });
+        const contentBase64 = await photoToBase64(prepared.file);
+        const totalUploadSize = uploads.reduce((sum,item)=>sum+item.contentBase64.length,0) + contentBase64.length;
+        if (totalUploadSize > 5_000_000) throw new Error("These photos are too large to send together. Publish fewer new photos at a time.");
+        uploads.push({ path:savedPath, contentType:prepared.contentType, contentBase64 });
         photoMap[photo] = savedPath;
         return savedPath;
       }));
