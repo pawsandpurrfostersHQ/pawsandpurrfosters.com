@@ -1,0 +1,92 @@
+// Supabase Edge Function: publish-draft
+// Deploy with: supabase functions deploy publish-draft
+// Required function secrets: GITHUB_TOKEN, GITHUB_REPOSITORY=pawsandpurrfostersHQ/pawsandpurrfosters.com
+// The function commits only to the private development branch. It never writes to main.
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+const cors = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+};
+const json = (body: unknown, status = 200) =>
+  new Response(JSON.stringify(body), { status, headers: { ...cors, "Content-Type": "application/json" } });
+
+const ADMIN_EMAIL = "pawsandpurrfosters@gmail.com";
+const TARGET_BRANCH = "private-editor-foundation";
+const ALLOWED_FILES = new Set([
+  "kitten-data.js",
+  "event-data.js",
+  "alumni-data.js",
+  "script.js",
+]);
+
+Deno.serve(async (req) => {
+  if (req.method === "OPTIONS") return new Response("ok", { headers: cors });
+  if (req.method !== "POST") return json({ error: "Method not allowed." }, 405);
+
+  const authHeader = req.headers.get("Authorization") || "";
+  const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : "";
+  if (!token) return json({ error: "Sign-in required." }, 401);
+
+  const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+  const anonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
+  const authClient = createClient(supabaseUrl, anonKey, {
+    global: { headers: { Authorization: `Bearer ${token}` } },
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+  const { data: { user }, error: authError } = await authClient.auth.getUser(token);
+  if (authError || !user || user.email?.toLowerCase() !== ADMIN_EMAIL) {
+    return json({ error: "You are not authorized to publish." }, 403);
+  }
+
+  const githubToken = Deno.env.get("GITHUB_TOKEN");
+  const repository = Deno.env.get("GITHUB_REPOSITORY") || "pawsandpurrfostersHQ/pawsandpurrfosters.com";
+  if (!githubToken) return json({ error: "Publishing service is not configured yet." }, 503);
+
+  let payload: { files?: Record<string, string>; message?: string };
+  try { payload = await req.json(); } catch { return json({ error: "Invalid JSON." }, 400); }
+  const files = payload.files;
+  if (!files || typeof files !== "object" || Array.isArray(files)) return json({ error: "No draft files supplied." }, 400);
+  const entries = Object.entries(files);
+  if (!entries.length || entries.length > 4) return json({ error: "Supply between one and four files." }, 400);
+  for (const [path, content] of entries) {
+    if (!ALLOWED_FILES.has(path) || typeof content !== "string" || content.length > 500_000) {
+      return json({ error: `File is not allowed or is too large: ${path}` }, 400);
+    }
+  }
+
+  const headers = {
+    Authorization: `Bearer ${githubToken}`,
+    Accept: "application/vnd.github+json",
+    "X-GitHub-Api-Version": "2022-11-28",
+    "Content-Type": "application/json",
+  };
+  const api = `https://api.github.com/repos/${repository}/contents`;
+  const results = [];
+  for (const [path, content] of entries) {
+    const current = await fetch(`${api}/${path}?ref=${TARGET_BRANCH}`, { headers });
+    let sha: string | undefined;
+    if (current.ok) sha = (await current.json()).sha;
+    else if (current.status !== 404) return json({ error: "Could not read the current draft branch file." }, 502);
+
+    const response = await fetch(`${api}/${path}`, {
+      method: "PUT",
+      headers,
+      body: JSON.stringify({
+        message: payload.message?.slice(0, 120) || "Update foster website draft from private editor",
+        content: btoa(unescape(encodeURIComponent(content))),
+        branch: TARGET_BRANCH,
+        ...(sha ? { sha } : {}),
+      }),
+    });
+    if (!response.ok) {
+      const detail = await response.text();
+      console.error("GitHub commit failed", response.status, detail);
+      return json({ error: "GitHub could not save the draft. No live-site changes were made." }, 502);
+    }
+    const result = await response.json();
+    results.push({ path, commit: result.commit?.sha });
+  }
+  return json({ ok: true, branch: TARGET_BRANCH, files: results });
+});
