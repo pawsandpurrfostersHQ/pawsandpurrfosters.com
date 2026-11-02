@@ -19,7 +19,7 @@ function key(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"
 function cd(start,end,label){
  const now=new Date(),ms=start-now;
  if(ms>0){if(ms<=3600000){const n=Math.max(1,Math.ceil(ms/60000));return (label||"Starts")+" in "+n+" "+(n===1?"minute":"minutes")+"!";}
- const days=Math.ceil(ms/86400000);if(days>=1)return "Coming in "+days+" "+(days===1?"day":"days")+"!";const hours=Math.max(1,Math.ceil(ms/3600000));return hours===1?"Starts in 1 hour!":"Starts in "+hours+" hours!";}
+ const today=new Date(now.getFullYear(),now.getMonth(),now.getDate()),eventDay=new Date(start.getFullYear(),start.getMonth(),start.getDate()),days=Math.round((eventDay-today)/86400000);if(days>0)return "Coming in "+days+" "+(days===1?"day":"days")+"!";const hours=Math.max(1,Math.ceil(ms/3600000));return hours===1?"Starts in 1 hour!":"Starts in "+hours+" hours!";}
  if(end&&now>=end)return "You missed us today!";
  if(!end&&label==="Kitty Yoga")return "Kitty Yoga is starting!";
  if(end){const n=Math.ceil((end-now)/60000);if(n<=15)return "Last chance to stop by today!";if(n<=30)return "30 minutes left!";if(n<=60)return "1 hour left!";const h=Math.floor(n/60);return h+" "+(h===1?"hour":"hours")+" left!";}
@@ -37,7 +37,7 @@ function init(){
   else if(ev.active&&s&&now<e&&key(s)>=key(new Date(now.getFullYear(),now.getMonth(),now.getDate()))){
    const attending=(ev.attendingKittens||[]).filter(function(n){return kittens.some(function(k){return k.name===n;});});
    body='<p class="eyebrow">Where to Find Us</p><h2>Upcoming Adoption Event</h2>'+countdown(s,e)+(s<=now?'<p class="event-live-label">Happening Now!</p>':"")+'<p class="event-date"><strong>'+esc(ev.date||"Date coming soon")+'</strong></p><p class="event-time"><strong>'+esc(ev.time||"10 a.m. – 4 p.m.")+'</strong></p><p class="event-location-name"><strong>'+esc(ev.location||"Location details to be announced")+'</strong></p>'+map(ev.address,ev.mapsUrl)+(attending.length?'<p class="event-attending"><strong>Kittens attending:</strong><br>'+attending.map(esc).join(", ")+'</p>':"");
-  }else body='<p class="eyebrow">Where to Find Us</p><h2 class="coming-soon-title">COMING SOON</h2><p class="coming-soon-copy">Your new best friend might be waiting! Check back soon to see when you can meet our adoptable kittens.</p><div class="coming-soon-details"><strong>Location details to be announced.</strong><p>For more updates and upcoming meet-and-greets, visit our <a href="events/">Events tab</a>!</p></div>';
+  }else body='<p class="eyebrow">Where to Find Us</p><h2 class="coming-soon-title">COMING SOON</h2><p class="coming-soon-copy">Your new best friend might be waiting! Check back soon to see when you can meet our adoptable kittens.</p><div class="coming-soon-details"><strong>Location details to be announced.</strong><p>Check back here for updates and future opportunities to meet our adoptable kittens.</p></div>';
   featured.innerHTML='<article class="event-card event-card--compact"><div class="event-card-content '+(body.includes("coming-soon-title")?"event-coming-soon":"")+'">'+body+'</div></article>';
  }
  const specials=[data.specialEvent].concat(Array.isArray(data.additionalSpecialEvents)?data.additionalSpecialEvents:[]).filter(function(x){if(!x||x.active===false)return false;const p=parts(x);if(!p)return true;const day=new Date(p.y,p.m,p.d);const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());return day>=today;});
