@@ -1163,3 +1163,38 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .meet-calendar-legend{display:flex;flex-wrap:wrap;gap:16px;margin:10px 0 4px;color:var(--muted);font-size:13px}.meet-calendar-legend span{display:inline-flex;align-items:center;gap:7px}.legend-dot{width:11px;height:11px;border-radius:50%;display:inline-block}.legend-dot.available{background:var(--sage)}.legend-dot.unavailable{background:#c9c9c5}.meet-calendar-explanation,.meet-weekend-note{max-width:680px;margin:8px 0;color:var(--muted);font-size:13px;line-height:1.55}.meet-weekend-note{padding:12px 14px;border-left:3px solid var(--sage);border-radius:0 10px 10px 0;background:rgba(255,255,255,.72)}.meet-calendar-day.is-unavailable{background:#e8e8e5!important;color:#858780!important;border-color:#d6d7d2!important}.meet-calendar-day:disabled{cursor:not-allowed}.faq-question-form button,.meet-greet-panel .faq-question-form button,.faq-contact .faq-question-form button{background:var(--purple)!important;color:#fff!important;border:1px solid var(--purple-dark)!important;border-radius:999px!important;font:inherit;font-weight:750!important;padding:12px 24px!important;box-shadow:none!important}.faq-question-form button:hover:not(:disabled),.meet-greet-panel .faq-question-form button:hover:not(:disabled){background:var(--purple-dark)!important}.faq-question-form button:disabled{opacity:.65;cursor:wait}.meet-greet-panel .faq-question-form select{min-height:48px;height:auto}.event-coming-soon{width:100%;max-width:100%;grid-column:1/-1;text-align:center!important;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px clamp(8px,3vw,28px)}.event-coming-soon .eyebrow{color:#e5dcef!important}.event-coming-soon .coming-soon-title{color:#fff!important;font-size:clamp(34px,5vw,48px)!important;margin:4px 0 12px!important;letter-spacing:.035em}.event-coming-soon .coming-soon-copy,.event-coming-soon .coming-soon-details,.event-coming-soon .coming-soon-details p{color:#f3eef7!important;text-align:center!important;max-width:700px;margin:7px auto!important}.event-coming-soon a{color:#fff!important;font-weight:800;text-decoration:underline;text-underline-offset:3px}.event-coming-soon .coming-soon-details{padding:15px 20px;border-radius:16px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15)}#event-featured .event-card:has(.event-coming-soon){display:block!important;min-height:260px}.events-page #event-featured .event-coming-soon{padding:8px 0}
 
 .meet-public-events{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:12px 0}.meet-public-events-title{grid-column:1/-1;margin:0;color:var(--purple-dark);font-size:14px;font-weight:800}.meet-public-event{display:flex;flex-direction:column;gap:3px;padding:12px 14px;border:1px solid #d9d2e2;border-radius:12px;background:#fff}.meet-public-event strong{color:var(--purple-dark)}.meet-public-event span{font-weight:700}.meet-public-event small,.meet-public-event p{margin:0;color:var(--muted);font-size:12px}
+
+/* Meet-and-greet calendar: compact desktop layout, clear status colors, mobile stacking */
+.meet-calendar-layout{display:grid;grid-template-columns:minmax(250px,330px) minmax(210px,1fr);align-items:start;gap:14px;max-width:720px;margin:8px 0 10px}
+.meet-calendar{width:100%;max-width:none;padding:10px;border-radius:13px}
+.meet-calendar-heading{margin-bottom:6px}
+.meet-calendar-heading button{width:30px;height:30px;min-width:30px;padding:0;line-height:1}
+.meet-calendar-grid{gap:3px}
+.meet-calendar-weekday{padding:3px 0;font-size:11px}
+.meet-calendar-empty{min-height:29px}
+.meet-calendar-day{min-width:0;min-height:29px;height:29px;padding:0;border-radius:7px;font-size:12px;line-height:1}
+.meet-calendar-day:not(:disabled){background:#e6f1e6!important;border:1px solid #b8d3b8!important;color:#315f3a!important}
+.meet-calendar-day:not(:disabled):hover,.meet-calendar-day.is-selected{background:#b9d9bd!important;border-color:#548b60!important;color:#234b2b!important;font-weight:850}
+.meet-calendar-day.is-unavailable,.meet-calendar-day:disabled{background:#e8def2!important;border:1px solid #c7b3dc!important;color:#65427f!important;text-decoration:none!important;opacity:1!important}
+.meet-calendar-side{min-width:0;display:flex;flex-direction:column;gap:10px}
+.meet-calendar-legend{display:flex;flex-direction:column;gap:7px;margin:0;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;font-size:12px}
+.meet-calendar-legend .legend-dot.available{background:#72a77a}
+.meet-calendar-legend .legend-dot.unavailable{background:#a985c4}
+.meet-public-events{max-height:190px;overflow:auto;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#f7f4fa}
+.meet-public-events-title{margin:0 0 7px;color:var(--purple-dark);font-size:13px;font-weight:800}
+.meet-public-event{padding:8px 0;border-top:1px solid #e5dcec;font-size:12px;line-height:1.4}
+.meet-public-event:first-of-type{border-top:0}
+.meet-public-event p{margin:4px 0 0;font-size:11px}
+.meet-calendar-explanation,.meet-weekend-note{max-width:720px;margin:8px 0;font-size:12px;line-height:1.45}
+.meet-weekend-note{padding:10px 12px}
+.meet-greet-panel .faq-question-form select#meet-time{display:block;position:relative;z-index:2;width:100%;min-height:48px;padding:10px 42px 10px 13px;background-color:#fff!important;color:var(--ink)!important;border:1px solid var(--line);border-radius:10px;appearance:auto;-webkit-appearance:menulist;pointer-events:auto;cursor:pointer}
+.meet-greet-panel .faq-question-form select#meet-time:disabled{opacity:.55;cursor:not-allowed}
+.events-page #event-featured .event-coming-soon,.events-page #event-featured .event-coming-soon *{color:#352541!important;opacity:1!important;text-shadow:none!important}
+.events-page #event-featured .event-coming-soon{background:linear-gradient(135deg,#eef2e9,#eee5f4)!important;border-radius:18px;padding:24px!important;min-height:250px}
+.events-page #event-featured .event-coming-soon .eyebrow{color:#71558a!important}
+.events-page #event-featured .event-coming-soon .coming-soon-title{color:#50336a!important;font-size:clamp(34px,4vw,46px)!important}
+.events-page #event-featured .event-coming-soon .coming-soon-copy{color:#44364b!important;font-weight:600}
+.events-page #event-featured .event-coming-soon .coming-soon-details{background:rgba(255,255,255,.8)!important;border:1px solid #ded3e7!important;color:#44364b!important}
+.events-page #event-featured .event-coming-soon .coming-soon-details p,.events-page #event-featured .event-coming-soon .coming-soon-details strong{color:#44364b!important}
+.events-page #event-featured .event-coming-soon a{color:#563674!important}
+@media(max-width:700px){.meet-calendar-layout{grid-template-columns:minmax(0,1fr);gap:9px;max-width:100%}.meet-calendar{max-width:100%;padding:10px}.meet-calendar-day{height:clamp(34px,9vw,40px);min-height:clamp(34px,9vw,40px);font-size:13px}.meet-calendar-side{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}.meet-calendar-legend{flex-direction:row;flex-wrap:wrap}.meet-public-events{max-height:none}.meet-calendar-explanation,.meet-weekend-note{font-size:12px}.meet-greet-panel .faq-question-form select#meet-time{font-size:16px}}
