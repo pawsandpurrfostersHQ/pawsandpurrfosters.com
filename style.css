@@ -1211,3 +1211,44 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
  .meet-calendar-day.is-unavailable,.meet-calendar-day:disabled{position:relative!important;background:#eee8f3!important;border:1px solid #d4c5df!important;color:#887494!important;opacity:1!important;text-decoration:none!important}
  .meet-calendar-day.is-unavailable::after,.meet-calendar-day:disabled::after{content:"×";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#9b82ae;font-size:20px;font-weight:500;line-height:1;pointer-events:none}
 }
+
+
+/* Meet-and-greet calendar: clear available and unavailable states on all screen sizes */
+.meet-calendar-day:not(:disabled):not(.is-unavailable){
+  background:#e6f1e6!important;
+  border:1px solid #b8d3b8!important;
+  color:#315f3a!important;
+  opacity:1!important;
+}
+.meet-calendar-day:not(:disabled):not(.is-unavailable):hover,
+.meet-calendar-day:not(:disabled):not(.is-unavailable):focus,
+.meet-calendar-day:not(:disabled):not(.is-unavailable).is-selected,
+.meet-calendar-day:not(:disabled):not(.is-unavailable):active{
+  background:#d9eadb!important;
+  border-color:#548b60!important;
+  color:#315f3a!important;
+}
+.meet-calendar-day.is-unavailable,
+.meet-calendar-day:disabled{
+  position:relative!important;
+  background:#eee8f3!important;
+  border:1px solid #d4c5df!important;
+  color:#887494!important;
+  opacity:1!important;
+  text-decoration:none!important;
+}
+.meet-calendar-day.is-unavailable::after,
+.meet-calendar-day:disabled::after{
+  content:""!important;
+  position:absolute!important;
+  left:20%!important;
+  right:20%!important;
+  top:50%!important;
+  bottom:auto!important;
+  height:2px!important;
+  display:block!important;
+  background:#a58bb8!important;
+  border:0!important;
+  transform:translateY(-50%)!important;
+  pointer-events:none!important;
+}
