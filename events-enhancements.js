@@ -19,7 +19,7 @@ function key(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"
 function cd(start,end,label){
  const now=new Date(),ms=start-now;
  if(ms>0){if(ms<=3600000){const n=Math.max(1,Math.ceil(ms/60000));return (label||"Starts")+" in "+n+" "+(n===1?"minute":"minutes")+"!";}
- const days=Math.ceil(ms/86400000);if(days>=2)return days+" days left!";const hours=Math.max(1,Math.ceil(ms/3600000));return hours===1?"Starts in 1 hour!":"Starts in "+hours+" hours!";}
+ const days=Math.ceil(ms/86400000);if(days>=1)return "Coming in "+days+" "+(days===1?"day":"days")+"!";const hours=Math.max(1,Math.ceil(ms/3600000));return hours===1?"Starts in 1 hour!":"Starts in "+hours+" hours!";}
  if(end&&now>=end)return "You missed us today!";
  if(!end&&label==="Kitty Yoga")return "Kitty Yoga is starting!";
  if(end){const n=Math.ceil((end-now)/60000);if(n<=15)return "Last chance to stop by today!";if(n<=30)return "30 minutes left!";if(n<=60)return "1 hour left!";const h=Math.floor(n/60);return h+" "+(h===1?"hour":"hours")+" left!";}
