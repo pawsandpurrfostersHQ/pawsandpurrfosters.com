@@ -1,7 +1,4 @@
-// ==================================================
-// EASY EVENT EDITING
-// Change the information below when our schedule changes.
-// ==================================================
+// Easy event editing. Event times use 24-hour local time for automatic countdowns.
 window.PAWS_EVENT_DATA = {
   "featuredEvent": {
     "active": true,
@@ -22,7 +19,10 @@ window.PAWS_EVENT_DATA = {
       "Wally"
     ],
     "description": "",
-    "notAttendingKittens": []
+    "notAttendingKittens": [],
+    "dateISO": "2026-11-01",
+    "startTime": "11:00",
+    "endTime": "16:00"
   },
   "regularSchedule": {
     "active": true,
@@ -52,7 +52,11 @@ window.PAWS_EVENT_DATA = {
     "adoptionTime": "10 a.m. – 4 p.m.",
     "yogaTime": "11:30 a.m.",
     "address": "1510 Neroly Road, Oakley, CA",
-    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Diamond+Hills+Sports+Club+%26+Spa%2C+1510+Neroly+Road%2C+Oakley%2C+CA"
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Diamond+Hills+Sports+Club+%26+Spa%2C+1510+Neroly+Road%2C+Oakley%2C+CA",
+    "dateISO": "2026-11-09",
+    "startTime": "10:00",
+    "endTime": "16:00",
+    "yogaStartTime": "11:30"
   },
   "additionalSpecialEvents": []
 };
