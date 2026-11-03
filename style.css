@@ -1288,3 +1288,8 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 
 /* Give the booking form and its calendar the available desktop width */
 .meet-greet-panel .faq-question-form{max-width:100%!important;width:100%!important}
+
+/* Final priority for the selected date and four-booking capacity state */
+.meet-calendar-day:not(:disabled):not(.is-unavailable).is-selected{background:#75628d!important;border-color:#57456f!important;color:#fff!important;box-shadow:0 0 0 2px #d8cde3!important}
+.meet-calendar-day:not(:disabled):not(.is-unavailable):hover:not(.is-selected),.meet-calendar-day:not(:disabled):not(.is-unavailable):focus:not(.is-selected){background:#d9eadb!important;border-color:#548b60!important;color:#315f3a!important}
+.meet-calendar-day.is-fully-booked:disabled{background:#f8dfe8!important;border-color:#e9b9ca!important;color:#92566c!important}
