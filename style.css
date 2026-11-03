@@ -1311,3 +1311,31 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .meet-calendar-day.is-unavailable::after,.meet-calendar-day:disabled::after{background:#b5a1c4!important;color:#b5a1c4!important}
 .meet-public-events{padding-left:20px!important}.meet-public-events-title,.meet-public-event{margin-left:2px!important}
 @media(max-width:760px){.meet-calendar-heading{grid-template-columns:38px minmax(0,1fr) 38px!important}.meet-calendar-heading button{width:34px!important;height:34px!important;min-width:34px!important}}
+
+
+/* Final meet-and-greet calendar polish */
+.meet-calendar-heading button{
+  transform:translateY(-8px)!important;
+}
+.meet-greet-panel .faq-question-form .meet-calendar-day:disabled,
+.meet-greet-panel .faq-question-form .meet-calendar-day.is-unavailable{
+  cursor:default!important;
+  animation:none!important;
+}
+.meet-greet-panel .faq-question-form .meet-calendar-day:disabled:hover{
+  cursor:default!important;
+}
+.meet-public-events{
+  padding-left:30px!important;
+  padding-right:20px!important;
+  box-sizing:border-box!important;
+}
+.meet-public-events-title,
+.meet-public-event{
+  margin-left:8px!important;
+}
+@media(max-width:760px){
+  .meet-calendar-heading button{transform:translateY(-8px)!important}
+  .meet-public-events{padding-left:24px!important;padding-right:16px!important}
+  .meet-public-events-title,.meet-public-event{margin-left:5px!important}
+}
