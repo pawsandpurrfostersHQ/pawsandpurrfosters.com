@@ -1767,3 +1767,17 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
     font-size:13px!important;
   }
 }
+
+
+/* Match the booking arrows' glyph to the visitor cancel/reschedule arrows.
+   Keep the existing circular buttons; remove the booking-only glyph offset. */
+#meet-prev .meet-arrow-glyph,
+#meet-next .meet-arrow-glyph{
+  display:inline-block!important;
+  position:static!important;
+  top:auto!important;
+  transform:none!important;
+  font-size:23px!important;
+  font-weight:400!important;
+  line-height:1!important;
+}
