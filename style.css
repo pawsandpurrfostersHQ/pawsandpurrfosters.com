@@ -1496,3 +1496,106 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
  .manage-calendar .meet-calendar-day{height:clamp(34px,9vw,40px);min-height:clamp(34px,9vw,40px)}
  .manage-calendar-legend{flex-direction:row;flex-wrap:wrap;gap:10px 14px;padding:4px 2px;font-size:12px}
 }
+
+
+/* Consistent, compact private meet-and-greet request styling */
+.meet-greet-panel{
+  max-width:940px!important;
+  margin:28px auto!important;
+  padding:clamp(20px,3.2vw,36px)!important;
+  border:1px solid var(--line)!important;
+  border-radius:22px!important;
+  background:rgba(255,255,255,.9)!important;
+  box-shadow:0 8px 28px rgba(61,45,75,.055)!important;
+}
+.meet-greet-panel>h2{margin:4px 0 10px!important;color:var(--purple-dark)!important}
+.meet-greet-panel>h3{margin:24px 0 8px!important;color:var(--purple-dark)!important}
+.meet-greet-panel .meet-greet-how{
+  margin:20px 0 24px!important;
+  padding:18px 20px!important;
+  border:1px solid #e5deeb!important;
+  border-radius:16px!important;
+  background:#faf8fc!important;
+}
+.meet-greet-panel .meet-greet-how h3{margin:0 0 10px!important;color:var(--purple-dark)!important}
+.meet-greet-panel .meet-greet-how ol{margin:0;padding-left:22px!important;line-height:1.7!important}
+.meet-greet-panel .meet-greet-required-note{margin:6px 0 14px!important;color:var(--muted)!important;font-size:13px!important}
+.meet-greet-panel #meet-greet-form{
+  margin-top:12px!important;
+  padding:clamp(18px,2.5vw,26px)!important;
+  border:1px solid var(--line)!important;
+  border-radius:18px!important;
+  background:rgba(255,255,255,.82)!important;
+  box-shadow:0 5px 18px rgba(61,45,75,.045)!important;
+}
+.meet-greet-panel #meet-greet-form>label,
+.meet-greet-panel #meet-greet-form>.faq-field-label{display:block!important;margin:17px 0 7px!important;font-weight:700!important;color:var(--ink)!important}
+.meet-greet-panel #meet-greet-form>input:not([type=hidden]):not([type=checkbox]):not([type=radio]),
+.meet-greet-panel #meet-greet-form>select,
+.meet-greet-panel #meet-greet-form>textarea{
+  display:block!important;width:100%!important;max-width:100%!important;min-height:48px!important;
+  padding:12px 14px!important;border:1px solid #d9d2df!important;border-radius:11px!important;
+  background:#fff!important;color:var(--ink)!important;font:inherit!important;font-size:16px!important;box-sizing:border-box!important;
+}
+.meet-greet-panel #meet-greet-form>textarea{min-height:110px!important;resize:vertical!important;line-height:1.5!important}
+.meet-greet-panel .meet-greet-kitten-options{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important;margin:10px 0 18px!important;
+}
+.meet-greet-panel .meet-greet-kitten{
+  display:flex!important;align-items:center!important;gap:10px!important;min-height:44px!important;
+  margin:0!important;padding:10px 12px!important;border:1px solid #e5deeb!important;border-radius:11px!important;
+  background:#faf8fc!important;font-weight:600!important;
+}
+.meet-greet-panel .meet-greet-radio{display:flex!important;flex-wrap:wrap!important;gap:12px!important;margin:8px 0 12px!important}
+.meet-greet-panel .meet-greet-radio label{display:flex!important;align-items:center!important;gap:8px!important;padding:9px 13px!important;border:1px solid #e5deeb!important;border-radius:10px!important;background:#faf8fc!important}
+.meet-greet-panel .meet-calendar-layout{
+  display:grid!important;grid-template-columns:minmax(0,390px) minmax(190px,1fr)!important;
+  gap:14px!important;align-items:start!important;margin:10px 0 8px!important;max-width:100%!important;
+}
+.meet-greet-panel .meet-calendar{width:100%!important;max-width:390px!important;min-width:0!important;padding:14px!important;border:1px solid #e8e2ec!important;border-radius:15px!important;background:#fff!important}
+.meet-greet-panel .meet-calendar-grid{gap:5px!important}
+.meet-greet-panel .meet-calendar-day{height:36px!important;min-height:36px!important}
+.meet-greet-panel .meet-calendar-side{display:flex!important;flex-direction:column!important;gap:10px!important}
+.meet-greet-panel .meet-calendar-legend{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px 12px!important;
+  margin:0!important;padding:13px 14px!important;border:1px solid #e8e2ec!important;border-radius:14px!important;
+  background:#faf9fb!important;font-size:12px!important;
+}
+.meet-greet-panel .meet-calendar-legend span{display:flex!important;align-items:center!important;gap:7px!important;white-space:nowrap!important}
+.meet-greet-panel .meet-calendar-legend .meet-weekend-note{grid-column:1/-1!important;margin:3px 0 0!important;padding:10px 11px!important;font-size:12px!important}
+.meet-greet-panel .legend-dot.available{background:#72a77a!important}
+.meet-greet-panel .legend-dot.unavailable{background:#cbbbd8!important}
+.meet-greet-panel .legend-dot.fully-booked{background:#efb8ca!important}
+.meet-greet-panel .legend-dot.past{background:#d8d9d4!important}
+.meet-greet-panel .meet-time-note{margin:12px 0!important;padding:13px 15px!important;border-radius:12px!important;background:#faf8fc!important;color:var(--muted)!important;font-size:13px!important;line-height:1.6!important}
+.meet-greet-panel .meet-time-window{
+  margin:9px 0 0!important;padding:12px 14px!important;border-radius:11px!important;
+  background:var(--sage-light)!important;color:var(--sage-dark)!important;font-weight:750!important;line-height:1.5!important;
+}
+.meet-greet-panel .meet-greet-date-status{margin:8px 0!important;color:var(--muted)!important;font-size:13px!important}
+.meet-greet-panel #meet-submit{margin-top:18px!important;min-height:48px!important}
+.meet-greet-panel .meet-greet-disclaimer{margin:14px 0 0!important;padding-top:13px!important;border-top:1px solid #ece7ef!important;color:var(--muted)!important;font-size:13px!important;line-height:1.6!important}
+.meet-calendar-day.is-past,.meet-calendar-day.is-past:disabled,
+.meet-greet-panel .meet-calendar-day.is-past,
+.meet-greet-panel .meet-calendar-day.is-past:disabled,
+.manage-meet-greet .meet-calendar-day.is-past,
+.manage-meet-greet .meet-calendar-day.is-past:disabled{
+  background:#eeeeeb!important;border:1px solid #dedfda!important;color:#a2a49e!important;
+  opacity:1!important;text-decoration:none!important;box-shadow:none!important;
+}
+.meet-calendar-day.is-past.is-fully-booked:disabled,
+.meet-calendar-day.is-past.is-event-reserved:disabled,
+.meet-greet-panel .meet-calendar-day.is-past.is-fully-booked:disabled,
+.meet-greet-panel .meet-calendar-day.is-past.is-event-reserved:disabled,
+.manage-meet-greet .meet-calendar-day.is-past.is-fully-booked:disabled,
+.manage-meet-greet .meet-calendar-day.is-past.is-event-reserved:disabled{
+  background:#eeeeeb!important;border-color:#dedfda!important;color:#a2a49e!important;
+}
+@media(max-width:760px){
+  .meet-greet-panel{padding:20px 14px!important}
+  .meet-greet-panel #meet-greet-form{padding:18px 14px!important}
+  .meet-greet-panel .meet-calendar-layout{grid-template-columns:minmax(0,1fr)!important;gap:9px!important}
+  .meet-greet-panel .meet-calendar{max-width:100%!important;padding:12px!important}
+  .meet-greet-panel .meet-calendar-legend{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .meet-greet-panel .meet-greet-kitten-options{grid-template-columns:minmax(0,1fr)!important}
+}
