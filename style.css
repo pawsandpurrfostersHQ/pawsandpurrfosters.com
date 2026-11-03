@@ -1477,3 +1477,22 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
  .manage-meet-greet textarea{min-height:150px}
  .manage-meet-greet .button.primary{width:100%;box-sizing:border-box}
 }
+
+
+/* Compact version of the main booking calendar for visitor rescheduling */
+.manage-calendar-layout{display:grid;grid-template-columns:minmax(250px,390px) minmax(150px,1fr);gap:14px;align-items:start;margin:10px 0 4px}
+.manage-calendar{min-width:0;max-width:390px;width:100%}
+.manage-calendar .meet-calendar-heading{margin-bottom:8px}
+.manage-calendar .meet-calendar-grid{gap:4px}
+.manage-calendar .meet-calendar-day{height:36px;min-height:36px}
+.manage-calendar-legend{display:flex;flex-direction:column;gap:9px;padding:10px 4px;color:var(--muted);font-size:13px}
+.manage-calendar-legend span{display:flex;align-items:center;gap:8px}
+.manage-window{margin:10px 0 0;padding:12px 14px;border-radius:11px;background:var(--sage-light);color:var(--sage-dark);font-weight:750;line-height:1.5}
+.manage-meet-greet .meet-calendar-day.is-fully-booked{background:#eee8f3!important;border-color:#d8c8e2!important;color:var(--purple-dark)!important;text-decoration:line-through}
+.manage-meet-greet .meet-calendar-day.is-event-reserved{background:#f2eaf5!important;border-color:#d8c4e4!important;color:var(--purple-dark)!important}
+@media(max-width:640px){
+ .manage-calendar-layout{grid-template-columns:minmax(0,1fr);gap:7px}
+ .manage-calendar{max-width:100%}
+ .manage-calendar .meet-calendar-day{height:clamp(34px,9vw,40px);min-height:clamp(34px,9vw,40px)}
+ .manage-calendar-legend{flex-direction:row;flex-wrap:wrap;gap:10px 14px;padding:4px 2px;font-size:12px}
+}
