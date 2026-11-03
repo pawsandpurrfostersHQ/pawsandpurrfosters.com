@@ -131,7 +131,7 @@ function initMeetGreet(){
    const start=meetLocalIso(selected,p.hour,p.minute),end=new Date(new Date(start).getTime()+(p.hour===16?2:4)*3600000).toISOString();
    const overlaps=(occupied||[]).some(x=>new Date(x.starts_at)<new Date(end)&&new Date(x.ends_at)>new Date(start));
    option.disabled=!selected||!occupied||overlaps||(dailyCounts[selected]||0)>=4||isDateClosed(selected);
-   option.textContent=option.value+(overlaps?" — unavailable":"");
+   option.textContent=option.value+(overlaps?" — unavailable":((dailyCounts[selected]||0)>=4||isDateClosed(selected)?" — unavailable":""));
   });
   timeSelect.value="";
   timeSelect.disabled=!selected||!occupied||applicationNo;
@@ -141,15 +141,7 @@ function initMeetGreet(){
  const upcomingPublicEvents=[data.featuredEvent,data.specialEvent].concat(data.additionalSpecialEvents||[]).filter(function(x){if(!x||x.active===false)return false;const p=parts(x);if(!p)return false;const day=new Date(p.y,p.m,p.d);day.setHours(23,59,59,999);return day>=today;});
  const eventList=host.querySelector("#meet-public-events");
  if(eventList){eventList.innerHTML=upcomingPublicEvents.length?'<p class="meet-public-events-title">Upcoming public adoption events</p>'+upcomingPublicEvents.map(function(x){return '<div class="meet-public-event"><strong>'+esc(x.date||"Upcoming event")+'</strong><span>'+esc(x.location||"Location to be announced")+'</span><small>'+esc(x.time||x.adoptionTime||"")+'</small></div>';}).join(""): '<div class="meet-public-events-empty"><strong>No upcoming public adoption event is listed right now.</strong><p>Please check our Events tab for the next adoption and our regular schedule.</p></div>';}
- function isFullyBooked(dateKey){
-  if(!occupied)return false;
-  return (dailyCounts[dateKey]||0)>=4;
-  return timeOptions.every(option=>{
-   const p=meetTimeParts(option.value);if(!p)return true;
-   const start=meetLocalIso(dateKey,p.hour,p.minute),end=new Date(new Date(start).getTime()+4*3600000).toISOString();
-   return occupied.some(x=>new Date(x.starts_at)<new Date(end)&&new Date(x.ends_at)>new Date(start));
-  });
- }
+ function isFullyBooked(dateKey){return !!occupied&&(dailyCounts[dateKey]||0)>=4;}
  function isDateClosed(dateKey){const d=new Date(dateKey+"T12:00:00");const thanksgiving=(()=>{const first=new Date(d.getFullYear(),10,1),firstThu=1+((4-first.getDay()+7)%7);return new Date(d.getFullYear(),10,firstThu+21);})();const start=new Date(thanksgiving);start.setDate(thanksgiving.getDate()-((thanksgiving.getDay()+6)%7));const end=new Date(start);end.setDate(start.getDate()+6);const x=new Date(dateKey+"T12:00:00");return (x>=start&&x<=end)||(x>=new Date(d.getFullYear(),11,21)&&x<=new Date(d.getFullYear(),11,27));}
  function unavailable(d){const k=key(d),todayPassed=d<today||(k===key(today)&&new Date()>=new Date(meetLocalIso(k,16,0)));return todayPassed||d.getDay()===2||d.getDay()===4||blocked.has(k)||isDateClosed(k)||isFullyBooked(k);}
  function reason(d){if(d.getDay()===2||d.getDay()===4||isDateClosed(key(d)))return "Unavailable";if(blocked.has(key(d)))return "A public adoption event is scheduled for this date. Please check the Events tab for the schedule.";if(isFullyBooked(key(d)))return "This date has reached its limit of four meet-and-greet bookings.";return "";}
@@ -158,7 +150,7 @@ function initMeetGreet(){
   let html=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map(function(x){return '<span class="meet-calendar-weekday">'+x+'</span>';}).join("");
   const offset=new Date(month.getFullYear(),month.getMonth(),1).getDay(),n=new Date(month.getFullYear(),month.getMonth()+1,0).getDate();
   for(let i=0;i<offset;i++)html+='<span class="meet-calendar-empty"></span>';
-  for(let d=1;d<=n;d++){const x=new Date(month.getFullYear(),month.getMonth(),d),k=key(x),past=x<today,eventDay=blocked.has(k),off=unavailable(x);html+='<button type="button" class="meet-calendar-day'+(off?" is-unavailable ":"")+(past?" is-past ":"")+(eventDay?" is-event-reserved ":"")+(date.value===k?" is-selected":"")+'" data-day="'+k+'" title="'+esc(reason(x)||"Available for a private meet-and-greet")+'" aria-label="'+esc(x.toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})+(off?". "+reason(x):", available"))+'" '+(off?"disabled":"")+'>'+d+'</button>';}
+  for(let d=1;d<=n;d++){const x=new Date(month.getFullYear(),month.getMonth(),d),k=key(x),past=x<today||(k===key(today)&&new Date()>=new Date(meetLocalIso(k,16,0))),eventDay=blocked.has(k),full=isFullyBooked(k),off=unavailable(x);html+='<button type="button" class="meet-calendar-day'+(off?" is-unavailable ":"")+(past?" is-past ":"")+(full?" is-fully-booked ":"")+(eventDay?" is-event-reserved ":"")+(date.value===k?" is-selected":"")+'" data-day="'+k+'" title="'+esc(reason(x)||"Available for a private meet-and-greet")+'" aria-label="'+esc(x.toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})+(off?". "+reason(x):", available"))+'" '+(off?"disabled":"")+'>'+d+'</button>';}
   host.querySelector("#meet-days").innerHTML=html;
   host.querySelectorAll("[data-day]").forEach(function(b){b.addEventListener("click",function(){date.value=b.dataset.day;status.textContent="Selected "+new Date(date.value+"T12:00:00").toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"})+". Choose an available start time below.";updateTimeOptions();draw();});});
   host.querySelector("#meet-prev").disabled=month<=new Date(today.getFullYear(),today.getMonth(),1);
