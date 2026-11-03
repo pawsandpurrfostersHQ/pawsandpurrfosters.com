@@ -53,6 +53,10 @@ function init(){
  tick();if(!window.__pawsEventTick)window.__pawsEventTick=setInterval(tick,30000);
  initMeetGreet();
 }
+function meetTodayDate() {
+ const p={};new Intl.DateTimeFormat("en-US",{timeZone:"America/Los_Angeles",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date()).forEach(x=>p[x.type]=x.value);
+ return new Date(Number(p.year),Number(p.month)-1,Number(p.day));
+}
 function meetLocalIso(dateKey, hour, minute) {
  const [y,m,d]=dateKey.split("-").map(Number);
  const target=Date.UTC(y,m-1,d,hour,minute);
@@ -111,7 +115,7 @@ function initMeetGreet(){
   timeSelect.disabled=!selected||!occupied;
  }
 
- const today=new Date();today.setHours(0,0,0,0);let month=new Date(today.getFullYear(),today.getMonth(),1),applicationNo=false;
+ const today=meetTodayDate();let month=new Date(today.getFullYear(),today.getMonth(),1),applicationNo=false;
  const upcomingPublicEvents=[data.featuredEvent,data.specialEvent].concat(data.additionalSpecialEvents||[]).filter(function(x){if(!x||x.active===false)return false;const p=parts(x);if(!p)return false;const day=new Date(p.y,p.m,p.d);day.setHours(23,59,59,999);return day>=today;});
  const eventList=host.querySelector("#meet-public-events");
  if(eventList){eventList.innerHTML=upcomingPublicEvents.length?'<p class="meet-public-events-title">Upcoming public adoption events</p>'+upcomingPublicEvents.map(function(x){return '<div class="meet-public-event"><strong>'+esc(x.date||"Upcoming event")+'</strong><span>'+esc(x.location||"Location to be announced")+'</span><small>'+esc(x.time||x.adoptionTime||"")+'</small></div>';}).join(""): '<div class="meet-public-events-empty"><strong>No upcoming public adoption event is listed right now.</strong><p>Please check our Events tab for the next adoption and our regular schedule.</p></div>';}
