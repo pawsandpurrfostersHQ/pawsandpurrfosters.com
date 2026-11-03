@@ -1726,3 +1726,44 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
   .meet-greet-panel .meet-calendar-day{height:clamp(36px,9vw,42px)!important;min-height:clamp(36px,9vw,42px)!important}
   .meet-greet-panel .meet-calendar-heading button{width:36px!important;height:36px!important;min-width:36px!important}
 }
+
+
+/* Final, form-specific overrides for the main booking calendar.
+   The form's generic button rule otherwise turns calendar controls into pills. */
+.meet-greet-panel #meet-greet-form.faq-question-form .meet-calendar-heading button{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  width:36px!important;height:36px!important;min-width:36px!important;min-height:36px!important;
+  max-height:36px!important;margin:0!important;padding:0!important;
+  border:0!important;border-radius:50%!important;
+  background:var(--sage-light)!important;color:var(--sage-dark)!important;
+  box-shadow:none!important;font-size:23px!important;line-height:1!important;
+}
+.meet-greet-panel #meet-greet-form.faq-question-form .meet-calendar-heading button:hover:not(:disabled){
+  background:#dce8d8!important;color:var(--sage-dark)!important;
+}
+.meet-greet-panel #meet-greet-form.faq-question-form .meet-calendar-heading button:disabled{
+  opacity:.35!important;cursor:not-allowed!important;
+}
+
+/* Keep the booking calendar larger, but give the side information a little
+   less room while preserving the side-by-side desktop arrangement. */
+.meet-greet-panel .meet-calendar-layout{
+  grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr)!important;
+  gap:16px!important;max-width:100%!important;
+}
+.meet-greet-panel .meet-calendar{
+  width:100%!important;max-width:none!important;padding:14px!important;
+}
+.meet-greet-panel #meet-greet-form.faq-question-form button.meet-calendar-day{
+  display:grid!important;place-items:center!important;
+  width:100%!important;height:auto!important;min-width:0!important;min-height:0!important;
+  aspect-ratio:1/1!important;padding:0!important;margin:0!important;
+  border-radius:7px!important;font-size:14px!important;line-height:1!important;
+  box-shadow:none!important;
+}
+@media(max-width:760px){
+  .meet-greet-panel .meet-calendar-layout{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}
+  .meet-greet-panel #meet-greet-form.faq-question-form button.meet-calendar-day{
+    font-size:13px!important;
+  }
+}
