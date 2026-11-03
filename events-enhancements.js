@@ -126,6 +126,7 @@ function initMeetGreet(){
  }
  function updateTimeOptions(){
   const selected=date.value;
+  if(!selected||!occupied){timeOptions.forEach(option=>{option.disabled=true;option.textContent=option.value;});timeSelect.disabled=true;return;}
   timeOptions.forEach(option=>{
    const p=meetTimeParts(option.value);if(!p)return;
    const start=meetLocalIso(selected,p.hour,p.minute),end=new Date(new Date(start).getTime()+(p.hour===16?2:4)*3600000).toISOString();
