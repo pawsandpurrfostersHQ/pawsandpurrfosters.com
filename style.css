@@ -1678,3 +1678,51 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
   font-size:13px!important;line-height:1.5!important;font-weight:600!important;
 }
 .meet-greet-panel .meet-bonded-note[hidden]{display:none!important}
+
+/* Make the main private meet-and-greet calendar use the same square-day
+   shape and sage navigation as the visitor cancel/reschedule calendar. */
+.meet-greet-panel .meet-calendar-heading button{
+  width:38px!important;height:38px!important;min-width:38px!important;padding:0!important;
+  border:0!important;border-radius:50%!important;background:var(--sage-light)!important;
+  color:var(--sage-dark)!important;font-size:26px!important;line-height:1!important;
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+}
+.meet-greet-panel .meet-calendar-heading button:disabled{opacity:.35!important}
+.meet-greet-panel .meet-calendar-day{
+  min-width:0!important;height:42px!important;min-height:42px!important;padding:0!important;
+  border-radius:7px!important;font-size:14px!important;line-height:1!important;
+}
+/* Explicit state colors: these selectors override older calendar rules. */
+.meet-greet-panel .meet-calendar-day:not(:disabled){
+  background:#e6f1e6!important;border:1px solid #b8d3b8!important;color:#315f3a!important;
+}
+.meet-greet-panel .meet-calendar-day:not(:disabled):hover,
+.meet-greet-panel .meet-calendar-day:not(:disabled):focus{
+  background:#dcebdd!important;border-color:#548b60!important;color:#315f3a!important;
+}
+.meet-greet-panel .meet-calendar-day:not(:disabled).is-selected{
+  background:#b9d5bc!important;border-color:#527f59!important;color:#254b2c!important;
+  box-shadow:inset 0 0 0 1px #527f59!important;
+}
+.meet-greet-panel .meet-calendar-day.is-unavailable,
+.meet-greet-panel .meet-calendar-day:disabled{
+  background:#f1ebf5!important;border:1px solid #d9cde2!important;color:#8b7898!important;
+  opacity:1!important;text-decoration:none!important;
+}
+.meet-greet-panel .meet-calendar-day.is-fully-booked,
+.meet-greet-panel .meet-calendar-day.is-fully-booked:disabled{
+  background:#f8dfe8!important;border-color:#e9b9ca!important;color:#92566c!important;
+  text-decoration:none!important;
+}
+.meet-greet-panel .meet-calendar-day.is-event-reserved:not(.is-past){
+  background:#f2eaf5!important;border-color:#d8c4e4!important;color:var(--purple-dark)!important;
+}
+.meet-greet-panel .meet-calendar-day.is-past,
+.meet-greet-panel .meet-calendar-day.is-past:disabled{
+  background:#eeeeeb!important;border-color:#dedfda!important;color:#a2a49e!important;
+  opacity:1!important;text-decoration:none!important;box-shadow:none!important;
+}
+@media(max-width:760px){
+  .meet-greet-panel .meet-calendar-day{height:clamp(36px,9vw,42px)!important;min-height:clamp(36px,9vw,42px)!important}
+  .meet-greet-panel .meet-calendar-heading button{width:36px!important;height:36px!important;min-width:36px!important}
+}
