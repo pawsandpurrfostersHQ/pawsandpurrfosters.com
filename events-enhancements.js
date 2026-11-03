@@ -66,7 +66,7 @@ function meetLocalIso(dateKey, hour, minute) {
  return new Date(guess).toISOString();
 }
 function meetTimeParts(label) {
- const m=String(label).match(/(\\d{1,2}):(\\d{2})\\s*(a\\.m\\.|p\\.m\\.)/i);
+ const m=String(label).match(/(\d{1,2}):(\d{2})\s*(a\.m\.|p\.m\.)/i);
  if(!m)return null;let h=Number(m[1])%12;if(/p/i.test(m[3]))h+=12;
  return {hour:h,minute:Number(m[2])};
 }
