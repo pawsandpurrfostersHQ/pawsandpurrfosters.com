@@ -53,6 +53,23 @@ function init(){
  tick();if(!window.__pawsEventTick)window.__pawsEventTick=setInterval(tick,30000);
  initMeetGreet();
 }
+function meetLocalIso(dateKey, hour, minute) {
+ const [y,m,d]=dateKey.split("-").map(Number);
+ const target=Date.UTC(y,m-1,d,hour,minute);
+ let guess=target;
+ for(let i=0;i<3;i++){
+  const parts=new Intl.DateTimeFormat("en-US",{timeZone:"America/Los_Angeles",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(new Date(guess));
+  const p={};parts.forEach(x=>p[x.type]=x.value);
+  const represented=Date.UTC(Number(p.year),Number(p.month)-1,Number(p.day),Number(p.hour),Number(p.minute));
+  guess+=target-represented;
+ }
+ return new Date(guess).toISOString();
+}
+function meetTimeParts(label) {
+ const m=String(label).match(/(\\d{1,2}):(\\d{2})\\s*(a\\.m\\.|p\\.m\\.)/i);
+ if(!m)return null;let h=Number(m[1])%12;if(/p/i.test(m[3]))h+=12;
+ return {hour:h,minute:Number(m[2])};
+}
 function initMeetGreet(){
  const host=document.getElementById("private-meet-greet");if(!host)return;
  const manageToken=new URLSearchParams(window.location.search).get("meet-manage");
@@ -69,6 +86,31 @@ function initMeetGreet(){
  let checks=eligible.map(function(k){return '<label class="meet-greet-kitten"><input type="checkbox" name="kittens[]" value="'+esc(k.name)+'"><span>'+esc(k.name)+'</span></label>';}).join("");
  host.innerHTML='<section class="meet-greet-panel"><p class="eyebrow">A more personal visit</p><h2>Want to Meet the Kittens?</h2><p>Can’t make it to one of our scheduled adoption events? You may still be able to arrange a private meet-and-greet.</p><div class="meet-greet-how"><h3>How it works</h3><ol><li>First, submit an adoption application for the kitten(s) you’re interested in through <a href="'+rescue+'" target="_blank" rel="noopener noreferrer">No Paws Left Behind Kitty Rescue</a>.</li><li>Once you’ve submitted your application, let the rescue know you’d like to schedule a private meet-and-greet.</li><li>Then, fill out the request form below so we can coordinate a time.</li></ol></div><h3>Private Meet-and-Greet Request</h3><p class="meet-greet-required-note">Fields marked <strong>Required</strong> must be completed.</p><form id="meet-greet-form" class="faq-question-form" action="#" method="POST"><input type="hidden" name="_subject" value="New Private Meet-and-Greet Request — Paws &amp; Purr Fosters"><input type="hidden" name="_template" value="table"><input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="faq-honeypot"><label for="meet-first">First name <span class="required-label">Required</span></label><input id="meet-first" name="first_name" type="text" maxlength="60" autocomplete="given-name" pattern="(?=.*[A-Za-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ’\' -]+" title="Please enter a valid first name using letters only." required><label for="meet-last">Last name <span class="required-label">Required</span></label><input id="meet-last" name="last_name" type="text" maxlength="60" autocomplete="family-name" pattern="(?=.*[A-Za-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ’\' -]+" title="Please enter a valid last name using letters only." required><label for="meet-email">Email address <span class="required-label">Required</span></label><input id="meet-email" name="email" type="email" maxlength="254" autocomplete="email" required><span class="faq-field-label">Which kittens are you interested in? <span class="required-label">Required — select at least one</span></span><div class="meet-greet-kitten-options">'+(checks||"<p>No currently adoptable kittens are listed.</p>")+'</div><label>Have you submitted an adoption application through No Paws Left Behind Kitty Rescue? <span class="required-label">Required</span></label><div class="meet-greet-radio"><label><input type="radio" name="application_submitted" value="Yes" required> Yes</label><label><input type="radio" name="application_submitted" value="No" required> No</label></div><p id="meet-no-note" class="meet-greet-application-note" hidden>Please submit an <a href="'+rescue+'" target="_blank" rel="noopener noreferrer">adoption application through the rescue</a> first. You can return here once it has been submitted.</p><label>Preferred date <span class="required-label">Required</span></label><div class="meet-calendar-layout"><div class="meet-calendar"><div class="meet-calendar-heading"><button type="button" id="meet-prev" aria-label="Previous month">‹</button><strong id="meet-month"></strong><button type="button" id="meet-next" aria-label="Next month">›</button></div><div id="meet-days" class="meet-calendar-grid"></div></div><aside class="meet-calendar-side"><div class="meet-calendar-legend"><span><i class="legend-dot available"></i> Available</span><span><i class="legend-dot unavailable"></i> Unavailable</span></div><div id="meet-public-events" class="meet-public-events"></div></aside></div><p class="meet-calendar-explanation"><strong>Calendar key:</strong> Green dates are available. Purple dates are unavailable because of our schedule or a public adoption event. Past dates are simply disabled.</p><p class="meet-weekend-note">Weekend requests are tentative. If an adoption event is added for your selected date, we’ll email you with the event details and invite you to meet the kittens there.</p><input type="hidden" id="meet-date" name="preferred_date" required><p id="meet-date-status" class="meet-greet-date-status" role="status">Select an available date on the calendar.</p><label for="meet-time">Preferred time <span class="required-label">Required</span></label><select id="meet-time" name="preferred_time" required><option value="">Choose a time (9:30 a.m. – 4:00 p.m.)</option><option>9:30 a.m.</option><option>10:00 a.m.</option><option>10:30 a.m.</option><option>11:00 a.m.</option><option>11:30 a.m.</option><option>12:00 p.m.</option><option>12:30 p.m.</option><option>1:00 p.m.</option><option>1:30 p.m.</option><option>2:00 p.m.</option><option>2:30 p.m.</option><option>3:00 p.m.</option><option>3:30 p.m.</option><option>4:00 p.m.</option></select><label for="meet-notes">Anything else you’d like us to know? <span>(Optional)</span></label><textarea id="meet-notes" name="additional_notes" rows="3"></textarea><button id="meet-submit" type="submit" class="button button-primary">Request a Meet-and-Greet</button><p id="meet-status" class="faq-form-status" role="status" aria-live="polite"></p><p class="meet-greet-disclaimer">Submitting a request does not confirm an appointment. Private meet-and-greets are subject to availability and scheduling. We’ll contact you by email to discuss your request.</p></form></section>';
  const form=host.querySelector("#meet-greet-form"),date=host.querySelector("#meet-date"),status=host.querySelector("#meet-date-status");
+ const timeSelect=host.querySelector("#meet-time");
+ const timeOptions=Array.from(timeSelect.options).filter(o=>o.value);
+ let occupied=[];
+ async function refreshAvailability(){
+  const from=meetLocalIso(key(new Date(month.getFullYear(),month.getMonth(),1)),0,0);
+  const to=meetLocalIso(key(new Date(month.getFullYear(),month.getMonth()+1,1)),0,0);
+  try{
+   const response=await fetch("https://ovnbbpcrwbvotyevghcx.supabase.co/functions/v1/meet-greet",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"availability",from,to})});
+   const result=await response.json();if(!response.ok)throw new Error(result.error||"Availability could not be loaded.");
+   occupied=result.blocked||[];updateTimeOptions();
+  }catch(e){occupied=null;timeSelect.disabled=true;status.textContent="Live availability is temporarily unavailable. Please refresh the page before choosing a time.";}
+ }
+ function updateTimeOptions(){
+  const selected=date.value;
+  timeOptions.forEach(option=>{
+   const p=meetTimeParts(option.value);if(!p)return;
+   const start=meetLocalIso(selected,p.hour,p.minute),end=new Date(new Date(start).getTime()+4*3600000).toISOString();
+   const overlaps=(occupied||[]).some(x=>new Date(x.starts_at)<new Date(end)&&new Date(x.ends_at)>new Date(start));
+   option.disabled=!selected||!occupied||overlaps;
+   option.textContent=option.value+(overlaps?" — unavailable":"");
+  });
+  timeSelect.value="";
+  timeSelect.disabled=!selected||!occupied;
+ }
+
  const today=new Date();today.setHours(0,0,0,0);let month=new Date(today.getFullYear(),today.getMonth(),1),applicationNo=false;
  const upcomingPublicEvents=[data.featuredEvent,data.specialEvent].concat(data.additionalSpecialEvents||[]).filter(function(x){if(!x||x.active===false)return false;const p=parts(x);if(!p)return false;const day=new Date(p.y,p.m,p.d);day.setHours(23,59,59,999);return day>=today;});
  const eventList=host.querySelector("#meet-public-events");
@@ -82,7 +124,7 @@ function initMeetGreet(){
   for(let i=0;i<offset;i++)html+='<span class="meet-calendar-empty"></span>';
   for(let d=1;d<=n;d++){const x=new Date(month.getFullYear(),month.getMonth(),d),k=key(x),past=x<today,eventDay=blocked.has(k),off=unavailable(x);html+='<button type="button" class="meet-calendar-day'+(off?" is-unavailable ":"")+(past?" is-past ":"")+(eventDay?" is-event-reserved ":"")+(date.value===k?" is-selected":"")+'" data-day="'+k+'" title="'+esc(reason(x)||"Available for a private meet-and-greet")+'" aria-label="'+esc(x.toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})+(off?". "+reason(x):", available"))+'" '+(off?"disabled":"")+'>'+d+'</button>';}
   host.querySelector("#meet-days").innerHTML=html;
-  host.querySelectorAll("[data-day]").forEach(function(b){b.addEventListener("click",function(){date.value=b.dataset.day;status.textContent="Selected "+new Date(date.value+"T12:00:00").toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"})+". Choose a preferred time below.";draw();});});
+  host.querySelectorAll("[data-day]").forEach(function(b){b.addEventListener("click",function(){date.value=b.dataset.day;status.textContent="Selected "+new Date(date.value+"T12:00:00").toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"})+". Choose an available start time below.";updateTimeOptions();draw();});});
   host.querySelector("#meet-prev").disabled=month<=new Date(today.getFullYear(),today.getMonth(),1);
   host.querySelector("#meet-next").disabled=month>=new Date(today.getFullYear(),today.getMonth()+6,1);
  }
@@ -96,11 +138,11 @@ function initMeetGreet(){
   if(form.querySelector('input[name="application_submitted"]:checked')?.value!=="Yes"){out.textContent="Please submit an adoption application through the rescue before requesting a private meet-and-greet.";return;}
   if(!date.value||unavailable(new Date(date.value+"T12:00:00"))){out.textContent="That date is unavailable. Please choose another date.";return;}
   button.disabled=true;button.textContent="Sending…";out.textContent="Sending your request. Please wait.";
-  try{const selectedTime=host.querySelector("#meet-time").value;const timeMatch=selectedTime.match(/(\d{1,2}):(\d{2})\s*(a\.m\.|p\.m\.)/i);if(!timeMatch)throw new Error("Please choose a valid start time.");let hh=Number(timeMatch[1])%12;if(/p/i.test(timeMatch[3]))hh+=12;const mm=Number(timeMatch[2]);const localDate=new Date(date.value+"T"+String(hh).padStart(2,"0")+":"+String(mm).padStart(2,"0")+":00");const startsAt=localDate.toISOString();const eventDates=[data.featuredEvent,data.specialEvent].concat(data.additionalSpecialEvents||[]).filter(x=>x&&x.active!==false).map(parts).filter(Boolean).map(p=>key(new Date(p.y,p.m,p.d)));const response=await fetch("https://ovnbbpcrwbvotyevghcx.supabase.co/functions/v1/meet-greet",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"request",first_name:form.elements.first_name.value,last_name:form.elements.last_name.value,email:form.elements.email.value,kittens:Array.from(form.querySelectorAll('input[name="kittens[]"]:checked')).map(x=>x.value),application_submitted:form.querySelector('input[name="application_submitted"]:checked')?.value==="Yes",starts_at:startsAt,additional_notes:form.elements.additional_notes.value,event_dates:eventDates,_honey:form.elements._honey.value})});const result=await response.json();if(!response.ok)throw new Error(result.error||"Your request could not be sent.");form.reset();date.value="";draw();host.querySelector("#meet-no-note").hidden=true;status.textContent="Select an available date on the calendar.";out.textContent="Thank you! Your request has been received. It is not confirmed until we review it and email you.";}
+  try{const selectedTime=host.querySelector("#meet-time").value;const timeMatch=selectedTime.match(/(\d{1,2}):(\d{2})\s*(a\.m\.|p\.m\.)/i);if(!timeMatch)throw new Error("Please choose a valid start time.");let hh=Number(timeMatch[1])%12;if(/p/i.test(timeMatch[3]))hh+=12;const mm=Number(timeMatch[2]);const startsAt=meetLocalIso(date.value,hh,mm);const eventDates=[data.featuredEvent,data.specialEvent].concat(data.additionalSpecialEvents||[]).filter(x=>x&&x.active!==false).map(parts).filter(Boolean).map(p=>key(new Date(p.y,p.m,p.d)));const response=await fetch("https://ovnbbpcrwbvotyevghcx.supabase.co/functions/v1/meet-greet",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"request",first_name:form.elements.first_name.value,last_name:form.elements.last_name.value,email:form.elements.email.value,kittens:Array.from(form.querySelectorAll('input[name="kittens[]"]:checked')).map(x=>x.value),application_submitted:form.querySelector('input[name="application_submitted"]:checked')?.value==="Yes",starts_at:startsAt,additional_notes:form.elements.additional_notes.value,event_dates:eventDates,_honey:form.elements._honey.value})});const result=await response.json();if(!response.ok)throw new Error(result.error||"Your request could not be sent.");form.reset();date.value="";draw();host.querySelector("#meet-no-note").hidden=true;status.textContent="Select an available date on the calendar.";out.textContent="Thank you! Your request has been received. It is not confirmed until we review it and email you.";}
   catch(err){out.textContent="Sorry, your request could not be sent right now. Please try again later or email pawsandpurrsfosters@gmail.com directly.";}
   finally{button.disabled=false;button.textContent="Request a Meet-and-Greet";}
  });
- draw();
+ draw();refreshAvailability();
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
 })();
