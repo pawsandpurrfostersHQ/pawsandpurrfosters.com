@@ -1339,3 +1339,37 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
   .meet-public-events{padding-left:24px!important;padding-right:16px!important}
   .meet-public-events-title,.meet-public-event{margin-left:5px!important}
 }
+
+
+/* Target the actual booking controls directly so these offsets win over layout rules. */
+#meet-prev,
+#meet-next{
+  position:relative!important;
+  top:-12px!important;
+  transform:translateY(-12px)!important;
+}
+#meet-public-events{
+  padding-inline-start:34px!important;
+  padding-inline-end:20px!important;
+  box-sizing:border-box!important;
+}
+#meet-public-events > .meet-public-events-title,
+#meet-public-events > .meet-public-event,
+#meet-public-events > .meet-public-events-empty{
+  margin-inline-start:10px!important;
+}
+@media(max-width:760px){
+  #meet-prev,#meet-next{
+    top:-10px!important;
+    transform:translateY(-10px)!important;
+  }
+  #meet-public-events{
+    padding-inline-start:26px!important;
+    padding-inline-end:16px!important;
+  }
+  #meet-public-events > .meet-public-events-title,
+  #meet-public-events > .meet-public-event,
+  #meet-public-events > .meet-public-events-empty{
+    margin-inline-start:6px!important;
+  }
+}
