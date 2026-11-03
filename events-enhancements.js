@@ -121,7 +121,7 @@ function initMeetGreet(){
   try{
    const response=await fetch("https://ovnbbpcrwbvotyevghcx.supabase.co/functions/v1/meet-greet",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"availability",from,to})});
    const result=await response.json();if(!response.ok)throw new Error(result.error||"Availability could not be loaded.");
-   occupied=result.blocked||[];updateTimeOptions();
+   occupied=result.blocked||[];updateTimeOptions();draw();
   }catch(e){occupied=null;timeSelect.disabled=true;status.textContent="Live availability is temporarily unavailable. Please refresh the page before choosing a time.";}
  }
  function updateTimeOptions(){
@@ -141,8 +141,16 @@ function initMeetGreet(){
  const upcomingPublicEvents=[data.featuredEvent,data.specialEvent].concat(data.additionalSpecialEvents||[]).filter(function(x){if(!x||x.active===false)return false;const p=parts(x);if(!p)return false;const day=new Date(p.y,p.m,p.d);day.setHours(23,59,59,999);return day>=today;});
  const eventList=host.querySelector("#meet-public-events");
  if(eventList){eventList.innerHTML=upcomingPublicEvents.length?'<p class="meet-public-events-title">Upcoming public adoption events</p>'+upcomingPublicEvents.map(function(x){return '<div class="meet-public-event"><strong>'+esc(x.date||"Upcoming event")+'</strong><span>'+esc(x.location||"Location to be announced")+'</span><small>'+esc(x.time||x.adoptionTime||"")+'</small></div>';}).join(""): '<div class="meet-public-events-empty"><strong>No upcoming public adoption event is listed right now.</strong><p>Please check our Events tab for the next adoption and our regular schedule.</p></div>';}
- function unavailable(d){return d<today||d.getDay()===2||d.getDay()===4||blocked.has(key(d));}
- function reason(d){if(d<today)return "This date has passed.";if(d.getDay()===2||d.getDay()===4)return "Private meet-and-greets are not available on Tuesdays or Thursdays.";if(blocked.has(key(d)))return "A public adoption event is scheduled for this date. You’re welcome to come meet the kittens there instead!";return "";}
+ function isFullyBooked(dateKey){
+  if(!occupied||!occupied.length)return false;
+  return timeOptions.every(option=>{
+   const p=meetTimeParts(option.value);if(!p)return true;
+   const start=meetLocalIso(dateKey,p.hour,p.minute),end=new Date(new Date(start).getTime()+4*3600000).toISOString();
+   return occupied.some(x=>new Date(x.starts_at)<new Date(end)&&new Date(x.ends_at)>new Date(start));
+  });
+ }
+ function unavailable(d){return d<today||d.getDay()===2||d.getDay()===4||blocked.has(key(d))||isFullyBooked(key(d));}
+ function reason(d){if(d<today)return "This date has passed.";if(d.getDay()===2||d.getDay()===4)return "Private meet-and-greets are not available on Tuesdays or Thursdays.";if(blocked.has(key(d)))return "A public adoption event is scheduled for this date. You’re welcome to come meet the kittens there instead!";if(isFullyBooked(key(d)))return "All private meet-and-greet start times are booked for this date.";return "";}
  function draw(){
   host.querySelector("#meet-month").textContent=month.toLocaleDateString("en-US",{month:"long",year:"numeric"});
   let html=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map(function(x){return '<span class="meet-calendar-weekday">'+x+'</span>';}).join("");
