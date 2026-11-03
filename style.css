@@ -1285,3 +1285,6 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .meet-calendar-legend .legend-dot.fully-booked{background:#efb8ca}
 .meet-time-note{max-width:900px;margin:8px 0 14px;padding:11px 14px;border-left:3px solid var(--purple);background:#f7f4fa;border-radius:0 10px 10px 0;color:var(--ink);font-size:13px;line-height:1.5}
 @media(max-width:760px){.meet-calendar-layout{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}}
+
+/* Give the booking form and its calendar the available desktop width */
+.meet-greet-panel .faq-question-form{max-width:100%!important;width:100%!important}
