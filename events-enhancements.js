@@ -98,7 +98,7 @@ function initMeetGreet(){
     let available=0;
     manageTimeOptions.forEach(o=>{
      const p=meetTimeParts(o.value),start=meetLocalIso(day,p.hour,p.minute),end=new Date(new Date(start).getTime()+((p.hour>14||(p.hour===14&&p.minute>=30))?2:4)*3600000).toISOString();
-     const overlap=(result.blocked||[]).some(x=>new Date(x.starts_at)<new Date(end)&&new Date(x.ends_at)>new Date(start));
+     const occupied=[...(result.blocked||[]),...(result.own_appointment?[result.own_appointment]:[])];const overlap=occupied.some(x=>new Date(x.starts_at)<new Date(end)&&new Date(x.ends_at)>new Date(start));
      const unavailable=weekday===2||weekday===4||publicDay||overlap||(result.daily_counts?.[day]||0)>=4||isDateClosed(day);
      o.disabled=unavailable;o.textContent=o.value+(unavailable?" — unavailable":"");if(!unavailable)available++;
     });
