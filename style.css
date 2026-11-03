@@ -1599,3 +1599,13 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
   .meet-greet-panel .meet-calendar-legend{grid-template-columns:repeat(2,minmax(0,1fr))!important}
   .meet-greet-panel .meet-greet-kitten-options{grid-template-columns:minmax(0,1fr)!important}
 }
+
+
+/* Complete the compact visitor rescheduling legend */
+.manage-calendar-legend .legend-dot.available{background:#72a77a!important}
+.manage-calendar-legend .legend-dot.unavailable{background:#cbbbd8!important}
+.manage-calendar-legend .legend-dot.fully-booked{background:#efb8ca!important}
+.manage-calendar-legend .legend-dot.past{background:#d8d9d4!important}
+.manage-meet-greet .manage-calendar-legend{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px 12px!important}
+.manage-meet-greet .manage-calendar-legend span{display:flex!important;align-items:center!important;gap:7px!important;white-space:nowrap!important}
+@media(max-width:640px){.manage-meet-greet .manage-calendar-legend{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
