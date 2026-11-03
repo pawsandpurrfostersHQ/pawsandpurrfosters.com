@@ -1609,3 +1609,72 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .manage-meet-greet .manage-calendar-legend{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px 12px!important}
 .manage-meet-greet .manage-calendar-legend span{display:flex!important;align-items:center!important;gap:7px!important;white-space:nowrap!important}
 @media(max-width:640px){.manage-meet-greet .manage-calendar-legend{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+
+
+/* Match visitor rescheduling calendar to the original booking calendar */
+.manage-meet-greet .manage-calendar .meet-calendar-heading button{
+  width:30px!important;height:30px!important;min-width:30px!important;padding:0!important;
+  border:0!important;border-radius:50%!important;background:var(--sage-light)!important;
+  color:var(--sage-dark)!important;font-size:23px!important;line-height:1!important;
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+}
+.manage-meet-greet .manage-calendar .meet-calendar-heading button:disabled{opacity:.35!important}
+.manage-meet-greet .manage-calendar .meet-calendar-day{
+  min-width:0!important;min-height:29px!important;height:29px!important;padding:0!important;
+  border-radius:7px!important;font-size:12px!important;line-height:1!important;
+}
+.manage-meet-greet .manage-calendar .meet-calendar-day:not(:disabled){
+  background:#e6f1e6!important;border:1px solid #b8d3b8!important;color:#315f3a!important;
+}
+.manage-meet-greet .manage-calendar .meet-calendar-day:not(:disabled):hover,
+.manage-meet-greet .manage-calendar .meet-calendar-day:not(:disabled):focus{
+  background:#dcebdd!important;border-color:#548b60!important;color:#315f3a!important;
+}
+.manage-meet-greet .manage-calendar .meet-calendar-day:not(:disabled).is-selected{
+  background:#b9d5bc!important;border-color:#527f59!important;color:#254b2c!important;
+  box-shadow:inset 0 0 0 1px #527f59!important;
+}
+.manage-meet-greet .manage-calendar .meet-calendar-day.is-unavailable,
+.manage-meet-greet .manage-calendar .meet-calendar-day:disabled{
+  background:#f1ebf5!important;border:1px solid #d9cde2!important;color:#8b7898!important;
+  opacity:1!important;text-decoration:none!important;
+}
+.manage-meet-greet .manage-calendar .meet-calendar-day.is-fully-booked,
+.manage-meet-greet .manage-calendar .meet-calendar-day.is-fully-booked:disabled{
+  background:#f8dfe8!important;border-color:#e9b9ca!important;color:#92566c!important;
+  text-decoration:none!important;
+}
+.manage-meet-greet .manage-calendar .meet-calendar-day.is-event-reserved:not(.is-past){
+  background:#f2eaf5!important;border-color:#d8c4e4!important;color:var(--purple-dark)!important;
+}
+.manage-meet-greet .manage-calendar .meet-calendar-day.is-past,
+.manage-meet-greet .manage-calendar .meet-calendar-day.is-past:disabled{
+  background:#eeeeeb!important;border-color:#dedfda!important;color:#a2a49e!important;
+  opacity:1!important;text-decoration:none!important;box-shadow:none!important;
+}
+.manage-meet-greet .manage-calendar .meet-calendar-day.is-past.is-fully-booked:disabled,
+.manage-meet-greet .manage-calendar .meet-calendar-day.is-past.is-event-reserved:disabled{
+  background:#eeeeeb!important;border-color:#dedfda!important;color:#a2a49e!important;
+}
+.manage-meet-greet .manage-calendar-legend .legend-dot,
+.meet-greet-panel .meet-calendar-legend .legend-dot{
+  display:inline-block!important;flex:0 0 11px!important;width:11px!important;height:11px!important;
+  min-width:11px!important;min-height:11px!important;aspect-ratio:1/1!important;
+  border-radius:50%!important;box-sizing:border-box!important;
+}
+.manage-meet-greet .manage-calendar-legend .legend-dot.available{background:#72a77a!important}
+.manage-meet-greet .manage-calendar-legend .legend-dot.unavailable{background:#cbbbd8!important}
+.manage-meet-greet .manage-calendar-legend .legend-dot.fully-booked{background:#efb8ca!important}
+.manage-meet-greet .manage-calendar-legend .legend-dot.past{background:#d8d9d4!important}
+
+/* Keep the anti-spam honeypot in the form but out of the visitor's view */
+.meet-greet-panel #meet-greet-form>input.faq-honeypot{
+  position:absolute!important;left:-10000px!important;top:auto!important;width:1px!important;height:1px!important;
+  min-height:1px!important;padding:0!important;margin:0!important;opacity:0!important;pointer-events:none!important;
+}
+.meet-greet-panel .meet-bonded-note{
+  margin:4px 0 16px!important;padding:11px 14px!important;border:1px solid #d3e1d0!important;
+  border-radius:11px!important;background:var(--sage-light)!important;color:var(--sage-dark)!important;
+  font-size:13px!important;line-height:1.5!important;font-weight:600!important;
+}
+.meet-greet-panel .meet-bonded-note[hidden]{display:none!important}
