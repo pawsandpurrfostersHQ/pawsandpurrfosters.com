@@ -1450,3 +1450,30 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
   #meet-public-events > .meet-public-events-empty > strong,
   #meet-public-events > .meet-public-events-empty > p{padding-inline-start:6px!important}
 }
+
+
+/* Visitor appointment management — responsive layout and site palette */
+.manage-meet-greet{max-width:920px;margin:28px auto;padding:clamp(20px,3.5vw,38px)}
+.manage-meet-greet .manage-card{margin:20px 0;padding:clamp(18px,2.5vw,26px);border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.82);box-shadow:0 5px 18px rgba(61,45,75,.045)}
+.manage-meet-greet .manage-card h3{margin:0 0 12px;color:var(--purple-dark)}
+.manage-meet-greet .manage-card p{line-height:1.65}
+.manage-meet-greet .manage-card label{display:block;margin:14px 0 7px;font-weight:700;color:var(--ink)}
+.manage-meet-greet .manage-field{display:block;margin:18px 0 22px}
+.manage-meet-greet input[type=date],.manage-meet-greet select,.manage-meet-greet textarea{display:block;width:100%;max-width:100%;min-height:50px;padding:12px 14px;border:1px solid #d9d2df;border-radius:11px;background:#fff;color:var(--ink);font:inherit;font-size:16px;box-sizing:border-box}
+.manage-meet-greet textarea{min-height:130px;resize:vertical;line-height:1.5}
+.manage-meet-greet .manage-help{margin:8px 0 0;color:var(--muted);font-size:13px}
+.manage-meet-greet .manage-carrier-note{margin:18px 0 4px;padding:14px 16px;border-left:4px solid var(--sage-dark);border-radius:0 12px 12px 0;background:var(--sage-light);color:var(--ink)}
+.manage-meet-greet .button.primary{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:12px 22px;border:1px solid var(--purple-dark);border-radius:999px;background:var(--purple);color:#fff;font-weight:750;text-decoration:none;cursor:pointer}
+.manage-meet-greet .button.primary:hover:not(:disabled){background:var(--purple-dark)}
+.manage-meet-greet .button:disabled{opacity:.55;cursor:not-allowed}
+.manage-status{margin:18px 0;padding:14px 16px;border-radius:13px;color:var(--purple-dark);background:var(--purple-light);line-height:1.6}
+.manage-status:empty{display:none}
+.manage-status.is-success{padding:22px;background:var(--sage-light);border:1px solid #cbd9c7;color:var(--sage-dark)}
+.manage-status.is-success h3{margin:0 0 8px;color:var(--sage-dark)}
+@media(max-width:640px){
+ .manage-meet-greet{padding:20px 14px}
+ .manage-meet-greet .manage-card{padding:18px 14px;margin:16px 0}
+ .manage-meet-greet .manage-field{margin:20px 0 24px}
+ .manage-meet-greet textarea{min-height:150px}
+ .manage-meet-greet .button.primary{width:100%;box-sizing:border-box}
+}
