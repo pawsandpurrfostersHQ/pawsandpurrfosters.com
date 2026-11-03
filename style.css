@@ -1373,3 +1373,38 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
     margin-inline-start:6px!important;
   }
 }
+
+
+/* Fine alignment: keep the circular arrow buttons and event panel fixed. */
+#meet-prev,#meet-next{
+  top:auto!important;
+  position:relative!important;
+  transform:none!important;
+}
+#meet-prev .meet-arrow-glyph,
+#meet-next .meet-arrow-glyph{
+  display:inline-block!important;
+  position:relative!important;
+  top:-5px!important;
+  transform:none!important;
+  line-height:1!important;
+}
+#meet-public-events{
+  padding:14px 16px!important;
+  box-sizing:border-box!important;
+}
+#meet-public-events > .meet-public-events-title,
+#meet-public-events > .meet-public-event,
+#meet-public-events > .meet-public-events-empty{
+  margin-inline-start:0!important;
+  position:relative!important;
+  left:8px!important;
+}
+@media(max-width:760px){
+  #meet-prev .meet-arrow-glyph,
+  #meet-next .meet-arrow-glyph{top:-4px!important}
+  #meet-public-events{padding:10px 12px!important}
+  #meet-public-events > .meet-public-events-title,
+  #meet-public-events > .meet-public-event,
+  #meet-public-events > .meet-public-events-empty{left:6px!important}
+}
