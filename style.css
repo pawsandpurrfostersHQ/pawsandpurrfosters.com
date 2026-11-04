@@ -1252,3 +1252,535 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
   transform:translateY(-50%)!important;
   pointer-events:none!important;
 }
+
+
+/* Calendar refinement: consistent compact date cells and balanced desktop layout */
+.meet-calendar-layout{grid-template-columns:minmax(320px,410px) minmax(250px,1fr);gap:22px;max-width:900px;align-items:start}
+.meet-calendar{min-width:0;padding:14px}
+.meet-calendar-grid{display:grid!important;grid-template-columns:repeat(7,minmax(0,1fr))!important;gap:6px!important;width:100%}
+.meet-calendar-weekday,.meet-calendar-empty,.meet-calendar-day{box-sizing:border-box!important;min-width:0!important;width:100%!important}
+.meet-calendar-empty{height:clamp(34px,4vw,44px)!important;min-height:0!important}
+.meet-calendar-day{position:relative!important;display:grid!important;place-items:center!important;height:auto!important;min-height:0!important;aspect-ratio:1/1!important;padding:0!important;margin:0!important;border-radius:50%!important;font-size:clamp(12px,1.2vw,14px)!important;line-height:1!important;font-weight:650!important;overflow:hidden!important}
+.meet-calendar-day.is-unavailable,.meet-calendar-day:disabled{background:#eee8f3!important;color:#745b87!important}
+.meet-calendar-day.is-unavailable::after,.meet-calendar-day:disabled::after{content:""!important;position:absolute!important;left:20%!important;right:20%!important;top:50%!important;width:auto!important;height:1.5px!important;background:#9a7caf!important;border:0!important;transform:translateY(-50%) rotate(-42deg)!important;transform-origin:center!important;z-index:1!important;pointer-events:none!important}
+.meet-calendar-day.is-past{background:#f0f0ed!important;border-color:#e2e3de!important;color:#a2a49e!important}
+.meet-calendar-day.is-past::after{display:none!important}
+.meet-calendar-side{min-width:0;gap:12px}
+.meet-calendar-legend{padding:14px 16px;font-size:13px}
+.meet-public-events{max-height:340px;padding:14px 16px}
+.meet-public-event{font-size:13px;padding:11px 0}
+.meet-public-event p{display:none}
+.meet-public-events-empty{padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#f7f4fa;color:var(--ink);font-size:13px;line-height:1.5}
+.meet-public-events-empty p{margin:6px 0 0;color:var(--muted)}
+.meet-calendar-explanation,.meet-weekend-note{max-width:900px;font-size:13px;line-height:1.5}
+@media(max-width:760px){.meet-calendar-layout{grid-template-columns:minmax(0,1fr);gap:12px;max-width:100%}.meet-calendar{padding:12px}.meet-calendar-grid{gap:5px!important}.meet-calendar-empty{height:clamp(34px,10vw,42px)!important}.meet-calendar-day{font-size:13px!important}.meet-calendar-side{display:grid;grid-template-columns:minmax(0,1fr);gap:9px}.meet-calendar-legend{flex-direction:row;flex-wrap:wrap}.meet-public-events{max-height:none}.meet-calendar-explanation,.meet-weekend-note{font-size:12px}}
+
+/* Meet-and-greet booking refinements */
+.meet-calendar-layout{max-width:100%!important;grid-template-columns:minmax(320px,1.05fr) minmax(260px,.95fr)!important;gap:24px!important}
+.meet-calendar-heading{display:flex;align-items:center;justify-content:space-between;min-height:38px}
+.meet-calendar-heading strong{flex:1;text-align:center}
+.meet-calendar-day:not(:disabled):hover,.meet-calendar-day:not(:disabled):focus{background:#d9eadb!important;border-color:#548b60!important;color:#315f3a!important}
+.meet-calendar-day.is-selected{background:#75628d!important;border-color:#57456f!important;color:#fff!important;box-shadow:0 0 0 2px #d8cde3!important}
+.meet-calendar-day.is-fully-booked,.meet-calendar-day.is-fully-booked:disabled{background:#f8dfe8!important;border-color:#e9b9ca!important;color:#92566c!important}
+.meet-calendar-legend .legend-dot.fully-booked{background:#efb8ca}
+.meet-time-note{max-width:900px;margin:8px 0 14px;padding:11px 14px;border-left:3px solid var(--purple);background:#f7f4fa;border-radius:0 10px 10px 0;color:var(--ink);font-size:13px;line-height:1.5}
+@media(max-width:760px){.meet-calendar-layout{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}}
+
+/* Give the booking form and its calendar the available desktop width */
+.meet-greet-panel .faq-question-form{max-width:100%!important;width:100%!important}
+
+/* Final priority for the selected date and four-booking capacity state */
+.meet-calendar-day:not(:disabled):not(.is-unavailable).is-selected{background:#75628d!important;border-color:#57456f!important;color:#fff!important;box-shadow:0 0 0 2px #d8cde3!important}
+.meet-calendar-day:not(:disabled):not(.is-unavailable):hover:not(.is-selected),.meet-calendar-day:not(:disabled):not(.is-unavailable):focus:not(.is-selected){background:#d9eadb!important;border-color:#548b60!important;color:#315f3a!important}
+.meet-calendar-day.is-fully-booked:disabled{background:#f8dfe8!important;border-color:#e9b9ca!important;color:#92566c!important}
+
+
+/* Meet-and-greet calendar refinements — preview branch */
+.meet-calendar-layout{grid-template-columns:minmax(360px,1.25fr) minmax(220px,.75fr)!important;gap:22px!important;max-width:100%!important;align-items:start!important}.meet-calendar{width:100%;max-width:none!important;padding:16px!important}.meet-calendar-heading{display:grid!important;grid-template-columns:40px minmax(0,1fr) 40px!important;align-items:center!important;min-height:44px!important;gap:8px!important}.meet-calendar-heading button{display:grid!important;place-items:center!important;align-self:center!important;justify-self:center!important;width:36px!important;height:36px!important;min-width:36px!important;max-height:36px!important;line-height:1!important;font-size:24px!important;padding:0!important;margin:0!important;transform:none!important}.meet-calendar-heading button:first-child{grid-column:1;grid-row:1}.meet-calendar-heading strong{grid-column:2;grid-row:1;text-align:center!important}.meet-calendar-heading button:last-child{grid-column:3;grid-row:1}.meet-calendar-grid{gap:7px!important}.meet-calendar-day{aspect-ratio:1/1!important;min-height:0!important;height:auto!important}
+.meet-calendar-day:not(:disabled):not(.is-unavailable){background:#e6f1e6!important;border:1px solid #b8d3b8!important;color:#315f3a!important}.meet-calendar-day:not(:disabled):not(.is-unavailable):hover,.meet-calendar-day:not(:disabled):not(.is-unavailable):focus{background:#d9eadb!important;border-color:#548b60!important;color:#315f3a!important}.meet-calendar-day:not(:disabled):not(.is-unavailable).is-selected{background:#d9cbe8!important;border-color:#a88fc1!important;color:#57456f!important;box-shadow:inset 0 0 0 2px #bba8cf!important}
+.meet-calendar-day.is-unavailable,.meet-calendar-day:disabled{background:#eee8f3!important;border:1px solid #d4c5df!important;color:#887494!important;opacity:1!important}.meet-calendar-day.is-past,.meet-calendar-day.is-past:disabled{background:#eeeeeb!important;border-color:#dedfda!important;color:#a2a49e!important}.meet-calendar-day.is-past::after{display:none!important}.meet-calendar-day.is-fully-booked,.meet-calendar-day.is-fully-booked:disabled{background:#f8dfe8!important;border-color:#e9b9ca!important;color:#92566c!important}
+.meet-calendar-side{gap:12px!important}.meet-calendar-legend{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px 12px!important;padding:13px 15px!important}.meet-calendar-legend span{white-space:nowrap!important}.meet-calendar-legend .legend-dot.available{background:#72a77a!important}.meet-calendar-legend .legend-dot.unavailable{background:#cbbbd8!important}.meet-calendar-legend .legend-dot.fully-booked{background:#efb8ca!important}.meet-calendar-legend .legend-dot.past{background:#d8d9d4!important}.meet-calendar-legend .meet-weekend-note{grid-column:1/-1;margin:3px 0 0!important;padding:9px 11px!important;font-size:12px!important}.meet-calendar-explanation{display:none!important}.meet-time-window{margin:8px 0 0;color:var(--sage-dark);font-weight:800;font-size:14px}.meet-four-pm-note{margin:8px 0 14px;padding:11px 14px;border-left:3px solid var(--purple);border-radius:0 10px 10px 0;background:#f7f4fa;color:var(--ink);font-size:13px;line-height:1.5}
+@media(max-width:760px){.meet-calendar-layout{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}.meet-calendar-legend{grid-template-columns:repeat(2,minmax(0,1fr))!important}.meet-calendar{padding:12px!important}.meet-calendar-grid{gap:5px!important}}
+
+
+/* Latest requested desktop/mobile booking polish */
+.meet-calendar-day:not(:disabled):not(.is-unavailable).is-selected{background:#b9d5bc!important;border-color:#527f59!important;color:#254b2c!important;box-shadow:inset 0 0 0 1px #527f59!important}
+.meet-calendar-day:not(:disabled):not(.is-unavailable).is-selected:hover,.meet-calendar-day:not(:disabled):not(.is-unavailable).is-selected:focus{background:#a9cbaa!important;border-color:#3f7048!important;color:#214728!important;box-shadow:inset 0 0 0 2px #3f7048!important}
+.meet-calendar-day:not(:disabled):not(.is-unavailable):not(.is-selected):hover,.meet-calendar-day:not(:disabled):not(.is-unavailable):not(.is-selected):focus{background:#dcebdd!important;border-color:#548b60!important;color:#315f3a!important;box-shadow:inset 0 0 0 1px #548b60!important}
+.meet-calendar-day.is-unavailable,.meet-calendar-day:disabled{background:#f1ebf5!important;border-color:#d9cde2!important;color:#8b7898!important}
+.meet-calendar-day.is-unavailable::after,.meet-calendar-day:disabled::after{background:#b5a1c4!important;color:#b5a1c4!important}
+.meet-public-events{padding-left:20px!important}.meet-public-events-title,.meet-public-event{margin-left:2px!important}
+@media(max-width:760px){.meet-calendar-heading{grid-template-columns:38px minmax(0,1fr) 38px!important}.meet-calendar-heading button{width:34px!important;height:34px!important;min-width:34px!important}}
+
+
+/* Final meet-and-greet calendar polish */
+.meet-calendar-heading button{
+  transform:translateY(-8px)!important;
+}
+.meet-greet-panel .faq-question-form .meet-calendar-day:disabled,
+.meet-greet-panel .faq-question-form .meet-calendar-day.is-unavailable{
+  cursor:default!important;
+  animation:none!important;
+}
+.meet-greet-panel .faq-question-form .meet-calendar-day:disabled:hover{
+  cursor:default!important;
+}
+.meet-public-events{
+  padding-left:30px!important;
+  padding-right:20px!important;
+  box-sizing:border-box!important;
+}
+.meet-public-events-title,
+.meet-public-event{
+  margin-left:8px!important;
+}
+@media(max-width:760px){
+  .meet-calendar-heading button{transform:translateY(-8px)!important}
+  .meet-public-events{padding-left:24px!important;padding-right:16px!important}
+  .meet-public-events-title,.meet-public-event{margin-left:5px!important}
+}
+
+
+/* Target the actual booking controls directly so these offsets win over layout rules. */
+#meet-prev,
+#meet-next{
+  position:relative!important;
+  top:-12px!important;
+  transform:translateY(-12px)!important;
+}
+#meet-public-events{
+  padding-inline-start:34px!important;
+  padding-inline-end:20px!important;
+  box-sizing:border-box!important;
+}
+#meet-public-events > .meet-public-events-title,
+#meet-public-events > .meet-public-event,
+#meet-public-events > .meet-public-events-empty{
+  margin-inline-start:10px!important;
+}
+@media(max-width:760px){
+  #meet-prev,#meet-next{
+    top:-10px!important;
+    transform:translateY(-10px)!important;
+  }
+  #meet-public-events{
+    padding-inline-start:26px!important;
+    padding-inline-end:16px!important;
+  }
+  #meet-public-events > .meet-public-events-title,
+  #meet-public-events > .meet-public-event,
+  #meet-public-events > .meet-public-events-empty{
+    margin-inline-start:6px!important;
+  }
+}
+
+
+/* Fine alignment: keep the circular arrow buttons and event panel fixed. */
+#meet-prev,#meet-next{
+  top:auto!important;
+  position:relative!important;
+  transform:none!important;
+}
+#meet-prev .meet-arrow-glyph,
+#meet-next .meet-arrow-glyph{
+  display:inline-block!important;
+  position:relative!important;
+  top:-5px!important;
+  transform:none!important;
+  line-height:1!important;
+}
+#meet-public-events{
+  padding:14px 16px!important;
+  box-sizing:border-box!important;
+}
+#meet-public-events > .meet-public-events-title,
+#meet-public-events > .meet-public-event,
+#meet-public-events > .meet-public-events-empty{
+  margin-inline-start:0!important;
+  position:relative!important;
+  left:8px!important;
+}
+@media(max-width:760px){
+  #meet-prev .meet-arrow-glyph,
+  #meet-next .meet-arrow-glyph{top:-4px!important}
+  #meet-public-events{padding:10px 12px!important}
+  #meet-public-events > .meet-public-events-title,
+  #meet-public-events > .meet-public-event,
+  #meet-public-events > .meet-public-events-empty{left:6px!important}
+}
+
+/* Shift only the text inside the public-events panel; preserve the panel geometry. */
+#meet-public-events{
+  padding:14px 16px!important;
+  box-sizing:border-box!important;
+}
+#meet-public-events > .meet-public-events-title{
+  margin:0 0 7px!important;
+  left:auto!important;
+  transform:none!important;
+  text-indent:10px!important;
+}
+#meet-public-events > .meet-public-event{
+  margin:0!important;
+  left:auto!important;
+  transform:none!important;
+}
+#meet-public-events > .meet-public-event > strong,
+#meet-public-events > .meet-public-event > span,
+#meet-public-events > .meet-public-event > small{
+  display:block!important;
+  padding-inline-start:10px!important;
+}
+#meet-public-events > .meet-public-events-empty{
+  margin:0!important;
+  left:auto!important;
+  transform:none!important;
+}
+#meet-public-events > .meet-public-events-empty > strong,
+#meet-public-events > .meet-public-events-empty > p{
+  display:block!important;
+  padding-inline-start:10px!important;
+}
+@media(max-width:760px){
+  #meet-public-events{padding:10px 12px!important}
+  #meet-public-events > .meet-public-events-title{text-indent:6px!important}
+  #meet-public-events > .meet-public-event > strong,
+  #meet-public-events > .meet-public-event > span,
+  #meet-public-events > .meet-public-event > small,
+  #meet-public-events > .meet-public-events-empty > strong,
+  #meet-public-events > .meet-public-events-empty > p{padding-inline-start:6px!important}
+}
+
+
+/* Visitor appointment management — responsive layout and site palette */
+.manage-meet-greet{max-width:920px;margin:28px auto;padding:clamp(20px,3.5vw,38px)}
+.manage-meet-greet .manage-card{margin:20px 0;padding:clamp(18px,2.5vw,26px);border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.82);box-shadow:0 5px 18px rgba(61,45,75,.045)}
+.manage-meet-greet .manage-card h3{margin:0 0 12px;color:var(--purple-dark)}
+.manage-meet-greet .manage-card p{line-height:1.65}
+.manage-meet-greet .manage-card label{display:block;margin:14px 0 7px;font-weight:700;color:var(--ink)}
+.manage-meet-greet .manage-field{display:block;margin:18px 0 22px}
+.manage-meet-greet input[type=date],.manage-meet-greet select,.manage-meet-greet textarea{display:block;width:100%;max-width:100%;min-height:50px;padding:12px 14px;border:1px solid #d9d2df;border-radius:11px;background:#fff;color:var(--ink);font:inherit;font-size:16px;box-sizing:border-box}
+.manage-meet-greet textarea{min-height:130px;resize:vertical;line-height:1.5}
+.manage-meet-greet .manage-help{margin:8px 0 0;color:var(--muted);font-size:13px}
+.manage-meet-greet .manage-carrier-note{margin:18px 0 4px;padding:14px 16px;border-left:4px solid var(--sage-dark);border-radius:0 12px 12px 0;background:var(--sage-light);color:var(--ink)}
+.manage-meet-greet .button.primary{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:12px 22px;border:1px solid var(--purple-dark);border-radius:999px;background:var(--purple);color:#fff;font-weight:750;text-decoration:none;cursor:pointer}
+.manage-meet-greet .button.primary:hover:not(:disabled){background:var(--purple-dark)}
+.manage-meet-greet .button:disabled{opacity:.55;cursor:not-allowed}
+.manage-status{margin:18px 0;padding:14px 16px;border-radius:13px;color:var(--purple-dark);background:var(--purple-light);line-height:1.6}
+.manage-status:empty{display:none}
+.manage-status.is-success{padding:22px;background:var(--sage-light);border:1px solid #cbd9c7;color:var(--sage-dark)}
+.manage-status.is-success h3{margin:0 0 8px;color:var(--sage-dark)}
+.manage-reschedule-pending{margin:10px 0;padding:14px 16px;border:1px solid #cbd9c7;border-radius:13px;background:var(--sage-light);color:var(--sage-dark)}
+.manage-reschedule-pending h3{margin:0 0 8px;color:var(--sage-dark)}
+.manage-reschedule-pending p{margin:7px 0;line-height:1.55}
+@media(max-width:640px){
+ .manage-meet-greet{padding:20px 14px}
+ .manage-meet-greet .manage-card{padding:18px 14px;margin:16px 0}
+ .manage-meet-greet .manage-field{margin:20px 0 24px}
+ .manage-meet-greet textarea{min-height:150px}
+ .manage-meet-greet .button.primary{width:100%;box-sizing:border-box}
+}
+
+
+/* Compact version of the main booking calendar for visitor rescheduling */
+.manage-calendar-layout{display:grid;grid-template-columns:minmax(250px,390px) minmax(150px,1fr);gap:14px;align-items:start;margin:10px 0 4px}
+.manage-calendar{min-width:0;max-width:390px;width:100%}
+.manage-calendar .meet-calendar-heading{margin-bottom:8px}
+.manage-calendar .meet-calendar-grid{gap:4px}
+.manage-calendar .meet-calendar-day{height:36px;min-height:36px}
+.manage-calendar-legend{display:flex;flex-direction:column;gap:9px;padding:10px 4px;color:var(--muted);font-size:13px}
+.manage-calendar-legend span{display:flex;align-items:center;gap:8px}
+.manage-window{margin:10px 0 0;padding:12px 14px;border-radius:11px;background:var(--sage-light);color:var(--sage-dark);font-weight:750;line-height:1.5}
+.manage-meet-greet .meet-calendar-day.is-fully-booked{background:#eee8f3!important;border-color:#d8c8e2!important;color:var(--purple-dark)!important;text-decoration:line-through}
+.manage-meet-greet .meet-calendar-day.is-event-reserved{background:#f2eaf5!important;border-color:#d8c4e4!important;color:var(--purple-dark)!important}
+@media(max-width:640px){
+ .manage-calendar-layout{grid-template-columns:minmax(0,1fr);gap:7px}
+ .manage-calendar{max-width:100%}
+ .manage-calendar .meet-calendar-day{height:clamp(34px,9vw,40px);min-height:clamp(34px,9vw,40px)}
+ .manage-calendar-legend{flex-direction:row;flex-wrap:wrap;gap:10px 14px;padding:4px 2px;font-size:12px}
+}
+
+
+/* Consistent, compact private meet-and-greet request styling */
+.meet-greet-panel{
+  max-width:940px!important;
+  margin:28px auto!important;
+  padding:clamp(20px,3.2vw,36px)!important;
+  border:1px solid var(--line)!important;
+  border-radius:22px!important;
+  background:rgba(255,255,255,.9)!important;
+  box-shadow:0 8px 28px rgba(61,45,75,.055)!important;
+}
+.meet-greet-panel>h2{margin:4px 0 10px!important;color:var(--purple-dark)!important}
+.meet-greet-panel>h3{margin:24px 0 8px!important;color:var(--purple-dark)!important}
+.meet-greet-panel .meet-greet-how{
+  margin:20px 0 24px!important;
+  padding:18px 20px!important;
+  border:1px solid #e5deeb!important;
+  border-radius:16px!important;
+  background:#faf8fc!important;
+}
+.meet-greet-panel .meet-greet-how h3{margin:0 0 10px!important;color:var(--purple-dark)!important}
+.meet-greet-panel .meet-greet-how ol{margin:0;padding-left:22px!important;line-height:1.7!important}
+.meet-greet-panel .meet-greet-required-note{margin:6px 0 14px!important;color:var(--muted)!important;font-size:13px!important}
+.meet-greet-panel #meet-greet-form{
+  margin-top:12px!important;
+  padding:clamp(18px,2.5vw,26px)!important;
+  border:1px solid var(--line)!important;
+  border-radius:18px!important;
+  background:rgba(255,255,255,.82)!important;
+  box-shadow:0 5px 18px rgba(61,45,75,.045)!important;
+}
+.meet-greet-panel #meet-greet-form>label,
+.meet-greet-panel #meet-greet-form>.faq-field-label{display:block!important;margin:17px 0 7px!important;font-weight:700!important;color:var(--ink)!important}
+.meet-greet-panel #meet-greet-form>input:not([type=hidden]):not([type=checkbox]):not([type=radio]),
+.meet-greet-panel #meet-greet-form>select,
+.meet-greet-panel #meet-greet-form>textarea{
+  display:block!important;width:100%!important;max-width:100%!important;min-height:48px!important;
+  padding:12px 14px!important;border:1px solid #d9d2df!important;border-radius:11px!important;
+  background:#fff!important;color:var(--ink)!important;font:inherit!important;font-size:16px!important;box-sizing:border-box!important;
+}
+.meet-greet-panel #meet-greet-form>textarea{min-height:110px!important;resize:vertical!important;line-height:1.5!important}
+.meet-greet-panel .meet-greet-kitten-options{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important;margin:10px 0 18px!important;
+}
+.meet-greet-panel .meet-greet-kitten{
+  display:flex!important;align-items:center!important;gap:10px!important;min-height:44px!important;
+  margin:0!important;padding:10px 12px!important;border:1px solid #e5deeb!important;border-radius:11px!important;
+  background:#faf8fc!important;font-weight:600!important;
+}
+.meet-greet-panel .meet-greet-radio{display:flex!important;flex-wrap:wrap!important;gap:12px!important;margin:8px 0 12px!important}
+.meet-greet-panel .meet-greet-radio label{display:flex!important;align-items:center!important;gap:8px!important;padding:9px 13px!important;border:1px solid #e5deeb!important;border-radius:10px!important;background:#faf8fc!important}
+.meet-greet-panel .meet-calendar-layout{
+  display:grid!important;grid-template-columns:minmax(0,390px) minmax(190px,1fr)!important;
+  gap:14px!important;align-items:start!important;margin:10px 0 8px!important;max-width:100%!important;
+}
+.meet-greet-panel .meet-calendar{width:100%!important;max-width:390px!important;min-width:0!important;padding:14px!important;border:1px solid #e8e2ec!important;border-radius:15px!important;background:#fff!important}
+.meet-greet-panel .meet-calendar-grid{gap:5px!important}
+.meet-greet-panel .meet-calendar-day{height:36px!important;min-height:36px!important}
+.meet-greet-panel .meet-calendar-side{display:flex!important;flex-direction:column!important;gap:10px!important}
+.meet-greet-panel .meet-calendar-legend{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px 12px!important;
+  margin:0!important;padding:13px 14px!important;border:1px solid #e8e2ec!important;border-radius:14px!important;
+  background:#faf9fb!important;font-size:12px!important;
+}
+.meet-greet-panel .meet-calendar-legend span{display:flex!important;align-items:center!important;gap:7px!important;white-space:nowrap!important}
+.meet-greet-panel .meet-calendar-legend .meet-weekend-note{grid-column:1/-1!important;margin:3px 0 0!important;padding:10px 11px!important;font-size:12px!important}
+.meet-greet-panel .legend-dot.available{background:#72a77a!important}
+.meet-greet-panel .legend-dot.unavailable{background:#cbbbd8!important}
+.meet-greet-panel .legend-dot.fully-booked{background:#efb8ca!important}
+.meet-greet-panel .legend-dot.past{background:#d8d9d4!important}
+.meet-greet-panel .meet-time-note{margin:12px 0!important;padding:13px 15px!important;border-radius:12px!important;background:#faf8fc!important;color:var(--muted)!important;font-size:13px!important;line-height:1.6!important}
+.meet-greet-panel .meet-time-window{
+  margin:9px 0 0!important;padding:12px 14px!important;border-radius:11px!important;
+  background:var(--sage-light)!important;color:var(--sage-dark)!important;font-weight:750!important;line-height:1.5!important;
+}
+.meet-greet-panel .meet-greet-date-status{margin:8px 0!important;color:var(--muted)!important;font-size:13px!important}
+.meet-greet-panel #meet-submit{margin-top:18px!important;min-height:48px!important}
+.meet-greet-panel .meet-greet-disclaimer{margin:14px 0 0!important;padding-top:13px!important;border-top:1px solid #ece7ef!important;color:var(--muted)!important;font-size:13px!important;line-height:1.6!important}
+.meet-calendar-day.is-past,.meet-calendar-day.is-past:disabled,
+.meet-greet-panel .meet-calendar-day.is-past,
+.meet-greet-panel .meet-calendar-day.is-past:disabled,
+.manage-meet-greet .meet-calendar-day.is-past,
+.manage-meet-greet .meet-calendar-day.is-past:disabled{
+  background:#eeeeeb!important;border:1px solid #dedfda!important;color:#a2a49e!important;
+  opacity:1!important;text-decoration:none!important;box-shadow:none!important;
+}
+.meet-calendar-day.is-past.is-fully-booked:disabled,
+.meet-calendar-day.is-past.is-event-reserved:disabled,
+.meet-greet-panel .meet-calendar-day.is-past.is-fully-booked:disabled,
+.meet-greet-panel .meet-calendar-day.is-past.is-event-reserved:disabled,
+.manage-meet-greet .meet-calendar-day.is-past.is-fully-booked:disabled,
+.manage-meet-greet .meet-calendar-day.is-past.is-event-reserved:disabled{
+  background:#eeeeeb!important;border-color:#dedfda!important;color:#a2a49e!important;
+}
+@media(max-width:760px){
+  .meet-greet-panel{padding:20px 14px!important}
+  .meet-greet-panel #meet-greet-form{padding:18px 14px!important}
+  .meet-greet-panel .meet-calendar-layout{grid-template-columns:minmax(0,1fr)!important;gap:9px!important}
+  .meet-greet-panel .meet-calendar{max-width:100%!important;padding:12px!important}
+  .meet-greet-panel .meet-calendar-legend{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .meet-greet-panel .meet-greet-kitten-options{grid-template-columns:minmax(0,1fr)!important}
+}
+
+
+/* Complete the compact visitor rescheduling legend */
+.manage-calendar-legend .legend-dot.available{background:#72a77a!important}
+.manage-calendar-legend .legend-dot.unavailable{background:#cbbbd8!important}
+.manage-calendar-legend .legend-dot.fully-booked{background:#efb8ca!important}
+.manage-calendar-legend .legend-dot.past{background:#d8d9d4!important}
+.manage-meet-greet .manage-calendar-legend{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px 12px!important}
+.manage-meet-greet .manage-calendar-legend span{display:flex!important;align-items:center!important;gap:7px!important;white-space:nowrap!important}
+@media(max-width:640px){.manage-meet-greet .manage-calendar-legend{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+
+
+/* Match visitor rescheduling calendar to the original booking calendar */
+.manage-meet-greet .manage-calendar .meet-calendar-heading button{
+  width:30px!important;height:30px!important;min-width:30px!important;padding:0!important;
+  border:0!important;border-radius:50%!important;background:var(--sage-light)!important;
+  color:var(--sage-dark)!important;font-size:23px!important;line-height:1!important;
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+}
+.manage-meet-greet .manage-calendar .meet-calendar-heading button:disabled{opacity:.35!important}
+.manage-meet-greet .manage-calendar .meet-calendar-day{
+  min-width:0!important;min-height:29px!important;height:29px!important;padding:0!important;
+  border-radius:7px!important;font-size:12px!important;line-height:1!important;
+}
+.manage-meet-greet .manage-calendar .meet-calendar-day:not(:disabled){
+  background:#e6f1e6!important;border:1px solid #b8d3b8!important;color:#315f3a!important;
+}
+.manage-meet-greet .manage-calendar .meet-calendar-day:not(:disabled):hover,
+.manage-meet-greet .manage-calendar .meet-calendar-day:not(:disabled):focus{
+  background:#dcebdd!important;border-color:#548b60!important;color:#315f3a!important;
+}
+.manage-meet-greet .manage-calendar .meet-calendar-day:not(:disabled).is-selected{
+  background:#b9d5bc!important;border-color:#527f59!important;color:#254b2c!important;
+  box-shadow:inset 0 0 0 1px #527f59!important;
+}
+.manage-meet-greet .manage-calendar .meet-calendar-day.is-unavailable,
+.manage-meet-greet .manage-calendar .meet-calendar-day:disabled{
+  background:#f1ebf5!important;border:1px solid #d9cde2!important;color:#8b7898!important;
+  opacity:1!important;text-decoration:none!important;
+}
+.manage-meet-greet .manage-calendar .meet-calendar-day.is-fully-booked,
+.manage-meet-greet .manage-calendar .meet-calendar-day.is-fully-booked:disabled{
+  background:#f8dfe8!important;border-color:#e9b9ca!important;color:#92566c!important;
+  text-decoration:none!important;
+}
+.manage-meet-greet .manage-calendar .meet-calendar-day.is-event-reserved:not(.is-past){
+  background:#f2eaf5!important;border-color:#d8c4e4!important;color:var(--purple-dark)!important;
+}
+.manage-meet-greet .manage-calendar .meet-calendar-day.is-past,
+.manage-meet-greet .manage-calendar .meet-calendar-day.is-past:disabled{
+  background:#eeeeeb!important;border-color:#dedfda!important;color:#a2a49e!important;
+  opacity:1!important;text-decoration:none!important;box-shadow:none!important;
+}
+.manage-meet-greet .manage-calendar .meet-calendar-day.is-past.is-fully-booked:disabled,
+.manage-meet-greet .manage-calendar .meet-calendar-day.is-past.is-event-reserved:disabled{
+  background:#eeeeeb!important;border-color:#dedfda!important;color:#a2a49e!important;
+}
+.manage-meet-greet .manage-calendar-legend .legend-dot,
+.meet-greet-panel .meet-calendar-legend .legend-dot{
+  display:inline-block!important;flex:0 0 11px!important;width:11px!important;height:11px!important;
+  min-width:11px!important;min-height:11px!important;aspect-ratio:1/1!important;
+  border-radius:50%!important;box-sizing:border-box!important;
+}
+.manage-meet-greet .manage-calendar-legend .legend-dot.available{background:#72a77a!important}
+.manage-meet-greet .manage-calendar-legend .legend-dot.unavailable{background:#cbbbd8!important}
+.manage-meet-greet .manage-calendar-legend .legend-dot.fully-booked{background:#efb8ca!important}
+.manage-meet-greet .manage-calendar-legend .legend-dot.past{background:#d8d9d4!important}
+
+/* Keep the anti-spam honeypot in the form but out of the visitor's view */
+.meet-greet-panel #meet-greet-form>input.faq-honeypot{
+  position:absolute!important;left:-10000px!important;top:auto!important;width:1px!important;height:1px!important;
+  min-height:1px!important;padding:0!important;margin:0!important;opacity:0!important;pointer-events:none!important;
+}
+.meet-greet-panel .meet-bonded-note{
+  margin:4px 0 16px!important;padding:11px 14px!important;border:1px solid #d3e1d0!important;
+  border-radius:11px!important;background:var(--sage-light)!important;color:var(--sage-dark)!important;
+  font-size:13px!important;line-height:1.5!important;font-weight:600!important;
+}
+.meet-greet-panel .meet-bonded-note[hidden]{display:none!important}
+
+/* Make the main private meet-and-greet calendar use the same square-day
+   shape and sage navigation as the visitor cancel/reschedule calendar. */
+.meet-greet-panel .meet-calendar-heading button{
+  width:38px!important;height:38px!important;min-width:38px!important;padding:0!important;
+  border:0!important;border-radius:50%!important;background:var(--sage-light)!important;
+  color:var(--sage-dark)!important;font-size:26px!important;line-height:1!important;
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+}
+.meet-greet-panel .meet-calendar-heading button:disabled{opacity:.35!important}
+.meet-greet-panel .meet-calendar-day{
+  min-width:0!important;height:42px!important;min-height:42px!important;padding:0!important;
+  border-radius:7px!important;font-size:14px!important;line-height:1!important;
+}
+/* Explicit state colors: these selectors override older calendar rules. */
+.meet-greet-panel .meet-calendar-day:not(:disabled){
+  background:#e6f1e6!important;border:1px solid #b8d3b8!important;color:#315f3a!important;
+}
+.meet-greet-panel .meet-calendar-day:not(:disabled):hover,
+.meet-greet-panel .meet-calendar-day:not(:disabled):focus{
+  background:#dcebdd!important;border-color:#548b60!important;color:#315f3a!important;
+}
+.meet-greet-panel .meet-calendar-day:not(:disabled).is-selected{
+  background:#b9d5bc!important;border-color:#527f59!important;color:#254b2c!important;
+  box-shadow:inset 0 0 0 1px #527f59!important;
+}
+.meet-greet-panel .meet-calendar-day.is-unavailable,
+.meet-greet-panel .meet-calendar-day:disabled{
+  background:#f1ebf5!important;border:1px solid #d9cde2!important;color:#8b7898!important;
+  opacity:1!important;text-decoration:none!important;
+}
+.meet-greet-panel .meet-calendar-day.is-fully-booked,
+.meet-greet-panel .meet-calendar-day.is-fully-booked:disabled{
+  background:#f8dfe8!important;border-color:#e9b9ca!important;color:#92566c!important;
+  text-decoration:none!important;
+}
+.meet-greet-panel .meet-calendar-day.is-event-reserved:not(.is-past){
+  background:#f2eaf5!important;border-color:#d8c4e4!important;color:var(--purple-dark)!important;
+}
+.meet-greet-panel .meet-calendar-day.is-past,
+.meet-greet-panel .meet-calendar-day.is-past:disabled{
+  background:#eeeeeb!important;border-color:#dedfda!important;color:#a2a49e!important;
+  opacity:1!important;text-decoration:none!important;box-shadow:none!important;
+}
+@media(max-width:760px){
+  .meet-greet-panel .meet-calendar-day{height:clamp(36px,9vw,42px)!important;min-height:clamp(36px,9vw,42px)!important}
+  .meet-greet-panel .meet-calendar-heading button{width:36px!important;height:36px!important;min-width:36px!important}
+}
+
+
+/* Final, form-specific overrides for the main booking calendar.
+   The form's generic button rule otherwise turns calendar controls into pills. */
+.meet-greet-panel #meet-greet-form.faq-question-form .meet-calendar-heading button{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  width:36px!important;height:36px!important;min-width:36px!important;min-height:36px!important;
+  max-height:36px!important;margin:0!important;padding:0!important;
+  border:0!important;border-radius:50%!important;
+  background:var(--sage-light)!important;color:var(--sage-dark)!important;
+  box-shadow:none!important;font-size:23px!important;line-height:1!important;
+}
+.meet-greet-panel #meet-greet-form.faq-question-form .meet-calendar-heading button:hover:not(:disabled){
+  background:#dce8d8!important;color:var(--sage-dark)!important;
+}
+.meet-greet-panel #meet-greet-form.faq-question-form .meet-calendar-heading button:disabled{
+  opacity:.35!important;cursor:not-allowed!important;
+}
+
+/* Keep the booking calendar larger, but give the side information a little
+   less room while preserving the side-by-side desktop arrangement. */
+.meet-greet-panel .meet-calendar-layout{
+  grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr)!important;
+  gap:16px!important;max-width:100%!important;
+}
+.meet-greet-panel .meet-calendar{
+  width:100%!important;max-width:none!important;padding:14px!important;
+}
+.meet-greet-panel #meet-greet-form.faq-question-form button.meet-calendar-day{
+  display:grid!important;place-items:center!important;
+  width:100%!important;height:auto!important;min-width:0!important;min-height:0!important;
+  aspect-ratio:1/1!important;padding:0!important;margin:0!important;
+  border-radius:7px!important;font-size:14px!important;line-height:1!important;
+  box-shadow:none!important;
+}
+@media(max-width:760px){
+  .meet-greet-panel .meet-calendar-layout{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}
+  .meet-greet-panel #meet-greet-form.faq-question-form button.meet-calendar-day{
+    font-size:13px!important;
+  }
+}
+
+
+/* Match the booking arrows' glyph to the visitor cancel/reschedule arrows.
+   Keep the existing circular buttons; remove the booking-only glyph offset. */
+#meet-prev .meet-arrow-glyph,
+#meet-next .meet-arrow-glyph{
+  display:inline-block!important;
+  position:static!important;
+  top:auto!important;
+  transform:none!important;
+  font-size:23px!important;
+  font-weight:400!important;
+  line-height:1!important;
+}
