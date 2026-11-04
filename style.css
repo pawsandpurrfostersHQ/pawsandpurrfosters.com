@@ -1470,6 +1470,9 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .manage-status:empty{display:none}
 .manage-status.is-success{padding:22px;background:var(--sage-light);border:1px solid #cbd9c7;color:var(--sage-dark)}
 .manage-status.is-success h3{margin:0 0 8px;color:var(--sage-dark)}
+.manage-reschedule-pending{margin:10px 0;padding:14px 16px;border:1px solid #cbd9c7;border-radius:13px;background:var(--sage-light);color:var(--sage-dark)}
+.manage-reschedule-pending h3{margin:0 0 8px;color:var(--sage-dark)}
+.manage-reschedule-pending p{margin:7px 0;line-height:1.55}
 @media(max-width:640px){
  .manage-meet-greet{padding:20px 14px}
  .manage-meet-greet .manage-card{padding:18px 14px;margin:16px 0}
