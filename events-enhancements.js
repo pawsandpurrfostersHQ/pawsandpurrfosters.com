@@ -112,7 +112,7 @@ function initMeetGreet(){
   async function manageRefreshAvailability(){
    manageOccupied=null;manageDraw();manageTime.disabled=true;manageHelp.textContent="Checking live availability…";
    const from=meetLocalIso(key(manageMonth),0,0),to=meetLocalIso(key(new Date(manageMonth.getFullYear(),manageMonth.getMonth()+1,1)),0,0);
-   try{const result=await call({action:"availability",from,to,visitor_token:manageToken});manageOccupied=result.blocked||[];manageDailyCounts=result.daily_counts||{};manageOwn=result.own_appointment||null;manageDraw();manageUpdateTimes();}catch(e){manageOccupied=null;manageDraw();manageHelp.textContent="Live availability couldn't be loaded. Please try again.";manageStatus.textContent=e.message;}
+   try{const result=await call({action:"availability",from,to,visitor_token:manageToken,site_base_url:window.location.origin});manageOccupied=result.blocked||[];manageDailyCounts=result.daily_counts||{};manageOwn=result.own_appointment||null;manageDraw();manageUpdateTimes();}catch(e){manageOccupied=null;manageDraw();manageHelp.textContent="Live availability couldn't be loaded. Please try again.";manageStatus.textContent=e.message;}
   }
   host.querySelector("#manage-prev").onclick=()=>{if(!host.querySelector("#manage-prev").disabled){manageMonth=new Date(manageMonth.getFullYear(),manageMonth.getMonth()-1,1);manageDate.value="";manageRefreshAvailability();}};
   host.querySelector("#manage-next").onclick=()=>{if(!host.querySelector("#manage-next").disabled){manageMonth=new Date(manageMonth.getFullYear(),manageMonth.getMonth()+1,1);manageDate.value="";manageRefreshAvailability();}};
@@ -155,7 +155,7 @@ function initMeetGreet(){
   const from=meetLocalIso(key(new Date(month.getFullYear(),month.getMonth(),1)),0,0);
   const to=meetLocalIso(key(new Date(month.getFullYear(),month.getMonth()+1,1)),0,0);
   try{
-   const response=await fetch("https://ovnbbpcrwbvotyevghcx.supabase.co/functions/v1/meet-greet",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"availability",from,to})});
+   const response=await fetch("https://ovnbbpcrwbvotyevghcx.supabase.co/functions/v1/meet-greet",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"availability",from,to,site_base_url:window.location.origin})});
    const result=await response.json();if(!response.ok)throw new Error(result.error||"Availability could not be loaded.");
    occupied=result.blocked||[];dailyCounts=result.daily_counts||{};timeSelect.disabled=false;updateTimeOptions();draw();
   }catch(e){occupied=null;timeSelect.disabled=true;status.textContent="Live availability is temporarily unavailable. Please refresh the page before choosing a time.";}
