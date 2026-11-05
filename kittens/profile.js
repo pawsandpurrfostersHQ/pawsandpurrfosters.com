@@ -9,7 +9,7 @@ function escapeHTML(value) {
 }
 
 function profilePhotoSource(photo) {
-  return /^(?:https?:)?\/\//i.test(photo) ? photo : `../${photo}`;
+  return /^(?:https?:)?\/\//i.test(photo) || /^(?:data:|blob:)/i.test(photo) ? photo : `../${photo}`;
 }
 
 function formatBirthday(dateString) {
