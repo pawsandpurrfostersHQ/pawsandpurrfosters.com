@@ -5,7 +5,7 @@ window.PAWS_EVENT_DATA = {
     "title": "Where to Find Us",
     "location": "Brentwood Farmers Market",
     "date": "Saturday, November 7, 2026",
-    "time": "8 am – 12 pm",
+    "time": "9 am – 1 pm",
     "address": "In front of Hair Encounters | 614 1st St, Brentwood, CA ",
     "mapsUrl": "https://maps.app.goo.gl/V2cGFG6hthWMbo9m6",
     "attendingKittens": [
