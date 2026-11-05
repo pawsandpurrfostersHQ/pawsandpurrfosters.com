@@ -1818,3 +1818,7 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
  .meet-greet-accordion-toggle{top:20px;right:15px;width:34px;height:34px}
  .meet-greet-accordion-content{padding:0 14px 22px}
 }
+
+/* Keep the meet-and-greet scheduling controls grouped while application approval is required. */
+.meet-scheduling-gate{border:0;padding:0;margin:0;min-width:0;}
+.meet-scheduling-gate:disabled{opacity:.58;}
