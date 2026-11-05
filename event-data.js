@@ -21,8 +21,8 @@ window.PAWS_EVENT_DATA = {
     "description": "",
     "notAttendingKittens": [],
     "dateISO": "2026-11-07",
-    "startTime": "08:00",
-    "endTime": "12:00"
+    "startTime": "09:00",
+    "endTime": "13:00"
   },
   "regularSchedule": {
     "active": true,
