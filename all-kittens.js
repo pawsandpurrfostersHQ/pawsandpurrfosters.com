@@ -24,8 +24,8 @@ function statusClassName(status) {
 
 function shortBlurb(kitten) {
   const descriptions = typeof globalThis !== "undefined" ? globalThis.PAWS_KITTEN_CARD_DESCRIPTIONS : null;
-  if (descriptions?.[kitten.id]) return descriptions[kitten.id];
   if (kitten.description) return kitten.description;
+  if (descriptions?.[kitten.id]) return descriptions[kitten.id];
   if (kitten.bio) return kitten.bio;
   return "This sweet kitten is growing, learning, and preparing for their next chapter in foster care.";
 }
