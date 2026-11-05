@@ -1800,8 +1800,18 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 /* Public Events page: prominent, closed-by-default private meet-and-greet disclosure */
 .events-page .meet-greet-panel{padding:0!important;overflow:hidden}
 .meet-greet-accordion{display:block}
-.meet-greet-accordion-summary{position:relative;display:block;padding:clamp(24px,4vw,38px);padding-right:82px;cursor:pointer;list-style:none}
+.meet-greet-accordion-summary{position:relative;display:block;padding:clamp(25px,4vw,40px);padding-right:82px;cursor:pointer;list-style:none;background:linear-gradient(135deg,rgba(255,255,255,.54),rgba(250,246,253,.76))}
 .meet-greet-accordion-summary::-webkit-details-marker{display:none}
+
+.meet-greet-accordion-kicker{display:inline-flex;align-items:center;gap:7px;margin:0 0 13px;padding:7px 13px;border:1px solid rgba(111,83,137,.17);border-radius:999px;background:rgba(255,255,255,.72);color:#76518c;font-size:12px;font-weight:750;letter-spacing:.075em;text-transform:uppercase}
+.meet-greet-accordion-title{margin-bottom:7px!important}
+.meet-greet-accordion-welcome{display:block;margin:0 0 20px;color:var(--sage-dark);font-family:"Playfair Display",Georgia,serif;font-size:clamp(18px,2.2vw,22px);font-style:italic;font-weight:600}
+.meet-greet-accordion-divider{display:block;width:58px;height:3px;margin:0 0 19px;border-radius:4px;background:linear-gradient(90deg,#8d70a7,#a8b99c)}
+.meet-greet-accordion-question{display:block;margin:0 0 7px;color:var(--purple-dark);font-size:17px;font-weight:800}
+.meet-greet-accordion-copy{display:block;max-width:850px;margin:0 0 10px;color:var(--muted);font-size:15px;line-height:1.75}
+.meet-greet-accordion-learn{display:inline-flex;align-items:center;margin-top:10px;padding:9px 14px;border:1px solid rgba(111,83,137,.2);border-radius:999px;background:rgba(255,255,255,.76);color:var(--purple-dark);font-size:13px;font-weight:750;transition:background .18s ease,transform .18s ease}
+.meet-greet-accordion-summary:hover .meet-greet-accordion-learn{background:#fff;transform:translateY(-1px)}
+
 .meet-greet-accordion-summary::marker{content:""}
 .meet-greet-accordion-title{display:block;margin:0 0 12px;color:var(--purple-dark);font-family:"Playfair Display",Georgia,serif;font-size:clamp(29px,4.2vw,40px);font-weight:650;line-height:1.15}
 .meet-greet-accordion-copy{display:block;max-width:850px;color:var(--muted);font-size:15px;line-height:1.75}
@@ -1812,7 +1822,12 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .meet-greet-accordion-content{padding:0 clamp(18px,3vw,34px) clamp(24px,4vw,38px)}
 .meet-greet-accordion-content .meet-greet-how{margin-top:8px}
 @media(max-width:600px){
- .meet-greet-accordion-summary{padding:22px 62px 22px 18px}
+ .meet-greet-accordion-summary{padding:23px 62px 24px 18px}
+ .meet-greet-accordion-kicker{font-size:10px;padding:6px 10px;margin-bottom:11px}
+ .meet-greet-accordion-welcome{font-size:18px;margin-bottom:16px}
+ .meet-greet-accordion-question{font-size:16px}
+ .meet-greet-accordion-copy{font-size:14px;line-height:1.65}
+ .meet-greet-accordion-learn{font-size:12px;padding:8px 12px;max-width:100%}
  .meet-greet-accordion-title{font-size:29px;margin-bottom:10px}
  .meet-greet-accordion-copy{font-size:14px;line-height:1.65}
  .meet-greet-accordion-toggle{top:20px;right:15px;width:34px;height:34px}
