@@ -3,7 +3,7 @@
 // Add or remove your own photo filenames from assets/hero.
 // Example: "photo1.jpg"
 // ==========================================
-const FOSTER_CAROUSEL_PHOTOS = [
+const FOSTER_CAROUSEL_PHOTOS = Array.isArray(window.__PAWS_PREVIEW_DATA?.heroPhotos) ? window.__PAWS_PREVIEW_DATA.heroPhotos : [
   "foster-01.png",
   "foster-02.png",
   "foster-03.png",
