@@ -116,7 +116,7 @@ function renderFosterPhotoCarousel() {
   const dots = document.querySelector("#hero-dots");
   if (!slides || !empty || !previous || !next) return;
 
-  const photoPaths = FOSTER_CAROUSEL_PHOTOS.filter(Boolean).map(filename => `assets/hero/${filename}`);
+  const photoPaths = FOSTER_CAROUSEL_PHOTOS.filter(Boolean).map(filename => /^(?:data:|https?:|blob:)/i.test(String(filename)) ? filename : `assets/hero/${filename}`);
   if (!photoPaths.length) return;
 
   empty.hidden = true;
@@ -177,7 +177,7 @@ function renderKittenCards() {
       : `<span class="card-link profile-coming-soon">Profile coming soon</span>`;
     const status = kitten.adoptionStatus || kitten.status || "Available";
     const returnedStatusClass = status === "Returned — Available" ? " status-returned" : "";
-    const description = window.PAWS_KITTEN_CARD_DESCRIPTIONS?.[kitten.id] || kitten.description;
+    const description = kitten.description || window.PAWS_KITTEN_CARD_DESCRIPTIONS?.[kitten.id];
     return `<article class="kitten-card">
       <div class="card-photo-wrap">${photo}</div>
       <div class="card-content">
