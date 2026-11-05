@@ -3,11 +3,11 @@ window.PAWS_EVENT_DATA = {
   "featuredEvent": {
     "active": true,
     "title": "Where to Find Us",
-    "location": "Antioch PetSmart",
-    "date": "Sunday, November 1, 2026",
-    "time": "11 a.m. – 3 p.m.",
-    "address": "5879 Lone Tree Way, Antioch, CA",
-    "mapsUrl": "https://maps.app.goo.gl/MjBjSfjpJHPXh89h7",
+    "location": "Brentwood Farmers Market",
+    "date": "Saturday, November 7, 2026",
+    "time": "8 am – 12 pm",
+    "address": "In front of Hair Encounters | 614 1st St, Brentwood, CA ",
+    "mapsUrl": "https://maps.app.goo.gl/V2cGFG6hthWMbo9m6",
     "attendingKittens": [
       "Diego",
       "Valentina",
@@ -20,9 +20,9 @@ window.PAWS_EVENT_DATA = {
     ],
     "description": "",
     "notAttendingKittens": [],
-    "dateISO": "2026-11-01",
-    "startTime": "11:00",
-    "endTime": "16:00"
+    "dateISO": "2026-11-07",
+    "startTime": "08:00",
+    "endTime": "12:00"
   },
   "regularSchedule": {
     "active": true,
