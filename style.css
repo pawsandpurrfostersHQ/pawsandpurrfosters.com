@@ -1134,6 +1134,18 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .meet-greet-panel{margin:34px 0 0;padding:clamp(24px,4vw,42px);border:1px solid var(--line);border-radius:22px;background:linear-gradient(135deg,#f3f5ef,#f5eff9);box-shadow:0 8px 26px rgba(61,45,75,.05)}
 .meet-greet-panel>h2{margin:4px 0 10px;color:var(--purple-dark);font-family:"Playfair Display",serif;font-size:clamp(28px,4vw,38px)}
 .meet-greet-panel>p:not(.eyebrow){color:var(--muted)}
+.home-event-square .home-event-more .text-link{display:inline-flex;align-items:center;gap:6px;color:#fff!important;font-weight:800;text-decoration:underline;text-decoration-color:rgba(255,255,255,.7);text-underline-offset:4px}
+.home-event-square .home-event-more .text-link:hover{color:#f1e8f7!important;text-decoration-color:#f1e8f7}
+.meet-greet-intro{margin:14px 0 20px;border:1px solid rgba(91,67,112,.16);border-radius:14px;background:rgba(255,255,255,.68);overflow:hidden}
+.meet-greet-intro summary{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 17px;color:var(--purple-dark);font-size:14px;font-weight:650;line-height:1.55;cursor:pointer;list-style:none}
+.meet-greet-intro summary::-webkit-details-marker{display:none}
+.meet-greet-intro-toggle{display:inline-flex;align-items:center;gap:7px;flex-shrink:0;color:var(--purple);font-size:12px;font-weight:800;white-space:nowrap}
+.meet-greet-intro-toggle span{display:inline-block;font-size:17px;transition:transform .18s ease}
+.meet-greet-intro[open] .meet-greet-intro-toggle span{transform:rotate(180deg)}
+.meet-greet-intro-content{padding:0 17px 13px;color:var(--muted);font-size:13px;line-height:1.65}
+.meet-greet-intro-content p{margin:5px 0 9px}
+.meet-greet-intro summary:focus-visible{outline:3px solid var(--sage-dark);outline-offset:-3px;border-radius:12px}
+@media(max-width:560px){.meet-greet-intro summary{align-items:flex-start;flex-direction:column;gap:5px}.meet-greet-intro-toggle{margin-left:auto}}
 .meet-greet-how{margin:20px 0 26px;padding:18px 22px;border-radius:16px;background:rgba(255,255,255,.8)}
 .meet-greet-how h3,.meet-greet-panel>h3{margin:0 0 10px;color:var(--purple-dark)}
 .meet-greet-how li{margin:8px 0;color:var(--muted)}
