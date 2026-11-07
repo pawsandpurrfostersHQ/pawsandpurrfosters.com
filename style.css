@@ -1837,3 +1837,14 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 /* Keep the meet-and-greet scheduling controls grouped while application approval is required. */
 .meet-scheduling-gate{border:0;padding:0;margin:0;min-width:0;}
 .meet-scheduling-gate:disabled{opacity:.58;}
+
+
+/* Clear event cancellation and rescheduling notices. */
+.event-status-label{display:inline-flex;align-items:center;margin:10px 0 8px;padding:7px 15px;border-radius:999px;font-size:13px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.event-status-label.is-canceled{background:#f5e7e8;color:#8a3f49;border:1px solid #e8c7ca}
+.event-status-label.is-rescheduled{background:#eee8f4;color:#654b7d;border:1px solid #d8c9e3}
+.event-status-reason,.event-reschedule-note{margin:8px 0 15px;color:var(--purple-dark);font-weight:650;line-height:1.65}
+.event-original-schedule{margin:7px 0 13px;color:var(--muted);font-size:14px}
+.event-original-schedule s{text-decoration-thickness:1.5px}
+.event-new-schedule-label{margin:12px 0 2px;color:var(--sage-dark);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.event-status-label+.event-date{margin-top:12px}
