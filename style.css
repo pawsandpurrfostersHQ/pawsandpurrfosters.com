@@ -1972,3 +1972,8 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .event-missed-intro{max-width:700px}
 .special-activity{margin:10px 0}
 @media(max-width:760px){.event-panels.has-special-events #special-event,.event-panels.has-special-events #home-special-event{grid-template-columns:1fr}}
+
+.event.has-special-events #home-special-event{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:stretch}
+.event.has-special-events #home-special-event[hidden]{display:none}
+.event.has-special-events #home-special-event .special-event-entry{margin:0}
+@media(max-width:760px){.event.has-special-events #home-special-event{grid-template-columns:1fr}}
