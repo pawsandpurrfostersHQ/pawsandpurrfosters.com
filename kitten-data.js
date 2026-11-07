@@ -356,7 +356,7 @@ appRoot.PAWS_KITTENS = [
     "gender": "Male",
     "birthday": "2026-02-16",
     "litterNumber": 10,
-    "bio": "Meet Wally! Wally is a timid boy who may need a little time to adjust, but with patience, you’ll get to see what a truly sweet kitten he is. He loves getting pets and will rub against your legs when he wants some attention. When he is especially happy, he may even flop right over! Wally loves to play, purr, and spend time with his people. Once he knows you, he really enjoys being near you and soaking up all the love he can get.\n\nWally was previously adopted and has since returned to foster care. He is not being returned because of a behavior problem — he is simply a very sweet, affectionate boy who has lots of love to give and does best with people who are willing to give him the time and patience he needs to feel comfortable.",
+    "bio": "Meet Wally! Wally is a timid boy who may need a little time to adjust, but with patience, you’ll get to see what a truly sweet kitten he is. He loves getting pets and will rub against your legs when he wants some attention. When he is especially happy, he may even flop right over! Wally loves to play, purr, and spend time with his people. Once he knows you, he really enjoys being near you and soaking up all the love he can get.\n\nWally was previously adopted and has since returned to foster care because he was no longer the right fit for his previous home. He is a very sweet, affectionate boy with so much love to give. He just needs someone willing to give him a little extra time and patience to feel comfortable and settle in at his own pace. Once he feels safe, his loving personality truly begins to blossom. And trust me, he is absolutely worth it! ",
     "photos": [
       "assets/kittens/wally-main.png",
       "assets/kittens/wally-photo-2.png",
@@ -373,7 +373,7 @@ appRoot.PAWS_KITTENS = [
       "People-loving",
       "Cuddly"
     ],
-    "idealHome": "Wally would do best in a patient home that understands he may need some time to settle into a new environment. Once he feels comfortable, his affectionate and loving personality really comes through. He would prefer to be the only cat in the home, but he can be okay with other cats with a proper introduction. He would be happy with older children and people who enjoy having a very affectionate companion.",
+    "idealHome": "Wally would do best in a patient, understanding home that gives him a little time to settle into a new environment and feel comfortable. He warms up fairly quickly, and his affectionate personality shines through once he does. He can do well with other cats with slow, proper introductions. He may also be a good fit for a home with older or younger children, although he has not had direct experience with young children. Most of all, Wally would love a family who enjoys having a sweet, affectionate companion. ",
     "compatibility": {
       "dogs": "No",
       "cats": "Yes — prefers to be the only cat, but can be okay with other cats with proper introduction",
@@ -410,7 +410,7 @@ appRoot.PAWS_KITTENS = [
     "gender": "Male",
     "birthday": "2026-02-09",
     "litterNumber": 10,
-    "bio": "Meet Raymond! He is a very affectionate, playful boy who absolutely loves being around people. Raymond loves being petted and has the loudest purrs when he’s getting attention, and he’s always happy to play and spend time with his people. He may need a little time to adjust to a new environment, but once he feels comfortable, his sweet personality really shines through. Raymond was previously adopted and has since returned to foster care. This was not because of a behavior problem—he is simply an exceptionally affectionate, people-loving boy with lots of love and attention to give.",
+    "bio": "Meet Raymond! He is a very affectionate, playful boy who absolutely loves being around people. Raymond loves being petted and has the loudest purrs when he’s getting attention, and he’s always happy to play and spend time with his people. He doesn’t mind being picked up and cuddled, and he’ll often seek you out just to be near you. He’s always happy to see you and will greet you with the sweetest little chirp or meow.\n\nRaymond was previously adopted and has since returned to foster care because he was no longer the right fit for his previous home. He is an incredibly affectionate, people-loving boy who is more than ready to give someone all the love and attention he has to offer. He may need a little time to settle into a new environment, but once he does, he’ll be eager to shower his person with affection. He is truly such a special boy, and someone is going to be very lucky to have him. ",
     "photos": [
       "assets/kittens/raymond-main.png",
       "assets/kittens/raymond-photo-2.png",
@@ -427,7 +427,7 @@ appRoot.PAWS_KITTENS = [
       "Cuddly",
       "Social"
     ],
-    "idealHome": "Raymond would do best in a patient home that understands he may need some time to settle into a new environment. Once he feels comfortable, his affectionate and loving personality really comes through. He would prefer to be the only cat in the home, but he can be okay with other cats with a proper introduction. He would be happy with older children and people who enjoy having a very affectionate companion.",
+    "idealHome": "Raymond would do best in a patient, understanding home that gives him a little time to settle into a new environment. He may need a little time to adjust to other cats, but slow, positive introductions help him feel comfortable, and once he does, he really enjoys their company. He could also do well with older or younger children, although he has limited experience with young children. Most of all, Raymond is ready to find a family who will appreciate just how sweet, affectionate, and loving he is. ",
     "compatibility": {
       "dogs": "No",
       "cats": "Yes — prefers to be the only cat, but can be okay with other cats with proper introduction",
