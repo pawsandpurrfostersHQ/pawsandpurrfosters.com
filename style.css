@@ -1955,3 +1955,20 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .special-event-entry:has(.event-status-label.is-canceled) .event-status-label.is-canceled {
   margin-left:0!important;
 }
+
+
+/* Automatically prioritized event cards and special-event grid */
+.event-panels.has-special-events #special-event,.event-panels.has-special-events #home-special-event{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:stretch}
+.event-panels.has-special-events #special-event[hidden],.event-panels.has-special-events #home-special-event[hidden]{display:none}
+.special-event-entry{min-width:0;padding:26px;border:1px solid #d9e3d3;border-radius:22px;background:#e8eee4}
+.special-event-entry:nth-child(2n){background:#eee9f4;border-color:#ddd3e8}
+.special-event-entry:nth-child(3n){background:#e5ebdf;border-color:#d4dfce}
+.special-event-entry h2{font-size:clamp(22px,2vw,29px);margin:5px 0 12px}
+.special-event-entry p{overflow-wrap:anywhere}
+.event-next-preview{margin-top:20px;padding:20px;border:1px solid rgba(255,255,255,.25);border-radius:18px;background:rgba(255,255,255,.10)}
+.event-next-preview .eyebrow{margin-bottom:5px}
+.event-next-preview h3{margin:4px 0 10px;font:600 clamp(21px,2vw,27px) Georgia,serif}
+.event-next-preview p{margin:8px 0}
+.event-missed-intro{max-width:700px}
+.special-activity{margin:10px 0}
+@media(max-width:760px){.event-panels.has-special-events #special-event,.event-panels.has-special-events #home-special-event{grid-template-columns:1fr}}
