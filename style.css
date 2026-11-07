@@ -1977,3 +1977,68 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .event.has-special-events #home-special-event[hidden]{display:none}
 .event.has-special-events #home-special-event .special-event-entry{margin:0}
 @media(max-width:760px){.event.has-special-events #home-special-event{grid-template-columns:1fr}}
+
+
+/* Keep the promoted special-event detail readable on the purple featured card. */
+#event-featured .members-only {
+  color: #c9dfbd !important;
+  font-weight: 800;
+}
+
+/* The Events tab's Where to Find Us card should match the homepage purple card. */
+.events-page #event-featured {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 22px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.events-page #event-featured .event-card--compact {
+  min-height: 300px !important;
+  padding: 30px !important;
+  display: flex !important;
+  align-items: center !important;
+  border: 0 !important;
+  border-radius: 22px !important;
+  background: var(--purple) !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+.events-page #event-featured .event-card--compact .event-card-content {
+  width: 100%;
+  color: #fff !important;
+}
+.events-page #event-featured .event-card--compact .eyebrow {
+  color: #dcd2e8 !important;
+}
+.events-page #event-featured .event-card--compact h2 {
+  color: #fff !important;
+  font-size: clamp(26px, 2.6vw, 32px) !important;
+}
+.events-page #event-featured .event-card--compact p {
+  color: #eee9f4 !important;
+}
+.events-page #event-featured .event-card--compact .event-date {
+  font-size: 18px !important;
+}
+.events-page #event-featured .event-card--compact .event-address {
+  display: inline-block !important;
+  margin-top: 7px !important;
+  padding: 8px 11px !important;
+  border: 0 !important;
+  border-radius: 9px !important;
+  background: var(--purple-dark) !important;
+  color: #fff !important;
+}
+.events-page #event-featured .members-only {
+  color: #c9dfbd !important;
+}
+.events-page #event-featured .event-next-preview {
+  color: #fff !important;
+}
+@media(max-width:760px) {
+  .events-page #event-featured .event-card--compact {
+    min-height: 0 !important;
+    padding: 24px 20px !important;
+  }
+}
