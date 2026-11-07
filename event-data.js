@@ -2,7 +2,9 @@
 window.PAWS_EVENT_DATA = {
   "featuredEvent": {
     "active": true,
-    "title": "Where to Find Us",
+    "title": "Brentwood Farmers Market",
+    "status": "canceled",
+    "statusReason": "Canceled because the Veterans Parade will be taking place at the same location.",
     "location": "Brentwood Farmers Market",
     "date": "Saturday, November 7, 2026",
     "time": "9 am – 1 pm",
