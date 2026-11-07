@@ -1,20 +1,18 @@
 // Easy event editing. Event times use 24-hour local time for automatic countdowns.\nwindow.PAWS_EVENT_DATA = {
   "featuredEvent": {
-    "active": true,
-    "title": "Kitty Adoption Event & Yoga",
-    "description": "Join us Monday, November 9, at Diamond Hills Sports Club & Spa for two special activities. The kitten adoption event is open to everyone from 10 a.m. to 4 p.m. Members can also enjoy Kitty Yoga at 11:30 a.m., featuring some furry friends!",
-    "location": "Diamond Hills Sports Club & Spa",
-    "date": "Monday, November 9, 2026",
-    "time": "Adoption Event: 10 a.m. – 4 p.m. | Kitty Yoga: 11:30 a.m. (Members Only)",
-    "adoptionTime": "10 a.m. – 4 p.m.",
-    "yogaTime": "11:30 a.m.",
-    "address": "1510 Neroly Road, Oakley, CA",
-    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Diamond+Hills+Sports+Club+%26+Spa%2C+1510+Neroly+Road%2C+Oakley%2C+CA",
-    "dateISO": "2026-11-09",
-    "startTime": "10:00",
-    "endTime": "16:00",
-    "yogaStartTime": "11:30",
-    "status": "upcoming"
+    "active": false,
+    "status": "upcoming",
+    "title": "",
+    "description": "",
+    "location": "",
+    "date": "",
+    "dateISO": "",
+    "startTime": "",
+    "endTime": "",
+    "time": "",
+    "address": "",
+    "mapsUrl": "",
+    "attendingKittens": []
   },
   "regularSchedule": {
     "active": true,
@@ -36,20 +34,20 @@
   },
   "specialEvent": {
     "active": true,
-    "title": "",
-    "description": "",
-    "location": "",
-    "date": "",
-    "dateISO": "",
+    "title": "Kitty Adoption Event & Yoga",
+    "description": "Join us Monday, November 9, at Diamond Hills Sports Club & Spa for two special activities. The kitten adoption event is open to everyone from 10 a.m. to 4 p.m. Members can also enjoy Kitty Yoga at 11:30 a.m., featuring some furry friends!",
+    "location": "Diamond Hills Sports Club & Spa",
+    "date": "Monday, November 9, 2026",
+    "time": "Adoption Event: 10 a.m. – 4 p.m. | Kitty Yoga: 11:30 a.m. (Members Only)",
+    "adoptionTime": "10 a.m. – 4 p.m.",
+    "yogaTime": "11:30 a.m.",
+    "address": "1510 Neroly Road, Oakley, CA",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Diamond+Hills+Sports+Club+%26+Spa%2C+1510+Neroly+Road%2C+Oakley%2C+CA",
+    "dateISO": "2026-11-09",
     "startTime": "10:00",
     "endTime": "16:00",
     "yogaStartTime": "11:30",
-    "time": "",
-    "adoptionTime": "",
-    "yogaTime": "",
-    "address": "",
-    "mapsUrl": "",
-    "attendingKittens": []
+    "status": "special"
   },
   "additionalSpecialEvents": []
-};\n
+};
