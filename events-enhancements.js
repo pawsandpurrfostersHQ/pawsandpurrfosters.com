@@ -71,7 +71,7 @@ function init(){
   const now=new Date(),today=todayLA(),events=allEvents(),canceledFeatured=events.find(x=>x.kind==="featured"&&x.canceled&&now<x.end);
   const endedToday=events.filter(x=>!x.canceled&&key(x.end)===today&&now>=x.end&&now<nextLocalDayStart(today)).sort((a,b)=>b.end-a.end)[0];
   const nextAfterEnded=endedToday?events.find(x=>!x.canceled&&x.start>endedToday.start&&x.end>now):null,upcoming=events.find(x=>!x.canceled&&x.end>now);
-  const mainRecord=canceledFeatured||endedToday||upcoming||null,missed=endedToday&&!canceledFeatured?{next:nextAfterEnded}:null,promoted=mainRecord&&mainRecord.kind==="special"?mainRecord:null;
+  const mainRecord=canceledFeatured||endedToday||upcoming||null,missed=endedToday&&!canceledFeatured?{next:nextAfterEnded}:null,promoted=missed&&missed.next&&missed.next.kind==="special"?missed.next:(mainRecord&&mainRecord.kind==="special"?mainRecord:null);
   if(featured){let body=mainRecord?renderDetails(mainRecord,missed):'<p class="eyebrow">Where to Find Us</p><h2 class="coming-soon-title">COMING SOON</h2><p class="coming-soon-copy">Your new best friend might be waiting! Check back soon to see when you can meet our adoptable kittens.</p><div class="coming-soon-details"><strong>Location details to be announced.</strong><p>Check back here for updates and future opportunities to meet our adoptable kittens.</p></div>';
    if(featured.classList.contains("home-event-square"))body+='<p class="home-event-more"><a class="text-link" href="events/">Learn more →</a></p>';
    featured.innerHTML='<article class="event-card event-card--compact"><div class="event-card-content '+(body.includes("coming-soon-title")?"event-coming-soon":"")+'">'+body+'</div></article>';featured.hidden=false;
