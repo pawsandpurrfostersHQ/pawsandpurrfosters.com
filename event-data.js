@@ -1,30 +1,20 @@
-// Easy event editing. Event times use 24-hour local time for automatic countdowns.
-window.PAWS_EVENT_DATA = {
+// Easy event editing. Event times use 24-hour local time for automatic countdowns.\nwindow.PAWS_EVENT_DATA = {
   "featuredEvent": {
     "active": true,
-    "title": "Brentwood Farmers Market",
-    "status": "canceled",
-    "statusReason": "Canceled because the Veterans Parade will be taking place at the same location.",
-    "location": "Brentwood Farmers Market",
-    "date": "Saturday, November 7, 2026",
-    "time": "9 am – 1 pm",
-    "address": "In front of Hair Encounters | 614 1st St, Brentwood, CA ",
-    "mapsUrl": "https://maps.app.goo.gl/V2cGFG6hthWMbo9m6",
-    "attendingKittens": [
-      "Diego",
-      "Valentina",
-      "Paloma",
-      "Claudia",
-      "Harvey",
-      "Melody",
-      "Raymond",
-      "Wally"
-    ],
-    "description": "",
-    "notAttendingKittens": [],
-    "dateISO": "2026-11-07",
-    "startTime": "09:00",
-    "endTime": "13:00"
+    "title": "Kitty Adoption Event & Yoga",
+    "description": "Join us Monday, November 9, at Diamond Hills Sports Club & Spa for two special activities. The kitten adoption event is open to everyone from 10 a.m. to 4 p.m. Members can also enjoy Kitty Yoga at 11:30 a.m., featuring some furry friends!",
+    "location": "Diamond Hills Sports Club & Spa",
+    "date": "Monday, November 9, 2026",
+    "time": "Adoption Event: 10 a.m. – 4 p.m. | Kitty Yoga: 11:30 a.m. (Members Only)",
+    "adoptionTime": "10 a.m. – 4 p.m.",
+    "yogaTime": "11:30 a.m.",
+    "address": "1510 Neroly Road, Oakley, CA",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Diamond+Hills+Sports+Club+%26+Spa%2C+1510+Neroly+Road%2C+Oakley%2C+CA",
+    "dateISO": "2026-11-09",
+    "startTime": "10:00",
+    "endTime": "16:00",
+    "yogaStartTime": "11:30",
+    "status": "upcoming"
   },
   "regularSchedule": {
     "active": true,
@@ -46,19 +36,20 @@ window.PAWS_EVENT_DATA = {
   },
   "specialEvent": {
     "active": true,
-    "title": "Kitty Adoption Event & Yoga",
-    "description": "Join us Monday, November 9, at Diamond Hills Sports Club & Spa for two special activities. The kitten adoption event is open to everyone from 10 a.m. to 4 p.m. Members can also enjoy Kitty Yoga at 11:30 a.m., featuring some furry friends!",
-    "location": "Diamond Hills Sports Club & Spa",
-    "date": "Monday, November 9, 2026",
-    "time": "Adoption Event: 10 a.m. – 4 p.m. | Kitty Yoga: 11:30 a.m. (Members Only)",
-    "adoptionTime": "10 a.m. – 4 p.m.",
-    "yogaTime": "11:30 a.m.",
-    "address": "1510 Neroly Road, Oakley, CA",
-    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Diamond+Hills+Sports+Club+%26+Spa%2C+1510+Neroly+Road%2C+Oakley%2C+CA",
-    "dateISO": "2026-11-09",
+    "title": "",
+    "description": "",
+    "location": "",
+    "date": "",
+    "dateISO": "",
     "startTime": "10:00",
     "endTime": "16:00",
-    "yogaStartTime": "11:30"
+    "yogaStartTime": "11:30",
+    "time": "",
+    "adoptionTime": "",
+    "yogaTime": "",
+    "address": "",
+    "mapsUrl": "",
+    "attendingKittens": []
   },
   "additionalSpecialEvents": []
-};
+};\n
