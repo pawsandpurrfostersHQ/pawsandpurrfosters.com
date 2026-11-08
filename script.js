@@ -113,7 +113,6 @@ function renderFosterPhotoCarousel() {
   const empty = document.querySelector("#hero-empty");
   const previous = document.querySelector("#hero-previous");
   const next = document.querySelector("#hero-next");
-  const dots = document.querySelector("#hero-dots");
   if (!slides || !empty || !previous || !next) return;
 
   const photoPaths = FOSTER_CAROUSEL_PHOTOS.filter(Boolean).map(filename =>
@@ -125,7 +124,6 @@ function renderFosterPhotoCarousel() {
     empty.hidden = false;
     previous.hidden = true;
     next.hidden = true;
-    if (dots) { dots.hidden = true; dots.innerHTML = ""; }
     return;
   }
 
@@ -140,42 +138,23 @@ function renderFosterPhotoCarousel() {
   let activeIndex = 0;
   let timer = null;
 
-  function renderDots() {
-    if (!dots) return;
-    dots.innerHTML = activeImages.map((_, index) =>
-      '<button type="button" data-carousel-dot="' + index + '" class="' +
-      (index === activeIndex ? 'is-active' : '') + '" aria-label="Show photo ' + (index + 1) +
-      '" aria-pressed="' + (index === activeIndex ? 'true' : 'false') + '"></button>'
-    ).join("");
-    dots.hidden = activeImages.length < 2;
-    dots.querySelectorAll("[data-carousel-dot]").forEach(button => {
-      button.addEventListener("click", () => showSlide(Number(button.dataset.carouselDot)));
-    });
-  }
-
   function showSlide(index) {
     if (!activeImages.length) return;
     activeIndex = (index + activeImages.length) % activeImages.length;
     activeImages.forEach((image, imageIndex) => image.classList.toggle("is-active", imageIndex === activeIndex));
-    if (dots) dots.querySelectorAll("button").forEach((dot, dotIndex) => {
-      dot.classList.toggle("is-active", dotIndex === activeIndex);
-      dot.setAttribute("aria-pressed", dotIndex === activeIndex ? "true" : "false");
-    });
   }
 
   function updateControls() {
     previous.hidden = activeImages.length < 2;
     next.hidden = activeImages.length < 2;
-    renderDots();
     showSlide(activeIndex);
     if (activeImages.length < 2 && timer) { window.clearInterval(timer); timer = null; }
   }
 
   previous.onclick = () => showSlide(activeIndex - 1);
   next.onclick = () => showSlide(activeIndex + 1);
-  renderDots();
   showSlide(0);
-
+  updateControls();
   const carousel = document.querySelector("#hero-carousel");
   if (activeImages.length > 1 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     timer = window.setInterval(() => showSlide(activeIndex + 1), 5000);
