@@ -35,14 +35,14 @@
     "eventPresetId": "kitty-yoga",
     "yogaStartTime": "11:30",
     "attendingKittens": [
-      "Diego",
       "Valentina",
       "Claudia",
       "Paloma",
       "Harvey",
       "Melody",
       "Wally",
-      "Raymond"
+      "Raymond",
+      "Diego"
     ],
     "locationPresetId": "custom"
   },
