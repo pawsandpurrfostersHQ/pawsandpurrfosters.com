@@ -116,50 +116,87 @@ function renderFosterPhotoCarousel() {
   const dots = document.querySelector("#hero-dots");
   if (!slides || !empty || !previous || !next) return;
 
-  const photoPaths = FOSTER_CAROUSEL_PHOTOS.filter(Boolean).map(filename => /^(?:data:|https?:|blob:)/i.test(String(filename)) ? filename : `assets/hero/${filename}`);
-  if (!photoPaths.length) return;
+  const photoPaths = FOSTER_CAROUSEL_PHOTOS.filter(Boolean).map(filename =>
+    /^(?:data:|https?:|blob:)/i.test(String(filename)) ? filename : "assets/hero/" + filename
+  );
+  if (!photoPaths.length) {
+    slides.innerHTML = "";
+    slides.hidden = true;
+    empty.hidden = false;
+    previous.hidden = true;
+    next.hidden = true;
+    if (dots) { dots.hidden = true; dots.innerHTML = ""; }
+    return;
+  }
 
   empty.hidden = true;
-  slides.innerHTML = photoPaths.map((path, index) => `
-    <img class="hero-photo${index === 0 ? " is-active" : ""}" src="${escapeHTML(path)}"
-      alt="Paws &amp; Purr foster kitten${photoPaths.length > 1 ? "s" : ""}" ${index ? "loading=\"lazy\"" : ""}>
-  `).join("");
+  slides.hidden = false;
+  slides.innerHTML = photoPaths.map((path, index) =>
+    '<img class="hero-photo' + (index === 0 ? ' is-active' : '') + '" src="' + escapeHTML(path) +
+    '" alt="Paws &amp; Purr foster kittens" ' + (index ? 'loading="lazy"' : '') + '>'
+  ).join("");
 
-  const images = Array.from(slides.querySelectorAll("img"));
+  let activeImages = Array.from(slides.querySelectorAll("img"));
   let activeIndex = 0;
-  let timer;
-  const showSlide = index => {
-    activeIndex = (index + images.length) % images.length;
-    images.forEach((image, imageIndex) => image.classList.toggle("is-active", imageIndex === activeIndex));
+  let timer = null;
 
-  };
-
-
-  previous.hidden = images.length < 2;
-  next.hidden = images.length < 2;
-  if (dots) dots.hidden = true;
-  previous.addEventListener("click", () => showSlide(activeIndex - 1));
-  next.addEventListener("click", () => showSlide(activeIndex + 1));
-
-  if (images.length > 1 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    timer = window.setInterval(() => showSlide(activeIndex + 1), 5000);
-    const carousel = document.querySelector("#hero-carousel");
-    carousel.addEventListener("mouseenter", () => window.clearInterval(timer));
-    carousel.addEventListener("mouseleave", () => {
-      window.clearInterval(timer);
-      timer = window.setInterval(() => showSlide(activeIndex + 1), 5000);
+  function renderDots() {
+    if (!dots) return;
+    dots.innerHTML = activeImages.map((_, index) =>
+      '<button type="button" data-carousel-dot="' + index + '" class="' +
+      (index === activeIndex ? 'is-active' : '') + '" aria-label="Show photo ' + (index + 1) +
+      '" aria-pressed="' + (index === activeIndex ? 'true' : 'false') + '"></button>'
+    ).join("");
+    dots.hidden = activeImages.length < 2;
+    dots.querySelectorAll("[data-carousel-dot]").forEach(button => {
+      button.addEventListener("click", () => showSlide(Number(button.dataset.carouselDot)));
     });
   }
 
-  images.forEach(image => image.addEventListener("error", () => {
+  function showSlide(index) {
+    if (!activeImages.length) return;
+    activeIndex = (index + activeImages.length) % activeImages.length;
+    activeImages.forEach((image, imageIndex) => image.classList.toggle("is-active", imageIndex === activeIndex));
+    if (dots) dots.querySelectorAll("button").forEach((dot, dotIndex) => {
+      dot.classList.toggle("is-active", dotIndex === activeIndex);
+      dot.setAttribute("aria-pressed", dotIndex === activeIndex ? "true" : "false");
+    });
+  }
+
+  function updateControls() {
+    previous.hidden = activeImages.length < 2;
+    next.hidden = activeImages.length < 2;
+    renderDots();
+    showSlide(activeIndex);
+    if (activeImages.length < 2 && timer) { window.clearInterval(timer); timer = null; }
+  }
+
+  previous.onclick = () => showSlide(activeIndex - 1);
+  next.onclick = () => showSlide(activeIndex + 1);
+  renderDots();
+  showSlide(0);
+
+  const carousel = document.querySelector("#hero-carousel");
+  if (activeImages.length > 1 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    timer = window.setInterval(() => showSlide(activeIndex + 1), 5000);
+    carousel.addEventListener("mouseenter", () => { if (timer) { window.clearInterval(timer); timer = null; } });
+    carousel.addEventListener("mouseleave", () => {
+      if (!timer && activeImages.length > 1) timer = window.setInterval(() => showSlide(activeIndex + 1), 5000);
+    });
+  }
+
+  activeImages.slice().forEach(image => image.addEventListener("error", () => {
+    const failedIndex = activeImages.indexOf(image);
+    if (failedIndex < 0) return;
+    activeImages.splice(failedIndex, 1);
     image.remove();
-    const remainingImages = slides.querySelectorAll("img");
-    if (!remainingImages.length) {
+    if (failedIndex < activeIndex) activeIndex--;
+    if (activeIndex >= activeImages.length) activeIndex = 0;
+    updateControls();
+    if (!activeImages.length) {
       slides.hidden = true;
       empty.hidden = false;
-      previous.hidden = true;
-      next.hidden = true;
-      if (dots) dots.hidden = true;
+      if (timer) { window.clearInterval(timer); timer = null; }
     }
   }));
 }
