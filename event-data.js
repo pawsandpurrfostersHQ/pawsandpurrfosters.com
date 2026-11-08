@@ -1,4 +1,5 @@
-// Easy event editing. Event times use 24-hour local time for automatic countdowns.\nwindow.PAWS_EVENT_DATA = {
+// Easy event editing. Event times use 24-hour local time for automatic countdowns.
+window.PAWS_EVENT_DATA = {
   "specialEvent": {
     "date": "",
     "time": "",
