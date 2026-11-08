@@ -166,18 +166,14 @@ h3 { font-family: "Playfair Display", serif; font-size: 27px; margin: 6px 0; }
 .hero-slides { position: absolute; inset: 0; }
 .hero-photo { display: none; width: 100%; height: 100%; object-fit: contain; background: var(--sage-light); }
 .hero-photo.is-active { display: block; }
-.hero-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 46px; height: 46px; background: rgba(255,255,255,.94); box-shadow: var(--shadow); }
-.hero-previous { left: 14px; }
-.hero-next { right: 14px; }
-.hero-dots { position: absolute; right: 0; bottom: 14px; left: 0; display: flex; justify-content: center; gap: 8px; }
-.hero-dots button { width: 9px; height: 9px; padding: 0; border: 0; border-radius: 50%; background: rgba(255,255,255,.7); cursor: pointer; }
-.hero-dots button.is-active { background: var(--purple-dark); outline: 2px solid white; }
-.floating-card {
-  position: absolute; right: -4px; bottom: 48px; max-width: 230px;
-  padding: 18px 20px; border-radius: 18px; background: white; box-shadow: var(--shadow);
+.hero-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 36px; height: 36px; padding: 0;
+  background: rgba(255,255,255,.94); box-shadow: 0 4px 14px rgba(48,49,47,.16);
+  font-size: 24px; z-index: 2;
 }
-.floating-card strong { display: block; color: var(--purple-dark); }
-.floating-card span { color: var(--muted); font-size: 13px; }
+.hero-previous { left: 10px; }
+.hero-next { right: 10px; }
 
 .section { max-width: 1280px; margin: auto; padding: 90px clamp(20px, 5vw, 72px); }
 .section { max-width: 1280px; margin: auto; padding: 90px clamp(20px, 5vw, 72px); }
