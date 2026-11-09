@@ -33,7 +33,7 @@ function cd(start,end,label){
  const now=new Date(),ms=start-now;if(ms>0){if(ms<=3600000){const n=Math.max(1,Math.ceil(ms/60000));return (label||"Starts")+" in "+n+" "+(n===1?"minute":"minutes")+"!";}
  const days=Math.round((localDayStart(key(start))-localDayStart(todayLA()))/86400000);if(days===1)return "Coming tomorrow!";if(days>1)return "Coming in "+days+" days!";const h=Math.max(1,Math.ceil(ms/3600000));return h===1?"Starts in 1 hour!":"Starts in "+h+" hours!";}
  if(end&&now>=end)return "You missed us today!";if(!end&&label==="Kitty Yoga")return "Kitty Yoga is starting!";
- if(end){const n=Math.ceil((end-now)/60000);if(n<=15)return "Last chance to stop by today!";if(n<=30)return "30 minutes left!";if(n<=60)return "1 hour left!";const h=Math.floor(n/60);return h+" "+(h===1?"hour":"hours")+" left!";}return "Happening Now!";
+ if(end){const n=Math.ceil((end-now)/60000);if(n<=30)return "Last chance to stop by today! "+n+" minutes left!";if(n<=60)return "1 hour left!";const h=Math.floor(n/60);return h+" "+(h===1?"hour":"hours")+" left!";}return "Happening Now!";
 }
 function countdown(start,end,label){return '<span class="event-countdown" data-start="'+start.toISOString()+'" data-end="'+(end?end.toISOString():"")+'" data-label="'+esc(label||"")+'">'+esc(cd(start,end,label))+'</span>';}
 function tick(){document.querySelectorAll("[data-start]").forEach(n=>{const s=new Date(n.dataset.start),e=n.dataset.end?new Date(n.dataset.end):null;if(!isNaN(s))n.textContent=cd(s,e,n.dataset.label);});}
