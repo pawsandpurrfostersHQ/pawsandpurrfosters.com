@@ -95,9 +95,12 @@ function renderAbout() {
     container.innerHTML = '<p class="empty-state" role="alert">Foster history totals could not be loaded.</p>';
     return;
   }
-  const paragraphs = ABOUT_STORY.paragraphs.map(text =>
-    `<p>${escapeHTML(text.replaceAll("{{currentLitter}}", totals.currentLitter).replaceAll("{{kittenCount}}", String(totals.kittenCount)))}</p>`
-  ).join("");
+  const paragraphs = ABOUT_STORY.paragraphs.map(text => {
+    const escaped = escapeHTML(text.replaceAll("{{currentLitter}}", totals.currentLitter).replaceAll("{{kittenCount}}", String(totals.kittenCount)));
+    const rescueName = "No Paws Left Behind Kitty Rescue";
+    const linked = escaped.replace(rescueName, `<strong><a href="https://www.nopawsleftbehindkittyrescue.com/" target="_blank" rel="noopener noreferrer">${rescueName}</a></strong>`);
+    return `<p>${linked}</p>`;
+  }).join("");
 
   container.innerHTML = `
     <div class="about-accent"><span>Since</span><strong>2024</strong><span>${totals.kittenCount} kittens fostered</span></div>
