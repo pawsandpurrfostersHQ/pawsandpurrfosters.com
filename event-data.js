@@ -18,18 +18,18 @@ window.PAWS_EVENT_DATA = {
     "attendingKittens": []
   },
   "featuredEvent": {
-    "date": "Monday, November 9, 2026",
-    "time": "Adoption Event: 10 a.m. – 4 p.m. | Kitty Yoga: 11:30 a.m. (Members Only)",
+    "date": "Sunday, November 15, 2026",
+    "time": "11 a.m. – 3 p.m.",
     "title": "Kitty Adoption Event & Yoga",
     "active": true,
     "status": "upcoming",
-    "address": "1510 Neroly Road, Oakley, CA",
-    "dateISO": "2026-11-09",
-    "endTime": "16:00",
-    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Diamond+Hills+Sports+Club+%26+Spa%2C+1510+Neroly+Road%2C+Oakley%2C+CA",
-    "location": "Diamond Hills Sports Club & Spa",
+    "address": "5879 Lone Tree Way, Antioch, CA 94531",
+    "dateISO": "2026-11-15",
+    "endTime": "15:00",
+    "mapsUrl": "https://maps.app.goo.gl/bDa3qbVxZ8EPSCqG6",
+    "location": "Antioch PetSmart",
     "yogaTime": "11:30 a.m.",
-    "startTime": "10:00",
+    "startTime": "11:00",
     "description": "Join us Monday, November 9 at Diamond Hills Sports Club & Spa for two special activities. The kitten adoption event is open to everyone from 10 a.m. to 4 p.m. Members can also enjoy Kitty Yoga at 11:30 a.m., featuring some furry friends!",
     "adoptionTime": "10 a.m. – 4 p.m.",
     "statusReason": "",
@@ -45,7 +45,7 @@ window.PAWS_EVENT_DATA = {
       "Raymond",
       "Diego"
     ],
-    "locationPresetId": "custom"
+    "locationPresetId": "antioch"
   },
   "regularSchedule": {
     "note": "Schedule is subject to change. Special adoption events and additional locations may be added.",
