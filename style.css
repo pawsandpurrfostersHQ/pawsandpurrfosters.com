@@ -2066,9 +2066,72 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .alumni-birthday-cake:focus::after { display: block; }
 .alumni-companion { margin: 16px 0 0; color: var(--muted); text-decoration: none; cursor: default; }
 .all-litters__group { scroll-margin-top: 110px; }
-.all-litters__group:target {
+.all-litters__group.is-highlighted {
   padding: 14px;
   border: 2px solid var(--purple-light);
   border-radius: 18px;
   background: var(--sage-light);
 }
+
+
+/* Final layout refinements: centered carousel arrows and balanced alumni cards. */
+.kitten-carousel { position:relative; min-width:0; padding:0 48px; }
+.kitten-carousel-controls {
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:space-between;
+  gap:0; pointer-events:none; z-index:3;
+}
+.kitten-carousel-controls .carousel-button { pointer-events:auto; }
+.kitten-carousel-controls .carousel-button[hidden] { display:none!important; }
+.kitten-track { scrollbar-width:none; }
+.kitten-track::-webkit-scrollbar { display:none; }
+.all-litters__carousel { position:relative; padding:0 48px; }
+.all-litters__cards {
+  display:flex; flex-wrap:nowrap; min-width:0; overflow-x:auto; overflow-y:hidden;
+  gap:22px; padding:2px 2px 14px; scroll-snap-type:x proximity;
+  scrollbar-width:none; -webkit-overflow-scrolling:touch;
+}
+.all-litters__cards::-webkit-scrollbar { display:none; }
+.all-litters__cards > .kitten-card {
+  flex:1 0 calc((100% - 66px) / 4); min-width:220px; scroll-snap-align:start;
+}
+.all-litters__arrow {
+  display:grid; position:absolute; top:50%; transform:translateY(-50%);
+  z-index:4; width:36px; height:36px; padding:0; align-items:center; justify-items:center;
+  box-shadow:0 4px 14px rgba(48,49,47,.14);
+}
+.all-litters__arrow:first-child { left:4px; }
+.all-litters__arrow:last-child { right:4px; }
+.all-litters__arrow[hidden] { display:none!important; }
+.alumni-card { display:flex; flex-direction:column; }
+.alumni-card-content { display:flex; flex:1; flex-direction:column; }
+.alumni-companion { margin: auto 0 0; padding-top:14px; color:var(--muted); text-decoration:none; cursor:default; }
+@media(max-width:760px) {
+  .kitten-carousel { padding:0 40px; }
+  .all-litters__carousel { padding:0 40px; }
+  .all-litters__cards > .kitten-card { flex-basis:min(78vw,320px); min-width:240px; }
+  .all-litters__arrow:first-child { left:0; }
+  .all-litters__arrow:last-child { right:0; }
+}
+@media(max-width:500px) {
+  .kitten-carousel { padding:0 36px; }
+  .all-litters__carousel { padding:0 36px; }
+  .all-litters__cards > .kitten-card { flex-basis:min(76vw,300px); min-width:220px; }
+}
+
+
+
+/* Keep the featured adoption card centered unless a special event is beside it. */
+#events:not(.has-special-events) #event-featured {
+  width:100%; max-width:1050px; margin:0 auto;
+}
+#events:not(.has-special-events) #home-special-event { display:none!important; }
+#events.has-special-events {
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); align-items:stretch; gap:22px;
+}
+#events.has-special-events #event-featured,
+#events.has-special-events #home-special-event { width:100%; max-width:none; min-width:0; margin:0; }
+#events.has-special-events .event-page-link { grid-column:1/-1; }
+@media(max-width:760px) {
+  #events.has-special-events { grid-template-columns:1fr; }
+}
+
