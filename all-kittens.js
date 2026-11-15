@@ -137,10 +137,13 @@ function renderAllKittens() {
     const [previous, next] = carousel.querySelectorAll(".all-litters__arrow");
     const updateControls = () => {
       const maxScroll = track.scrollWidth - track.clientWidth;
-      previous.disabled = track.scrollLeft <= 2;
-      next.disabled = track.scrollLeft >= maxScroll - 2;
-      previous.hidden = maxScroll <= 2;
-      next.hidden = maxScroll <= 2;
+      const atStart = track.scrollLeft <= 2;
+      const atEnd = track.scrollLeft >= maxScroll - 2;
+      carousel.classList.toggle("has-overflow", maxScroll > 2);
+      previous.disabled = atStart;
+      next.disabled = atEnd;
+      previous.hidden = maxScroll <= 2 || atStart;
+      next.hidden = maxScroll <= 2 || atEnd;
     };
     const scrollCards = direction => {
       const card = track.querySelector(".kitten-card");
