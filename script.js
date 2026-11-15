@@ -264,7 +264,7 @@ window.renderPawsAttendeeGallery = function(names) {
   const kittens = Array.isArray(window.PAWS_KITTENS) ? window.PAWS_KITTENS : [];
   const records = (names || []).map(name => kittens.find(k => k.name === name)).filter(Boolean);
   if (!records.length) return "";
-  const prefix = document.body.classList.contains("events-page") ? "../" : "";
+  const prefix = document.querySelector(".events-page") ? "../" : "";
   const slides = records.map((kitten, index) => {
     const photo = kitten.image || (Array.isArray(kitten.photos) ? kitten.photos[0] : "");
     if (!photo) return "";
