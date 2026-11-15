@@ -135,7 +135,7 @@ function renderAlumniCard(kitten, alumniIds, today = new Date()) {
     ? `<p class="alumni-companion">Adopted with ${escapeHTML(alumniIds.get(kitten.companionId))}</p>`
     : "";
   const birthdayDate = parseAlumniDate(kitten.birthday);
-  const birthdayTooltip = `${kitten.name}'s birthday month is ${birthdayDate.toLocaleString("en-US", { month: "long" })}.`;
+  const birthdayTooltip = `${birthdayDate.toLocaleString("en-US", { month: "long" })} is ${kitten.name}'s birthday month.`;
   const birthdayMessage = celebrations.birthdayMessage
     ? celebrations.birthdayYears > 0
       ? `It's ${escapeHTML(kitten.name)}'s ${formatBirthdayOrdinal(celebrations.birthdayYears)} birthday!`
