@@ -230,7 +230,7 @@ function renderKittenCards() {
     if (scrollbarHideTimer) clearTimeout(scrollbarHideTimer);
     carousel.classList.toggle("is-scrollbar-visible", visible);
     if (visible && linger) {
-      scrollbarHideTimer = setTimeout(() => setScrollbarVisible(false), 12000);
+      scrollbarHideTimer = setTimeout(() => setScrollbarVisible(false), 15000);
     }
   };
   track.addEventListener("pointerover", event => {
