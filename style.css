@@ -4677,13 +4677,13 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
   box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 8px 22px rgba(35,23,48,.12) !important;
 }
 #events.event.section > #event-featured .attending-kitten-name {
-  background: #4b3764 !important;
-  border: 1px solid rgba(255,255,255,.32) !important;
+  background: rgba(44,32,61,.66) !important;
+  border: 1px solid rgba(255,255,255,.3) !important;
   color: #fff !important;
 }
 #events.event.section > #event-featured .attending-kitten-name:hover,
 #events.event.section > #event-featured .attending-kitten-name:focus-visible {
-  background: #38264f !important;
+  background: rgba(44,32,61,.88) !important;
   color: #fff !important;
 }
 #events.event.section > #event-featured {
