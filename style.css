@@ -4340,3 +4340,60 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 @media (max-width:760px) {
   #events.event.section { display:block !important; }
 }
+
+
+/* Homepage adoption card: match the JavaScript's feature layout and the selected lavender-purple. */
+#events > #event-featured .event-card--compact {
+  background:#8979A5 !important;
+  border-color:#8979A5 !important;
+}
+#events > #event-featured .event-feature-layout {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  align-items:center !important;
+  gap:clamp(24px,3.5vw,42px) !important;
+  width:100% !important;
+}
+#events > #event-featured .event-feature-details {
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:100% !important;
+  min-width:0 !important;
+  text-align:center !important;
+}
+#events > #event-featured .event-feature-details > * {
+  max-width:100% !important;
+  text-align:center !important;
+}
+#events > #event-featured .event-countdown {
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:fit-content !important;
+  max-width:100% !important;
+  margin:6px auto 12px !important;
+  padding:7px 13px !important;
+  border-radius:999px !important;
+  background:#f0f3e9 !important;
+  color:#536b58 !important;
+  font-weight:800 !important;
+  line-height:1.35 !important;
+}
+#events > #event-featured .event-countdown[hidden] {
+  display:none !important;
+}
+@media(max-width:760px) {
+  #events > #event-featured .event-feature-layout {
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    gap:22px !important;
+  }
+  #events > #event-featured .event-feature-details,
+  #events > #event-featured .event-feature-details > * {
+    width:100% !important;
+    text-align:center !important;
+  }
+}
