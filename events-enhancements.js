@@ -55,11 +55,11 @@ function init(){
  };
  const renderDetails=(record,missed)=>{
   const item=record.item,changed=item.status==="canceled"||item.status==="rescheduled",attending=kittensFor(item);let html='<p class="eyebrow">Where to Find Us</p>';
+  const eventHeading = (eventItem, kind) => { const title=String(eventItem.title||"").trim(); if(kind==="featured"&&(!title||title==="Where to Find Us"||/kitty adoption.*yoga/i.test(title))) return "Kitten Adoption Event"; return title||(kind==="featured"?"Kitten Adoption Event":"Special Adoption Event"); };
   if(missed){html+='<h2>You missed us today!</h2><p class="event-missed-intro">Our adoption event has wrapped up for the day. Here is what is coming up next:</p>';const next=missed.next;
-   if(next){const n=next.item;html+='<div class="event-next-preview"><p class="eyebrow">Up next</p><h3>'+esc(eventHeading(n,"featured"))+'</h3><p class="event-date"><strong>'+esc(n.date||"Date coming soon")+'</strong></p>'+renderActivity(n,missed.next.start,n.status==="canceled"||n.status==="rescheduled")+(n.description?'<p>'+esc(n.description)+'</p>':"")+'<p class="event-location-name"><strong>'+esc(n.location||"Location details to be announced")+'</strong></p>'+map(n.address,n.mapsUrl)+(kittensFor(n).length?'<p class="event-attending"><strong>Kittens attending:</strong><br>'+kittensFor(n).map(esc).join(", ")+'</p>':"")+'</div>';}
+   if(next){const n=next.item;html+='<div class="event-next-preview"><p class="eyebrow">Up next</p><h3>'+esc(eventHeading(n,next.kind))+'</h3><p class="event-date"><strong>'+esc(n.date||"Date coming soon")+'</strong></p>'+renderActivity(n,missed.next.start,n.status==="canceled"||n.status==="rescheduled")+(n.description?'<p>'+esc(n.description)+'</p>':"")+'<p class="event-location-name"><strong>'+esc(n.location||"Location details to be announced")+'</strong></p>'+map(n.address,n.mapsUrl)+(kittensFor(n).length?'<p class="event-attending"><strong>Kittens attending:</strong><br>'+kittensFor(n).map(esc).join(", ")+'</p>':"")+'</div>';}
    else html+='<p>Check back soon for our next opportunity to meet our adoptable kittens.</p>';return html;
   }
-  const eventHeading = (eventItem, kind) => { const title=String(eventItem.title||"").trim(); if(kind==="featured"&&(!title||title==="Where to Find Us"||/kitty adoption.*yoga/i.test(title))) return "Kitten Adoption Event"; return title||(kind==="featured"?"Kitten Adoption Event":"Special Adoption Event"); };
   html+='<h2>'+esc(eventHeading(item,record.kind))+'</h2>';
   if(changed)html+=scheduleChange(item,item.status);
   if(record.kind==="special")html+='<p class="event-date"><strong>'+esc(item.date||"Date coming soon")+'</strong></p>'+renderActivity(item,record.start,changed)+(item.description?'<p>'+esc(item.description)+'</p>':"");
