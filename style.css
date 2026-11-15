@@ -4641,3 +4641,27 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .events-page #event-featured .event-attending::after {
   background: #cdbfe0 !important;
 }
+
+
+/* Events tab only — tighten the featured card and force readable map-link text. */
+.events-page #event-featured .event-card--compact {
+  min-height: 0 !important;
+  height: auto !important;
+  aspect-ratio: auto !important;
+  padding: 18px 40px !important;
+}
+.events-page #event-featured .event-feature-layout {
+  min-height: 0 !important;
+}
+.events-page #event-featured .event-feature-details .event-location-block > a.event-address,
+.events-page #event-featured .event-feature-details a.event-address {
+  color: #315c3d !important;
+  -webkit-text-fill-color: #315c3d !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
+}
+.events-page #event-featured {
+  scroll-margin-top: 110px;
+}
