@@ -3207,3 +3207,103 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .events-page #event-featured .event-card-content .event-next-label {display:inline-flex !important;}
 .events-page .event-card-list .event-card--compact {display:block !important;width:100% !important;max-width:none !important;height:auto !important;min-height:0 !important;}
 .events-page .event-card-list .event-card-content {display:flex !important;flex-direction:column !important;align-items:center !important;justify-content:flex-start !important;gap:10px !important;}
+
+
+/* User-selected event-card purple and compact rectangular layout. */
+#events #event-featured .event-card--compact,
+#events #home-special-event .event-card--compact,
+.events-page #event-featured .event-card--compact,
+.events-page .event-card-list .event-card--compact {
+  background:#7B679A !important;
+  border:1px solid #7B679A !important;
+  color:#fff !important;
+  width:100% !important;
+  max-width:none !important;
+  height:auto !important;
+  min-height:0 !important;
+  padding:clamp(18px,2.2vw,27px) !important;
+  border-radius:22px !important;
+  box-shadow:0 10px 26px rgba(68,52,91,.14) !important;
+}
+#events #event-featured .event-card-content,
+#events #home-special-event .event-card-content,
+.events-page #event-featured .event-card-content,
+.events-page .event-card-list .event-card-content {
+  color:#fff !important;
+}
+#events #event-featured .event-card-content h2,
+#events #home-special-event .event-card-content h2,
+.events-page #event-featured .event-card-content h2,
+.events-page .event-card-list .event-card-content h2,
+#events #event-featured .event-card-content p,
+#events #home-special-event .event-card-content p,
+.events-page #event-featured .event-card-content p,
+.events-page .event-card-list .event-card-content p,
+.events-page .event-card-list .event-attending strong {
+  color:#fff !important;
+}
+#events #event-featured .event-next-label,
+#events #home-special-event .event-next-label,
+.events-page #event-featured .event-next-label,
+.events-page .event-card-list .event-next-label {
+  display:inline-flex !important;
+  margin:0 auto 5px !important;
+  padding:5px 12px !important;
+  border-radius:999px !important;
+  background:rgba(255,255,255,.19) !important;
+  color:#fff !important;
+  font-size:10px !important;
+  letter-spacing:.12em !important;
+}
+#events #event-featured .event-card-content .event-address,
+#events #home-special-event .event-card-content .event-address,
+.events-page #event-featured .event-card-content .event-address,
+.events-page .event-card-list .event-card-content .event-address {
+  background:rgba(255,255,255,.94) !important;
+  color:#57456F !important;
+  border-radius:999px !important;
+}
+.events-page .event-card-list .event-card-content {
+  gap:5px !important;
+}
+.events-page .event-card-list .event-card-content .event-meta-row {
+  width:min(100%,480px) !important;
+  margin:5px auto 7px !important;
+  padding:8px 12px !important;
+  border-color:rgba(255,255,255,.32) !important;
+  color:#fff !important;
+  gap:6px 18px !important;
+}
+.events-page .event-card-list .event-card-content .event-meta-row .event-date,
+.events-page .event-card-list .event-card-content .event-meta-row .event-time {
+  color:#fff !important;
+}
+.events-page .event-card-list .event-card-content .event-location-block {
+  margin:2px auto 4px !important;
+  gap:4px !important;
+}
+.events-page .event-card-list .event-card-content .event-attending-block {
+  max-width:100% !important;
+  margin:8px auto 0 !important;
+}
+.events-page .event-card-list .attending-kitten-gallery {
+  width:min(100%,330px) !important;
+  height:195px !important;
+  margin:0 auto !important;
+}
+.events-page .event-card-list .attending-kitten-slide img {
+  height:145px !important;
+  flex-basis:145px !important;
+}
+@media(max-width:760px) {
+  .events-page .event-card-list .event-card--compact {
+    padding:18px 15px !important;
+  }
+  .events-page .event-card-list .attending-kitten-gallery {
+    height:185px !important;
+  }
+  .events-page .event-card-list .attending-kitten-slide img {
+    height:138px !important;
+    flex-basis:138px !important;
+  }
+}
