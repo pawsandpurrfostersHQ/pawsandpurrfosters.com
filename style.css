@@ -2184,3 +2184,57 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 @media(max-width:500px) {
   .alumni-cards--single > .alumni-card { flex-basis:min(76vw,310px); }
 }
+
+/* Foster Alumni: center single-kitten litters in the same row position as paired litters. */
+.alumni-cards--single {
+  justify-content:center;
+  scroll-snap-type:none;
+}
+.alumni-cards--single > .alumni-card {
+  flex:0 0 clamp(220px, calc((100% - 44px) / 3), 320px);
+  scroll-snap-align:center;
+}
+@media(max-width:500px) {
+  .alumni-cards--single > .alumni-card { flex-basis:min(76vw,310px); }
+}
+
+/* Homepage Current Fosters scrollbar is visible only while a card is hovered or focused. */
+.kitten-track { scrollbar-color:transparent transparent; }
+.kitten-track::-webkit-scrollbar-thumb { background:transparent; }
+.kitten-carousel.is-scrollbar-visible .kitten-track { scrollbar-color:rgba(117,98,141,.58) transparent; }
+.kitten-carousel.is-scrollbar-visible .kitten-track::-webkit-scrollbar-thumb { background:rgba(117,98,141,.58); }
+
+/* When there is no special event beside it, the homepage adoption card becomes a wide, compact feature. */
+#events:has(#home-special-event[hidden]) { grid-template-columns:minmax(0,1fr); }
+#events:has(#home-special-event[hidden]) #event-featured {
+  width:min(100%,920px); min-height:0; height:auto; margin:0 auto;
+}
+#events:has(#home-special-event[hidden]) #event-featured .event-card--compact {
+  min-height:0; height:auto; padding:20px clamp(22px,3vw,34px); display:block;
+}
+#events:has(#home-special-event[hidden]) #event-featured .event-card-content {
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  align-items:center; gap:5px 18px; text-align:center;
+}
+#events:has(#home-special-event[hidden]) #event-featured .event-card-content > .eyebrow,
+#events:has(#home-special-event[hidden]) #event-featured .event-card-content > h2,
+#events:has(#home-special-event[hidden]) #event-featured .event-card-content > .event-attending { grid-column:1/-1; }
+#events:has(#home-special-event[hidden]) #event-featured .event-card-content > .event-date,
+#events:has(#home-special-event[hidden]) #event-featured .event-card-content > .event-time,
+#events:has(#home-special-event[hidden]) #event-featured .event-card-content > .event-location-name,
+#events:has(#home-special-event[hidden]) #event-featured .event-card-content > .event-address {
+  justify-self:center; margin:2px 0;
+}
+@media(max-width:760px) {
+  #events:has(#home-special-event[hidden]) #event-featured .event-card-content { grid-template-columns:1fr; gap:4px; }
+  #events:has(#home-special-event[hidden]) #event-featured .event-card-content > * { grid-column:1/-1; }
+}
+
+/* Keep the dedicated Events page special-event panel compact and in proportion with the schedule panel. */
+.events-page .special-event-panel { padding:22px clamp(22px,3vw,30px); }
+.events-page .special-event-panel h2 { font-size:clamp(23px,2.2vw,27px); margin:4px 0 7px; }
+.events-page .special-event-panel .special-event-date { font-size:16px; margin:6px 0 9px; }
+.events-page .special-event-activities { gap:10px; margin:0 auto 10px; }
+.events-page .special-event-activities > p { padding:11px 10px; }
+.events-page .special-event-activities .event-activity-icon { font-size:20px; margin-bottom:3px; }
+.events-page .special-event-panel > p:last-child { margin:10px auto 0; font-size:14px; line-height:1.55; }
