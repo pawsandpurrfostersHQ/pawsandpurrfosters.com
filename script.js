@@ -210,40 +210,36 @@ function renderKittenCards() {
 
   const previous = document.querySelector("#kitten-previous");
   const next = document.querySelector("#kitten-next");
-  let scrollbarFadeTimer = null;
-  const revealHomepageScrollbar = () => {
-    const carousel = track.closest(".kitten-carousel");
-    if (!carousel) return;
-    carousel.classList.add("is-scrollbar-visible");
-    if (scrollbarFadeTimer) window.clearTimeout(scrollbarFadeTimer);
-    scrollbarFadeTimer = window.setTimeout(() => {
-      carousel.classList.remove("is-scrollbar-visible");
-    }, 1600);
-  };
+  const carousel = track.closest(".kitten-carousel");
   const updateControls = () => {
     const maxScroll = track.scrollWidth - track.clientWidth;
-    previous.disabled = track.scrollLeft <= 2;
-    next.disabled = track.scrollLeft >= maxScroll - 2;
+    const atStart = track.scrollLeft <= 2;
+    const atEnd = track.scrollLeft >= maxScroll - 2;
+    carousel.classList.toggle("has-overflow", maxScroll > 2);
+    previous.disabled = atStart;
+    next.disabled = atEnd;
     previous.hidden = maxScroll <= 2;
     next.hidden = maxScroll <= 2;
   };
   const scrollCards = direction => {
     const card = track.querySelector(".kitten-card");
-    if (card) {
-      revealHomepageScrollbar();
-      track.scrollBy({ left: direction * (card.getBoundingClientRect().width + 22), behavior: "smooth" });
-    }
+    if (card) track.scrollBy({ left: direction * (card.getBoundingClientRect().width + 22), behavior: "smooth" });
   };
+  const setScrollbarVisible = visible => carousel.classList.toggle("is-scrollbar-visible", visible);
+  track.addEventListener("pointerover", event => {
+    if (event.pointerType === "mouse" && event.target.closest(".kitten-card")) setScrollbarVisible(true);
+  });
+  track.addEventListener("pointerout", event => {
+    if (event.pointerType !== "mouse" || !event.target.closest(".kitten-card")) return;
+    if (!event.relatedTarget?.closest?.(".kitten-card")) setScrollbarVisible(false);
+  });
+  track.addEventListener("focusin", () => setScrollbarVisible(true));
+  track.addEventListener("focusout", event => {
+    if (!track.contains(event.relatedTarget)) setScrollbarVisible(false);
+  });
   previous.addEventListener("click", () => scrollCards(-1));
   next.addEventListener("click", () => scrollCards(1));
-  track.addEventListener("scroll", () => { updateControls(); revealHomepageScrollbar(); }, { passive: true });
-  track.addEventListener("pointerdown", revealHomepageScrollbar);
-  track.addEventListener("wheel", revealHomepageScrollbar, { passive: true });
-  track.addEventListener("touchstart", revealHomepageScrollbar, { passive: true });
-  track.addEventListener("focusin", revealHomepageScrollbar);
-  track.addEventListener("keydown", event => {
-    if (["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) revealHomepageScrollbar();
-  });
+  track.addEventListener("scroll", updateControls, { passive: true });
   window.addEventListener("resize", updateControls);
   updateControls();
 }
