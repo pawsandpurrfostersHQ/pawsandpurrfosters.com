@@ -136,3 +136,18 @@
 .profile-details .profile-pairing .pairing-description { text-align:center; }
 .profile-details .profile-reminder .adoption-question { margin:14px 0; }
 .profile-details .profile-reminder .adoption-question strong { color:var(--sage-dark,#55765e)!important; font-weight:800; }
+
+/* Optional bonded-pair gallery: compact photo beside the pairing description. */
+.profile-details .profile-pairing { align-items:stretch!important; text-align:center; }
+.profile-pairing-layout { display:flex; align-items:center; gap:18px; width:100%; margin-top:14px; }
+.pairing-photo-carousel { flex:0 0 min(34%,220px); min-width:130px; }
+.pairing-photo-frame { overflow:hidden; border-radius:14px; background:var(--sage-light); }
+.pairing-photo-frame img { display:block; width:100%; aspect-ratio:4/3; object-fit:cover; }
+.pairing-photo-controls { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:8px; color:var(--muted); font-size:12px; }
+.pairing-photo-controls button { width:30px; height:30px; padding:0; border:1px solid var(--line); border-radius:50%; background:#fff; color:var(--purple-dark); font-size:20px; line-height:1; cursor:pointer; }
+.profile-pairing-layout .pairing-description { flex:1; min-width:0; margin:0!important; text-align:left!important; font-size:14px; line-height:1.65; }
+@media(max-width:520px) {
+  .profile-pairing-layout { align-items:flex-start; gap:12px; }
+  .pairing-photo-carousel { flex-basis:38%; min-width:110px; }
+  .profile-pairing-layout .pairing-description { font-size:13px; }
+}
