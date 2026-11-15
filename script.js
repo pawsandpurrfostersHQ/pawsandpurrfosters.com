@@ -329,14 +329,25 @@ function renderEvents() {
       : { date:"Coming Soon", time:"Coming Soon", location:"Coming Soon", address:"Coming Soon" };
     const addressMarkup = currentEvent ? mapAnchor(event.address,event.mapsUrl) : '<span class="event-address">Address and map link coming soon</span>';
     featured.innerHTML = `<article class="event-card event-card--compact${currentEvent ? "" : " event-coming-soon"}">
-      <div class="event-card-content"><p class="eyebrow">Where to Find Us</p><h2>Upcoming Adoption Event</h2>
-      <p class="home-event-countdown" data-date="${escapeHTML(event.dateISO || "")}" data-time="${escapeHTML(event.startTime || "")}"></p>
-      <p class="event-date"><strong>${escapeHTML(value.date)}</strong></p><p class="event-time"><strong>${escapeHTML(value.time)}</strong></p>
-      <p class="event-location-name"><strong>${escapeHTML(value.location)}</strong></p>
-      ${addressMarkup}${attendingMarkup}</div>
+      <div class="event-feature-layout">
+        <div class="event-feature-details">
+          <p class="eyebrow">Where to Find Us</p>
+          <h2>Upcoming Adoption Event</h2>
+          <p class="event-countdown" data-date="${escapeHTML(event.dateISO || "")}" data-time="${escapeHTML(event.startTime || "")}"></p>
+          <div class="event-meta-row">
+            <p class="event-date"><strong>${escapeHTML(value.date)}</strong></p>
+            <p class="event-time"><strong>${escapeHTML(value.time)}</strong></p>
+          </div>
+          <div class="event-location-block">
+            <p class="event-location-name"><strong>${escapeHTML(value.location)}</strong></p>
+            ${addressMarkup}
+          </div>
+        </div>
+        ${attendingMarkup}
+      </div>
     </article>`;
     featured.hidden = false;
-    const countdown = featured.querySelector(".home-event-countdown");
+    const countdown = featured.querySelector(".event-countdown");
     if (countdown) {
       const dateText = countdown.dataset.date;
       const timeText = countdown.dataset.time;
