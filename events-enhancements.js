@@ -73,7 +73,7 @@ function init(){
   const activity=renderActivity(item,record.start,changed);
   const meta='<div class="event-meta-row"><p class="event-date"><strong>'+esc(item.date||"Date coming soon")+'</strong></p><p class="event-time"><strong>'+esc(item.time||item.adoptionTime||"Time to be announced")+'</strong></p></div>';
   const location='<div class="event-location-block"><p class="event-location-name"><strong>'+esc(item.location||"Location details to be announced")+'</strong></p>'+map(item.address,item.mapsUrl)+'</div>';
-  return '<article class="event-card event-card--compact"><div class="event-card-content"><h2>'+esc(item.title||"Special Adoption Event")+'</h2>'+(changed?scheduleChange(item,item.status):"")+(record.start?countdown(record.start,record.end):"")+meta+'<div class="special-event-activities">'+activity+'</div>'+location+'<p class="special-event-description">'+esc(item.description||"Come meet our foster kittens and learn more about this special event.")+'</p>'+attending+'</div></article>';
+  return '<article class="event-card event-card--compact"><div class="event-card-content"><p class="eyebrow event-next-label">Next Event</p><h2>'+esc(item.title||"Special Adoption Event")+'</h2>'+(changed?scheduleChange(item,item.status):"")+(record.start?countdown(record.start,record.end):"")+meta+'<div class="special-event-activities">'+activity+'</div>'+location+'<p class="special-event-description">'+esc(item.description||"Come meet our foster kittens and learn more about this special event.")+'</p>'+attending+'</div></article>';
  };
  function renderDisplays(){
   const now=new Date(),today=todayLA(),events=allEvents(),canceledFeatured=events.find(x=>x.kind==="featured"&&x.canceled&&now<x.end);
