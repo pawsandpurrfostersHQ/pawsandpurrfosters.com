@@ -4018,3 +4018,80 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
   .events-page #event-featured .attending-kitten-gallery { height:205px !important; }
   .events-page #event-featured .attending-kitten-slide img { height:155px !important; flex-basis:155px !important; }
 }
+
+
+/* Events tab featured event: separate details and kitten gallery into real columns. */
+.events-page #event-featured .event-card--compact {
+  display:block !important; width:100% !important; max-width:none !important;
+  min-width:0 !important; min-height:460px !important; height:auto !important;
+  aspect-ratio:auto !important; overflow:visible !important; box-sizing:border-box !important;
+  padding:38px clamp(28px,4vw,54px) !important; border:0 !important;
+  border-radius:28px !important; background:#8979A5 !important; color:#fff !important;
+  box-shadow:0 14px 34px rgba(55,42,69,.16) !important;
+}
+.events-page #event-featured .event-card-content {
+  display:block !important; width:100% !important; min-width:0 !important;
+  min-height:0 !important; height:auto !important; text-align:center !important;
+  overflow:visible !important;
+}
+.events-page #event-featured .event-feature-layout {
+  display:grid !important;
+  grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr) !important;
+  align-items:center !important; gap:28px clamp(30px,4vw,56px) !important;
+  width:100% !important; min-width:0 !important;
+}
+.events-page #event-featured .event-feature-details {
+  display:flex !important; flex-direction:column !important; align-items:center !important;
+  justify-content:center !important; min-width:0 !important; width:100% !important;
+  text-align:center !important;
+}
+.events-page #event-featured .event-feature-details > * {
+  max-width:100% !important; text-align:center !important;
+}
+.events-page #event-featured .event-feature-details .event-meta-row {
+  display:flex !important; flex-direction:column !important; align-items:center !important;
+  justify-content:center !important; gap:4px !important; width:100% !important;
+}
+.events-page #event-featured .event-feature-details .event-location-block {
+  width:100% !important; text-align:center !important;
+}
+.events-page #event-featured .event-feature-details .event-address {
+  display:inline-flex !important; align-items:center !important; justify-content:center !important;
+  width:fit-content !important; max-width:100% !important; padding:9px 15px !important;
+  border-radius:12px !important; background:#fff !important; color:#57456F !important;
+  text-decoration:none !important; overflow-wrap:anywhere !important;
+}
+.events-page #event-featured .event-feature-details .event-countdown {
+  margin:10px auto 8px !important; background:#fff !important; color:#315c3d !important;
+}
+.events-page #event-featured .event-feature-details h2,
+.events-page #event-featured .event-feature-details p,
+.events-page #event-featured .event-feature-details .eyebrow { color:#fff !important; }
+.events-page #event-featured .event-feature-layout > .event-attending-block {
+  display:flex !important; flex-direction:column !important; align-items:center !important;
+  justify-content:center !important; width:100% !important; min-width:0 !important;
+  margin:0 !important; text-align:center !important;
+}
+.events-page #event-featured .event-attending-block .event-attending {
+  margin:0 0 10px !important; color:#fff !important; font-weight:800 !important;
+  text-align:center !important;
+}
+.events-page #event-featured .attending-kitten-gallery {
+  width:100% !important; max-width:460px !important; height:260px !important;
+  margin:0 auto !important; overflow:hidden !important;
+}
+.events-page #event-featured .attending-kitten-slide img {
+  display:block !important; width:100% !important; height:220px !important;
+  object-fit:contain !important; object-position:center !important;
+}
+.events-page #event-featured .attending-kitten-slide figcaption { height:40px !important; }
+@media(max-width:760px) {
+  .events-page #event-featured .event-card--compact {
+    min-height:0 !important; padding:28px 20px !important;
+  }
+  .events-page #event-featured .event-feature-layout {
+    grid-template-columns:minmax(0,1fr) !important; gap:20px !important;
+  }
+  .events-page #event-featured .attending-kitten-gallery { height:220px !important; }
+  .events-page #event-featured .attending-kitten-slide img { height:180px !important; }
+}
