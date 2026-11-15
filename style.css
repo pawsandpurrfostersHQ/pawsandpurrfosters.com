@@ -2064,7 +2064,7 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 }
 .alumni-birthday-cake:hover::after,
 .alumni-birthday-cake:focus::after { display: block; }
-.alumni-companion { color: var(--muted); text-decoration: none; cursor: default; }
+.alumni-companion { margin: 16px 0 0; color: var(--muted); text-decoration: none; cursor: default; }
 .all-litters__group { scroll-margin-top: 110px; }
 .all-litters__group:target {
   padding: 14px;
