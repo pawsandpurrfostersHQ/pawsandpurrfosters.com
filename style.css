@@ -2412,3 +2412,126 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
   .attending-kitten-slide img { height: 100px; }
   .events-page .special-event-panel { width: 100% !important; }
 }
+
+
+/* Final layout refinements: independent centered single-kitten alumni rows. */
+.alumni-litters { grid-template-columns:minmax(0,1fr); }
+.alumni-litters > .alumni-litter { width:100%; min-width:0; }
+.alumni-litters > .alumni-litter .alumni-cards--single {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(220px,320px) minmax(0,1fr);
+  width:100%;
+  overflow:visible;
+}
+.alumni-litters > .alumni-litter .alumni-cards--single > .alumni-card {
+  grid-column:2;
+  width:100%;
+  justify-self:center;
+}
+@media(max-width:760px) {
+  .alumni-litters > .alumni-litter .alumni-cards--single {
+    grid-template-columns:minmax(0,1fr);
+  }
+  .alumni-litters > .alumni-litter .alumni-cards--single > .alumni-card {
+    grid-column:1;
+    width:min(76vw,310px);
+  }
+}
+
+/* Homepage featured event: one wide, short card when there is no second event. */
+#events:not(.has-special-events) {
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  gap:14px;
+}
+#events:not(.has-special-events) #event-featured {
+  grid-column:1;
+  width:100%;
+  max-width:none;
+  min-height:0;
+  height:auto;
+}
+#events:not(.has-special-events) #event-featured .event-card--compact {
+  min-height:0;
+  height:auto;
+  padding:clamp(22px,2.6vw,34px);
+  border-radius:24px;
+}
+#events:not(.has-special-events) #event-featured .event-card-content {
+  display:grid;
+  grid-template-columns:minmax(0,1.05fr) minmax(260px,.95fr);
+  align-items:center;
+  gap:7px 34px;
+  width:100%;
+  text-align:center;
+}
+#events:not(.has-special-events) #event-featured .event-card-content > .eyebrow,
+#events:not(.has-special-events) #event-featured .event-card-content > h2 {
+  grid-column:1/-1;
+}
+#events:not(.has-special-events) #event-featured .event-attending-block {
+  grid-column:2;
+  grid-row:3 / span 6;
+  align-self:center;
+  min-width:0;
+  margin:0;
+}
+#events:not(.has-special-events) #event-featured .event-attending { margin:0 0 8px; }
+#events:not(.has-special-events) #event-featured .event-attending-names {
+  margin:8px 0 0;
+  font-size:12px;
+  line-height:1.45;
+}
+#events:not(.has-special-events) .attending-kitten-gallery {
+  width:min(100%,360px);
+  height:176px;
+  border-radius:16px;
+}
+#events:not(.has-special-events) .attending-kitten-slide img { height:142px; }
+#events:not(.has-special-events) .attending-kitten-slide figcaption { height:34px; }
+
+/* The special-event panel on the Events page should read as a compact schedule card. */
+.events-page .special-event-panel {
+  padding:22px clamp(22px,3vw,32px);
+}
+.events-page .special-event-entry {
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) minmax(230px,.9fr);
+  align-items:center;
+  gap:7px 26px;
+}
+.events-page .special-event-entry > .eyebrow,
+.events-page .special-event-entry > h2,
+.events-page .special-event-entry > .special-event-date,
+.events-page .special-event-entry > p:last-child {
+  grid-column:1/-1;
+}
+.events-page .special-event-entry h2 {
+  margin:0;
+  font-size:clamp(24px,2.4vw,29px);
+}
+.events-page .special-event-entry > p { margin:4px 0; }
+.events-page .special-event-entry .event-attending-block {
+  grid-column:2;
+  grid-row:3 / span 5;
+  align-self:center;
+  min-width:0;
+}
+.events-page .special-event-entry .attending-kitten-gallery {
+  width:min(100%,300px);
+  height:140px;
+}
+.events-page .special-event-entry .attending-kitten-slide img { height:108px; }
+.events-page .special-event-entry .attending-kitten-slide figcaption { height:32px; }
+@media(max-width:760px) {
+  #events:not(.has-special-events) #event-featured .event-card-content,
+  .events-page .special-event-entry {
+    grid-template-columns:minmax(0,1fr);
+  }
+  #events:not(.has-special-events) #event-featured .event-attending-block,
+  .events-page .special-event-entry .event-attending-block {
+    grid-column:1;
+    grid-row:auto;
+  }
+  #events:not(.has-special-events) .attending-kitten-gallery { height:150px; }
+}
