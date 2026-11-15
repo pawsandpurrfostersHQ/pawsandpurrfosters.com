@@ -2038,3 +2038,37 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
     padding: 24px 20px !important;
   }
 }
+
+
+/* Alumni birthday symbol help and direct litter-link highlighting */
+.alumni-birthday-cake { z-index: 2; cursor: help; }
+.alumni-birthday-cake::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 5;
+  display: none;
+  width: 210px;
+  padding: 9px 11px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: white;
+  color: var(--ink);
+  box-shadow: 0 6px 18px rgba(62,67,57,.14);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: left;
+  white-space: normal;
+}
+.alumni-birthday-cake:hover::after,
+.alumni-birthday-cake:focus::after { display: block; }
+.alumni-companion { color: var(--muted); text-decoration: none; cursor: default; }
+.all-litters__group { scroll-margin-top: 110px; }
+.all-litters__group:target {
+  padding: 14px;
+  border: 2px solid var(--purple-light);
+  border-radius: 18px;
+  background: var(--sage-light);
+}
