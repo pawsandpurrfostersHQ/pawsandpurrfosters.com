@@ -267,3 +267,17 @@ function initMeetGreet(){
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
 })();
+
+/* Restore the Events page position after returning from an attendee profile. */
+if (document.querySelector(".events-page") && window.location.hash === "#event-featured") {
+  const restoreFeaturedEventPosition = () => {
+    const target = document.getElementById("event-featured");
+    if (!target || target.hidden) return;
+    window.requestAnimationFrame(() => {
+      target.scrollIntoView({ behavior: "auto", block: "start" });
+    });
+  };
+  window.addEventListener("pageshow", restoreFeaturedEventPosition);
+  window.addEventListener("load", restoreFeaturedEventPosition, { once: true });
+  window.setTimeout(restoreFeaturedEventPosition, 0);
+}
