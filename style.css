@@ -4689,3 +4689,12 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 #events.event.section > #event-featured {
   scroll-margin-top: 110px;
 }
+
+
+/* How to Adopt — keep application list text consistent with the step descriptions. */
+.adoption-step .adoption-application-options li {
+  color: var(--muted);
+}
+.adoption-step .adoption-application-options li::marker {
+  color: var(--muted);
+}
