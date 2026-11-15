@@ -185,9 +185,11 @@ function renderAlumniLitter(litter, kittens, alumniIds, today, paired = false, e
   return `<section class="alumni-litter${paired ? " alumni-litter--paired" : ""}" aria-labelledby="alumni-litter-${litter}">
     <div class="alumni-litter-heading">
       <h2 id="alumni-litter-${litter}">${escapeHTML(heading)}</h2>
+    </div>
+    <div class="alumni-carousel${paired ? " alumni-carousel--paired" : ""}">
+      <div class="alumni-cards" role="region" aria-label="${escapeHTML(heading)} alumni" tabindex="0">${cards}</div>
       ${controls}
     </div>
-    <div class="alumni-cards" role="region" aria-label="${escapeHTML(heading)} alumni" tabindex="0">${cards}</div>
   </section>`;
 }
 
@@ -286,6 +288,8 @@ function renderFosterAlumni(kittenList, today = new Date()) {
       const maxScroll = track.scrollWidth - track.clientWidth;
       previous.disabled = track.scrollLeft <= 2;
       next.disabled = track.scrollLeft >= maxScroll - 2;
+      previous.hidden = maxScroll <= 2;
+      next.hidden = maxScroll <= 2;
     };
     const scrollCards = direction => {
       const card = track.querySelector(".alumni-card");
