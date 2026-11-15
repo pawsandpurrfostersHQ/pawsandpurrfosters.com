@@ -4537,3 +4537,14 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
     transform: none !important;
   }
 }
+
+
+/* Rectangle Version Two — soften the divider accents without changing the layout */
+#events.event.section > #event-featured .event-feature-details .event-meta-row {
+  border-top-color: #cdbfe0 !important;
+  border-bottom-color: #cdbfe0 !important;
+}
+#events.event.section > #event-featured .event-attending::before,
+#events.event.section > #event-featured .event-attending::after {
+  background: #cdbfe0 !important;
+}
