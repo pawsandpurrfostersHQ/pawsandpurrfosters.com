@@ -264,11 +264,13 @@ window.renderPawsAttendeeGallery = function(names) {
   const kittens = Array.isArray(window.PAWS_KITTENS) ? window.PAWS_KITTENS : [];
   const records = (names || []).map(name => kittens.find(k => k.name === name)).filter(Boolean);
   if (!records.length) return "";
-  const prefix = document.querySelector(".events-page") ? "../" : "";
+  const onEventsPage = Boolean(document.querySelector(".events-page"));
+  const prefix = onEventsPage ? "../" : "";
+  const sourcePage = onEventsPage ? "events" : "home";
   const slides = records.map((kitten, index) => {
     const photo = kitten.image || (Array.isArray(kitten.photos) ? kitten.photos[0] : "");
     if (!photo) return "";
-    const profile = kitten.profileUrl ? prefix + kitten.profileUrl + (kitten.profileUrl.includes("?") ? "&" : "?") + "back=" + encodeURIComponent(window.location.href) : "#";
+    const profile = kitten.profileUrl ? prefix + kitten.profileUrl + (kitten.profileUrl.includes("?") ? "&" : "?") + "from=" + sourcePage + "&back=" + encodeURIComponent(window.location.href) : "#";
     return `<figure class="attending-kitten-slide${index === 0 ? " is-active" : ""}">
       <img src="${escapeHTML(prefix + photo)}" alt="${escapeHTML(kitten.name)}" loading="lazy">
       <figcaption><a class="attending-kitten-name" href="${escapeHTML(profile)}">${escapeHTML(kitten.name)}</a></figcaption>
