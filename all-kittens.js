@@ -108,7 +108,7 @@ function renderAllKittens() {
         <h3 class="all-litters__heading">${escapeHTML(heading)}</h3>
         <div class="all-litters__carousel">
           <button class="carousel-button all-litters__arrow" type="button" aria-label="Previous kittens in ${escapeHTML(heading)}">‹</button>
-          <div class="all-litters__cards${kittens.length === 1 ? " all-litters__cards--single" : ""}" role="region" aria-label="${escapeHTML(heading)} kittens" tabindex="0">${kittens.map(renderKittenCard).join("")}</div>
+          <div class="all-litters__cards" role="region" aria-label="${escapeHTML(heading)} kittens" tabindex="0">${kittens.map(renderKittenCard).join("")}</div>
           <button class="carousel-button all-litters__arrow" type="button" aria-label="Next kittens in ${escapeHTML(heading)}">›</button>
         </div>
       </section>
