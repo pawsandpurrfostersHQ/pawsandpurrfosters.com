@@ -2238,3 +2238,8 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .events-page .special-event-activities > p { padding:11px 10px; }
 .events-page .special-event-activities .event-activity-icon { font-size:20px; margin-bottom:3px; }
 .events-page .special-event-panel > p:last-child { margin:10px auto 0; font-size:14px; line-height:1.55; }
+
+/* Explicitly reveal the native horizontal scrollbar only while a homepage card is hovered. */
+.kitten-track { scrollbar-width:thin; }
+.kitten-track::-webkit-scrollbar { display:none; }
+.kitten-carousel.is-scrollbar-visible .kitten-track::-webkit-scrollbar { display:block; height:8px; }
