@@ -2488,3 +2488,242 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 
 /* The special-event copy and attendee gallery share one horizontal row. */
 .events-page .special-event-entry .event-attending-block{grid-column:2;grid-row:1;align-self:center}
+
+
+/* === Preview redesign: event cards and alumni singleton row === */
+#event-featured .event-card--compact {
+  display:block !important;
+  width:100%;
+  min-height:0 !important;
+  height:auto !important;
+  padding:clamp(24px,3vw,38px) !important;
+  border-radius:26px;
+}
+#event-featured .event-card-content {
+  display:grid !important;
+  grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr) !important;
+  grid-template-rows:auto auto auto auto auto auto;
+  align-items:center;
+  justify-items:center;
+  gap:8px 34px !important;
+  text-align:center !important;
+}
+#event-featured .event-card-content > .eyebrow,
+#event-featured .event-card-content > h2 {
+  grid-column:1 / -1 !important;
+  justify-self:center;
+  width:100%;
+}
+#event-featured .event-card-content > .eyebrow { grid-row:1; margin:0 0 2px; }
+#event-featured .event-card-content > h2 { grid-row:2; margin:0 0 8px; }
+#event-featured .event-card-content > .event-date { grid-column:1; grid-row:3; margin:7px 0; }
+#event-featured .event-card-content > .event-time { grid-column:1; grid-row:4; margin:7px 0; }
+#event-featured .event-card-content > .event-location-name { grid-column:1; grid-row:5; margin:7px 0; }
+#event-featured .event-card-content > .event-address { grid-column:1; grid-row:6; justify-self:center; margin:8px 0 0; }
+#event-featured .event-card-content > .event-attending-block {
+  grid-column:2 !important;
+  grid-row:3 / span 4 !important;
+  align-self:center;
+  justify-self:stretch;
+  min-width:0;
+  width:100%;
+  margin:0;
+}
+#event-featured .event-attending { margin:0 0 10px !important; text-align:center; }
+.attending-kitten-gallery {
+  position:relative;
+  width:min(100%,440px) !important;
+  height:275px !important;
+  margin:0 auto !important;
+  padding:8px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.3);
+  border-radius:16px;
+  background:rgba(255,255,255,.09);
+}
+.attending-kitten-slide {
+  position:absolute;
+  inset:8px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .45s ease;
+}
+.attending-kitten-slide.is-active {
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+.attending-kitten-slide img {
+  width:100%;
+  height:218px !important;
+  flex:0 0 218px;
+  object-fit:contain !important;
+  object-position:center;
+  padding:0 !important;
+  border-radius:10px;
+}
+.attending-kitten-slide figcaption {
+  height:34px !important;
+  min-height:34px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:3px 8px !important;
+}
+.attending-kitten-name {
+  position:relative;
+  z-index:2;
+  display:inline-block;
+  padding:5px 14px;
+  border-radius:999px;
+  color:#fff;
+  background:rgba(56,43,77,.55);
+  text-decoration:none !important;
+  font-size:13px;
+  font-weight:750;
+  transition:background .2s ease, transform .2s ease;
+}
+.attending-kitten-name:hover,
+.attending-kitten-name:focus-visible {
+  color:#fff;
+  background:rgba(56,43,77,.88);
+  transform:translateY(-1px);
+  outline:2px solid rgba(255,255,255,.75);
+  outline-offset:2px;
+}
+.events-page .event-panels {
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  align-items:stretch;
+}
+.events-page .special-event-panel {
+  grid-column:1 / -1 !important;
+  width:100% !important;
+  max-width:1080px !important;
+  justify-self:center;
+  align-self:stretch;
+  padding:clamp(22px,2.8vw,34px) !important;
+  border-radius:24px;
+}
+.events-page .special-event-entry {
+  display:grid !important;
+  grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr) !important;
+  align-items:center;
+  gap:10px 34px !important;
+  text-align:center;
+}
+.events-page .special-event-copy {
+  grid-column:1 !important;
+  grid-row:1 !important;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-width:0;
+  width:100%;
+  text-align:center;
+}
+.events-page .special-event-copy > * { max-width:100%; }
+.events-page .special-event-copy > .eyebrow,
+.events-page .special-event-copy > h2 { width:100%; text-align:center; }
+.events-page .special-event-entry > .event-attending-block {
+  grid-column:2 !important;
+  grid-row:1 !important;
+  align-self:center;
+  justify-self:stretch;
+  min-width:0;
+  width:100%;
+}
+.events-page .special-event-entry .attending-kitten-gallery {
+  width:min(100%,440px) !important;
+  height:275px !important;
+}
+.events-page .special-event-entry .attending-kitten-slide img { height:218px !important; }
+.events-page .special-event-entry .event-attending-names { display:none !important; }
+
+/* Paired singleton litters share the same three card tracks as ordinary alumni rows.
+   Their headings remain with their own litters; cards occupy columns one and three. */
+.alumni-litters > .alumni-litter-pair {
+  display:grid !important;
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  column-gap:22px !important;
+  row-gap:12px !important;
+  width:100%;
+  min-width:0;
+  align-items:start;
+}
+.alumni-litter-pair > .alumni-litter--paired {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr);
+  grid-template-rows:auto auto;
+  align-content:start;
+  min-width:0;
+}
+.alumni-litter-pair > .alumni-litter--paired:first-child { grid-column:1; }
+.alumni-litter-pair > .alumni-litter--paired:last-child { grid-column:3; }
+.alumni-litter-pair .alumni-litter-heading {
+  grid-column:1;
+  grid-row:1;
+  min-height:0;
+  margin:0 0 18px;
+}
+.alumni-litter-pair .alumni-carousel {
+  grid-column:1;
+  grid-row:2;
+  min-width:0;
+  width:100%;
+}
+.alumni-litter-pair .alumni-cards {
+  display:flex !important;
+  width:100%;
+  min-width:0;
+  overflow:visible !important;
+  padding:2px 0 14px !important;
+}
+.alumni-litter-pair .alumni-card {
+  display:flex;
+  flex:0 0 100% !important;
+  width:100% !important;
+  max-width:none !important;
+  min-width:0;
+  margin:0;
+}
+@media(max-width:760px) {
+  #event-featured .event-card-content,
+  .events-page .special-event-entry {
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) !important;
+    grid-template-rows:auto !important;
+    gap:8px !important;
+  }
+  #event-featured .event-card-content > *,
+  .events-page .special-event-entry .special-event-copy,
+  .events-page .special-event-entry > .event-attending-block {
+    grid-column:1 !important;
+    grid-row:auto !important;
+  }
+  .attending-kitten-gallery,
+  .events-page .special-event-entry .attending-kitten-gallery {
+    width:min(100%,440px) !important;
+    height:250px !important;
+  }
+  .attending-kitten-slide img,
+  .events-page .special-event-entry .attending-kitten-slide img {
+    height:193px !important;
+    flex-basis:193px;
+  }
+  .alumni-litters > .alumni-litter-pair {
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:14px !important;
+  }
+  .alumni-litter-pair > .alumni-litter--paired:first-child { grid-column:1; }
+  .alumni-litter-pair > .alumni-litter--paired:last-child { grid-column:2; }
+}
+@media(max-width:480px) {
+  .alumni-litters > .alumni-litter-pair { grid-template-columns:minmax(0,1fr) !important; }
+  .alumni-litter-pair > .alumni-litter--paired:first-child,
+  .alumni-litter-pair > .alumni-litter--paired:last-child { grid-column:1; }
+}
