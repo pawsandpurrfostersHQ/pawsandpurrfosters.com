@@ -192,7 +192,7 @@ function renderKittenCards() {
       ? `<img src="${escapeHTML(kitten.image)}" alt="${escapeHTML(kitten.name)}" loading="lazy">`
       : `<div class="photo-placeholder card-photo"><span>Photo coming soon</span></div>`;
     const profileAction = kitten.profileUrl
-      ? `<a href="${escapeHTML(`${kitten.profileUrl}${kitten.profileUrl.includes("?") ? "&" : "?"}from=home`)}" class="card-link">Meet ${escapeHTML(kitten.name)} →</a>`
+      ? `<a href="${escapeHTML(`${kitten.profileUrl}${kitten.profileUrl.includes("?") ? "&" : "?"}from=home&back=${encodeURIComponent(window.location.href)}`)}" class="card-link">Meet ${escapeHTML(kitten.name)} →</a>`
       : `<span class="card-link profile-coming-soon">Profile coming soon</span>`;
     const status = kitten.adoptionStatus || kitten.status || "Available";
     const returnedStatusClass = status === "Returned — Available" ? " status-returned" : "";
@@ -268,7 +268,7 @@ window.renderPawsAttendeeGallery = function(names) {
   const slides = records.map((kitten, index) => {
     const photo = kitten.image || (Array.isArray(kitten.photos) ? kitten.photos[0] : "");
     if (!photo) return "";
-    const profile = kitten.profileUrl ? prefix + kitten.profileUrl : "#";
+    const profile = kitten.profileUrl ? prefix + kitten.profileUrl + (kitten.profileUrl.includes("?") ? "&" : "?") + "back=" + encodeURIComponent(window.location.href) : "#";
     return `<figure class="attending-kitten-slide${index === 0 ? " is-active" : ""}">
       <img src="${escapeHTML(prefix + photo)}" alt="${escapeHTML(kitten.name)}" loading="lazy">
       <figcaption><a class="attending-kitten-name" href="${escapeHTML(profile)}">${escapeHTML(kitten.name)}</a></figcaption>
