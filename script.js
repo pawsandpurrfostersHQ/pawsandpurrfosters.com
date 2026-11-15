@@ -217,7 +217,7 @@ function renderKittenCards() {
     carousel.classList.add("is-scrollbar-visible");
     if (scrollbarFadeTimer) window.clearTimeout(scrollbarFadeTimer);
     scrollbarFadeTimer = window.setTimeout(() => {
-      if (!carousel.matches(":hover, :focus-within")) carousel.classList.remove("is-scrollbar-visible");
+      carousel.classList.remove("is-scrollbar-visible");
     }, 1600);
   };
   const updateControls = () => {
