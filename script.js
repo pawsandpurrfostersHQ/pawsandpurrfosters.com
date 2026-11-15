@@ -354,8 +354,8 @@ function renderEvents() {
       const startAt = dateText && timeText ? new Date(`${dateText}T${timeText}:00`) : null;
       const refreshCountdown = () => {
         if (!startAt || Number.isNaN(startAt.getTime()) || startAt <= new Date()) {
-          countdown.textContent = "";
-          countdown.hidden = true;
+          countdown.textContent = "Next adoption event details coming soon";
+          countdown.hidden = false;
           return;
         }
         const remaining = startAt.getTime() - Date.now();
