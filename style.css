@@ -4074,3 +4074,39 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
  .events-page #event-featured .attending-kitten-gallery {height:220px!important;max-width:440px!important;}
  .events-page #event-featured .attending-kitten-slide img {height:165px!important;}
 }
+
+/* Homepage-only restoration: keep the Upcoming Adoption Event card wide.
+   The Events tab has its own isolated .events-page layout above. */
+#events #event-featured {
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  height:auto!important;
+  margin:0!important;
+}
+#events #event-featured .event-card--compact {
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  min-height:320px!important;
+  height:auto!important;
+  aspect-ratio:auto!important;
+  box-sizing:border-box!important;
+}
+#events #event-featured .event-feature-layout {
+  display:grid!important;
+  grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)!important;
+  align-items:center!important;
+  gap:32px!important;
+  width:100%!important;
+}
+@media(max-width:760px) {
+  #events #event-featured .event-card--compact { min-height:0!important; }
+  #events #event-featured .event-feature-layout {
+    display:flex!important;
+    flex-direction:column!important;
+    gap:18px!important;
+  }
+}
