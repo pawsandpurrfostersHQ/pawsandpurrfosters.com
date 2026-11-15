@@ -64,7 +64,7 @@ function renderAvailableKittens() {
         <span class="status-badge ${statusClassName(status)}">${escapeHTML(status)}</span>
         <h3>${escapeHTML(kitten.name)}</h3>
         <p>${escapeHTML(shortBlurb(kitten))}</p>
-        <a class="card-link" href="${escapeHTML(kitten.profileUrl || "#")}">Get to Know ${escapeHTML(kitten.name)} →</a>
+        <a class="card-link" href="${escapeHTML(kitten.profileUrl ? `${kitten.profileUrl}${kitten.profileUrl.includes("?") ? "&" : "?"}from=available&back=${encodeURIComponent(window.location.href)}` : "#")}">Get to Know ${escapeHTML(kitten.name)} →</a>
       </div>
     </article>`;
   }).join("");

@@ -195,7 +195,16 @@ function renderProfile(kitten) {
     return;
   }
 
-  const returnFrom = new URLSearchParams(window.location.search).get("from") || "current";
+  const profileParams = new URLSearchParams(window.location.search);
+  const returnFrom = profileParams.get("from") || "current";
+  const requestedBack = profileParams.get("back");
+  let backHref = returnFrom === "home" ? "../#kittens" : returnFrom === "available" ? "../available-kittens/" : returnFrom === "events" ? "../events/" : "../all-kittens/";
+  if (requestedBack) {
+    try {
+      const backUrl = new URL(requestedBack, window.location.href);
+      if (backUrl.origin === window.location.origin) backHref = backUrl.href;
+    } catch (_) {}
+  }
   const pairingData = getPairingData(kitten);
   const pairingDescription = pairingData.type !== "single" ? getPairingDescription(kitten, pairingData) : "";
   const pairingPartner = pairingData.kittenId ? window.PAWS_KITTENS?.find(item => item.id === pairingData.kittenId) : null;
@@ -208,7 +217,7 @@ function renderProfile(kitten) {
     : "";
   const pairingCopy = pairingDescription ? `<p class="pairing-description">${escapeHTML(pairingDescription)}</p>` : "";
   const pairing = pairingData.type !== "single"
-    ? `<section class="profile-detail profile-pairing"><p class="eyebrow">Bonded Pair</p><h2>Better together</h2><a class="pair-partner-link" href="profile-template.html?id=${escapeHTML(pairingData.kittenId)}"><strong>${escapeHTML(pairingData.kittenName)}</strong><span>Meet ${escapeHTML(pairingData.kittenName)} →</span></a>${pairingPhotos.length ? `<div class="profile-pairing-layout">${pairingPhotoMarkup}${pairingCopy}</div>` : pairingCopy}</section>`
+    ? `<section class="profile-detail profile-pairing"><p class="eyebrow">Bonded Pair</p><h2>Better together</h2><a class="pair-partner-link" href="profile-template.html?id=${escapeHTML(pairingData.kittenId)}&from=${escapeHTML(returnFrom)}&back=${encodeURIComponent(backHref)}"><strong>${escapeHTML(pairingData.kittenName)}</strong><span>Meet ${escapeHTML(pairingData.kittenName)} →</span></a>${pairingPhotos.length ? `<div class="profile-pairing-layout">${pairingPhotoMarkup}${pairingCopy}</div>` : pairingCopy}</section>`
     : "";
   const requirements = "";
   const photoSet = [...new Set([kitten.image, ...(kitten.photos || [])].filter(Boolean))];
@@ -358,8 +367,7 @@ function renderProfile(kitten) {
   `;
 
   document.title = `${kitten.name} | Paws & Purr Fosters`;
-  const backHref = returnFrom === "home" ? "../#kittens" : "../all-kittens/";
-  const backLabel = returnFrom === "home" ? "Our Fosters" : "Current Fosters";
+  const backLabel = returnFrom === "home" ? "Home" : returnFrom === "available" ? "Adoptable Kittens" : returnFrom === "events" ? "Events" : "Current Fosters";
   root.innerHTML = `<a class="profile-back-link" href="${backHref}" aria-label="Back to ${backLabel}">← <span>${backLabel}</span></a>
   <div class="profile-layout">
     <div>${photoGallery}</div>

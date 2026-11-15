@@ -4,7 +4,7 @@
   --sage: #9caf91;
   --sage-dark: #536b58;
   --sage-light: #e8eee4;
-  --purple: #75628d;
+  --purple: #57456f;
   --purple-dark: #57456f;
   --purple-light: #eee9f4;
   --cream: #faf9f5;
@@ -2488,3 +2488,2204 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 
 /* The special-event copy and attendee gallery share one horizontal row. */
 .events-page .special-event-entry .event-attending-block{grid-column:2;grid-row:1;align-self:center}
+
+
+/* === Preview redesign: event cards and alumni singleton row === */
+#event-featured .event-card--compact {
+  display:block !important;
+  width:100%;
+  min-height:0 !important;
+  height:auto !important;
+  padding:clamp(24px,3vw,38px) !important;
+  border-radius:26px;
+}
+#event-featured .event-card-content {
+  display:grid !important;
+  grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr) !important;
+  grid-template-rows:auto auto auto auto auto auto;
+  align-items:center;
+  justify-items:center;
+  gap:8px 34px !important;
+  text-align:center !important;
+}
+#event-featured .event-card-content > .eyebrow,
+#event-featured .event-card-content > h2 {
+  grid-column:1 / -1 !important;
+  justify-self:center;
+  width:100%;
+}
+#event-featured .event-card-content > .eyebrow { grid-row:1; margin:0 0 2px; }
+#event-featured .event-card-content > h2 { grid-row:2; margin:0 0 8px; }
+#event-featured .event-card-content > .event-date { grid-column:1; grid-row:3; margin:7px 0; }
+#event-featured .event-card-content > .event-time { grid-column:1; grid-row:4; margin:7px 0; }
+#event-featured .event-card-content > .event-location-name { grid-column:1; grid-row:5; margin:7px 0; }
+#event-featured .event-card-content > .event-address { grid-column:1; grid-row:6; justify-self:center; margin:8px 0 0; }
+#event-featured .event-card-content > .event-attending-block {
+  grid-column:2 !important;
+  grid-row:3 / span 4 !important;
+  align-self:center;
+  justify-self:stretch;
+  min-width:0;
+  width:100%;
+  margin:0;
+}
+#event-featured .event-attending { margin:0 0 10px !important; text-align:center; }
+.attending-kitten-gallery {
+  position:relative;
+  width:min(100%,440px) !important;
+  height:275px !important;
+  margin:0 auto !important;
+  padding:8px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.3);
+  border-radius:16px;
+  background:rgba(255,255,255,.09);
+}
+.attending-kitten-slide {
+  position:absolute;
+  inset:8px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .45s ease;
+}
+.attending-kitten-slide.is-active {
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+.attending-kitten-slide img {
+  width:100%;
+  height:218px !important;
+  flex:0 0 218px;
+  object-fit:contain !important;
+  object-position:center;
+  padding:0 !important;
+  border-radius:10px;
+}
+.attending-kitten-slide figcaption {
+  height:34px !important;
+  min-height:34px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:3px 8px !important;
+}
+.attending-kitten-name {
+  position:relative;
+  z-index:2;
+  display:inline-block;
+  padding:5px 14px;
+  border-radius:999px;
+  color:#fff;
+  background:rgba(56,43,77,.55);
+  text-decoration:none !important;
+  font-size:13px;
+  font-weight:750;
+  transition:background .2s ease, transform .2s ease;
+}
+.attending-kitten-name:hover,
+.attending-kitten-name:focus-visible {
+  color:#fff;
+  background:rgba(56,43,77,.88);
+  transform:translateY(-1px);
+  outline:2px solid rgba(255,255,255,.75);
+  outline-offset:2px;
+}
+.events-page .event-panels {
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  align-items:stretch;
+}
+.events-page .special-event-panel {
+  grid-column:1 / -1 !important;
+  width:100% !important;
+  max-width:1080px !important;
+  justify-self:center;
+  align-self:stretch;
+  padding:clamp(22px,2.8vw,34px) !important;
+  border-radius:24px;
+}
+.events-page .special-event-entry {
+  display:grid !important;
+  grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr) !important;
+  align-items:center;
+  gap:10px 34px !important;
+  text-align:center;
+}
+.events-page .special-event-copy {
+  grid-column:1 !important;
+  grid-row:1 !important;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-width:0;
+  width:100%;
+  text-align:center;
+}
+.events-page .special-event-copy > * { max-width:100%; }
+.events-page .special-event-copy > .eyebrow,
+.events-page .special-event-copy > h2 { width:100%; text-align:center; }
+.events-page .special-event-entry > .event-attending-block {
+  grid-column:2 !important;
+  grid-row:1 !important;
+  align-self:center;
+  justify-self:stretch;
+  min-width:0;
+  width:100%;
+}
+.events-page .special-event-entry .attending-kitten-gallery {
+  width:min(100%,440px) !important;
+  height:275px !important;
+}
+.events-page .special-event-entry .attending-kitten-slide img { height:218px !important; }
+.events-page .special-event-entry .event-attending-names { display:none !important; }
+
+/* Paired singleton litters share the same three card tracks as ordinary alumni rows.
+   Their headings remain with their own litters; cards occupy columns one and three. */
+.alumni-litters > .alumni-litter-pair {
+  display:grid !important;
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  column-gap:22px !important;
+  row-gap:12px !important;
+  width:100%;
+  min-width:0;
+  align-items:start;
+}
+.alumni-litter-pair > .alumni-litter--paired {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr);
+  grid-template-rows:auto auto;
+  align-content:start;
+  min-width:0;
+}
+.alumni-litter-pair > .alumni-litter--paired:first-child { grid-column:1; }
+.alumni-litter-pair > .alumni-litter--paired:last-child { grid-column:3; }
+.alumni-litter-pair .alumni-litter-heading {
+  grid-column:1;
+  grid-row:1;
+  min-height:0;
+  margin:0 0 18px;
+}
+.alumni-litter-pair .alumni-carousel {
+  grid-column:1;
+  grid-row:2;
+  min-width:0;
+  width:100%;
+}
+.alumni-litter-pair .alumni-cards {
+  display:flex !important;
+  width:100%;
+  min-width:0;
+  overflow:visible !important;
+  padding:2px 0 14px !important;
+}
+.alumni-litter-pair .alumni-card {
+  display:flex;
+  flex:0 0 100% !important;
+  width:100% !important;
+  max-width:none !important;
+  min-width:0;
+  margin:0;
+}
+@media(max-width:760px) {
+  #event-featured .event-card-content,
+  .events-page .special-event-entry {
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) !important;
+    grid-template-rows:auto !important;
+    gap:8px !important;
+  }
+  #event-featured .event-card-content > *,
+  .events-page .special-event-entry .special-event-copy,
+  .events-page .special-event-entry > .event-attending-block {
+    grid-column:1 !important;
+    grid-row:auto !important;
+  }
+  .attending-kitten-gallery,
+  .events-page .special-event-entry .attending-kitten-gallery {
+    width:min(100%,440px) !important;
+    height:250px !important;
+  }
+  .attending-kitten-slide img,
+  .events-page .special-event-entry .attending-kitten-slide img {
+    height:193px !important;
+    flex-basis:193px;
+  }
+  .alumni-litters > .alumni-litter-pair {
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:14px !important;
+  }
+  .alumni-litter-pair > .alumni-litter--paired:first-child { grid-column:1; }
+  .alumni-litter-pair > .alumni-litter--paired:last-child { grid-column:2; }
+}
+@media(max-width:480px) {
+  .alumni-litters > .alumni-litter-pair { grid-template-columns:minmax(0,1fr) !important; }
+  .alumni-litter-pair > .alumni-litter--paired:first-child,
+  .alumni-litter-pair > .alumni-litter--paired:last-child { grid-column:1; }
+}
+
+
+/* === Refinement 2: consistent adoption-event feature card === */
+#events { display:block !important; }
+#events #event-featured { width:100%; max-width:none; min-width:0; min-height:0; height:auto; margin:0; }
+#events #event-featured .event-card--compact,
+.events-page #event-featured .event-card--compact {
+  display:block !important;
+  width:100%;
+  height:auto !important;
+  min-height:0 !important;
+  padding:clamp(22px,3vw,36px) !important;
+  border-radius:24px;
+  background:linear-gradient(118deg,#55416f 0%,#685482 52%,#75628d 100%);
+  box-shadow:0 14px 34px rgba(48,37,65,.13);
+}
+#events #event-featured .event-card-content,
+.events-page #event-featured .event-card-content {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(270px,.82fr) !important;
+  grid-template-rows:auto auto auto auto auto auto auto;
+  align-items:center;
+  justify-items:center;
+  gap:5px clamp(18px,3vw,34px) !important;
+  width:100%;
+  text-align:center !important;
+}
+#events #event-featured .event-card-content > .eyebrow,
+.events-page #event-featured .event-card-content > .eyebrow {
+  grid-column:1 / -1 !important; grid-row:1; margin:0 0 2px; text-align:center;
+}
+#events #event-featured .event-card-content > h2,
+.events-page #event-featured .event-card-content > h2 {
+  grid-column:1 / -1 !important; grid-row:2; margin:0 0 8px; text-align:center;
+  font-size:clamp(26px,3vw,36px) !important;
+}
+#events #event-featured .event-card-content > .event-countdown,
+.events-page #event-featured .event-card-content > .event-countdown {
+  grid-column:1; grid-row:3; justify-self:center; margin:4px 0 8px;
+}
+#events #event-featured .event-card-content > .event-date,
+.events-page #event-featured .event-card-content > .event-date {
+  grid-column:1; grid-row:4; margin:4px 0; font-size:clamp(18px,2vw,22px);
+}
+#events #event-featured .event-card-content > .event-time,
+.events-page #event-featured .event-card-content > .event-time { grid-column:1; grid-row:5; margin:3px 0; }
+#events #event-featured .event-card-content > .event-location-name,
+.events-page #event-featured .event-card-content > .event-location-name { grid-column:1; grid-row:6; margin:4px 0; }
+#events #event-featured .event-card-content > .event-address,
+.events-page #event-featured .event-card-content > .event-address {
+  grid-column:1; grid-row:7; justify-self:center; margin:5px auto 0 !important;
+  display:inline-block; padding:7px 12px; border-radius:999px;
+  background:rgba(255,255,255,.94); color:#3d3150 !important; text-decoration:none;
+  font-size:13px; font-weight:700;
+}
+#events #event-featured .event-card-content > .event-attending-block,
+.events-page #event-featured .event-card-content > .event-attending-block {
+  grid-column:2 !important; grid-row:3 / span 5 !important;
+  align-self:center; justify-self:stretch; width:100%; min-width:0; margin:0;
+}
+#events #event-featured .event-attending,
+.events-page #event-featured .event-attending { margin:0 0 8px !important; text-align:center; }
+#events #event-featured .event-countdown,
+.events-page #event-featured .event-countdown {
+  background:#edf2e9 !important; color:#345b40 !important;
+  padding:8px 16px; font-size:clamp(15px,1.6vw,18px);
+}
+#events .event-page-link { margin:14px 0 0; text-align:center; }
+#events .event-page-link a { color:var(--purple-dark); text-decoration:none; }
+#events .event-page-link a:hover { text-decoration:underline; text-underline-offset:4px; }
+@media(max-width:760px) {
+  #events #event-featured .event-card--compact,
+  .events-page #event-featured .event-card--compact { padding:22px 18px !important; }
+  #events #event-featured .event-card-content,
+  .events-page #event-featured .event-card-content {
+    grid-template-columns:minmax(0,1fr) !important;
+    grid-template-rows:auto !important;
+    gap:5px !important;
+  }
+  #events #event-featured .event-card-content > *,
+  .events-page #event-featured .event-card-content > * {
+    grid-column:1 !important; grid-row:auto !important; justify-self:center;
+  }
+  #events #event-featured .event-attending-block,
+  .events-page #event-featured .event-attending-block { grid-column:1 !important; grid-row:auto !important; width:100%; }
+  #events #event-featured .attending-kitten-gallery,
+  .events-page #event-featured .attending-kitten-gallery { width:min(100%,360px) !important; height:225px !important; }
+  #events #event-featured .attending-kitten-slide img,
+  .events-page #event-featured .attending-kitten-slide img { height:170px !important; flex-basis:170px; }
+  #events #event-featured .event-card-content > .event-address,
+  .events-page #event-featured .event-card-content > .event-address { margin:4px auto 8px !important; }
+}
+
+/* Alumni singletons: headings stay at the section start; cards sit in card columns,
+   not full-width nested litter grids. Use one consistent card/image width. */
+.alumni-litter-pair {
+  display:grid !important;
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  column-gap:22px !important;
+  row-gap:10px !important;
+  width:100%;
+  min-width:0;
+  align-items:start;
+}
+.alumni-litter-pair > .alumni-litter--paired { display:contents !important; }
+.alumni-litter-pair > .alumni-litter--paired:first-child .alumni-litter-heading {
+  grid-column:1; grid-row:1; margin:0 0 14px;
+}
+.alumni-litter-pair > .alumni-litter--paired:last-child .alumni-litter-heading {
+  grid-column:3; grid-row:1; margin:0 0 14px;
+}
+.alumni-litter-pair > .alumni-litter--paired:first-child .alumni-carousel,
+.alumni-litter-pair > .alumni-litter--paired:last-child .alumni-carousel { display:contents !important; }
+.alumni-litter-pair > .alumni-litter--paired:first-child .alumni-cards {
+  grid-column:1; grid-row:2; display:block !important; width:100%; overflow:visible !important; padding:0 0 14px 34px !important;
+}
+.alumni-litter-pair > .alumni-litter--paired:last-child .alumni-cards {
+  grid-column:3; grid-row:2; display:block !important; width:100%; overflow:visible !important; padding:0 0 14px !important;
+}
+.alumni-litter-pair .alumni-card {
+  display:flex !important;
+  width:min(100%,290px) !important;
+  max-width:290px !important;
+  min-width:0 !important;
+  flex:none !important;
+  margin:0;
+}
+.alumni-litter:not(.alumni-litter--paired) .alumni-card {
+  flex:0 0 min(290px, calc((100% - 44px)/3)) !important;
+  width:min(290px, calc((100% - 44px)/3)) !important;
+  max-width:290px;
+}
+.alumni-litter:not(.alumni-litter--paired) .alumni-cards { gap:22px; }
+.alumni-card .card-photo-wrap { width:100%; }
+@media(max-width:760px) {
+  .alumni-litter-pair { grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:14px !important; }
+  .alumni-litter-pair > .alumni-litter--paired:first-child .alumni-litter-heading,
+  .alumni-litter-pair > .alumni-litter--paired:first-child .alumni-cards { grid-column:1; }
+  .alumni-litter-pair > .alumni-litter--paired:last-child .alumni-litter-heading,
+  .alumni-litter-pair > .alumni-litter--paired:last-child .alumni-cards { grid-column:2; }
+  .alumni-litter-pair > .alumni-litter--paired:first-child .alumni-cards { padding-left:14px !important; }
+  .alumni-litter-pair .alumni-card { width:100% !important; max-width:100% !important; }
+  .alumni-litter:not(.alumni-litter--paired) .alumni-card { flex-basis:min(290px,80vw) !important; width:min(290px,80vw) !important; }
+}
+@media(max-width:480px) {
+  .alumni-litter-pair { grid-template-columns:minmax(0,1fr) !important; }
+  .alumni-litter-pair > .alumni-litter--paired:first-child .alumni-litter-heading,
+  .alumni-litter-pair > .alumni-litter--paired:first-child .alumni-cards,
+  .alumni-litter-pair > .alumni-litter--paired:last-child .alumni-litter-heading,
+  .alumni-litter-pair > .alumni-litter--paired:last-child .alumni-cards { grid-column:1; }
+  .alumni-litter-pair > .alumni-litter--paired:first-child .alumni-cards { padding-left:22px !important; }
+}
+
+
+/* === Visual polish: attendee heading and shared event-card styling === */
+#events #event-featured .event-attending,
+.events-page #event-featured .event-attending,
+.events-page .special-event-panel .event-attending {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  margin:0 auto 13px !important;
+  color:#f8f3fc;
+  font-family:"Playfair Display",Georgia,serif;
+  font-size:clamp(18px,1.7vw,22px);
+  font-weight:700;
+  letter-spacing:.025em;
+  text-shadow:0 1px 8px rgba(30,20,42,.2);
+}
+#events #event-featured .event-attending::before,
+#events #event-featured .event-attending::after,
+.events-page #event-featured .event-attending::before,
+.events-page #event-featured .event-attending::after,
+.events-page .special-event-panel .event-attending::before,
+.events-page .special-event-panel .event-attending::after {
+  content:"";
+  display:block;
+  width:clamp(24px,4vw,54px);
+  height:1px;
+  background:rgba(255,255,255,.58);
+}
+.attending-kitten-gallery {
+  border:1px solid rgba(255,255,255,.42) !important;
+  background:rgba(255,255,255,.10) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 8px 22px rgba(35,23,48,.12);
+}
+.attending-kitten-slide figcaption { padding-top:7px !important; }
+.attending-kitten-name {
+  background:rgba(44,32,61,.66) !important;
+  border:1px solid rgba(255,255,255,.3);
+  letter-spacing:.025em;
+}
+
+/* The Events page extra-event panel now uses the same visual card as Home.
+   The old section wrapper was the source of the oversized lavender square. */
+.events-page .special-event-panel {
+  width:100% !important;
+  max-width:none !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+}
+.events-page .special-event-panel .special-event-entry {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(270px,.82fr) !important;
+  grid-template-rows:auto !important;
+  align-items:center;
+  gap:8px clamp(18px,3vw,34px) !important;
+  width:100%;
+  min-height:0 !important;
+  padding:clamp(22px,3vw,36px) !important;
+  border:0 !important;
+  border-radius:24px !important;
+  background:linear-gradient(118deg,#55416f 0%,#685482 52%,#75628d 100%) !important;
+  color:#fff !important;
+  box-shadow:0 14px 34px rgba(48,37,65,.13);
+  text-align:center;
+}
+.events-page .special-event-panel .special-event-copy {
+  grid-column:1 !important;
+  grid-row:1 !important;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  min-width:0;
+  text-align:center;
+}
+.events-page .special-event-panel .special-event-copy > .eyebrow,
+.events-page .special-event-panel .special-event-copy > h2 { width:100%; text-align:center; }
+.events-page .special-event-panel .special-event-copy > h2 {
+  margin:0 0 8px;
+  color:#fff;
+  font-size:clamp(25px,2.8vw,34px);
+}
+.events-page .special-event-panel .special-event-copy p:not(.eyebrow) { color:#f0eaf6; }
+.events-page .special-event-panel .event-attending-block {
+  grid-column:2 !important;
+  grid-row:1 !important;
+  align-self:center;
+  justify-self:stretch;
+  width:100%;
+  min-width:0;
+  margin:0;
+}
+.events-page .special-event-panel .event-countdown {
+  align-self:center;
+  order:-1;
+  margin:4px auto 10px;
+  padding:8px 16px;
+  border-radius:999px;
+  background:#edf2e9;
+  color:#345b40;
+  font-weight:800;
+}
+.events-page .special-event-panel .attending-kitten-gallery {
+  width:min(100%,440px) !important;
+  height:275px !important;
+}
+.events-page .special-event-panel .attending-kitten-slide img {
+  height:218px !important;
+  flex-basis:218px;
+}
+@media(max-width:760px) {
+  .events-page .special-event-panel .special-event-entry {
+    grid-template-columns:minmax(0,1fr) !important;
+    gap:8px !important;
+    padding:22px 18px !important;
+  }
+  .events-page .special-event-panel .special-event-copy,
+  .events-page .special-event-panel .event-attending-block {
+    grid-column:1 !important;
+    grid-row:auto !important;
+  }
+  .events-page .special-event-panel .attending-kitten-gallery {
+    width:min(100%,360px) !important;
+    height:225px !important;
+  }
+  .events-page .special-event-panel .attending-kitten-slide img {
+    height:170px !important;
+    flex-basis:170px;
+  }
+}
+
+/* Alumni: intentional offsets from the litter headings, preserving card width. */
+@media(min-width:761px) {
+  .alumni-litter-pair > .alumni-litter--paired:first-child .alumni-cards {
+    padding-left:110px !important; /* Diablo: another ~2 cm to the right */
+  }
+  .alumni-litter-pair > .alumni-litter--paired:last-child .alumni-litter-heading {
+    transform:translateX(-44px); /* Finn's heading sits left of his card */
+  }
+  .alumni-litter-pair > .alumni-litter--paired:last-child .alumni-cards {
+    padding-left:44px !important; /* Finn's card is indented from the heading */
+  }
+}
+@media(max-width:760px) {
+  .alumni-litter-pair > .alumni-litter--paired:first-child .alumni-cards { padding-left:22px !important; }
+  .alumni-litter-pair > .alumni-litter--paired:last-child .alumni-litter-heading { transform:none; }
+  .alumni-litter-pair > .alumni-litter--paired:last-child .alumni-cards { padding-left:22px !important; }
+}
+
+
+/* === Paws & Purr palette: soft lilac + sage, with lighter visual weight === */
+/* Restore the site's original global sage-and-purple palette. Event-card lilac is scoped below. */
+#events #event-featured .event-card--compact,.events-page #event-featured .event-card--compact,.events-page .special-event-panel .event-card--compact {
+ background:linear-gradient(120deg,#b8a8ca 0%,#c7bad5 48%,#d8d9c8 100%) !important;color:#34343a !important;border:1px solid rgba(255,255,255,.72) !important;box-shadow:0 12px 30px rgba(82,72,92,.10) !important;
+}
+#events #event-featured .event-card-content,.events-page #event-featured .event-card-content,.events-page .special-event-panel .event-card-content{color:#34343a !important;}
+#events #event-featured .event-card-content .eyebrow,.events-page #event-featured .event-card-content .eyebrow,.events-page .special-event-panel .event-card-content .eyebrow{color:#fff !important;text-shadow:0 1px 3px rgba(68,57,77,.16);}
+#events #event-featured .event-card-content h2,.events-page #event-featured .event-card-content h2,.events-page .special-event-panel .event-card-content h2{color:#40364d !important;}
+#events #event-featured .event-date,#events #event-featured .event-time,#events #event-featured .event-location-name,.events-page #event-featured .event-date,.events-page #event-featured .event-time,.events-page #event-featured .event-location-name,.events-page .special-event-panel .event-date,.events-page .special-event-panel .event-time,.events-page .special-event-panel .event-location-name{color:#3f3e43 !important;}
+#events #event-featured .event-countdown,.events-page #event-featured .event-countdown,.events-page .special-event-panel .event-countdown{background:#eaf0e5 !important;color:#526b50 !important;border:1px solid rgba(100,125,94,.18);box-shadow:0 3px 10px rgba(73,91,68,.08);}
+#events #event-featured .event-address,.events-page #event-featured .event-address,.events-page .special-event-panel .event-address{color:#435743 !important;background:#edf2e9 !important;border:1px solid rgba(96,118,95,.18);box-shadow:0 3px 10px rgba(73,91,68,.06);}
+#events #event-featured .event-attending,.events-page #event-featured .event-attending,.events-page .special-event-panel .event-attending{color:#554866 !important;text-shadow:none;}
+#events #event-featured .event-attending::before,#events #event-featured .event-attending::after,.events-page #event-featured .event-attending::before,.events-page #event-featured .event-attending::after,.events-page .special-event-panel .event-attending::before,.events-page .special-event-panel .event-attending::after{background:rgba(92,77,108,.35);}
+#events #event-featured .attending-kitten-gallery,.events-page #event-featured .attending-kitten-gallery,.events-page .special-event-panel .attending-kitten-gallery{background:rgba(255,255,255,.24) !important;border-color:rgba(112,96,130,.3) !important;}
+.event-meta-row{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px 22px;width:min(100%,440px);margin:8px auto 10px !important;padding:12px 16px;border-top:1px solid rgba(91,78,107,.22);border-bottom:1px solid rgba(91,78,107,.22);color:#403e45;}
+.event-meta-row .event-date,.event-meta-row .event-time{margin:0 !important;font-size:clamp(15px,1.55vw,18px);}
+.event-location-block{display:flex;flex-direction:column;align-items:center;gap:7px;width:100%;margin:4px auto 8px;}
+.event-location-block .event-location-name{margin:0 !important;}
+.event-location-block .event-address{margin:0 auto !important;}
+#events #event-featured .event-card-content > .event-meta-row,.events-page #event-featured .event-card-content > .event-meta-row{grid-column:1;grid-row:4;}
+#events #event-featured .event-card-content > .event-location-block,.events-page #event-featured .event-card-content > .event-location-block{grid-column:1;grid-row:5 / span 2;}
+@media(max-width:760px){#events #event-featured .event-card-content > .event-meta-row,.events-page #event-featured .event-card-content > .event-meta-row,#events #event-featured .event-card-content > .event-location-block,.events-page #event-featured .event-card-content > .event-location-block{grid-column:1 !important;grid-row:auto !important;}}
+.events-page .event-panels{display:flex !important;flex-direction:column;gap:26px;}
+.events-page #event-featured{display:block;width:100% !important;max-width:none !important;min-height:0 !important;height:auto !important;padding:0 !important;margin:0 !important;border:0 !important;border-radius:0 !important;background:transparent !important;box-shadow:none !important;}
+.events-page #event-featured .event-card--compact{width:100% !important;max-width:none !important;min-height:0 !important;height:auto !important;margin:0 !important;padding:clamp(22px,3vw,36px) !important;border-radius:24px !important;}
+.events-page .special-event-panel{display:block;width:100% !important;max-width:none !important;min-height:0 !important;height:auto !important;padding:0 !important;margin:0 !important;border:0 !important;border-radius:0 !important;background:transparent !important;box-shadow:none !important;}
+.events-page .special-event-panel .special-event-entry{display:block !important;width:100% !important;max-width:none !important;min-height:0 !important;height:auto !important;padding:0 !important;margin:0 !important;border:0 !important;border-radius:0 !important;background:transparent !important;box-shadow:none !important;}
+@media(max-width:760px){.events-page #event-featured .event-card--compact{padding:22px 18px !important;}}
+@media(min-width:761px){
+.alumni-litter-pair > .alumni-litter--paired:first-child .alumni-cards{padding-left:84px !important;}
+.alumni-litter-pair > .alumni-litter--paired:last-child .alumni-litter-heading{transform:translateX(-88px) !important;}
+.alumni-litter-pair > .alumni-litter--paired:last-child .alumni-cards{padding-left:0 !important;}
+}
+
+
+/* Adoption event cards: one consistent lilac surface on the homepage and Events page. */
+#events #event-featured .event-card--compact,
+.events-page #event-featured .event-card--compact,
+.events-page .event-card-list .event-card--compact,
+#events #home-special-event .event-card--compact {
+  background:#eee9f4 !important;
+  color:#30312f !important;
+  border:1px solid #ded5e8 !important;
+  border-radius:24px !important;
+  box-shadow:0 12px 30px rgba(82,72,92,.08) !important;
+}
+#events #event-featured .event-card-content,
+.events-page #event-featured .event-card-content,
+.events-page .event-card-list .event-card-content,
+#events #home-special-event .event-card-content { color:#30312f !important; }
+#events #event-featured .event-card-content .eyebrow,
+.events-page #event-featured .event-card-content .eyebrow,
+.events-page .event-card-list .event-card-content .eyebrow,
+#events #home-special-event .event-card-content .eyebrow { display:none !important; }
+#events #event-featured .event-card-content h2,
+.events-page #event-featured .event-card-content h2,
+.events-page .event-card-list .event-card-content h2,
+#events #home-special-event .event-card-content h2 { color:#57456f !important; }
+#events #event-featured .event-date,
+#events #event-featured .event-time,
+#events #event-featured .event-location-name,
+.events-page #event-featured .event-date,
+.events-page #event-featured .event-time,
+.events-page #event-featured .event-location-name,
+.events-page .event-card-list .event-date,
+.events-page .event-card-list .event-time,
+.events-page .event-card-list .event-location-name,
+#events #home-special-event .event-date,
+#events #home-special-event .event-time,
+#events #home-special-event .event-location-name { color:#30312f !important; }
+#events #event-featured .event-countdown,
+.events-page #event-featured .event-countdown,
+.events-page .event-card-list .event-countdown,
+#events #home-special-event .event-countdown {
+  background:#fff !important; color:#536b58 !important; border:1px solid #d9e1d4 !important;
+}
+#events #event-featured .event-address,
+.events-page #event-featured .event-address,
+.events-page .event-card-list .event-address,
+#events #home-special-event .event-address {
+  display:inline-block !important; background:#fff !important; color:#57456f !important;
+  font-size:13px !important; font-weight:600 !important; padding:7px 11px !important;
+  border:1px solid #e2dbea !important; border-radius:9px !important;
+}
+#events #event-featured .event-location-name,
+.events-page #event-featured .event-location-name,
+.events-page .event-card-list .event-location-name,
+#events #home-special-event .event-location-name { font-size:21px !important; font-weight:750 !important; }
+#events #event-featured .event-attending,
+.events-page #event-featured .event-attending,
+.events-page .event-card-list .event-attending,
+#events #home-special-event .event-attending {
+  color:#57456f !important; font-family:"DM Sans",sans-serif !important;
+  font-size:19px !important; line-height:1.45 !important; font-weight:750 !important;
+  margin:16px 0 10px !important;
+}
+#events #event-featured .attending-kitten-gallery,
+.events-page #event-featured .attending-kitten-gallery,
+.events-page .event-card-list .attending-kitten-gallery,
+#events #home-special-event .attending-kitten-gallery {
+  background:rgba(255,255,255,.55) !important; border-color:rgba(117,98,141,.22) !important;
+}
+/* The Events-page host is only a list mount point, never a second colored card. */
+.events-page .event-card-list {
+  display:flex !important; flex-direction:column !important; gap:22px !important;
+  width:100% !important; padding:0 !important; margin:0 !important;
+  border:0 !important; border-radius:0 !important; background:transparent !important;
+  box-shadow:none !important;
+}
+.events-page .event-card-list .event-card--compact {
+  width:100% !important; min-height:0 !important; height:auto !important;
+  margin:0 !important; padding:clamp(22px,3vw,36px) !important;
+}
+.events-page .event-card-list .event-card-content { display:block !important; }
+.event-meta-row .event-date,.event-meta-row .event-time { font-family:"DM Sans",sans-serif !important; }
+@media(max-width:760px) {
+  #events #event-featured .event-card--compact,
+  .events-page #event-featured .event-card--compact,
+  .events-page .event-card-list .event-card--compact,
+  #events #home-special-event .event-card--compact { padding:23px 19px !important; }
+  #events #event-featured .event-attending,
+  .events-page #event-featured .event-attending,
+  .events-page .event-card-list .event-attending { font-size:18px !important; }
+}
+
+/* Brand purple confirmed by user: RGB(87, 69, 111) / #57456f. */
+:root { --purple: #57456f; }
+
+
+/* Next event label and single-column event-card geometry. */
+#events #event-featured .event-card--compact,.events-page #event-featured .event-card--compact,#events #home-special-event .event-card--compact,.events-page .event-card-list .event-card--compact {
+ display:block !important;grid-template-columns:minmax(0,1fr) !important;grid-template-rows:auto !important;width:100% !important;height:auto !important;min-height:0 !important;
+}
+#events #event-featured .event-card-content,.events-page #event-featured .event-card-content,#events #home-special-event .event-card-content,.events-page .event-card-list .event-card-content {
+ display:flex !important;flex-direction:column !important;align-items:center !important;width:100% !important;max-width:none !important;min-width:0 !important;text-align:center !important;
+}
+#events #event-featured .event-next-label,.events-page #event-featured .event-next-label,#events #home-special-event .event-next-label {
+ display:inline-flex !important;align-items:center;justify-content:center;width:auto !important;margin:0 auto 9px !important;padding:6px 14px;border-radius:999px;background:#ded4e9;color:#57456f !important;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:800;letter-spacing:.13em;line-height:1.2;text-transform:uppercase;
+}
+#events #event-featured .event-card-content > h2,.events-page #event-featured .event-card-content > h2,#events #home-special-event .event-card-content > h2 {width:100%;text-align:center;}
+#events #event-featured .event-attending-block,.events-page #event-featured .event-attending-block,#events #home-special-event .event-attending-block {width:100% !important;max-width:620px;margin:16px auto 0 !important;}
+#events #event-featured .attending-kitten-gallery,.events-page #event-featured .attending-kitten-gallery,#events #home-special-event .attending-kitten-gallery {width:min(100%,390px) !important;height:250px !important;margin:0 auto !important;}
+#events #event-featured .attending-kitten-slide img,.events-page #event-featured .attending-kitten-slide img,#events #home-special-event .attending-kitten-slide img {height:195px !important;flex-basis:195px !important;}
+#events #event-featured .event-card-content > .event-meta-row,.events-page #event-featured .event-card-content > .event-meta-row,#events #event-featured .event-card-content > .event-location-block,.events-page #event-featured .event-card-content > .event-location-block {width:min(100%,620px) !important;}
+#events #event-featured .event-card-content::before,#events #event-featured .event-card-content::after,.events-page #event-featured .event-card-content::before,.events-page #event-featured .event-card-content::after {content:none !important;}
+.events-page .event-card-list .event-card-content {display:flex !important;flex-direction:column !important;align-items:center !important;}
+@media(max-width:760px) {
+ #events #event-featured .attending-kitten-gallery,.events-page #event-featured .attending-kitten-gallery,#events #home-special-event .attending-kitten-gallery {height:220px !important;}
+ #events #event-featured .attending-kitten-slide img,.events-page #event-featured .attending-kitten-slide img,#events #home-special-event .attending-kitten-slide img {height:165px !important;flex-basis:165px !important;}
+}
+
+/* Final event-card proportions: one centered column, not the legacy two-column square. */
+#events #event-featured .event-card--compact,.events-page #event-featured .event-card--compact,#events #home-special-event .event-card--compact,.events-page .event-card-list .event-card--compact {display:block !important;grid-template-columns:minmax(0,1fr) !important;grid-template-rows:auto !important;height:auto !important;min-height:0 !important;}
+#events #event-featured .event-card-content,.events-page #event-featured .event-card-content,#events #home-special-event .event-card-content,.events-page .event-card-list .event-card-content {display:flex !important;flex-direction:column !important;align-items:center !important;width:100% !important;max-width:none !important;min-width:0 !important;text-align:center !important;}
+#events #event-featured .event-next-label,.events-page #event-featured .event-next-label,#events #home-special-event .event-next-label,.events-page .event-card-list .event-next-label {display:inline-flex !important;align-items:center;justify-content:center;width:auto !important;margin:0 auto 9px !important;padding:6px 14px;border-radius:999px;background:#ded4e9;color:#57456f !important;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:800;letter-spacing:.13em;line-height:1.2;text-transform:uppercase;}
+#events #event-featured .event-attending-block,.events-page #event-featured .event-attending-block,#events #home-special-event .event-attending-block,.events-page .event-card-list .event-attending-block {width:100% !important;max-width:620px;margin:16px auto 0 !important;}
+#events #event-featured .attending-kitten-gallery,.events-page #event-featured .attending-kitten-gallery,#events #home-special-event .attending-kitten-gallery,.events-page .event-card-list .attending-kitten-gallery {width:min(100%,390px) !important;height:250px !important;margin:0 auto !important;}
+#events #event-featured .attending-kitten-slide img,.events-page #event-featured .attending-kitten-slide img,#events #home-special-event .attending-kitten-slide img,.events-page .event-card-list .attending-kitten-slide img {height:195px !important;flex-basis:195px !important;}
+#events #event-featured .event-card-content > .event-meta-row,.events-page #event-featured .event-card-content > .event-meta-row,#events #event-featured .event-card-content > .event-location-block,.events-page #event-featured .event-card-content > .event-location-block,.events-page .event-card-list .event-meta-row,.events-page .event-card-list .event-location-block {width:min(100%,620px) !important;}
+#events #event-featured .event-card-content::before,#events #event-featured .event-card-content::after,.events-page #event-featured .event-card-content::before,.events-page #event-featured .event-card-content::after {content:none !important;display:none !important;}
+.events-page .event-card-list .event-card-content {display:flex !important;flex-direction:column !important;align-items:center !important;}
+@media(max-width:760px) {
+#events #event-featured .attending-kitten-gallery,.events-page #event-featured .attending-kitten-gallery,#events #home-special-event .attending-kitten-gallery,.events-page .event-card-list .attending-kitten-gallery {height:220px !important;}
+#events #event-featured .attending-kitten-slide img,.events-page #event-featured .attending-kitten-slide img,#events #home-special-event .attending-kitten-slide img,.events-page .event-card-list .attending-kitten-slide img {height:165px !important;flex-basis:165px !important;}
+}
+
+/* Remove the decorative paw badge and keep the Next Event eyebrow visible on the Events page. */
+.events-page .event-card-list .event-card--compact::before,
+.events-page #event-featured .event-card--compact::before {content:none !important;display:none !important;}
+.events-page .event-card-list .event-card-content .event-next-label,
+.events-page #event-featured .event-card-content .event-next-label {display:inline-flex !important;}
+.events-page .event-card-list .event-card--compact {display:block !important;width:100% !important;max-width:none !important;height:auto !important;min-height:0 !important;}
+.events-page .event-card-list .event-card-content {display:flex !important;flex-direction:column !important;align-items:center !important;justify-content:flex-start !important;gap:10px !important;}
+
+
+/* User-selected event-card purple and compact rectangular layout. */
+#events #event-featured .event-card--compact,
+#events #home-special-event .event-card--compact,
+.events-page #event-featured .event-card--compact,
+.events-page .event-card-list .event-card--compact {
+  background:#7B679A !important;
+  border:1px solid #7B679A !important;
+  color:#fff !important;
+  width:100% !important;
+  max-width:none !important;
+  height:auto !important;
+  min-height:0 !important;
+  padding:clamp(18px,2.2vw,27px) !important;
+  border-radius:22px !important;
+  box-shadow:0 10px 26px rgba(68,52,91,.14) !important;
+}
+#events #event-featured .event-card-content,
+#events #home-special-event .event-card-content,
+.events-page #event-featured .event-card-content,
+.events-page .event-card-list .event-card-content {
+  color:#fff !important;
+}
+#events #event-featured .event-card-content h2,
+#events #home-special-event .event-card-content h2,
+.events-page #event-featured .event-card-content h2,
+.events-page .event-card-list .event-card-content h2,
+#events #event-featured .event-card-content p,
+#events #home-special-event .event-card-content p,
+.events-page #event-featured .event-card-content p,
+.events-page .event-card-list .event-card-content p,
+.events-page .event-card-list .event-attending strong {
+  color:#fff !important;
+}
+#events #event-featured .event-next-label,
+#events #home-special-event .event-next-label,
+.events-page #event-featured .event-next-label,
+.events-page .event-card-list .event-next-label {
+  display:inline-flex !important;
+  margin:0 auto 5px !important;
+  padding:5px 12px !important;
+  border-radius:999px !important;
+  background:rgba(255,255,255,.19) !important;
+  color:#fff !important;
+  font-size:10px !important;
+  letter-spacing:.12em !important;
+}
+#events #event-featured .event-card-content .event-address,
+#events #home-special-event .event-card-content .event-address,
+.events-page #event-featured .event-card-content .event-address,
+.events-page .event-card-list .event-card-content .event-address {
+  background:rgba(255,255,255,.94) !important;
+  color:#57456F !important;
+  border-radius:999px !important;
+}
+.events-page .event-card-list .event-card-content {
+  gap:5px !important;
+}
+.events-page .event-card-list .event-card-content .event-meta-row {
+  width:min(100%,480px) !important;
+  margin:5px auto 7px !important;
+  padding:8px 12px !important;
+  border-color:rgba(255,255,255,.32) !important;
+  color:#fff !important;
+  gap:6px 18px !important;
+}
+.events-page .event-card-list .event-card-content .event-meta-row .event-date,
+.events-page .event-card-list .event-card-content .event-meta-row .event-time {
+  color:#fff !important;
+}
+.events-page .event-card-list .event-card-content .event-location-block {
+  margin:2px auto 4px !important;
+  gap:4px !important;
+}
+.events-page .event-card-list .event-card-content .event-attending-block {
+  max-width:100% !important;
+  margin:8px auto 0 !important;
+}
+.events-page .event-card-list .attending-kitten-gallery {
+  width:min(100%,330px) !important;
+  height:195px !important;
+  margin:0 auto !important;
+}
+.events-page .event-card-list .attending-kitten-slide img {
+  height:145px !important;
+  flex-basis:145px !important;
+}
+@media(max-width:760px) {
+  .events-page .event-card-list .event-card--compact {
+    padding:18px 15px !important;
+  }
+  .events-page .event-card-list .attending-kitten-gallery {
+    height:185px !important;
+  }
+  .events-page .event-card-list .attending-kitten-slide img {
+    height:138px !important;
+    flex-basis:138px !important;
+  }
+}
+
+
+/* Final Events-page geometry: horizontal information + kitten gallery layout. */
+:root { --event-card-purple:#8979A5; }
+#events #event-featured .event-card--compact,
+.events-page #event-featured .event-card--compact,
+.events-page .event-card-list .event-card--compact {
+  background:#8979A5 !important;
+  border-color:#8979A5 !important;
+  color:#fff !important;
+}
+#events #event-featured .event-card-content,
+.events-page #event-featured .event-card-content {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(250px,.82fr) !important;
+  grid-template-rows:auto auto auto auto auto !important;
+  align-items:center !important;
+  justify-items:center !important;
+  column-gap:clamp(16px,2.6vw,34px) !important;
+  row-gap:5px !important;
+  text-align:center !important;
+}
+#events #event-featured .event-card-content > .event-next-label,
+.events-page #event-featured .event-card-content > .event-next-label,
+#events #event-featured .event-card-content > h2,
+.events-page #event-featured .event-card-content > h2 {
+  grid-column:1 / -1 !important;
+}
+#events #event-featured .event-card-content > .event-meta-row,
+.events-page #event-featured .event-card-content > .event-meta-row {
+  grid-column:1 !important;
+  grid-row:3 !important;
+  width:100% !important;
+  max-width:100% !important;
+  border-color:rgba(255,255,255,.35) !important;
+  color:#fff !important;
+  margin:5px auto !important;
+  padding:9px 10px !important;
+}
+#events #event-featured .event-card-content > .event-location-block,
+.events-page #event-featured .event-card-content > .event-location-block {
+  grid-column:1 !important;
+  grid-row:4 !important;
+  width:100% !important;
+  margin:4px auto !important;
+}
+#events #event-featured .event-card-content > .event-attending-block,
+.events-page #event-featured .event-card-content > .event-attending-block {
+  grid-column:2 !important;
+  grid-row:3 / span 2 !important;
+  width:100% !important;
+  max-width:100% !important;
+  margin:0 auto !important;
+  align-self:center !important;
+}
+#events #event-featured .attending-kitten-gallery,
+.events-page #event-featured .attending-kitten-gallery {
+  width:min(100%,300px) !important;
+  height:195px !important;
+  margin:0 auto !important;
+}
+#events #event-featured .attending-kitten-slide img,
+.events-page #event-featured .attending-kitten-slide img {
+  height:145px !important;
+  flex-basis:145px !important;
+  object-fit:contain !important;
+}
+#events #event-featured .event-card-content .event-address,
+#events #event-featured .event-card-content .event-address:link,
+#events #event-featured .event-card-content .event-address:visited,
+.events-page #event-featured .event-card-content .event-address,
+.events-page #event-featured .event-card-content .event-address:link,
+.events-page #event-featured .event-card-content .event-address:visited,
+.events-page .event-card-list .event-card-content .event-address,
+.events-page .event-card-list .event-card-content .event-address:link,
+.events-page .event-card-list .event-card-content .event-address:visited {
+  background:#fff !important;
+  color:#57456F !important;
+  -webkit-text-fill-color:#57456F !important;
+  border:1px solid #e2dbea !important;
+  text-decoration:none !important;
+}
+#events #event-featured .event-card-content .event-address:hover,
+.events-page #event-featured .event-card-content .event-address:hover,
+.events-page .event-card-list .event-card-content .event-address:hover {
+  background:#f1edf5 !important;
+  color:#57456F !important;
+  -webkit-text-fill-color:#57456F !important;
+}
+.events-page .event-card-list .event-card--compact {
+  min-height:300px !important;
+  padding:22px 28px !important;
+}
+.events-page .event-card-list .event-card-content {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(250px,.82fr) !important;
+  grid-template-rows:auto auto auto auto !important;
+  align-items:center !important;
+  justify-items:center !important;
+  gap:6px 26px !important;
+  text-align:center !important;
+}
+.events-page .event-card-list .event-card-content > .event-next-label,
+.events-page .event-card-list .event-card-content > h2 {
+  grid-column:1 / -1 !important;
+}
+.events-page .event-card-list .event-card-content > .event-meta-row,
+.events-page .event-card-list .event-card-content > .event-location-block {
+  grid-column:1 !important;
+  width:100% !important;
+}
+.events-page .event-card-list .event-card-content > .event-attending-block {
+  grid-column:2 !important;
+  grid-row:3 / span 2 !important;
+  margin:0 auto !important;
+}
+.events-page .event-card-list .attending-kitten-gallery {
+  width:min(100%,300px) !important;
+  height:195px !important;
+}
+.events-page .event-card-list .attending-kitten-slide img {
+  height:145px !important;
+  flex-basis:145px !important;
+}
+@media(max-width:760px) {
+  #events #event-featured .event-card-content,
+  .events-page #event-featured .event-card-content,
+  .events-page .event-card-list .event-card-content {
+    grid-template-columns:minmax(0,1fr) !important;
+    grid-template-rows:auto !important;
+    row-gap:6px !important;
+  }
+  #events #event-featured .event-card-content > *,
+  .events-page #event-featured .event-card-content > *,
+  .events-page .event-card-list .event-card-content > * {
+    grid-column:1 !important;
+    grid-row:auto !important;
+  }
+  #events #event-featured .event-attending-block,
+  .events-page #event-featured .event-attending-block,
+  .events-page .event-card-list .event-attending-block {
+    width:100% !important;
+    max-width:100% !important;
+  }
+  #events #event-featured .attending-kitten-gallery,
+  .events-page #event-featured .attending-kitten-gallery,
+  .events-page .event-card-list .attending-kitten-gallery {
+    width:min(100%,290px) !important;
+    height:180px !important;
+  }
+  #events #event-featured .attending-kitten-slide img,
+  .events-page #event-featured .attending-kitten-slide img,
+  .events-page .event-card-list .attending-kitten-slide img {
+    height:132px !important;
+    flex-basis:132px !important;
+  }
+}
+
+
+/* 2026-11-15: Correct the dedicated Events page featured purple card.
+   Keep the homepage card's existing shape; only stack its date and time cleanly. */
+.events-page .event-panels {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) !important;
+  align-items:start !important;
+  gap:24px !important;
+}
+.events-page #event-featured {
+  grid-column:1 / -1 !important;
+  width:100% !important;
+  min-width:0 !important;
+  height:auto !important;
+}
+.events-page #event-featured .event-card--compact {
+  display:block !important;
+  width:100% !important;
+  max-width:none !important;
+  min-height:0 !important;
+  height:auto !important;
+  padding:clamp(22px,3vw,34px) !important;
+  background:#8979A5 !important;
+  border:1px solid #8979A5 !important;
+}
+.events-page #event-featured .event-card-content {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(260px,.9fr) !important;
+  grid-template-rows:auto auto auto auto !important;
+  align-items:center !important;
+  justify-items:stretch !important;
+  gap:8px clamp(20px,3vw,38px) !important;
+  width:100% !important;
+  text-align:center !important;
+}
+.events-page #event-featured .event-card-content > .event-next-label,
+.events-page #event-featured .event-card-content > h2 {
+  grid-column:1 / -1 !important;
+  grid-row:auto !important;
+  justify-self:center !important;
+}
+.events-page #event-featured .event-card-content > .event-countdown,
+.events-page #event-featured .event-card-content > .event-meta-row,
+.events-page #event-featured .event-card-content > .event-location-block {
+  grid-column:1 !important;
+  width:100% !important;
+  max-width:100% !important;
+  justify-self:stretch !important;
+}
+.events-page #event-featured .event-card-content > .event-countdown {
+  grid-row:3 !important;
+  margin:2px auto 5px !important;
+}
+.events-page #event-featured .event-card-content > .event-meta-row {
+  grid-row:4 !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  gap:7px !important;
+  margin:0 auto !important;
+  padding:10px 12px !important;
+  border-color:rgba(255,255,255,.34) !important;
+}
+.events-page #event-featured .event-card-content > .event-location-block {
+  grid-row:5 !important;
+  margin:2px auto 0 !important;
+}
+.events-page #event-featured .event-card-content > .event-attending-block {
+  grid-column:2 !important;
+  grid-row:3 / span 3 !important;
+  width:100% !important;
+  max-width:100% !important;
+  margin:0 auto !important;
+  align-self:center !important;
+}
+.events-page #event-featured .attending-kitten-gallery {
+  width:min(100%,330px) !important;
+  height:205px !important;
+  margin:0 auto !important;
+}
+.events-page #event-featured .attending-kitten-slide img {
+  height:150px !important;
+  flex-basis:150px !important;
+  object-fit:contain !important;
+}
+.events-page #event-featured .event-card-content > .event-location-block .event-address {
+  background:#fff !important;
+  color:#57456F !important;
+  -webkit-text-fill-color:#57456F !important;
+}
+@media(max-width:760px) {
+  .events-page #event-featured .event-card-content {
+    grid-template-columns:minmax(0,1fr) !important;
+    grid-template-rows:auto !important;
+    gap:8px !important;
+  }
+  .events-page #event-featured .event-card-content > * {
+    grid-column:1 !important;
+    grid-row:auto !important;
+  }
+  .events-page #event-featured .event-card-content > .event-attending-block {
+    width:100% !important;
+    margin:8px auto 0 !important;
+  }
+  .events-page #event-featured .attending-kitten-gallery {
+    width:min(100%,300px) !important;
+    height:185px !important;
+  }
+  .events-page #event-featured .attending-kitten-slide img {
+    height:135px !important;
+    flex-basis:135px !important;
+  }
+}
+/* Homepage: preserve the existing compact card, but never run date and time together. */
+.home-event-square .event-card-content > .event-meta-row {
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  gap:5px !important;
+  width:min(100%,300px) !important;
+}
+.home-event-square .event-card-content > .event-countdown {
+  margin:8px auto !important;
+  white-space:normal !important;
+  line-height:1.35 !important;
+}
+
+
+/* 2026-11-15 corrective isolation:
+   Homepage and Events-page featured cards are separate layouts.
+   Restore the homepage card to its compact vertical presentation. */
+#events #event-featured {
+  width:100% !important;
+  min-width:0 !important;
+}
+#events #event-featured .event-card--compact {
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:100% !important;
+  min-height:300px !important;
+  height:auto !important;
+  padding:28px !important;
+  box-sizing:border-box !important;
+}
+#events #event-featured .event-card-content {
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:7px !important;
+  width:100% !important;
+  max-width:100% !important;
+  min-height:0 !important;
+  text-align:center !important;
+}
+#events #event-featured .event-card-content > .event-next-label {
+  display:inline-flex !important;
+  order:0 !important;
+  margin:0 auto 5px !important;
+}
+#events #event-featured .event-card-content > h2 { order:1 !important; }
+#events #event-featured .event-card-content > .event-countdown {
+  order:2 !important;
+  white-space:normal !important;
+  max-width:100% !important;
+  margin:5px auto !important;
+  line-height:1.35 !important;
+}
+#events #event-featured .event-card-content > .event-meta-row {
+  order:3 !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  gap:5px !important;
+  width:min(100%,340px) !important;
+  margin:5px auto !important;
+}
+#events #event-featured .event-card-content > .event-location-block { order:4 !important; }
+#events #event-featured .event-card-content > .event-attending-block {
+  order:5 !important;
+  width:100% !important;
+  max-width:440px !important;
+  margin:10px auto 0 !important;
+}
+#events #event-featured .attending-kitten-gallery {
+  width:min(100%,360px) !important;
+  height:210px !important;
+  margin:0 auto !important;
+}
+#events #event-featured .attending-kitten-slide img {
+  height:160px !important;
+  flex-basis:160px !important;
+}
+
+/* Dedicated Events tab: enlarge the actual purple card container,
+   not just the countdown pill or its inner text. */
+.events-page .event-panels > #event-featured {
+  display:block !important;
+  width:100% !important;
+  min-width:0 !important;
+  min-height:460px !important;
+  height:auto !important;
+  grid-column:1 / -1 !important;
+  box-sizing:border-box !important;
+}
+.events-page #event-featured .event-card--compact {
+  display:block !important;
+  width:100% !important;
+  max-width:none !important;
+  min-height:460px !important;
+  height:auto !important;
+  padding:42px clamp(30px,5vw,58px) !important;
+  box-sizing:border-box !important;
+}
+.events-page #event-featured .event-card-content {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(300px,.9fr) !important;
+  grid-template-rows:auto auto auto auto !important;
+  align-items:center !important;
+  gap:12px clamp(28px,4vw,52px) !important;
+  width:100% !important;
+  min-height:365px !important;
+  box-sizing:border-box !important;
+}
+.events-page #event-featured .event-card-content > .event-next-label,
+.events-page #event-featured .event-card-content > h2 {
+  grid-column:1 / -1 !important;
+  justify-self:center !important;
+}
+.events-page #event-featured .event-card-content > .event-countdown,
+.events-page #event-featured .event-card-content > .event-meta-row,
+.events-page #event-featured .event-card-content > .event-location-block {
+  grid-column:1 !important;
+  width:100% !important;
+  max-width:100% !important;
+}
+.events-page #event-featured .event-card-content > .event-countdown { grid-row:3 !important; }
+.events-page #event-featured .event-card-content > .event-meta-row {
+  grid-row:4 !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  gap:8px !important;
+}
+.events-page #event-featured .event-card-content > .event-location-block { grid-row:5 !important; }
+.events-page #event-featured .event-card-content > .event-attending-block {
+  grid-column:2 !important;
+  grid-row:3 / span 3 !important;
+  width:100% !important;
+  max-width:100% !important;
+  margin:0 auto !important;
+  align-self:center !important;
+}
+.events-page #event-featured .attending-kitten-gallery {
+  width:min(100%,390px) !important;
+  height:245px !important;
+  margin:0 auto !important;
+}
+.events-page #event-featured .attending-kitten-slide img {
+  height:185px !important;
+  flex-basis:185px !important;
+}
+@media(max-width:760px) {
+  #events #event-featured .event-card--compact { min-height:0 !important; padding:22px 18px !important; }
+  #events #event-featured .attending-kitten-gallery { height:185px !important; }
+  #events #event-featured .attending-kitten-slide img { height:135px !important; flex-basis:135px !important; }
+  .events-page .event-panels > #event-featured { min-height:0 !important; }
+  .events-page #event-featured .event-card--compact { min-height:0 !important; padding:26px 20px !important; }
+  .events-page #event-featured .event-card-content {
+    grid-template-columns:minmax(0,1fr) !important;
+    grid-template-rows:auto !important;
+    min-height:0 !important;
+    gap:9px !important;
+  }
+  .events-page #event-featured .event-card-content > * {
+    grid-column:1 !important;
+    grid-row:auto !important;
+  }
+  .events-page #event-featured .event-attending-block { margin:8px auto 0 !important; }
+  .events-page #event-featured .attending-kitten-gallery { height:185px !important; }
+  .events-page #event-featured .attending-kitten-slide img { height:135px !important; flex-basis:135px !important; }
+}
+
+
+/* 2026-11-15: Homepage event card uses its existing outer footprint.
+   Only its inner content changes: event details left, attendee photos right. */
+@media (min-width:761px) {
+  #events #event-featured .event-card-content:has(> .event-attending-block) {
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) minmax(300px,.95fr) !important;
+    grid-template-rows:repeat(5,auto) !important;
+    align-items:center !important;
+    justify-content:stretch !important;
+    column-gap:clamp(24px,3vw,42px) !important;
+    row-gap:7px !important;
+    width:100% !important;
+    max-width:100% !important;
+    min-height:0 !important;
+    text-align:left !important;
+  }
+  #events #event-featured .event-card-content:has(> .event-attending-block) > .event-next-label {
+    grid-column:1 !important; grid-row:1 !important;
+    justify-self:start !important; margin:0 0 2px !important;
+  }
+  #events #event-featured .event-card-content:has(> .event-attending-block) > h2 {
+    grid-column:1 !important; grid-row:2 !important;
+    justify-self:start !important; text-align:left !important;
+    margin:0 0 4px !important;
+  }
+  #events #event-featured .event-card-content:has(> .event-attending-block) > .event-countdown {
+    grid-column:1 !important; grid-row:3 !important;
+    justify-self:start !important; margin:5px 0 !important;
+  }
+  #events #event-featured .event-card-content:has(> .event-attending-block) > .event-meta-row {
+    grid-column:1 !important; grid-row:4 !important;
+    display:flex !important; flex-direction:column !important;
+    align-items:flex-start !important; gap:4px !important;
+    width:100% !important; margin:4px 0 !important;
+  }
+  #events #event-featured .event-card-content:has(> .event-attending-block) > .event-location-block {
+    grid-column:1 !important; grid-row:5 !important;
+    justify-self:start !important; text-align:left !important;
+  }
+  #events #event-featured .event-card-content:has(> .event-attending-block) > .event-attending-block {
+    grid-column:2 !important; grid-row:1 / span 5 !important;
+    align-self:center !important; justify-self:stretch !important;
+    width:100% !important; max-width:none !important; margin:0 !important;
+  }
+  #events #event-featured .attending-kitten-gallery {
+    width:100% !important; max-width:460px !important;
+    height:260px !important; margin:0 auto !important;
+  }
+  #events #event-featured .attending-kitten-slide img {
+    height:205px !important; flex-basis:205px !important;
+  }
+}
+@media (max-width:760px) {
+  #events #event-featured .event-card-content:has(> .event-attending-block) {
+    display:flex !important; flex-direction:column !important;
+    align-items:center !important; text-align:center !important;
+  }
+  #events #event-featured .event-card-content:has(> .event-attending-block) > * {
+    width:100% !important; text-align:center !important;
+  }
+  #events #event-featured .event-card-content:has(> .event-attending-block) > .event-meta-row {
+    align-items:center !important;
+  }
+  #events #event-featured .attending-kitten-gallery { height:205px !important; }
+  #events #event-featured .attending-kitten-slide img { height:155px !important; flex-basis:155px !important; }
+}
+
+/* Events tab only: make the purple featured card itself larger and unmistakable.
+   These selectors cannot affect the homepage section or Foster Alumni. */
+.events-page #event-featured .event-card--compact {
+  display:block !important;
+  width:100% !important; max-width:none !important;
+  min-height:500px !important; height:auto !important;
+  padding:42px clamp(30px,5vw,58px) !important;
+  background:var(--purple) !important; color:#fff !important;
+  border:0 !important; border-radius:28px !important;
+  box-shadow:0 16px 38px rgba(47,34,62,.16) !important;
+}
+.events-page #event-featured .event-card--compact .eyebrow,
+.events-page #event-featured .event-card--compact h2 { color:#fff !important; }
+.events-page #event-featured .event-card-content > * { min-width:0; }
+.events-page #event-featured .event-card-content p { color:#eee9f4 !important; }
+.events-page #event-featured .event-card-content .event-countdown {
+  justify-self:center !important;
+  background:#fff !important; color:#315c3d !important;
+}
+.events-page #event-featured .event-card-content .event-address {
+  display:inline-flex !important; align-items:center !important;
+  justify-content:center !important; width:fit-content !important;
+  max-width:100% !important; padding:9px 15px !important;
+  border-radius:12px !important; background:#fff !important;
+  color:var(--purple-dark) !important; text-decoration:none !important;
+}
+.events-page #event-featured .attending-kitten-gallery {
+  width:min(100%,440px) !important; height:260px !important;
+}
+.events-page #event-featured .attending-kitten-slide img {
+  height:205px !important; flex-basis:205px !important;
+}
+@media(max-width:760px) {
+  .events-page #event-featured .event-card--compact {
+    min-height:0 !important; padding:28px 20px !important;
+  }
+  .events-page #event-featured .attending-kitten-gallery { height:205px !important; }
+  .events-page #event-featured .attending-kitten-slide img { height:155px !important; flex-basis:155px !important; }
+}
+
+
+/* 2026-11-15 refinement: center the homepage information column only.
+   The card footprint and right-side kitten gallery remain unchanged. */
+@media(min-width:761px) {
+  #events #event-featured .event-card-content:has(> .event-attending-block) {
+    text-align:center !important;
+    justify-items:center !important;
+  }
+  #events #event-featured .event-card-content:has(> .event-attending-block) > .event-next-label,
+  #events #event-featured .event-card-content:has(> .event-attending-block) > h2,
+  #events #event-featured .event-card-content:has(> .event-attending-block) > .event-countdown,
+  #events #event-featured .event-card-content:has(> .event-attending-block) > .event-meta-row,
+  #events #event-featured .event-card-content:has(> .event-attending-block) > .event-location-block {
+    justify-self:center !important;
+    text-align:center !important;
+  }
+  #events #event-featured .event-card-content:has(> .event-attending-block) > .event-meta-row {
+    align-items:center !important;
+  }
+  #events #event-featured .event-card-content:has(> .event-attending-block) > .event-location-block {
+    width:100% !important;
+  }
+}
+
+/* Events page: rebuild the featured panel geometry as a wide landscape card.
+   Explicitly restore the user's selected lighter purple (#8979A5), not --purple. */
+.events-page .event-panels {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) !important;
+  width:100% !important;
+  max-width:none !important;
+  gap:24px !important;
+}
+.events-page .event-panels > #event-featured {
+  display:block !important;
+  grid-column:1 !important;
+  width:100% !important;
+  max-width:none !important;
+  min-width:0 !important;
+  min-height:0 !important;
+  height:auto !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  box-sizing:border-box !important;
+}
+.events-page #event-featured .event-card--compact {
+  display:block !important;
+  width:100% !important;
+  max-width:none !important;
+  min-width:0 !important;
+  min-height:460px !important;
+  height:auto !important;
+  aspect-ratio:2.15 / 1 !important;
+  margin:0 !important;
+  padding:38px clamp(30px,4.5vw,58px) !important;
+  box-sizing:border-box !important;
+  background:#8979A5 !important;
+  background-image:none !important;
+  border:1px solid #8979A5 !important;
+  border-radius:26px !important;
+  color:#fff !important;
+  box-shadow:0 12px 30px rgba(82,72,92,.12) !important;
+}
+.events-page #event-featured .event-card-content {
+  display:grid !important;
+  grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr) !important;
+  grid-template-rows:repeat(7,auto) !important;
+  align-content:center !important;
+  align-items:center !important;
+  justify-items:center !important;
+  gap:7px clamp(28px,4vw,52px) !important;
+  width:100% !important;
+  max-width:none !important;
+  min-width:0 !important;
+  min-height:370px !important;
+  height:100% !important;
+  text-align:center !important;
+  box-sizing:border-box !important;
+}
+.events-page #event-featured .event-card-content > .event-next-label {
+  grid-column:1 / -1 !important; grid-row:1 !important;
+  justify-self:center !important; text-align:center !important;
+}
+.events-page #event-featured .event-card-content > h2 {
+  grid-column:1 / -1 !important; grid-row:2 !important;
+  justify-self:center !important; text-align:center !important;
+}
+.events-page #event-featured .event-card-content > .event-countdown {
+  grid-column:1 !important; grid-row:3 !important;
+  justify-self:center !important;
+}
+.events-page #event-featured .event-card-content > .event-meta-row {
+  grid-column:1 !important; grid-row:4 !important;
+  display:flex !important; flex-direction:column !important;
+  align-items:center !important; justify-content:center !important;
+  gap:5px !important; width:100% !important;
+  text-align:center !important;
+}
+.events-page #event-featured .event-card-content > .special-event-activities {
+  grid-column:1 !important; grid-row:5 !important;
+  width:100% !important; max-width:100% !important;
+}
+.events-page #event-featured .event-card-content > .event-location-block {
+  grid-column:1 !important; grid-row:6 !important;
+  justify-self:center !important; width:100% !important;
+  text-align:center !important;
+}
+.events-page #event-featured .event-card-content > .special-event-description {
+  grid-column:1 !important; grid-row:7 !important;
+  width:100% !important; text-align:center !important;
+}
+.events-page #event-featured .event-card-content > .event-attending-block {
+  grid-column:2 !important; grid-row:3 / span 5 !important;
+  align-self:center !important; justify-self:stretch !important;
+  width:100% !important; max-width:none !important;
+  min-width:0 !important; margin:0 !important;
+}
+.events-page #event-featured .event-card-content p,
+.events-page #event-featured .event-card-content h2,
+.events-page #event-featured .event-card-content .eyebrow {
+  color:#fff !important;
+}
+.events-page #event-featured .event-card-content .event-countdown {
+  background:#fff !important; color:#315c3d !important;
+}
+.events-page #event-featured .event-card-content .event-address {
+  display:inline-flex !important; align-items:center !important;
+  justify-content:center !important; width:fit-content !important;
+  max-width:100% !important; padding:9px 15px !important;
+  border-radius:12px !important; background:#fff !important;
+  color:#57456F !important; text-decoration:none !important;
+}
+.events-page #event-featured .attending-kitten-gallery {
+  width:100% !important; max-width:460px !important;
+  height:260px !important; margin:0 auto !important;
+}
+.events-page #event-featured .attending-kitten-slide img {
+  height:205px !important; flex-basis:205px !important;
+}
+@media(max-width:760px) {
+  .events-page #event-featured .event-card--compact {
+    min-height:0 !important; aspect-ratio:auto !important;
+    padding:28px 20px !important;
+  }
+  .events-page #event-featured .event-card-content {
+    display:flex !important; flex-direction:column !important;
+    align-items:center !important; min-height:0 !important;
+    height:auto !important; gap:10px !important;
+  }
+  .events-page #event-featured .event-card-content > * {
+    width:100% !important; grid-column:auto !important; grid-row:auto !important;
+    text-align:center !important;
+  }
+  .events-page #event-featured .event-card-content > .event-attending-block { margin:8px auto 0 !important; }
+  .events-page #event-featured .attending-kitten-gallery { height:205px !important; }
+  .events-page #event-featured .attending-kitten-slide img { height:155px !important; flex-basis:155px !important; }
+}
+
+
+/* Upcoming Adoption Event — single-owner, direct-child landscape card layout. */
+.events-page .event-panels {display:flex!important;flex-direction:column!important;gap:24px!important;}
+.events-page .event-panels > #event-featured {display:block!important;width:100%!important;max-width:none!important;min-width:0!important;margin:0!important;padding:0!important;}
+.events-page #event-featured .event-card--compact {
+ display:block!important;width:100%!important;max-width:none!important;min-width:0!important;
+ min-height:390px!important;height:auto!important;aspect-ratio:auto!important;box-sizing:border-box!important;
+ padding:34px 40px!important;overflow:visible!important;border:1px solid #8979A5!important;
+ border-radius:28px!important;background:#8979A5!important;color:#fff!important;
+ box-shadow:0 10px 28px rgba(55,42,69,.12)!important;
+}
+.events-page #event-featured .event-feature-layout {
+ display:grid!important;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)!important;
+ align-items:center!important;gap:38px!important;width:100%!important;min-width:0!important;
+}
+.events-page #event-featured .event-feature-details {
+ display:flex!important;flex-direction:column!important;align-items:center!important;
+ justify-content:center!important;min-width:0!important;width:100%!important;text-align:center!important;
+}
+.events-page #event-featured .event-feature-details > * {max-width:100%!important;text-align:center!important;}
+.events-page #event-featured .event-feature-details .event-meta-row {
+ display:flex!important;flex-direction:column!important;align-items:center!important;
+ justify-content:center!important;gap:4px!important;width:100%!important;margin:8px 0!important;
+}
+.events-page #event-featured .event-feature-details .event-location-block {width:100%!important;text-align:center!important;}
+.events-page #event-featured .event-feature-details .event-address {
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ width:fit-content!important;max-width:100%!important;padding:9px 15px!important;
+ border-radius:12px!important;background:#fff!important;color:#57456F!important;
+ text-decoration:none!important;overflow-wrap:anywhere!important;
+}
+.events-page #event-featured .event-feature-details h2,
+.events-page #event-featured .event-feature-details p,
+.events-page #event-featured .event-feature-details .eyebrow {color:#fff!important;}
+.events-page #event-featured .event-feature-details .event-countdown {
+ margin:8px auto 12px!important;background:#fff!important;color:#315c3d!important;
+}
+.events-page #event-featured .event-attending-block {
+ display:flex!important;flex-direction:column!important;align-items:center!important;
+ justify-content:center!important;width:100%!important;min-width:0!important;margin:0!important;text-align:center!important;
+}
+.events-page #event-featured .event-attending {margin:0 0 10px!important;color:#fff!important;text-align:center!important;}
+.events-page #event-featured .attending-kitten-gallery {
+ width:100%!important;max-width:440px!important;height:270px!important;margin:0 auto!important;overflow:hidden!important;
+}
+.events-page #event-featured .attending-kitten-slide img {
+ display:block!important;width:100%!important;height:215px!important;object-fit:contain!important;object-position:center!important;
+}
+@media(max-width:760px) {
+ .events-page #event-featured .event-card--compact {min-height:0!important;padding:26px 20px!important;border-radius:24px!important;}
+ .events-page #event-featured .event-feature-layout {display:flex!important;flex-direction:column!important;align-items:center!important;gap:20px!important;}
+ .events-page #event-featured .event-feature-details,.events-page #event-featured .event-feature-details > * {width:100%!important;text-align:center!important;}
+ .events-page #event-featured .attending-kitten-gallery {height:220px!important;max-width:440px!important;}
+ .events-page #event-featured .attending-kitten-slide img {height:165px!important;}
+}
+
+/* Homepage-only restoration: keep the Upcoming Adoption Event card wide.
+   The Events tab has its own isolated .events-page layout above. */
+#events #event-featured {
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  height:auto!important;
+  margin:0!important;
+}
+#events #event-featured .event-card--compact {
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  min-height:320px!important;
+  height:auto!important;
+  aspect-ratio:auto!important;
+  box-sizing:border-box!important;
+}
+#events #event-featured .event-feature-layout {
+  display:grid!important;
+  grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)!important;
+  align-items:center!important;
+  gap:32px!important;
+  width:100%!important;
+}
+@media(max-width:760px) {
+  #events #event-featured .event-card--compact { min-height:0!important; }
+  #events #event-featured .event-feature-layout {
+    display:flex!important;
+    flex-direction:column!important;
+    gap:18px!important;
+  }
+}
+
+
+/* Homepage featured adoption card — centered details on the left, kitten gallery on the right.
+   Keep this scoped to the homepage; the Events page retains its own layout. */
+#events > #event-featured {
+  display:block !important;
+  width:100% !important;
+  max-width:1120px !important;
+  min-width:0 !important;
+  margin:0 auto !important;
+}
+#events > #event-featured .event-card--compact {
+  display:block !important;
+  width:100% !important;
+  max-width:none !important;
+  min-width:0 !important;
+  min-height:350px !important;
+  height:auto !important;
+  padding:clamp(28px,3vw,38px) clamp(24px,3.5vw,44px) !important;
+  box-sizing:border-box !important;
+  border-radius:26px !important;
+  background:var(--purple) !important;
+  color:#fff !important;
+  box-shadow:0 14px 34px rgba(48,35,62,.14) !important;
+}
+#events > #event-featured .event-feature-layout {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  align-items:center !important;
+  gap:clamp(24px,3.5vw,42px) !important;
+  width:100% !important;
+  min-width:0 !important;
+}
+#events > #event-featured .event-feature-layout:not(:has(> .event-attending-block)) {
+  grid-template-columns:minmax(0,1fr) !important;
+}
+#events > #event-featured .event-feature-details {
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:100% !important;
+  min-width:0 !important;
+  text-align:center !important;
+}
+#events > #event-featured .event-feature-details > * {
+  max-width:100% !important;
+  text-align:center !important;
+}
+#events > #event-featured .event-feature-details .event-next-label {
+  margin:0 0 5px !important;
+  color:#e8e1ef !important;
+  font-size:11px !important;
+  font-weight:700 !important;
+  letter-spacing:.15em !important;
+  text-transform:uppercase !important;
+}
+#events > #event-featured .event-feature-details h2 {
+  margin:0 0 10px !important;
+  color:#fff !important;
+  font-size:clamp(28px,2.7vw,36px) !important;
+  line-height:1.15 !important;
+  text-align:center !important;
+}
+#events > #event-featured .event-feature-details p {
+  color:#f4f0f7 !important;
+  text-align:center !important;
+}
+#events > #event-featured .event-feature-details .event-countdown {
+  margin:5px auto 12px !important;
+  color:#fff !important;
+  font-weight:700 !important;
+}
+#events > #event-featured .event-feature-details .event-meta-row {
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:3px !important;
+  width:100% !important;
+  margin:8px 0 !important;
+  text-align:center !important;
+}
+#events > #event-featured .event-feature-details .event-date,
+#events > #event-featured .event-feature-details .event-time,
+#events > #event-featured .event-feature-details .event-location-name {
+  margin:2px 0 !important;
+  font-size:17px !important;
+  line-height:1.45 !important;
+}
+#events > #event-featured .event-feature-details .event-location-block {
+  width:100% !important;
+  margin-top:5px !important;
+  text-align:center !important;
+}
+#events > #event-featured .event-feature-details .event-address {
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:fit-content !important;
+  max-width:100% !important;
+  margin:7px auto 0 !important;
+  padding:9px 15px !important;
+  border:1px solid rgba(255,255,255,.4) !important;
+  border-radius:12px !important;
+  background:#f5f7ef !important;
+  color:#55734f !important;
+  font-weight:700 !important;
+  text-align:center !important;
+  text-decoration:none !important;
+  overflow-wrap:anywhere !important;
+}
+#events > #event-featured .event-feature-details .event-address:hover,
+#events > #event-featured .event-feature-details .event-address:focus-visible {
+  background:#e9f0e2 !important;
+  color:#3f633d !important;
+}
+#events > #event-featured .event-attending-block {
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:100% !important;
+  min-width:0 !important;
+  margin:0 !important;
+  text-align:center !important;
+}
+#events > #event-featured .event-attending {
+  margin:0 0 12px !important;
+  color:#fff !important;
+  font-family:"Playfair Display",Georgia,serif !important;
+  font-size:clamp(22px,2.2vw,28px) !important;
+  font-weight:600 !important;
+  line-height:1.2 !important;
+  text-align:center !important;
+}
+#events > #event-featured .attending-kitten-gallery {
+  position:relative !important;
+  width:100% !important;
+  max-width:440px !important;
+  height:260px !important;
+  margin:0 auto !important;
+  padding:7px !important;
+  border:1px solid rgba(255,255,255,.24) !important;
+  border-radius:16px !important;
+  background:rgba(255,255,255,.08) !important;
+  overflow:hidden !important;
+}
+#events > #event-featured .attending-kitten-slide img {
+  display:block !important;
+  width:100% !important;
+  height:214px !important;
+  object-fit:contain !important;
+  object-position:center !important;
+  border-radius:9px !important;
+}
+#events > #event-featured .attending-kitten-slide figcaption {
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  height:34px !important;
+  padding:3px 8px !important;
+}
+#events > #event-featured .attending-kitten-name {
+  display:inline-block !important;
+  padding:4px 14px !important;
+  border-radius:999px !important;
+  background:rgba(255,255,255,.13) !important;
+  color:#fff !important;
+  font-size:13px !important;
+  font-weight:700 !important;
+  text-decoration:none !important;
+  transition:background-color .2s ease,color .2s ease,transform .2s ease,box-shadow .2s ease !important;
+}
+#events > #event-featured .attending-kitten-name:hover,
+#events > #event-featured .attending-kitten-name:focus-visible {
+  background:rgba(255,255,255,.32) !important;
+  color:#fff !important;
+  transform:translateY(-3px) scale(1.04) !important;
+  box-shadow:0 5px 12px rgba(40,28,50,.16) !important;
+}
+@media(max-width:760px) {
+  #events > #event-featured .event-card--compact {
+    min-height:0 !important;
+    padding:26px 20px !important;
+    border-radius:23px !important;
+  }
+  #events > #event-featured .event-feature-layout {
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    gap:22px !important;
+  }
+  #events > #event-featured .event-feature-details,
+  #events > #event-featured .event-feature-details > * {
+    width:100% !important;
+    text-align:center !important;
+  }
+  #events > #event-featured .attending-kitten-gallery {
+    height:235px !important;
+    max-width:440px !important;
+  }
+  #events > #event-featured .attending-kitten-slide img {
+    height:189px !important;
+  }
+}
+
+
+/* Final homepage layout correction: the event section itself must not create
+   two columns. The featured card owns its own left/right two-column layout. */
+#events.event.section {
+  display:block !important;
+  width:100% !important;
+  max-width:1120px !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+#events.event.section > #event-featured,
+#events.event.section > #home-special-event,
+#events.event.section > .event-page-link {
+  width:100% !important;
+  max-width:none !important;
+  min-width:0 !important;
+}
+#events.event.section > #event-featured {
+  margin:0 auto !important;
+}
+@media (max-width:760px) {
+  #events.event.section { display:block !important; }
+}
+
+
+/* Homepage adoption card: match the JavaScript's feature layout and the selected lavender-purple. */
+#events > #event-featured .event-card--compact {
+  background:#8979A5 !important;
+  border-color:#8979A5 !important;
+}
+#events > #event-featured .event-feature-layout {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  align-items:center !important;
+  gap:clamp(24px,3.5vw,42px) !important;
+  width:100% !important;
+}
+#events > #event-featured .event-feature-details {
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:100% !important;
+  min-width:0 !important;
+  text-align:center !important;
+}
+#events > #event-featured .event-feature-details > * {
+  max-width:100% !important;
+  text-align:center !important;
+}
+#events > #event-featured .event-countdown {
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:fit-content !important;
+  max-width:100% !important;
+  margin:6px auto 12px !important;
+  padding:7px 13px !important;
+  border-radius:999px !important;
+  background:#f0f3e9 !important;
+  color:#536b58 !important;
+  font-weight:800 !important;
+  line-height:1.35 !important;
+}
+#events > #event-featured .event-countdown[hidden] {
+  display:none !important;
+}
+@media(max-width:760px) {
+  #events > #event-featured .event-feature-layout {
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    gap:22px !important;
+  }
+  #events > #event-featured .event-feature-details,
+  #events > #event-featured .event-feature-details > * {
+    width:100% !important;
+    text-align:center !important;
+  }
+}
+
+
+/* 2026-11-15: definitive desktop homepage adoption-card layout.
+   Keep this scoped to the homepage featured card; the Events page is unchanged. */
+@media (min-width: 761px) {
+  #events.event.section > #event-featured {
+    display:block !important;
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    margin:0 !important;
+  }
+  #events.event.section > #event-featured > .event-card--compact {
+    display:block !important;
+    box-sizing:border-box !important;
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    min-height:390px !important;
+    height:auto !important;
+    padding:34px 38px !important;
+    border-radius:18px !important;
+    background:#8979A5 !important;
+    overflow:visible !important;
+  }
+  #events.event.section > #event-featured .event-feature-layout {
+    display:grid !important;
+    grid-template-columns:minmax(0, 1fr) minmax(0, 1fr) !important;
+    grid-template-rows:1fr !important;
+    align-items:center !important;
+    justify-items:stretch !important;
+    column-gap:38px !important;
+    row-gap:0 !important;
+    width:100% !important;
+    min-height:320px !important;
+    height:auto !important;
+    margin:0 !important;
+  }
+  #events.event.section > #event-featured .event-feature-details {
+    grid-column:1 !important;
+    grid-row:1 !important;
+    align-self:center !important;
+    justify-self:stretch !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    justify-content:center !important;
+    width:100% !important;
+    min-width:0 !important;
+    margin:0 !important;
+    text-align:center !important;
+  }
+  #events.event.section > #event-featured .event-attending-block {
+    grid-column:2 !important;
+    grid-row:1 !important;
+    align-self:center !important;
+    justify-self:stretch !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    justify-content:center !important;
+    width:100% !important;
+    min-width:0 !important;
+    margin:0 !important;
+    text-align:center !important;
+  }
+  #events.event.section > #event-featured .attending-kitten-gallery {
+    width:100% !important;
+    max-width:440px !important;
+    height:260px !important;
+    margin:0 auto !important;
+  }
+  #events.event.section > #event-featured .event-feature-details .event-countdown {
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    width:max-content !important;
+    max-width:100% !important;
+    min-height:34px !important;
+    margin:7px auto 13px !important;
+    padding:7px 16px !important;
+    border:1px solid #e2e9dc !important;
+    border-radius:999px !important;
+    background:#fff !important;
+    color:#536b58 !important;
+    font-size:15px !important;
+    font-weight:800 !important;
+    line-height:1.3 !important;
+    text-align:center !important;
+    visibility:visible !important;
+  }
+  #events.event.section > #event-featured .event-feature-details .event-countdown[hidden] {
+    display:inline-flex !important;
+  }
+}
+@media (max-width:760px) {
+  #events.event.section > #event-featured > .event-card--compact {
+    width:100% !important;
+    min-height:0 !important;
+    height:auto !important;
+    border-radius:18px !important;
+  }
+  #events.event.section > #event-featured .event-feature-layout {
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    gap:22px !important;
+    min-height:0 !important;
+  }
+  #events.event.section > #event-featured .event-feature-details,
+  #events.event.section > #event-featured .event-attending-block {
+    width:100% !important;
+    min-width:0 !important;
+  }
+  #events.event.section > #event-featured .event-feature-details .event-countdown {
+    display:inline-flex !important;
+    background:#fff !important;
+    color:#536b58 !important;
+  }
+  #events.event.section > #event-featured .event-feature-details .event-countdown[hidden] {
+    display:inline-flex !important;
+  }
+}
+
+
+/* Rectangle Version One — keep attendee names clear of the photo */
+@media (min-width: 761px) {
+  #events.event.section > #event-featured .attending-kitten-slide img {
+    height: 202px !important;
+  }
+  #events.event.section > #event-featured .attending-kitten-slide figcaption {
+    height: 42px !important;
+    padding: 10px 8px 2px !important;
+    align-items: flex-end !important;
+  }
+  #events.event.section > #event-featured .attending-kitten-name:hover,
+  #events.event.section > #event-featured .attending-kitten-name:focus-visible {
+    transform: none !important;
+  }
+}
+
+
+/* Rectangle Version Two — soften the divider accents without changing the layout */
+#events.event.section > #event-featured .event-feature-details .event-meta-row {
+  border-top-color: #cdbfe0 !important;
+  border-bottom-color: #cdbfe0 !important;
+}
+#events.event.section > #event-featured .event-attending::before,
+#events.event.section > #event-featured .event-attending::after {
+  background: #cdbfe0 !important;
+}
+
+
+/* Events tab only — landscape adoption card; homepage card remains untouched. */
+@media (min-width: 761px) {
+  .events-page #event-featured .event-card--compact {
+    width: 100% !important;
+    min-height: 430px !important;
+    aspect-ratio: 2.15 / 1 !important;
+    height: auto !important;
+    box-sizing: border-box !important;
+  }
+  .events-page #event-featured .event-feature-layout {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr) !important;
+    grid-template-rows: minmax(0, 1fr) !important;
+    grid-template-areas: "event-details event-attending" !important;
+    align-items: center !important;
+    justify-items: stretch !important;
+    gap: clamp(28px, 4vw, 52px) !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 350px !important;
+  }
+  .events-page #event-featured .event-feature-details {
+    grid-area: event-details !important;
+    align-self: center !important;
+    justify-self: stretch !important;
+    min-width: 0 !important;
+  }
+  .events-page #event-featured .event-attending-block {
+    grid-area: event-attending !important;
+    align-self: center !important;
+    justify-self: stretch !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+}
+@media (max-width: 760px) {
+  .events-page #event-featured .event-card--compact {
+    aspect-ratio: auto !important;
+    min-height: 0 !important;
+  }
+  .events-page #event-featured .event-feature-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 20px !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+  .events-page #event-featured .event-feature-details,
+  .events-page #event-featured .event-attending-block {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+}
+
+
+/* Events tab only — tighten card spacing and match Rectangle Version Two details.
+   Every selector is scoped to the Events page; homepage styles remain untouched. */
+@media (min-width: 761px) {
+  .events-page #event-featured .event-card--compact {
+    padding-top: 22px !important;
+    padding-bottom: 22px !important;
+  }
+  .events-page #event-featured .event-feature-layout {
+    min-height: 0 !important;
+  }
+}
+.events-page #event-featured .event-feature-details .event-address {
+  color: #315c3d !important;
+  font-family: inherit !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
+}
+.events-page #event-featured .event-attending,
+.events-page #event-featured .event-attending strong {
+  color: #fff !important;
+  font-family: "Playfair Display", serif !important;
+  font-size: clamp(28px, 2.7vw, 36px) !important;
+  font-weight: 600 !important;
+  line-height: 1.15 !important;
+}
+.events-page #event-featured .event-feature-details .event-meta-row {
+  border-top-color: #cdbfe0 !important;
+  border-bottom-color: #cdbfe0 !important;
+}
+.events-page #event-featured .event-attending::before,
+.events-page #event-featured .event-attending::after {
+  background: #cdbfe0 !important;
+}
+
+
+/* Events tab only — tighten the featured card and force readable map-link text. */
+.events-page #event-featured .event-card--compact {
+  min-height: 0 !important;
+  height: auto !important;
+  aspect-ratio: auto !important;
+  padding: 18px 40px !important;
+}
+.events-page #event-featured .event-feature-layout {
+  min-height: 0 !important;
+}
+.events-page #event-featured .event-feature-details .event-location-block > a.event-address,
+.events-page #event-featured .event-feature-details a.event-address {
+  color: #315c3d !important;
+  -webkit-text-fill-color: #315c3d !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
+}
+.events-page #event-featured {
+  scroll-margin-top: 110px;
+}
+
+
+/* Homepage adoption box only — coordinate kitten labels and photo frame with Events.
+   Scoped to the homepage's #events section; Events tab selectors are not affected. */
+#events.event.section > #event-featured .attending-kitten-gallery {
+  padding: 9px !important;
+  border: 1px solid rgba(255,255,255,.42) !important;
+  border-radius: 16px !important;
+  background: #e8e1ef !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 8px 22px rgba(35,23,48,.12) !important;
+}
+#events.event.section > #event-featured .attending-kitten-name {
+  background: rgba(44,32,61,.66) !important;
+  border: 1px solid rgba(255,255,255,.3) !important;
+  color: #fff !important;
+}
+#events.event.section > #event-featured .attending-kitten-name:hover,
+#events.event.section > #event-featured .attending-kitten-name:focus-visible {
+  background: rgba(44,32,61,.88) !important;
+  color: #fff !important;
+}
+#events.event.section > #event-featured {
+  scroll-margin-top: 110px;
+}
