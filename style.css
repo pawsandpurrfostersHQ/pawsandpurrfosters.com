@@ -4605,3 +4605,39 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
     min-width: 0 !important;
   }
 }
+
+
+/* Events tab only — tighten card spacing and match Rectangle Version Two details.
+   Every selector is scoped to the Events page; homepage styles remain untouched. */
+@media (min-width: 761px) {
+  .events-page #event-featured .event-card--compact {
+    padding-top: 22px !important;
+    padding-bottom: 22px !important;
+  }
+  .events-page #event-featured .event-feature-layout {
+    min-height: 0 !important;
+  }
+}
+.events-page #event-featured .event-feature-details .event-address {
+  color: #315c3d !important;
+  font-family: inherit !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
+}
+.events-page #event-featured .event-attending,
+.events-page #event-featured .event-attending strong {
+  color: #fff !important;
+  font-family: "Playfair Display", serif !important;
+  font-size: clamp(28px, 2.7vw, 36px) !important;
+  font-weight: 600 !important;
+  line-height: 1.15 !important;
+}
+.events-page #event-featured .event-feature-details .event-meta-row {
+  border-top-color: #cdbfe0 !important;
+  border-bottom-color: #cdbfe0 !important;
+}
+.events-page #event-featured .event-attending::before,
+.events-page #event-featured .event-attending::after {
+  background: #cdbfe0 !important;
+}
