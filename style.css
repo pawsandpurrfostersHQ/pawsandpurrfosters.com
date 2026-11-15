@@ -4520,3 +4520,20 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
     display:inline-flex !important;
   }
 }
+
+
+/* Rectangle Version One — keep attendee names clear of the photo */
+@media (min-width: 761px) {
+  #events.event.section > #event-featured .attending-kitten-slide img {
+    height: 202px !important;
+  }
+  #events.event.section > #event-featured .attending-kitten-slide figcaption {
+    height: 42px !important;
+    padding: 10px 8px 2px !important;
+    align-items: flex-end !important;
+  }
+  #events.event.section > #event-featured .attending-kitten-name:hover,
+  #events.event.section > #event-featured .attending-kitten-name:focus-visible {
+    transform: none !important;
+  }
+}
