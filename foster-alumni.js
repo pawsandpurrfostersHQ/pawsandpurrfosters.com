@@ -230,6 +230,7 @@ function renderFosterAlumni(kittenList, today = new Date()) {
     groups.get(litter).push(kitten);
   });
 
+  const hasDiabloFinnPair = groups.has(5) && groups.has(4);
   let eleventhLitterRendered = false;
   container.innerHTML = [...groups.entries()].map(([litter, kittens]) => {
     if (litter === 12) {
@@ -241,6 +242,13 @@ function renderFosterAlumni(kittenList, today = new Date()) {
       const litterTen = renderAlumniLitter(litter, kittens, alumniIds, today, false, raymondNotice, "matilda");
       return `${eleventhLitterRendered ? "" : renderTemporaryAlumniLitter(11, eleventhLitterNotice)}${litterTen}`;
     }
+    if (hasDiabloFinnPair && litter === 5) {
+      return `<div class="alumni-litter-pair">
+        ${renderAlumniLitter(5, groups.get(5), alumniIds, today, true)}
+        ${renderAlumniLitter(4, groups.get(4), alumniIds, today, true)}
+      </div>`;
+    }
+    if (hasDiabloFinnPair && litter === 4) return "";
     return renderAlumniLitter(litter, kittens, alumniIds, today);
   }).join("");
 
