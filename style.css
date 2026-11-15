@@ -4110,3 +4110,85 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
     gap:18px!important;
   }
 }
+
+
+/* Homepage-only: restore the wide event card with details left and kitten gallery right.
+   The homepage event section is unique; the Events page and Foster Alumni are not targeted. */
+main > .event.section#events > #event-featured .event-card--compact {
+  width:100% !important;
+  max-width:none !important;
+  min-height:330px !important;
+  height:auto !important;
+  padding:clamp(24px,3vw,38px) !important;
+  box-sizing:border-box !important;
+}
+main > .event.section#events > #event-featured .event-feature-layout {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(320px,.95fr) !important;
+  align-items:center !important;
+  gap:clamp(26px,4vw,52px) !important;
+  width:100% !important;
+  min-width:0 !important;
+}
+main > .event.section#events > #event-featured .event-feature-details {
+  grid-column:1 !important;
+  grid-row:1 !important;
+  min-width:0 !important;
+  text-align:left !important;
+}
+main > .event.section#events > #event-featured .event-feature-details > .eyebrow,
+main > .event.section#events > #event-featured .event-feature-details > h2,
+main > .event.section#events > #event-featured .event-feature-details > p {
+  text-align:left !important;
+}
+main > .event.section#events > #event-featured .event-feature-details > h2 {
+  margin:4px 0 16px !important;
+}
+main > .event.section#events > #event-featured .event-feature-details .event-address {
+  margin-left:0 !important;
+}
+main > .event.section#events > #event-featured .event-attending-block {
+  grid-column:2 !important;
+  grid-row:1 !important;
+  align-self:center !important;
+  justify-self:stretch !important;
+  width:100% !important;
+  min-width:0 !important;
+  margin:0 !important;
+}
+main > .event.section#events > #event-featured .event-attending {
+  justify-content:center !important;
+  margin:0 auto 12px !important;
+  text-align:center !important;
+}
+main > .event.section#events > #event-featured .attending-kitten-gallery {
+  width:100% !important;
+  max-width:100% !important;
+  margin:0 auto !important;
+}
+@media(max-width:760px) {
+  main > .event.section#events > #event-featured .event-card--compact {
+    min-height:0 !important;
+    padding:22px 18px !important;
+  }
+  main > .event.section#events > #event-featured .event-feature-layout {
+    grid-template-columns:minmax(0,1fr) !important;
+    gap:20px !important;
+  }
+  main > .event.section#events > #event-featured .event-feature-details,
+  main > .event.section#events > #event-featured .event-attending-block {
+    grid-column:1 !important;
+    grid-row:auto !important;
+    width:100% !important;
+  }
+  main > .event.section#events > #event-featured .event-feature-details,
+  main > .event.section#events > #event-featured .event-feature-details > .eyebrow,
+  main > .event.section#events > #event-featured .event-feature-details > h2,
+  main > .event.section#events > #event-featured .event-feature-details > p {
+    text-align:center !important;
+  }
+  main > .event.section#events > #event-featured .event-feature-details .event-address {
+    margin-left:auto !important;
+    margin-right:auto !important;
+  }
+}
