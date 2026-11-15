@@ -192,7 +192,7 @@ function renderKittenCards() {
       ? `<img src="${escapeHTML(kitten.image)}" alt="${escapeHTML(kitten.name)}" loading="lazy">`
       : `<div class="photo-placeholder card-photo"><span>Photo coming soon</span></div>`;
     const profileAction = kitten.profileUrl
-      ? `<a href="${escapeHTML(`${kitten.profileUrl}${kitten.profileUrl.includes("?") ? "&" : "?"}from=home`)}" class="card-link">Meet ${escapeHTML(kitten.name)} →</a>`
+      ? `<a href="${escapeHTML(`${kitten.profileUrl}${kitten.profileUrl.includes("?") ? "&" : "?"}from=home&back=${encodeURIComponent(window.location.href)}`)}" class="card-link">Meet ${escapeHTML(kitten.name)} →</a>`
       : `<span class="card-link profile-coming-soon">Profile coming soon</span>`;
     const status = kitten.adoptionStatus || kitten.status || "Available";
     const returnedStatusClass = status === "Returned — Available" ? " status-returned" : "";
@@ -264,11 +264,16 @@ window.renderPawsAttendeeGallery = function(names) {
   const kittens = Array.isArray(window.PAWS_KITTENS) ? window.PAWS_KITTENS : [];
   const records = (names || []).map(name => kittens.find(k => k.name === name)).filter(Boolean);
   if (!records.length) return "";
-  const prefix = document.querySelector(".events-page") ? "../" : "";
+  const onEventsPage = Boolean(document.querySelector(".events-page"));
+  const prefix = onEventsPage ? "../" : "";
+  const sourcePage = onEventsPage ? "events" : "home";
+  const returnUrl = new URL(window.location.href);
+  returnUrl.hash = "event-featured";
+  const backTarget = returnUrl.href;
   const slides = records.map((kitten, index) => {
     const photo = kitten.image || (Array.isArray(kitten.photos) ? kitten.photos[0] : "");
     if (!photo) return "";
-    const profile = kitten.profileUrl ? prefix + kitten.profileUrl : "#";
+    const profile = kitten.profileUrl ? prefix + kitten.profileUrl + (kitten.profileUrl.includes("?") ? "&" : "?") + "from=" + sourcePage + "&back=" + encodeURIComponent(backTarget) : "#";
     return `<figure class="attending-kitten-slide${index === 0 ? " is-active" : ""}">
       <img src="${escapeHTML(prefix + photo)}" alt="${escapeHTML(kitten.name)}" loading="lazy">
       <figcaption><a class="attending-kitten-name" href="${escapeHTML(profile)}">${escapeHTML(kitten.name)}</a></figcaption>
@@ -297,6 +302,7 @@ window.initPawsAttendeeGalleries = function(root = document) {
 };
 
 function renderEvents() {
+  if (document.querySelector(".events-page")) return; // events-enhancements.js is the sole Events-page card renderer.
   const data = window.PAWS_EVENT_DATA;
   if (!data) return;
   const featured = document.querySelector("#event-featured");
@@ -326,12 +332,51 @@ function renderEvents() {
       : { date:"Coming Soon", time:"Coming Soon", location:"Coming Soon", address:"Coming Soon" };
     const addressMarkup = currentEvent ? mapAnchor(event.address,event.mapsUrl) : '<span class="event-address">Address and map link coming soon</span>';
     featured.innerHTML = `<article class="event-card event-card--compact${currentEvent ? "" : " event-coming-soon"}">
-      <div class="event-card-content"><p class="eyebrow">Where to Find Us</p><h2>Upcoming Adoption Event</h2>
-      <p class="event-date"><strong>${escapeHTML(value.date)}</strong></p><p class="event-time"><strong>${escapeHTML(value.time)}</strong></p>
-      <p class="event-location-name"><strong>${escapeHTML(value.location)}</strong></p>
-      ${addressMarkup}${attendingMarkup}</div>
+      <div class="event-feature-layout">
+        <div class="event-feature-details">
+          <p class="eyebrow">Where to Find Us</p>
+          <h2>Upcoming Adoption Event</h2>
+          <p class="event-countdown" data-date="${escapeHTML(event.dateISO || "")}" data-time="${escapeHTML(event.startTime || "")}"></p>
+          <div class="event-meta-row">
+            <p class="event-date"><strong>${escapeHTML(value.date)}</strong></p>
+            <p class="event-time"><strong>${escapeHTML(value.time)}</strong></p>
+          </div>
+          <div class="event-location-block">
+            <p class="event-location-name"><strong>${escapeHTML(value.location)}</strong></p>
+            ${addressMarkup}
+          </div>
+        </div>
+        ${attendingMarkup}
+      </div>
     </article>`;
     featured.hidden = false;
+    if (!onEventsPage && window.location.hash === "#event-featured") {
+      window.requestAnimationFrame(() => {
+        featured.scrollIntoView({ behavior: "auto", block: "start" });
+      });
+    }
+    const countdown = featured.querySelector(".event-countdown");
+    if (countdown) {
+      const dateText = countdown.dataset.date;
+      const timeText = countdown.dataset.time;
+      const startAt = dateText && timeText ? new Date(`${dateText}T${timeText}:00`) : null;
+      const refreshCountdown = () => {
+        if (!startAt || Number.isNaN(startAt.getTime()) || startAt <= new Date()) {
+          countdown.textContent = "Next adoption event details coming soon";
+          countdown.hidden = false;
+          return;
+        }
+        const remaining = startAt.getTime() - Date.now();
+        const hours = Math.ceil(remaining / 3600000);
+        countdown.textContent = hours < 1 ? "Starts in less than an hour" : hours < 24
+          ? `Starts in ${hours} ${hours === 1 ? "hour" : "hours"}`
+          : `Starts in ${Math.ceil(hours / 24)} ${Math.ceil(hours / 24) === 1 ? "day" : "days"}`;
+        countdown.hidden = false;
+      };
+      refreshCountdown();
+      if (window.__pawsHomeEventCountdownTimer) clearInterval(window.__pawsHomeEventCountdownTimer);
+      window.__pawsHomeEventCountdownTimer = window.setInterval(refreshCountdown, 60000);
+    }
   }
 
   const schedule = document.querySelector("#regular-schedule");
