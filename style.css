@@ -4,7 +4,7 @@
   --sage: #9caf91;
   --sage-dark: #536b58;
   --sage-light: #e8eee4;
-  --purple: #75628d;
+  --purple: #57456f;
   --purple-dark: #57456f;
   --purple-light: #eee9f4;
   --cream: #faf9f5;
@@ -3158,3 +3158,6 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
   .events-page #event-featured .event-attending,
   .events-page .event-card-list .event-attending { font-size:18px !important; }
 }
+
+/* Brand purple confirmed by user: RGB(87, 69, 111) / #57456f. */
+:root { --purple: #57456f; }
