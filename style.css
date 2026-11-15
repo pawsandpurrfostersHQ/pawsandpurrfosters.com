@@ -2445,3 +2445,37 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
  .events-page .special-event-entry .attending-kitten-gallery { height:210px; }
  .events-page .special-event-entry .attending-kitten-slide img { height:170px; }
 }
+
+
+/* Diablo and Finn keep the same standard card dimensions, aligned to card columns one and three. */
+.alumni-litter-pair{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:22px;row-gap:12px;align-items:start}
+.alumni-litter-pair>.alumni-litter--paired{display:contents}
+.alumni-litter-pair>.alumni-litter--paired:first-child .alumni-litter-heading{grid-column:1;grid-row:1}
+.alumni-litter-pair>.alumni-litter--paired:last-child .alumni-litter-heading{grid-column:3;grid-row:1}
+.alumni-litter-pair>.alumni-litter--paired .alumni-carousel{display:contents}
+.alumni-litter-pair>.alumni-litter--paired:first-child .alumni-cards{grid-column:1;grid-row:2}
+.alumni-litter-pair>.alumni-litter--paired:last-child .alumni-cards{grid-column:3;grid-row:2}
+.alumni-litter-pair .alumni-cards{display:block;width:100%;min-width:0;overflow:visible;padding:0}
+.alumni-litter-pair .alumni-card{display:flex;width:100%;min-width:0;max-width:none;flex:none;margin:0}
+@media(max-width:760px){.alumni-litter-pair{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:14px}.alumni-litter-pair>.alumni-litter--paired:first-child .alumni-litter-heading,.alumni-litter-pair>.alumni-litter--paired:first-child .alumni-cards{grid-column:1}.alumni-litter-pair>.alumni-litter--paired:last-child .alumni-litter-heading,.alumni-litter-pair>.alumni-litter--paired:last-child .alumni-cards{grid-column:2}.alumni-litter-pair .alumni-card{width:100%}}
+/* Center the event label and remove paw decorations around the heading. */
+#event-featured .event-card-content>.eyebrow,.events-page .special-event-entry>.eyebrow{grid-column:1/-1;justify-self:center;width:100%;text-align:center}
+#event-featured .event-card-content>.eyebrow:before,#event-featured .event-card-content>.eyebrow:after,.events-page .special-event-entry>.eyebrow:before,.events-page .special-event-entry>.eyebrow:after{content:none!important}
+/* Attendee carousel: larger full-photo frame and clickable name label. */
+.attending-kitten-gallery{width:min(100%,460px);height:260px;margin:8px auto 0;padding:7px;border:1px solid rgba(255,255,255,.28);border-radius:14px;background:transparent}
+.attending-kitten-slide img{height:214px;padding:0;border-radius:9px;object-fit:contain}
+.attending-kitten-slide figcaption{height:34px;padding:4px 8px;display:flex;align-items:center;justify-content:center}
+.attending-kitten-name{display:inline-block;padding:4px 12px;border-radius:999px;background:rgba(91,72,117,.24);color:inherit;text-decoration:none;transition:background-color .2s ease,color .2s ease,transform .2s ease}
+.attending-kitten-name:hover,.attending-kitten-name:focus-visible{background:rgba(91,72,117,.52);color:#fff;transform:translateY(-1px);text-decoration:none}
+#event-featured .event-card-content,.events-page #event-featured .event-card-content{grid-template-columns:minmax(0,1fr) minmax(270px,.95fr)!important;text-align:center}
+#event-featured .event-card-content>.eyebrow,#event-featured .event-card-content>h2,.events-page #event-featured .event-card-content>.eyebrow,.events-page #event-featured .event-card-content>h2{grid-column:1/-1}
+#event-featured .event-attending-block,.events-page #event-featured .event-attending-block{grid-column:2;grid-row:3/span 6;align-self:center;min-width:0}
+#event-featured .event-attending-names,.events-page #event-featured .event-attending-names{display:none!important}
+/* Events-page special panel uses the same long horizontal layout as the homepage. */
+.events-page .event-panels .special-event-panel{grid-column:1/-1;width:100%!important;max-width:none!important;align-self:stretch;padding:22px clamp(22px,3vw,34px)!important}
+.events-page .special-event-entry{display:grid;grid-template-columns:minmax(0,1fr) minmax(270px,.95fr);align-items:center;gap:8px 28px;text-align:center}
+.events-page .special-event-entry>.eyebrow,.events-page .special-event-entry>h2,.events-page .special-event-entry>.special-event-date,.events-page .special-event-entry>.special-event-activities,.events-page .special-event-entry>p:last-child{grid-column:1/-1}
+.events-page .special-event-entry .event-attending-block{grid-column:2;grid-row:3/span 6;align-self:center;min-width:0}
+.events-page .special-event-entry .event-attending-names{display:none!important}
+.events-page .special-event-entry .attending-kitten-gallery{width:min(100%,460px);height:260px}
+@media(max-width:760px){.attending-kitten-gallery{height:220px}.attending-kitten-slide img{height:174px}#event-featured .event-card-content,.events-page #event-featured .event-card-content,.events-page .special-event-entry{grid-template-columns:minmax(0,1fr)!important}#event-featured .event-attending-block,.events-page #event-featured .event-attending-block,.events-page .special-event-entry .event-attending-block{grid-column:1;grid-row:auto}.events-page .special-event-entry>.special-event-activities,.events-page .special-event-entry>p:last-child{grid-column:1}}
