@@ -3161,3 +3161,26 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 
 /* Brand purple confirmed by user: RGB(87, 69, 111) / #57456f. */
 :root { --purple: #57456f; }
+
+
+/* Next event label and single-column event-card geometry. */
+#events #event-featured .event-card--compact,.events-page #event-featured .event-card--compact,#events #home-special-event .event-card--compact,.events-page .event-card-list .event-card--compact {
+ display:block !important;grid-template-columns:minmax(0,1fr) !important;grid-template-rows:auto !important;width:100% !important;height:auto !important;min-height:0 !important;
+}
+#events #event-featured .event-card-content,.events-page #event-featured .event-card-content,#events #home-special-event .event-card-content,.events-page .event-card-list .event-card-content {
+ display:flex !important;flex-direction:column !important;align-items:center !important;width:100% !important;max-width:none !important;min-width:0 !important;text-align:center !important;
+}
+#events #event-featured .event-next-label,.events-page #event-featured .event-next-label,#events #home-special-event .event-next-label {
+ display:inline-flex !important;align-items:center;justify-content:center;width:auto !important;margin:0 auto 9px !important;padding:6px 14px;border-radius:999px;background:#ded4e9;color:#57456f !important;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:800;letter-spacing:.13em;line-height:1.2;text-transform:uppercase;
+}
+#events #event-featured .event-card-content > h2,.events-page #event-featured .event-card-content > h2,#events #home-special-event .event-card-content > h2 {width:100%;text-align:center;}
+#events #event-featured .event-attending-block,.events-page #event-featured .event-attending-block,#events #home-special-event .event-attending-block {width:100% !important;max-width:620px;margin:16px auto 0 !important;}
+#events #event-featured .attending-kitten-gallery,.events-page #event-featured .attending-kitten-gallery,#events #home-special-event .attending-kitten-gallery {width:min(100%,390px) !important;height:250px !important;margin:0 auto !important;}
+#events #event-featured .attending-kitten-slide img,.events-page #event-featured .attending-kitten-slide img,#events #home-special-event .attending-kitten-slide img {height:195px !important;flex-basis:195px !important;}
+#events #event-featured .event-card-content > .event-meta-row,.events-page #event-featured .event-card-content > .event-meta-row,#events #event-featured .event-card-content > .event-location-block,.events-page #event-featured .event-card-content > .event-location-block {width:min(100%,620px) !important;}
+#events #event-featured .event-card-content::before,#events #event-featured .event-card-content::after,.events-page #event-featured .event-card-content::before,.events-page #event-featured .event-card-content::after {content:none !important;}
+.events-page .event-card-list .event-card-content {display:flex !important;flex-direction:column !important;align-items:center !important;}
+@media(max-width:760px) {
+ #events #event-featured .attending-kitten-gallery,.events-page #event-featured .attending-kitten-gallery,#events #home-special-event .attending-kitten-gallery {height:220px !important;}
+ #events #event-featured .attending-kitten-slide img,.events-page #event-featured .attending-kitten-slide img,#events #home-special-event .attending-kitten-slide img {height:165px !important;flex-basis:165px !important;}
+}
