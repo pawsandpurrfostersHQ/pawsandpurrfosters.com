@@ -57,7 +57,7 @@ function init(){
   const item=record.item,changed=item.status==="canceled"||item.status==="rescheduled",attending=kittensFor(item);let html="";
   const eventHeading = (eventItem, kind) => { const title=String(eventItem.title||"").trim(); if(kind==="featured"&&(!title||title==="Where to Find Us"||/kitty adoption.*yoga/i.test(title))) return "Kitten Adoption Event"; return title||(kind==="featured"?"Kitten Adoption Event":"Special Adoption Event"); };
   if(missed){html+='<h2>You missed us today!</h2><p class="event-missed-intro">Our adoption event has wrapped up for the day. Here is what is coming up next:</p>';const next=missed.next;
-   if(next){const n=next.item;html+='<div class="event-next-preview"><p class="eyebrow">Up next</p><h3>'+esc(eventHeading(n,next.kind))+'</h3><p class="event-date"><strong>'+esc(n.date||"Date coming soon")+'</strong></p>'+renderActivity(n,missed.next.start,n.status==="canceled"||n.status==="rescheduled")+(n.description?'<p>'+esc(n.description)+'</p>':"")+'<p class="event-location-name"><strong>'+esc(n.location||"Location details to be announced")+'</strong></p>'+map(n.address,n.mapsUrl)+(kittensFor(n).length?'<p class="event-attending"><strong>Kittens attending:</strong><br>'+kittensFor(n).map(esc).join(", ")+'</p>':"")+'</div>';}
+   if(next){const n=next.item;html+='<div class="event-next-preview"><p class="eyebrow">Up next</p><h3>'+esc(eventHeading(n,next.kind))+'</h3><p class="event-date"><strong>'+esc(n.date||"Date coming soon")+'</strong></p>'+renderActivity(n,missed.next.start,n.status==="canceled"||n.status==="rescheduled")+(n.description?'<p>'+esc(n.description)+'</p>':"")+'<p class="event-location-name"><strong>'+esc(n.location||"Location details to be announced")+'</strong></p>'+map(n.address,n.mapsUrl)+(kittensFor(n).length?'<p class="event-attending"><strong>Kittens Attending:</strong><br>'+kittensFor(n).map(esc).join(", ")+'</p>':"")+'</div>';}
    else html+='<p>Check back soon for our next opportunity to meet our adoptable kittens.</p>';return html;
   }
   html+='<h2>'+esc(eventHeading(item,record.kind))+'</h2>';
@@ -69,7 +69,7 @@ function init(){
  };
  const specialHTML=record=>{
   const item=record.item,changed=item.status==="canceled"||item.status==="rescheduled",attendees=kittensFor(item);
-  const attending=attendees.length?'<div class="event-attending-block"><p class="event-attending"><strong>Kittens attending</strong></p>'+(window.renderPawsAttendeeGallery?window.renderPawsAttendeeGallery(attendees):"")+'</div>':"";
+  const attending=attendees.length?'<div class="event-attending-block"><p class="event-attending"><strong>Kittens Attending</strong></p>'+(window.renderPawsAttendeeGallery?window.renderPawsAttendeeGallery(attendees):"")+'</div>':"";
   const activity=renderActivity(item,record.start,changed);
   const meta='<div class="event-meta-row"><p class="event-date"><strong>'+esc(item.date||"Date coming soon")+'</strong></p><p class="event-time"><strong>'+esc(item.time||item.adoptionTime||"Time to be announced")+'</strong></p></div>';
   const location='<div class="event-location-block"><p class="event-location-name"><strong>'+esc(item.location||"Location details to be announced")+'</strong></p>'+map(item.address,item.mapsUrl)+'</div>';
