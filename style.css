@@ -2162,3 +2162,28 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .alumni-carousel-controls .alumni-arrow[hidden] { display:none!important; }
 @media(max-width:760px) { .alumni-carousel { padding:0 40px; } .alumni-carousel--paired { padding:0; } }
 @media(max-width:500px) { .alumni-carousel { padding:0 36px; } .alumni-carousel--paired { padding:0; } }
+
+/* Homepage current-fosters scrollbar appears during interaction, then fades away. */
+.kitten-track { scrollbar-width:thin; scrollbar-color:transparent transparent; }
+.kitten-track::-webkit-scrollbar { height:8px; }
+.kitten-track::-webkit-scrollbar-track { background:transparent; }
+.kitten-track::-webkit-scrollbar-thumb { background:rgba(117,98,141,0); border-radius:999px; transition:background-color .35s ease; }
+.kitten-carousel:hover .kitten-track::-webkit-scrollbar-thumb,
+.kitten-carousel:focus-within .kitten-track::-webkit-scrollbar-thumb,
+.kitten-carousel.is-scrollbar-visible .kitten-track::-webkit-scrollbar-thumb { background:rgba(117,98,141,.58); }
+.kitten-carousel.is-scrollbar-visible .kitten-track { scrollbar-color:rgba(117,98,141,.58) transparent; }
+@media (prefers-reduced-motion:reduce) {
+  .kitten-track::-webkit-scrollbar-thumb { transition:none; }
+}
+
+/* Single-kitten foster litters stay card-sized and centered like the other rows. */
+.all-litters__cards--single { justify-content:center; }
+.all-litters__cards--single > .kitten-card {
+  flex:0 0 clamp(220px, calc((100% - 66px) / 4), 320px);
+}
+@media(max-width:760px) {
+  .all-litters__cards--single > .kitten-card { flex-basis:min(78vw,320px); }
+}
+@media(max-width:500px) {
+  .all-litters__cards--single > .kitten-card { flex-basis:min(76vw,300px); }
+}
