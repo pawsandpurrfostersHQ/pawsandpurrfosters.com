@@ -299,6 +299,7 @@ window.initPawsAttendeeGalleries = function(root = document) {
 };
 
 function renderEvents() {
+  if (document.querySelector(".events-page")) return; // events-enhancements.js is the sole Events-page card renderer.
   const data = window.PAWS_EVENT_DATA;
   if (!data) return;
   const featured = document.querySelector("#event-featured");
