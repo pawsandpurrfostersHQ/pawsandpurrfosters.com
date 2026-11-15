@@ -330,11 +330,34 @@ function renderEvents() {
     const addressMarkup = currentEvent ? mapAnchor(event.address,event.mapsUrl) : '<span class="event-address">Address and map link coming soon</span>';
     featured.innerHTML = `<article class="event-card event-card--compact${currentEvent ? "" : " event-coming-soon"}">
       <div class="event-card-content"><p class="eyebrow">Where to Find Us</p><h2>Upcoming Adoption Event</h2>
+      <p class="home-event-countdown" data-date="${escapeHTML(event.dateISO || "")}" data-time="${escapeHTML(event.startTime || "")}"></p>
       <p class="event-date"><strong>${escapeHTML(value.date)}</strong></p><p class="event-time"><strong>${escapeHTML(value.time)}</strong></p>
       <p class="event-location-name"><strong>${escapeHTML(value.location)}</strong></p>
       ${addressMarkup}${attendingMarkup}</div>
     </article>`;
     featured.hidden = false;
+    const countdown = featured.querySelector(".home-event-countdown");
+    if (countdown) {
+      const dateText = countdown.dataset.date;
+      const timeText = countdown.dataset.time;
+      const startAt = dateText && timeText ? new Date(`${dateText}T${timeText}:00`) : null;
+      const refreshCountdown = () => {
+        if (!startAt || Number.isNaN(startAt.getTime()) || startAt <= new Date()) {
+          countdown.textContent = "";
+          countdown.hidden = true;
+          return;
+        }
+        const remaining = startAt.getTime() - Date.now();
+        const hours = Math.ceil(remaining / 3600000);
+        countdown.textContent = hours < 1 ? "Starts in less than an hour" : hours < 24
+          ? `Starts in ${hours} ${hours === 1 ? "hour" : "hours"}`
+          : `Starts in ${Math.ceil(hours / 24)} ${Math.ceil(hours / 24) === 1 ? "day" : "days"}`;
+        countdown.hidden = false;
+      };
+      refreshCountdown();
+      if (window.__pawsHomeEventCountdownTimer) clearInterval(window.__pawsHomeEventCountdownTimer);
+      window.__pawsHomeEventCountdownTimer = window.setInterval(refreshCountdown, 60000);
+    }
   }
 
   const schedule = document.querySelector("#regular-schedule");
