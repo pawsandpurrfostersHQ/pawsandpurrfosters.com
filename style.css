@@ -2149,3 +2149,15 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 @media(max-width:760px) {
   .events-page .event-panels.has-special-events { grid-template-columns:1fr; }
 }
+
+/* Alumni card-row arrows use the same side-centered placement as the other kitten carousels. */
+.alumni-carousel { position:relative; min-width:0; padding:0 48px; }
+.alumni-carousel--paired { padding:0; }
+.alumni-carousel-controls {
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:space-between;
+  gap:0; pointer-events:none; z-index:3;
+}
+.alumni-carousel-controls .alumni-arrow { pointer-events:auto; box-shadow:0 4px 14px rgba(48,49,47,.14); }
+.alumni-carousel-controls .alumni-arrow[hidden] { display:none!important; }
+@media(max-width:760px) { .alumni-carousel { padding:0 40px; } .alumni-carousel--paired { padding:0; } }
+@media(max-width:500px) { .alumni-carousel { padding:0 36px; } .alumni-carousel--paired { padding:0; } }
