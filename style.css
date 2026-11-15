@@ -2135,3 +2135,17 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
   #events.has-special-events { grid-template-columns:1fr; }
 }
 
+
+/* The events-page featured adoption card is centered when no special event accompanies it. */
+.events-page .event-panels:not(.has-special-events) {
+  grid-template-columns:minmax(0,1fr);
+}
+.events-page .event-panels:not(.has-special-events) #event-featured {
+  grid-column:1; width:100%; max-width:1050px; justify-self:center;
+}
+.events-page .event-panels.has-special-events {
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+@media(max-width:760px) {
+  .events-page .event-panels.has-special-events { grid-template-columns:1fr; }
+}
