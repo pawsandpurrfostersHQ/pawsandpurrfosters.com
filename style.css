@@ -3035,7 +3035,7 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 
 
 /* === Paws & Purr palette: soft lilac + sage, with lighter visual weight === */
-:root { --purple:#b7a6c9; --purple-dark:#756487; --purple-light:#f0ebf5; --sage:#a9b99e; --sage-dark:#60765f; --sage-light:#edf2e9; }
+/* Restore the site's original global sage-and-purple palette. Event-card lilac is scoped below. */
 #events #event-featured .event-card--compact,.events-page #event-featured .event-card--compact,.events-page .special-event-panel .event-card--compact {
  background:linear-gradient(120deg,#b8a8ca 0%,#c7bad5 48%,#d8d9c8 100%) !important;color:#34343a !important;border:1px solid rgba(255,255,255,.72) !important;box-shadow:0 12px 30px rgba(82,72,92,.10) !important;
 }
@@ -3066,4 +3066,95 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .alumni-litter-pair > .alumni-litter--paired:first-child .alumni-cards{padding-left:84px !important;}
 .alumni-litter-pair > .alumni-litter--paired:last-child .alumni-litter-heading{transform:translateX(-88px) !important;}
 .alumni-litter-pair > .alumni-litter--paired:last-child .alumni-cards{padding-left:0 !important;}
+}
+
+
+/* Adoption event cards: one consistent lilac surface on the homepage and Events page. */
+#events #event-featured .event-card--compact,
+.events-page #event-featured .event-card--compact,
+.events-page .event-card-list .event-card--compact,
+#events #home-special-event .event-card--compact {
+  background:#eee9f4 !important;
+  color:#30312f !important;
+  border:1px solid #ded5e8 !important;
+  border-radius:24px !important;
+  box-shadow:0 12px 30px rgba(82,72,92,.08) !important;
+}
+#events #event-featured .event-card-content,
+.events-page #event-featured .event-card-content,
+.events-page .event-card-list .event-card-content,
+#events #home-special-event .event-card-content { color:#30312f !important; }
+#events #event-featured .event-card-content .eyebrow,
+.events-page #event-featured .event-card-content .eyebrow,
+.events-page .event-card-list .event-card-content .eyebrow,
+#events #home-special-event .event-card-content .eyebrow { display:none !important; }
+#events #event-featured .event-card-content h2,
+.events-page #event-featured .event-card-content h2,
+.events-page .event-card-list .event-card-content h2,
+#events #home-special-event .event-card-content h2 { color:#57456f !important; }
+#events #event-featured .event-date,
+#events #event-featured .event-time,
+#events #event-featured .event-location-name,
+.events-page #event-featured .event-date,
+.events-page #event-featured .event-time,
+.events-page #event-featured .event-location-name,
+.events-page .event-card-list .event-date,
+.events-page .event-card-list .event-time,
+.events-page .event-card-list .event-location-name,
+#events #home-special-event .event-date,
+#events #home-special-event .event-time,
+#events #home-special-event .event-location-name { color:#30312f !important; }
+#events #event-featured .event-countdown,
+.events-page #event-featured .event-countdown,
+.events-page .event-card-list .event-countdown,
+#events #home-special-event .event-countdown {
+  background:#fff !important; color:#536b58 !important; border:1px solid #d9e1d4 !important;
+}
+#events #event-featured .event-address,
+.events-page #event-featured .event-address,
+.events-page .event-card-list .event-address,
+#events #home-special-event .event-address {
+  display:inline-block !important; background:#fff !important; color:#57456f !important;
+  font-size:13px !important; font-weight:600 !important; padding:7px 11px !important;
+  border:1px solid #e2dbea !important; border-radius:9px !important;
+}
+#events #event-featured .event-location-name,
+.events-page #event-featured .event-location-name,
+.events-page .event-card-list .event-location-name,
+#events #home-special-event .event-location-name { font-size:21px !important; font-weight:750 !important; }
+#events #event-featured .event-attending,
+.events-page #event-featured .event-attending,
+.events-page .event-card-list .event-attending,
+#events #home-special-event .event-attending {
+  color:#57456f !important; font-family:"DM Sans",sans-serif !important;
+  font-size:19px !important; line-height:1.45 !important; font-weight:750 !important;
+  margin:16px 0 10px !important;
+}
+#events #event-featured .attending-kitten-gallery,
+.events-page #event-featured .attending-kitten-gallery,
+.events-page .event-card-list .attending-kitten-gallery,
+#events #home-special-event .attending-kitten-gallery {
+  background:rgba(255,255,255,.55) !important; border-color:rgba(117,98,141,.22) !important;
+}
+/* The Events-page host is only a list mount point, never a second colored card. */
+.events-page .event-card-list {
+  display:flex !important; flex-direction:column !important; gap:22px !important;
+  width:100% !important; padding:0 !important; margin:0 !important;
+  border:0 !important; border-radius:0 !important; background:transparent !important;
+  box-shadow:none !important;
+}
+.events-page .event-card-list .event-card--compact {
+  width:100% !important; min-height:0 !important; height:auto !important;
+  margin:0 !important; padding:clamp(22px,3vw,36px) !important;
+}
+.events-page .event-card-list .event-card-content { display:block !important; }
+.event-meta-row .event-date,.event-meta-row .event-time { font-family:"DM Sans",sans-serif !important; }
+@media(max-width:760px) {
+  #events #event-featured .event-card--compact,
+  .events-page #event-featured .event-card--compact,
+  .events-page .event-card-list .event-card--compact,
+  #events #home-special-event .event-card--compact { padding:23px 19px !important; }
+  #events #event-featured .event-attending,
+  .events-page #event-featured .event-attending,
+  .events-page .event-card-list .event-attending { font-size:18px !important; }
 }
