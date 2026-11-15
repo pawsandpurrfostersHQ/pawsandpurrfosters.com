@@ -187,7 +187,7 @@ function renderAlumniLitter(litter, kittens, alumniIds, today, paired = false, e
       <h2 id="alumni-litter-${litter}">${escapeHTML(heading)}</h2>
     </div>
     <div class="alumni-carousel${paired ? " alumni-carousel--paired" : ""}">
-      <div class="alumni-cards" role="region" aria-label="${escapeHTML(heading)} alumni" tabindex="0">${cards}</div>
+      <div class="alumni-cards${kittens.length === 1 && !paired ? " alumni-cards--single" : ""}" role="region" aria-label="${escapeHTML(heading)} alumni" tabindex="0">${cards}</div>
       ${controls}
     </div>
   </section>`;
