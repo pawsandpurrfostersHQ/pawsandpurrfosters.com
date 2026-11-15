@@ -2485,3 +2485,6 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .events-page .special-event-copy{grid-column:1;grid-row:1;display:flex;flex-direction:column;align-items:center;min-width:0;text-align:center}
 .events-page .special-event-copy>.eyebrow{width:100%;text-align:center;margin-top:0}
 .events-page .special-event-copy>h2{width:100%;text-align:center}
+
+/* The special-event copy and attendee gallery share one horizontal row. */
+.events-page .special-event-entry .event-attending-block{grid-column:2;grid-row:1;align-self:center}
