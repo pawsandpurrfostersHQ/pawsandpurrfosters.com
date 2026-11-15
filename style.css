@@ -4665,3 +4665,27 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .events-page #event-featured {
   scroll-margin-top: 110px;
 }
+
+
+/* Homepage adoption box only — coordinate kitten labels and photo frame with Events.
+   Scoped to the homepage's #events section; Events tab selectors are not affected. */
+#events.event.section > #event-featured .attending-kitten-gallery {
+  padding: 9px !important;
+  border: 1px solid rgba(255,255,255,.42) !important;
+  border-radius: 16px !important;
+  background: #e8e1ef !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 8px 22px rgba(35,23,48,.12) !important;
+}
+#events.event.section > #event-featured .attending-kitten-name {
+  background: #4b3764 !important;
+  border: 1px solid rgba(255,255,255,.32) !important;
+  color: #fff !important;
+}
+#events.event.section > #event-featured .attending-kitten-name:hover,
+#events.event.section > #event-featured .attending-kitten-name:focus-visible {
+  background: #38264f !important;
+  color: #fff !important;
+}
+#events.event.section > #event-featured {
+  scroll-margin-top: 110px;
+}
