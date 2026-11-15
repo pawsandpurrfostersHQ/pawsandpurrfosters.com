@@ -4075,157 +4075,229 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
  .events-page #event-featured .attending-kitten-slide img {height:165px!important;}
 }
 
-/* Homepage-only restoration: keep the Upcoming Adoption Event card wide.
-   The Events tab has its own isolated .events-page layout above. */
-#events #event-featured {
+
+
+/* PREVIEW FIX — keep the homepage and Events-page featured adoption cards
+   visually consistent while using the actual markup rendered by each page. */
+#events > #event-featured,
+.events-page .event-panels > #event-featured {
   display:block!important;
   width:100%!important;
   max-width:none!important;
   min-width:0!important;
   height:auto!important;
   margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
 }
-#events #event-featured .event-card--compact {
+#events > #event-featured .event-card--compact,
+.events-page #event-featured .event-card--compact {
   display:block!important;
   width:100%!important;
   max-width:none!important;
   min-width:0!important;
   min-height:320px!important;
   height:auto!important;
-  aspect-ratio:auto!important;
   box-sizing:border-box!important;
-}
-#events #event-featured .event-feature-layout {
-  display:grid!important;
-  grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)!important;
-  align-items:center!important;
-  gap:32px!important;
-  width:100%!important;
-}
-@media(max-width:760px) {
-  #events #event-featured .event-card--compact { min-height:0!important; }
-  #events #event-featured .event-feature-layout {
-    display:flex!important;
-    flex-direction:column!important;
-    gap:18px!important;
-  }
-}
-
-
-/* HOMEPAGE ONLY — Upcoming Adoption Event: balanced two-column landscape card.
-   The homepage renderer nests the details and attendee gallery in .event-card-content. */
-#events > #event-featured {
-  display:block !important;
-  width:100% !important;
-  max-width:1120px !important;
-  margin:0 auto !important;
-  min-width:0 !important;
-}
-#events > #event-featured .event-card--compact {
-  display:block !important;
-  width:100% !important;
-  max-width:none !important;
-  min-width:0 !important;
-  min-height:370px !important;
-  height:auto !important;
-  box-sizing:border-box !important;
-  padding:34px clamp(26px,4vw,48px) !important;
-  border:1px solid #8979A5 !important;
-  border-radius:26px !important;
-  background:#8979A5 !important;
-  color:#fff !important;
-  box-shadow:0 12px 30px rgba(82,72,92,.14) !important;
+  padding:28px clamp(24px,3.5vw,42px)!important;
+  border:1px solid #8b7aa2!important;
+  border-radius:24px!important;
+  background:#75628d!important;
+  color:#fff!important;
+  box-shadow:0 10px 28px rgba(62,48,78,.13)!important;
 }
 #events > #event-featured .event-card-content {
-  display:grid !important;
-  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
-  grid-template-rows:repeat(6,auto) !important;
-  align-content:center !important;
-  align-items:center !important;
-  justify-items:center !important;
-  column-gap:clamp(26px,4vw,52px) !important;
-  row-gap:7px !important;
-  width:100% !important;
-  max-width:none !important;
-  min-width:0 !important;
-  min-height:300px !important;
-  height:100% !important;
-  text-align:center !important;
-  box-sizing:border-box !important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  grid-template-rows:repeat(6,auto)!important;
+  align-content:center!important;
+  align-items:center!important;
+  justify-items:center!important;
+  gap:6px clamp(24px,3.5vw,42px)!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:260px!important;
+  height:100%!important;
+  margin:0!important;
+  text-align:center!important;
 }
-#events > #event-featured .event-card-content > .eyebrow {
-  grid-column:1 !important; grid-row:1 !important;
-  justify-self:center !important; text-align:center !important;
-  color:#fff !important; margin:0 0 2px !important;
-}
+#events > #event-featured .event-card-content > .eyebrow {grid-column:1!important;grid-row:1!important;}
 #events > #event-featured .event-card-content > h2 {
-  grid-column:1 !important; grid-row:2 !important;
-  justify-self:center !important; text-align:center !important;
-  color:#fff !important; font-family:"Playfair Display",Georgia,serif !important;
-  font-size:clamp(27px,3vw,36px) !important; line-height:1.15 !important;
-  margin:0 0 5px !important;
+  grid-column:1!important;grid-row:2!important;
+  margin:0 0 5px!important;
+  color:#fff!important;
+  font-family:"Playfair Display",Georgia,serif!important;
+  font-size:clamp(27px,2.8vw,34px)!important;
+  font-weight:600!important;
+  line-height:1.15!important;
+  text-align:center!important;
 }
-#events > #event-featured .event-card-content > .event-date {
-  grid-column:1 !important; grid-row:3 !important;
-  justify-self:center !important; text-align:center !important;
-  color:#fff !important; margin:2px 0 !important;
-}
-#events > #event-featured .event-card-content > .event-time {
-  grid-column:1 !important; grid-row:4 !important;
-  justify-self:center !important; text-align:center !important;
-  color:#fff !important; margin:2px 0 !important;
-}
-#events > #event-featured .event-card-content > .event-location-name {
-  grid-column:1 !important; grid-row:5 !important;
-  justify-self:center !important; text-align:center !important;
-  color:#fff !important; margin:2px 0 !important;
-}
-#events > #event-featured .event-card-content > .event-address {
-  grid-column:1 !important; grid-row:6 !important;
-  justify-self:center !important; text-align:center !important;
-  color:#57456F !important; margin:5px auto 0 !important;
-}
+#events > #event-featured .event-card-content > .event-date {grid-column:1!important;grid-row:3!important;}
+#events > #event-featured .event-card-content > .event-time {grid-column:1!important;grid-row:4!important;}
+#events > #event-featured .event-card-content > .event-location-name {grid-column:1!important;grid-row:5!important;}
+#events > #event-featured .event-card-content > .event-address {grid-column:1!important;grid-row:6!important;}
 #events > #event-featured .event-card-content > .event-attending-block {
-  grid-column:2 !important; grid-row:1 / span 6 !important;
-  align-self:center !important; justify-self:stretch !important;
-  display:flex !important; flex-direction:column !important;
-  align-items:center !important; justify-content:center !important;
-  width:100% !important; max-width:none !important; min-width:0 !important;
-  margin:0 !important; text-align:center !important;
+  grid-column:2!important;grid-row:1/span 6!important;
+  align-self:center!important;justify-self:stretch!important;
+  display:flex!important;flex-direction:column!important;
+  align-items:center!important;justify-content:center!important;
+  width:100%!important;max-width:none!important;min-width:0!important;
+  margin:0!important;text-align:center!important;
 }
-#events > #event-featured .event-attending {
-  color:#fff !important; text-align:center !important;
-  font-family:"Playfair Display",Georgia,serif !important;
-  font-size:clamp(22px,2.4vw,29px) !important;
-  font-weight:600 !important; margin:0 0 12px !important;
+.events-page #event-featured .event-card-content {
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  grid-template-rows:repeat(7,auto)!important;
+  align-content:center!important;
+  align-items:center!important;
+  justify-items:center!important;
+  gap:7px clamp(24px,3.5vw,42px)!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:260px!important;
+  height:100%!important;
+  margin:0!important;
+  text-align:center!important;
 }
-#events > #event-featured .attending-kitten-gallery {
-  width:100% !important; max-width:460px !important;
-  height:250px !important; margin:0 auto !important;
+.events-page #event-featured .event-card-content > .event-next-label {grid-column:1!important;grid-row:1!important;}
+.events-page #event-featured .event-card-content > h2 {
+  grid-column:1!important;grid-row:2!important;
+  margin:0 0 5px!important;
+  color:#fff!important;
+  font-family:"Playfair Display",Georgia,serif!important;
+  font-size:clamp(27px,2.8vw,34px)!important;
+  font-weight:600!important;
+  line-height:1.15!important;
+  text-align:center!important;
 }
-#events > #event-featured .attending-kitten-slide img {
-  height:195px !important; flex-basis:195px !important;
+.events-page #event-featured .event-card-content > .event-countdown,
+.events-page #event-featured .event-card-content > .event-status-label,
+.events-page #event-featured .event-card-content > .event-status-reason,
+.events-page #event-featured .event-card-content > .event-reschedule-note,
+.events-page #event-featured .event-card-content > .event-original-schedule,
+.events-page #event-featured .event-card-content > .event-live-label {grid-column:1!important;grid-row:3!important;justify-self:center!important;}
+.events-page #event-featured .event-card-content > .event-date {grid-column:1!important;grid-row:3!important;}
+.events-page #event-featured .event-card-content > .event-time,
+.events-page #event-featured .event-card-content > .special-activity {grid-column:1!important;grid-row:4!important;}
+.events-page #event-featured .event-card-content > .event-meta-row {
+  grid-column:1!important;grid-row:4!important;
+  display:flex!important;flex-wrap:wrap!important;
+  align-items:center!important;justify-content:center!important;
+  gap:4px 18px!important;width:100%!important;margin:0!important;
+}
+.events-page #event-featured .event-card-content > .event-location-block {grid-column:1!important;grid-row:5!important;width:100%!important;text-align:center!important;}
+.events-page #event-featured .event-card-content > .special-event-activities {grid-column:1!important;grid-row:6!important;width:100%!important;}
+.events-page #event-featured .event-card-content > .special-event-description {grid-column:1!important;grid-row:7!important;width:100%!important;}
+.events-page #event-featured .event-card-content > .event-attending-block {
+  grid-column:2!important;grid-row:1/span 7!important;
+  align-self:center!important;justify-self:stretch!important;
+  display:flex!important;flex-direction:column!important;
+  align-items:center!important;justify-content:center!important;
+  width:100%!important;max-width:none!important;min-width:0!important;
+  margin:0!important;text-align:center!important;
+}
+#events > #event-featured .event-card-content > .eyebrow,
+.events-page #event-featured .event-card-content > .eyebrow {
+  justify-self:center!important;
+  margin:0 0 3px!important;
+  color:#fff!important;
+  font-family:"DM Sans",sans-serif!important;
+  font-size:11px!important;
+  font-weight:700!important;
+  letter-spacing:.15em!important;
+  text-align:center!important;
 }
 #events > #event-featured .event-card-content p,
-#events > #event-featured .event-card-content strong {
-  color:#fff !important;
+#events > #event-featured .event-card-content strong,
+#events > #event-featured .event-card-content .event-address,
+.events-page #event-featured .event-card-content p,
+.events-page #event-featured .event-card-content strong,
+.events-page #event-featured .event-card-content .event-address {
+  color:#fff!important;
+  text-align:center!important;
+}
+#events > #event-featured .event-card-content .event-address,
+.events-page #event-featured .event-card-content .event-address {
+  display:inline-block!important;
+  max-width:100%!important;
+  margin:5px auto 0!important;
+  padding:8px 13px!important;
+  border:1px solid rgba(255,255,255,.28)!important;
+  border-radius:10px!important;
+  background:rgba(255,255,255,.12)!important;
+  color:#fff!important;
+  font-weight:600!important;
+  text-decoration:none!important;
+  overflow-wrap:anywhere!important;
+}
+#events > #event-featured .event-attending,
+.events-page #event-featured .event-attending {
+  margin:0 0 10px!important;
+  color:#fff!important;
+  font-family:"Playfair Display",Georgia,serif!important;
+  font-size:clamp(21px,2.2vw,27px)!important;
+  font-weight:600!important;
+  line-height:1.2!important;
+  text-align:center!important;
+}
+#events > #event-featured .attending-kitten-gallery,
+.events-page #event-featured .attending-kitten-gallery {
+  width:100%!important;
+  max-width:410px!important;
+  height:215px!important;
+  margin:0 auto!important;
+}
+#events > #event-featured .attending-kitten-slide img,
+.events-page #event-featured .attending-kitten-slide img {
+  display:block!important;
+  width:100%!important;
+  height:165px!important;
+  object-fit:contain!important;
+  object-position:center!important;
+}
+#events > #event-featured .attending-kitten-slide figcaption,
+.events-page #event-featured .attending-kitten-slide figcaption {
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  height:34px!important;
+}
+#events > #event-featured .attending-kitten-name,
+.events-page #event-featured .attending-kitten-name {
+  color:#fff!important;
 }
 @media(max-width:760px) {
-  #events > #event-featured .event-card--compact {
-    min-height:0 !important; padding:26px 20px !important;
+  #events > #event-featured .event-card--compact,
+  .events-page #event-featured .event-card--compact {
+    min-height:0!important;
+    padding:25px 20px!important;
+    border-radius:22px!important;
   }
-  #events > #event-featured .event-card-content {
-    display:flex !important; flex-direction:column !important;
-    align-items:center !important; min-height:0 !important;
-    height:auto !important; gap:9px !important;
+  #events > #event-featured .event-card-content,
+  .events-page #event-featured .event-card-content {
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:8px!important;
+    min-height:0!important;
+    height:auto!important;
   }
-  #events > #event-featured .event-card-content > * {
-    width:100% !important; text-align:center !important;
-    grid-column:auto !important; grid-row:auto !important;
+  #events > #event-featured .event-card-content > *,
+  .events-page #event-featured .event-card-content > * {
+    width:100%!important;
+    text-align:center!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
   }
-  #events > #event-featured .event-card-content > .event-attending-block {
-    margin:14px auto 0 !important;
+  #events > #event-featured .event-card-content > .event-attending-block,
+  .events-page #event-featured .event-card-content > .event-attending-block {
+    margin:12px auto 0!important;
   }
-  #events > #event-featured .attending-kitten-gallery { height:205px !important; }
-  #events > #event-featured .attending-kitten-slide img { height:155px !important; flex-basis:155px !important; }
+  #events > #event-featured .attending-kitten-gallery,
+  .events-page #event-featured .attending-kitten-gallery {height:200px!important;}
+  #events > #event-featured .attending-kitten-slide img,
+  .events-page #event-featured .attending-kitten-slide img {height:150px!important;}
 }
