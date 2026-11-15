@@ -3199,3 +3199,11 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 #events #event-featured .attending-kitten-gallery,.events-page #event-featured .attending-kitten-gallery,#events #home-special-event .attending-kitten-gallery,.events-page .event-card-list .attending-kitten-gallery {height:220px !important;}
 #events #event-featured .attending-kitten-slide img,.events-page #event-featured .attending-kitten-slide img,#events #home-special-event .attending-kitten-slide img,.events-page .event-card-list .attending-kitten-slide img {height:165px !important;flex-basis:165px !important;}
 }
+
+/* Remove the decorative paw badge and keep the Next Event eyebrow visible on the Events page. */
+.events-page .event-card-list .event-card--compact::before,
+.events-page #event-featured .event-card--compact::before {content:none !important;display:none !important;}
+.events-page .event-card-list .event-card-content .event-next-label,
+.events-page #event-featured .event-card-content .event-next-label {display:inline-flex !important;}
+.events-page .event-card-list .event-card--compact {display:block !important;width:100% !important;max-width:none !important;height:auto !important;min-height:0 !important;}
+.events-page .event-card-list .event-card-content {display:flex !important;flex-direction:column !important;align-items:center !important;justify-content:flex-start !important;gap:10px !important;}
