@@ -326,7 +326,7 @@ function renderEvents() {
       : { date:"Coming Soon", time:"Coming Soon", location:"Coming Soon", address:"Coming Soon" };
     const addressMarkup = currentEvent ? mapAnchor(event.address,event.mapsUrl) : '<span class="event-address">Address and map link coming soon</span>';
     featured.innerHTML = `<article class="event-card event-card--compact${currentEvent ? "" : " event-coming-soon"}">
-      <div class="event-card-content"><p class="eyebrow"><span aria-hidden="true">🐾</span> Where to Find Us</p><h2>Upcoming Adoption Event</h2>
+      <div class="event-card-content"><p class="eyebrow">Where to Find Us</p><h2>Upcoming Adoption Event</h2>
       <p class="event-date"><strong>${escapeHTML(value.date)}</strong></p><p class="event-time"><strong>${escapeHTML(value.time)}</strong></p>
       <p class="event-location-name"><strong>${escapeHTML(value.location)}</strong></p>
       ${addressMarkup}${attendingMarkup}</div>
