@@ -2168,8 +2168,6 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .kitten-track::-webkit-scrollbar { height:8px; }
 .kitten-track::-webkit-scrollbar-track { background:transparent; }
 .kitten-track::-webkit-scrollbar-thumb { background:rgba(117,98,141,0); border-radius:999px; transition:background-color .35s ease; }
-.kitten-carousel:hover .kitten-track::-webkit-scrollbar-thumb,
-.kitten-carousel:focus-within .kitten-track::-webkit-scrollbar-thumb,
 .kitten-carousel.is-scrollbar-visible .kitten-track::-webkit-scrollbar-thumb { background:rgba(117,98,141,.58); }
 .kitten-carousel.is-scrollbar-visible .kitten-track { scrollbar-color:rgba(117,98,141,.58) transparent; }
 @media (prefers-reduced-motion:reduce) {
