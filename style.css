@@ -3307,3 +3307,160 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
     flex-basis:138px !important;
   }
 }
+
+
+/* Final Events-page geometry: horizontal information + kitten gallery layout. */
+:root { --event-card-purple:#8979A5; }
+#events #event-featured .event-card--compact,
+.events-page #event-featured .event-card--compact,
+.events-page .event-card-list .event-card--compact {
+  background:#8979A5 !important;
+  border-color:#8979A5 !important;
+  color:#fff !important;
+}
+#events #event-featured .event-card-content,
+.events-page #event-featured .event-card-content {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(250px,.82fr) !important;
+  grid-template-rows:auto auto auto auto auto !important;
+  align-items:center !important;
+  justify-items:center !important;
+  column-gap:clamp(16px,2.6vw,34px) !important;
+  row-gap:5px !important;
+  text-align:center !important;
+}
+#events #event-featured .event-card-content > .event-next-label,
+.events-page #event-featured .event-card-content > .event-next-label,
+#events #event-featured .event-card-content > h2,
+.events-page #event-featured .event-card-content > h2 {
+  grid-column:1 / -1 !important;
+}
+#events #event-featured .event-card-content > .event-meta-row,
+.events-page #event-featured .event-card-content > .event-meta-row {
+  grid-column:1 !important;
+  grid-row:3 !important;
+  width:100% !important;
+  max-width:100% !important;
+  border-color:rgba(255,255,255,.35) !important;
+  color:#fff !important;
+  margin:5px auto !important;
+  padding:9px 10px !important;
+}
+#events #event-featured .event-card-content > .event-location-block,
+.events-page #event-featured .event-card-content > .event-location-block {
+  grid-column:1 !important;
+  grid-row:4 !important;
+  width:100% !important;
+  margin:4px auto !important;
+}
+#events #event-featured .event-card-content > .event-attending-block,
+.events-page #event-featured .event-card-content > .event-attending-block {
+  grid-column:2 !important;
+  grid-row:3 / span 2 !important;
+  width:100% !important;
+  max-width:100% !important;
+  margin:0 auto !important;
+  align-self:center !important;
+}
+#events #event-featured .attending-kitten-gallery,
+.events-page #event-featured .attending-kitten-gallery {
+  width:min(100%,300px) !important;
+  height:195px !important;
+  margin:0 auto !important;
+}
+#events #event-featured .attending-kitten-slide img,
+.events-page #event-featured .attending-kitten-slide img {
+  height:145px !important;
+  flex-basis:145px !important;
+  object-fit:contain !important;
+}
+#events #event-featured .event-card-content .event-address,
+#events #event-featured .event-card-content .event-address:link,
+#events #event-featured .event-card-content .event-address:visited,
+.events-page #event-featured .event-card-content .event-address,
+.events-page #event-featured .event-card-content .event-address:link,
+.events-page #event-featured .event-card-content .event-address:visited,
+.events-page .event-card-list .event-card-content .event-address,
+.events-page .event-card-list .event-card-content .event-address:link,
+.events-page .event-card-list .event-card-content .event-address:visited {
+  background:#fff !important;
+  color:#57456F !important;
+  -webkit-text-fill-color:#57456F !important;
+  border:1px solid #e2dbea !important;
+  text-decoration:none !important;
+}
+#events #event-featured .event-card-content .event-address:hover,
+.events-page #event-featured .event-card-content .event-address:hover,
+.events-page .event-card-list .event-card-content .event-address:hover {
+  background:#f1edf5 !important;
+  color:#57456F !important;
+  -webkit-text-fill-color:#57456F !important;
+}
+.events-page .event-card-list .event-card--compact {
+  min-height:300px !important;
+  padding:22px 28px !important;
+}
+.events-page .event-card-list .event-card-content {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(250px,.82fr) !important;
+  grid-template-rows:auto auto auto auto !important;
+  align-items:center !important;
+  justify-items:center !important;
+  gap:6px 26px !important;
+  text-align:center !important;
+}
+.events-page .event-card-list .event-card-content > .event-next-label,
+.events-page .event-card-list .event-card-content > h2 {
+  grid-column:1 / -1 !important;
+}
+.events-page .event-card-list .event-card-content > .event-meta-row,
+.events-page .event-card-list .event-card-content > .event-location-block {
+  grid-column:1 !important;
+  width:100% !important;
+}
+.events-page .event-card-list .event-card-content > .event-attending-block {
+  grid-column:2 !important;
+  grid-row:3 / span 2 !important;
+  margin:0 auto !important;
+}
+.events-page .event-card-list .attending-kitten-gallery {
+  width:min(100%,300px) !important;
+  height:195px !important;
+}
+.events-page .event-card-list .attending-kitten-slide img {
+  height:145px !important;
+  flex-basis:145px !important;
+}
+@media(max-width:760px) {
+  #events #event-featured .event-card-content,
+  .events-page #event-featured .event-card-content,
+  .events-page .event-card-list .event-card-content {
+    grid-template-columns:minmax(0,1fr) !important;
+    grid-template-rows:auto !important;
+    row-gap:6px !important;
+  }
+  #events #event-featured .event-card-content > *,
+  .events-page #event-featured .event-card-content > *,
+  .events-page .event-card-list .event-card-content > * {
+    grid-column:1 !important;
+    grid-row:auto !important;
+  }
+  #events #event-featured .event-attending-block,
+  .events-page #event-featured .event-attending-block,
+  .events-page .event-card-list .event-attending-block {
+    width:100% !important;
+    max-width:100% !important;
+  }
+  #events #event-featured .attending-kitten-gallery,
+  .events-page #event-featured .attending-kitten-gallery,
+  .events-page .event-card-list .attending-kitten-gallery {
+    width:min(100%,290px) !important;
+    height:180px !important;
+  }
+  #events #event-featured .attending-kitten-slide img,
+  .events-page #event-featured .attending-kitten-slide img,
+  .events-page .event-card-list .attending-kitten-slide img {
+    height:132px !important;
+    flex-basis:132px !important;
+  }
+}
