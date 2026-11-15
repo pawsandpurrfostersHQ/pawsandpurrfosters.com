@@ -119,7 +119,16 @@ function renderAllKittens() {
   if (targetId.startsWith("litter-")) {
     const target = document.getElementById(targetId);
     if (target) {
+      target.classList.add("is-highlighted");
       requestAnimationFrame(() => target.scrollIntoView({ behavior: "smooth", block: "start" }));
+      const dismissHighlight = event => {
+        if (!target.contains(event.target)) {
+          target.classList.remove("is-highlighted");
+          document.removeEventListener("click", dismissHighlight, true);
+          if (window.history?.replaceState) window.history.replaceState(null, "", window.location.pathname + window.location.search);
+        }
+      };
+      document.addEventListener("click", dismissHighlight, true);
     }
   }
 
@@ -130,6 +139,8 @@ function renderAllKittens() {
       const maxScroll = track.scrollWidth - track.clientWidth;
       previous.disabled = track.scrollLeft <= 2;
       next.disabled = track.scrollLeft >= maxScroll - 2;
+      previous.hidden = maxScroll <= 2;
+      next.hidden = maxScroll <= 2;
     };
     const scrollCards = direction => {
       const card = track.querySelector(".kitten-card");
