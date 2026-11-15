@@ -268,7 +268,7 @@ window.renderPawsAttendeeGallery = function(names) {
   const prefix = onEventsPage ? "../" : "";
   const sourcePage = onEventsPage ? "events" : "home";
   const returnUrl = new URL(window.location.href);
-  if (onEventsPage) returnUrl.hash = "event-featured";
+  returnUrl.hash = "event-featured";
   const backTarget = returnUrl.href;
   const slides = records.map((kitten, index) => {
     const photo = kitten.image || (Array.isArray(kitten.photos) ? kitten.photos[0] : "");
@@ -350,6 +350,11 @@ function renderEvents() {
       </div>
     </article>`;
     featured.hidden = false;
+    if (!onEventsPage && window.location.hash === "#event-featured") {
+      window.requestAnimationFrame(() => {
+        featured.scrollIntoView({ behavior: "auto", block: "start" });
+      });
+    }
     const countdown = featured.querySelector(".event-countdown");
     if (countdown) {
       const dateText = countdown.dataset.date;
