@@ -378,4 +378,5 @@ renderAbout();
 renderFosterPhotoCarousel();
 renderKittenCards();
 renderEvents();
+if (window.initPawsAttendeeGalleries) window.initPawsAttendeeGalleries();
 
