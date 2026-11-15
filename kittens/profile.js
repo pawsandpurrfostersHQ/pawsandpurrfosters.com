@@ -198,8 +198,17 @@ function renderProfile(kitten) {
   const returnFrom = new URLSearchParams(window.location.search).get("from") || "current";
   const pairingData = getPairingData(kitten);
   const pairingDescription = pairingData.type !== "single" ? getPairingDescription(kitten, pairingData) : "";
+  const pairingPartner = pairingData.kittenId ? window.PAWS_KITTENS?.find(item => item.id === pairingData.kittenId) : null;
+  const pairingPhotos = [...new Set([...(kitten.pairingPhotos || []), ...(pairingPartner?.pairingPhotos || [])].filter(Boolean))];
+  const pairingPhotoMarkup = pairingPhotos.length
+    ? `<div class="pairing-photo-carousel" data-pairing-gallery data-photos='${escapeHTML(JSON.stringify(pairingPhotos))}'>
+        <div class="pairing-photo-frame"><img src="${escapeHTML(profilePhotoSource(pairingPhotos[0]))}" alt="${escapeHTML(kitten.name)} and ${escapeHTML(pairingData.kittenName)} together" data-pairing-photo></div>
+        ${pairingPhotos.length > 1 ? '<div class="pairing-photo-controls"><button type="button" class="pairing-photo-prev" aria-label="Previous bonded-pair photo">‹</button><span data-pairing-count>1 / '+pairingPhotos.length+'</span><button type="button" class="pairing-photo-next" aria-label="Next bonded-pair photo">›</button></div>' : ""}
+      </div>`
+    : "";
+  const pairingCopy = pairingDescription ? `<p class="pairing-description">${escapeHTML(pairingDescription)}</p>` : "";
   const pairing = pairingData.type !== "single"
-    ? `<section class="profile-detail profile-pairing"><p class="eyebrow">Bonded Pair</p><h2>Better together</h2><a class="pair-partner-link" href="profile-template.html?id=${escapeHTML(pairingData.kittenId)}"><strong>${escapeHTML(pairingData.kittenName)}</strong><span>Meet ${escapeHTML(pairingData.kittenName)} →</span></a>${pairingDescription ? `<p class="pairing-description">${escapeHTML(pairingDescription)}</p>` : ""}</section>`
+    ? `<section class="profile-detail profile-pairing"><p class="eyebrow">Bonded Pair</p><h2>Better together</h2><a class="pair-partner-link" href="profile-template.html?id=${escapeHTML(pairingData.kittenId)}"><strong>${escapeHTML(pairingData.kittenName)}</strong><span>Meet ${escapeHTML(pairingData.kittenName)} →</span></a>${pairingPhotos.length ? `<div class="profile-pairing-layout">${pairingPhotoMarkup}${pairingCopy}</div>` : pairingCopy}</section>`
     : "";
   const requirements = "";
   const photoSet = [...new Set([kitten.image, ...(kitten.photos || [])].filter(Boolean))];
@@ -367,6 +376,23 @@ function renderProfile(kitten) {
   <div class="profile-details">
     ${health}${idealHomeBlock}${pairing}${adoptionReminder}${requirements}${meeting}${video}
   </div>`;
+
+  const pairGallery = root.querySelector("[data-pairing-gallery]");
+  if (pairGallery) {
+    const photos = JSON.parse(pairGallery.dataset.photos || "[]");
+    let pairIndex = 0;
+    const pairImage = pairGallery.querySelector("[data-pairing-photo]");
+    const pairCount = pairGallery.querySelector("[data-pairing-count]");
+    const showPairPhoto = next => {
+      if (!photos.length || !pairImage) return;
+      pairIndex = (next + photos.length) % photos.length;
+      pairImage.src = profilePhotoSource(photos[pairIndex]);
+      pairImage.alt = `${kitten.name} and ${pairingData.kittenName} together — photo ${pairIndex + 1}`;
+      if (pairCount) pairCount.textContent = `${pairIndex + 1} / ${photos.length}`;
+    };
+    pairGallery.querySelector(".pairing-photo-prev")?.addEventListener("click", () => showPairPhoto(pairIndex - 1));
+    pairGallery.querySelector(".pairing-photo-next")?.addEventListener("click", () => showPairPhoto(pairIndex + 1));
+  }
 
   const lightbox = document.querySelector("#photo-lightbox");
   const lightboxImage = lightbox?.querySelector("img");
