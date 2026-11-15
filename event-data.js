@@ -20,7 +20,7 @@ window.PAWS_EVENT_DATA = {
   "featuredEvent": {
     "date": "Sunday, November 15, 2026",
     "time": "11 a.m. – 3 p.m.",
-    "title": "Kitty Adoption Event & Yoga",
+    "title": "Kitten Adoption Event",
     "active": true,
     "status": "upcoming",
     "address": "5879 Lone Tree Way, Antioch, CA 94531",
