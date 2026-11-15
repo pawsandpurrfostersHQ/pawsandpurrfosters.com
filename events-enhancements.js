@@ -63,15 +63,18 @@ function init(){
   html+='<h2>'+esc(eventHeading(item,record.kind))+'</h2>';
   if(changed)html+=scheduleChange(item,item.status);
   if(record.kind==="special")html+='<p class="event-date"><strong>'+esc(item.date||"Date coming soon")+'</strong></p>'+renderActivity(item,record.start,changed)+(item.description?'<p>'+esc(item.description)+'</p>':"");
-  else html+=countdown(record.start,record.end)+(record.start<=new Date()?'<p class="event-live-label">Happening Now!</p>':"")+'<p class="event-date"><strong>'+esc(item.date||"Date coming soon")+'</strong></p><p class="event-time"><strong>'+esc(timeForVisitor(item.time||"10 a.m. – 4 p.m.",record.start))+'</strong></p>';
-  html+='<p class="event-location-name"><strong>'+esc(item.location||"Location details to be announced")+'</strong></p>'+map(item.address,item.mapsUrl);
+  else html+=countdown(record.start,record.end)+(record.start<=new Date()?'<p class="event-live-label">Happening Now!</p>':"")+'<div class="event-meta-row"><p class="event-date"><strong>'+esc(item.date||"Date coming soon")+'</strong></p><p class="event-time"><strong>'+esc(timeForVisitor(item.time||"10 a.m. – 4 p.m.",record.start))+'</strong></p></div>';
+  html+='<div class="event-location-block"><p class="event-location-name"><strong>'+esc(item.location||"Location details to be announced")+'</strong></p>'+map(item.address,item.mapsUrl)+'</div>';
   if(attending.length)html+='<div class="event-attending-block"><p class="event-attending"><strong>Kittens attending</strong></p>'+(window.renderPawsAttendeeGallery?window.renderPawsAttendeeGallery(attending):"")+'</div>';return html;
  };
  const specialHTML=record=>{
   const item=record.item,changed=item.status==="canceled"||item.status==="rescheduled",attendees=kittensFor(item);
   const attending=attendees.length?'<div class="event-attending-block"><p class="event-attending"><strong>Kittens attending</strong></p>'+(window.renderPawsAttendeeGallery?window.renderPawsAttendeeGallery(attendees):"")+'</div>':"";
-  return '<article class="special-event-entry"><div class="special-event-copy"><p class="eyebrow">Where to Find Us</p><h2>'+esc(item.title||"Special Adoption Event")+'</h2>'+(changed?scheduleChange(item,item.status):"")+(record.start?countdown(record.start,record.end):"")+'<p class="special-event-date event-date"><strong>'+esc(item.date||"Date coming soon")+'</strong></p><div class="special-event-activities">'+renderActivity(item,record.start,changed)+'</div><p class="event-location-name"><strong>'+esc(item.location||"Location details to be announced")+'</strong></p>'+map(item.address,item.mapsUrl)+'<p>'+esc(item.description||"Come meet our foster kittens and learn more about this special event.")+'</p></div>'+attending+'</article>';
- }
+  const activity=renderActivity(item,record.start,changed);
+  const meta='<div class="event-meta-row"><p class="event-date"><strong>'+esc(item.date||"Date coming soon")+'</strong></p><p class="event-time"><strong>'+esc(item.time||item.adoptionTime||"Time to be announced")+'</strong></p></div>';
+  const location='<div class="event-location-block"><p class="event-location-name"><strong>'+esc(item.location||"Location details to be announced")+'</strong></p>'+map(item.address,item.mapsUrl)+'</div>';
+  return '<article class="event-card event-card--compact"><div class="event-card-content"><p class="eyebrow">Where to Find Us</p><h2>'+esc(item.title||"Special Adoption Event")+'</h2>'+(changed?scheduleChange(item,item.status):"")+(record.start?countdown(record.start,record.end):"")+meta+'<div class="special-event-activities">'+activity+'</div>'+location+'<p class="special-event-description">'+esc(item.description||"Come meet our foster kittens and learn more about this special event.")+'</p>'+attending+'</div></article>';
+ };
  function renderDisplays(){
   const now=new Date(),today=todayLA(),events=allEvents(),canceledFeatured=events.find(x=>x.kind==="featured"&&x.canceled&&now<x.end);
   const endedToday=events.filter(x=>!x.canceled&&key(x.end)===today&&now>=x.end&&now<nextLocalDayStart(today)).sort((a,b)=>b.end-a.end)[0];
