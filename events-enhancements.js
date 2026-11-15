@@ -56,21 +56,19 @@ function init(){
  const renderDetails=(record,missed)=>{
   const item=record.item,changed=item.status==="canceled"||item.status==="rescheduled",attending=kittensFor(item);let html="";
   const eventHeading = (eventItem, kind) => { const title=String(eventItem.title||"").trim(); if(kind==="featured"&&(!title||title==="Where to Find Us"||/kitty adoption.*yoga/i.test(title))) return "Kitten Adoption Event"; return title||(kind==="featured"?"Kitten Adoption Event":"Special Adoption Event"); };
-  if(missed){html+='<h2>You missed us today!</h2><p class="event-missed-intro">Our adoption event has wrapped up for the day. Here is what is coming up next:</p>';const next=missed.next;
-   if(next){const n=next.item;html+='<div class="event-next-preview"><p class="eyebrow">Up next</p><h3>'+esc(eventHeading(n,next.kind))+'</h3><p class="event-date"><strong>'+esc(n.date||"Date coming soon")+'</strong></p>'+renderActivity(n,missed.next.start,n.status==="canceled"||n.status==="rescheduled")+(n.description?'<p>'+esc(n.description)+'</p>':"")+'<p class="event-location-name"><strong>'+esc(n.location||"Location details to be announced")+'</strong></p>'+map(n.address,n.mapsUrl)+(kittensFor(n).length?'<p class="event-attending"><strong>Kittens Attending:</strong><br>'+kittensFor(n).map(esc).join(", ")+'</p>':"")+'</div>';}
-   else html+='<p>Check back soon for our next opportunity to meet our adoptable kittens.</p>';return html;
+  if(missed){html+='<h2>You missed us today!</h2><p class="event-missed-intro">Our adoption event has wrapped up for the day. Our kittens are at home taking their well-deserved break.</p><p>Check back soon for our next available opportunity to meet our adoptable kittens.</p>';return html;
   }
   html+='<p class="eyebrow event-next-label">Coming Up Next</p><h2>'+esc(eventHeading(item,record.kind))+'</h2>';
   if(changed)html+=scheduleChange(item,item.status);
   if(record.kind==="special")html+='<p class="event-date"><strong>'+esc(item.date||"Date coming soon")+'</strong></p>'+renderActivity(item,record.start,changed)+(item.description?'<p>'+esc(item.description)+'</p>':"");
   else html+=countdown(record.start,record.end)+(record.start<=new Date()?'<p class="event-live-label">Happening Now!</p>':"")+'<div class="event-meta-row"><p class="event-date"><strong>'+esc(item.date||"Date coming soon")+'</strong></p><p class="event-time"><strong>'+esc(timeForVisitor(item.time||"10 a.m. – 4 p.m.",record.start))+'</strong></p></div>';
   html+='<div class="event-location-block"><p class="event-location-name"><strong>'+esc(item.location||"Location details to be announced")+'</strong></p>'+map(item.address,item.mapsUrl)+'</div>';
-  const attendeePanel=attending.length?'<div class="event-attending-block"><p class="event-attending"><strong>Kittens Attending</strong></p>'+(window.renderPawsAttendeeGallery?window.renderPawsAttendeeGallery(attending):"")+'</div>':"";
+  const attendeePanel=attending.length?'<div class="event-attending-block"><p class="event-attending"><strong>Kittens attended</strong></p>'+(window.renderPawsAttendeeGallery?window.renderPawsAttendeeGallery(attending):"")+'</div>':"";
   return html;
  };
  const specialHTML=record=>{
   const item=record.item,changed=item.status==="canceled"||item.status==="rescheduled",attendees=kittensFor(item);
-  const attending=attendees.length?'<div class="event-attending-block"><p class="event-attending"><strong>Kittens Attending</strong></p>'+(window.renderPawsAttendeeGallery?window.renderPawsAttendeeGallery(attendees):"")+'</div>':"";
+  const attending=attendees.length?'<div class="event-attending-block"><p class="event-attending"><strong>Kittens attended</strong></p>'+(window.renderPawsAttendeeGallery?window.renderPawsAttendeeGallery(attendees):"")+'</div>':"";
   const activity=renderActivity(item,record.start,changed);
   const meta='<div class="event-meta-row"><p class="event-date"><strong>'+esc(item.date||"Date coming soon")+'</strong></p><p class="event-time"><strong>'+esc(item.time||item.adoptionTime||"Time to be announced")+'</strong></p></div>';
   const location='<div class="event-location-block"><p class="event-location-name"><strong>'+esc(item.location||"Location details to be announced")+'</strong></p>'+map(item.address,item.mapsUrl)+'</div>';
@@ -83,8 +81,14 @@ function init(){
   const mainRecord=canceledFeatured||endedToday||upcoming||null,missed=endedToday&&!canceledFeatured?{next:nextAfterEnded}:null,promoted=missed&&missed.next&&missed.next.kind==="special"?missed.next:(mainRecord&&mainRecord.kind==="special"?mainRecord:null);
   if(featured){let body=mainRecord?renderDetails(mainRecord,missed):'<h2 class="coming-soon-title">COMING SOON</h2><p class="coming-soon-copy">Your new best friend might be waiting! Check back soon to see when you can meet our adoptable kittens.</p><div class="coming-soon-details"><strong>Location details to be announced.</strong><p>Check back here for updates and future opportunities to meet our adoptable kittens.</p></div>';
    if(featured.classList.contains("home-event-square"))body+='<p class="home-event-more"><a class="text-link" href="events/">Learn more →</a></p>';
-   featured.innerHTML='<article class="event-card event-card--compact"><div class="event-feature-layout"><div class="event-feature-details '+(body.includes("coming-soon-title")?"event-coming-soon":"")+'">'+body+'</div>'+(mainRecord?((function(){const names=kittensFor(mainRecord.item);return names.length?'<div class="event-attending-block"><p class="event-attending"><strong>Kittens Attending</strong></p>'+(window.renderPawsAttendeeGallery?window.renderPawsAttendeeGallery(names):"")+'</div>':"";})()):"")+'</div></article>';featured.hidden=false;
+   featured.innerHTML='<article class="event-card event-card--compact"><div class="event-feature-layout"><div class="event-feature-details '+(body.includes("coming-soon-title")?"event-coming-soon":"")+'">'+body+'</div>'+(mainRecord?((function(){const names=kittensFor(mainRecord.item);return names.length?'<div class="event-attending-block"><p class="event-attending"><strong>Kittens attended</strong></p>'+(window.renderPawsAttendeeGallery?window.renderPawsAttendeeGallery(names):"")+'</div>':"";})()):"")+'</div></article>';featured.hidden=false;
   }
+  const schedule=document.querySelector("#regular-schedule");
+  if(schedule&&data.regularSchedule?.active){
+   const locations=(data.regularSchedule.locations||[]).slice(0,2).map(location=>'<article class="schedule-location"><h3>'+esc(location.name)+'</h3><p>'+esc(location.timing)+'</p>'+map(location.address,location.mapsUrl)+'</article>').join("");
+   schedule.innerHTML='<p class="eyebrow">Plan a visit</p><h2>Regular Adoption Schedule</h2><div class="schedule-locations">'+locations+'</div><p class="schedule-note">'+esc(data.regularSchedule.note||"Schedule is subject to change.")+'</p>';
+   schedule.hidden=false;
+  }else if(schedule){schedule.hidden=true;}
   const cards=events.filter(x=>x.kind==="special"&&x.end>now&&!(promoted&&x===promoted)).sort((a,b)=>a.start-b.start);
   if(specialHost){specialHost.innerHTML=cards.map(specialHTML).join("");specialHost.hidden=!cards.length;}
   if(homeSpecial){homeSpecial.innerHTML=cards.map(specialHTML).join("");homeSpecial.hidden=!cards.length;}
