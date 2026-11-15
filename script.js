@@ -210,6 +210,16 @@ function renderKittenCards() {
 
   const previous = document.querySelector("#kitten-previous");
   const next = document.querySelector("#kitten-next");
+  let scrollbarFadeTimer = null;
+  const revealHomepageScrollbar = () => {
+    const carousel = track.closest(".kitten-carousel");
+    if (!carousel) return;
+    carousel.classList.add("is-scrollbar-visible");
+    if (scrollbarFadeTimer) window.clearTimeout(scrollbarFadeTimer);
+    scrollbarFadeTimer = window.setTimeout(() => {
+      if (!carousel.matches(":hover, :focus-within")) carousel.classList.remove("is-scrollbar-visible");
+    }, 1600);
+  };
   const updateControls = () => {
     const maxScroll = track.scrollWidth - track.clientWidth;
     previous.disabled = track.scrollLeft <= 2;
@@ -219,11 +229,21 @@ function renderKittenCards() {
   };
   const scrollCards = direction => {
     const card = track.querySelector(".kitten-card");
-    if (card) track.scrollBy({ left: direction * (card.getBoundingClientRect().width + 22), behavior: "smooth" });
+    if (card) {
+      revealHomepageScrollbar();
+      track.scrollBy({ left: direction * (card.getBoundingClientRect().width + 22), behavior: "smooth" });
+    }
   };
   previous.addEventListener("click", () => scrollCards(-1));
   next.addEventListener("click", () => scrollCards(1));
-  track.addEventListener("scroll", updateControls, { passive: true });
+  track.addEventListener("scroll", () => { updateControls(); revealHomepageScrollbar(); }, { passive: true });
+  track.addEventListener("pointerdown", revealHomepageScrollbar);
+  track.addEventListener("wheel", revealHomepageScrollbar, { passive: true });
+  track.addEventListener("touchstart", revealHomepageScrollbar, { passive: true });
+  track.addEventListener("focusin", revealHomepageScrollbar);
+  track.addEventListener("keydown", event => {
+    if (["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) revealHomepageScrollbar();
+  });
   window.addEventListener("resize", updateControls);
   updateControls();
 }
