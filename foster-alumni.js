@@ -165,8 +165,8 @@ function renderAlumniCard(kitten, alumniIds, today = new Date()) {
         <div><dt>Foster litter</dt><dd>${escapeHTML(formatAlumniLitter(kitten.fosterLitter))}</dd></div>
       </dl>
       ${gallery}
-      ${companionLink}
       ${celebrationMessages}
+      ${companionLink}
     </div>
   </article>`;
 }
