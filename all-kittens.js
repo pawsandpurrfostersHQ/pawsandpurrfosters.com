@@ -104,7 +104,7 @@ function renderAllKittens() {
   container.innerHTML = groups.map(({ litterNumber, kittens }) => {
     const heading = formatLitterHeading(litterNumber);
     return `
-      <section class="all-litters__group">
+      <section class="all-litters__group" id="litter-${escapeHTML(litterNumber)}">
         <h3 class="all-litters__heading">${escapeHTML(heading)}</h3>
         <div class="all-litters__carousel">
           <button class="carousel-button all-litters__arrow" type="button" aria-label="Previous kittens in ${escapeHTML(heading)}">‹</button>
@@ -114,6 +114,14 @@ function renderAllKittens() {
       </section>
     `;
   }).join("");
+
+  const targetId = typeof window !== "undefined" ? window.location.hash.slice(1) : "";
+  if (targetId.startsWith("litter-")) {
+    const target = document.getElementById(targetId);
+    if (target) {
+      requestAnimationFrame(() => target.scrollIntoView({ behavior: "smooth", block: "start" }));
+    }
+  }
 
   container.querySelectorAll(".all-litters__carousel").forEach(carousel => {
     const track = carousel.querySelector(".all-litters__cards");
