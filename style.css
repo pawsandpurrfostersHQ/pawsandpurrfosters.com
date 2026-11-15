@@ -3032,3 +3032,38 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
   .alumni-litter-pair > .alumni-litter--paired:last-child .alumni-litter-heading { transform:none; }
   .alumni-litter-pair > .alumni-litter--paired:last-child .alumni-cards { padding-left:22px !important; }
 }
+
+
+/* === Paws & Purr palette: soft lilac + sage, with lighter visual weight === */
+:root { --purple:#b7a6c9; --purple-dark:#756487; --purple-light:#f0ebf5; --sage:#a9b99e; --sage-dark:#60765f; --sage-light:#edf2e9; }
+#events #event-featured .event-card--compact,.events-page #event-featured .event-card--compact,.events-page .special-event-panel .event-card--compact {
+ background:linear-gradient(120deg,#b8a8ca 0%,#c7bad5 48%,#d8d9c8 100%) !important;color:#34343a !important;border:1px solid rgba(255,255,255,.72) !important;box-shadow:0 12px 30px rgba(82,72,92,.10) !important;
+}
+#events #event-featured .event-card-content,.events-page #event-featured .event-card-content,.events-page .special-event-panel .event-card-content{color:#34343a !important;}
+#events #event-featured .event-card-content .eyebrow,.events-page #event-featured .event-card-content .eyebrow,.events-page .special-event-panel .event-card-content .eyebrow{color:#fff !important;text-shadow:0 1px 3px rgba(68,57,77,.16);}
+#events #event-featured .event-card-content h2,.events-page #event-featured .event-card-content h2,.events-page .special-event-panel .event-card-content h2{color:#40364d !important;}
+#events #event-featured .event-date,#events #event-featured .event-time,#events #event-featured .event-location-name,.events-page #event-featured .event-date,.events-page #event-featured .event-time,.events-page #event-featured .event-location-name,.events-page .special-event-panel .event-date,.events-page .special-event-panel .event-time,.events-page .special-event-panel .event-location-name{color:#3f3e43 !important;}
+#events #event-featured .event-countdown,.events-page #event-featured .event-countdown,.events-page .special-event-panel .event-countdown{background:#eaf0e5 !important;color:#526b50 !important;border:1px solid rgba(100,125,94,.18);box-shadow:0 3px 10px rgba(73,91,68,.08);}
+#events #event-featured .event-address,.events-page #event-featured .event-address,.events-page .special-event-panel .event-address{color:#435743 !important;background:#edf2e9 !important;border:1px solid rgba(96,118,95,.18);box-shadow:0 3px 10px rgba(73,91,68,.06);}
+#events #event-featured .event-attending,.events-page #event-featured .event-attending,.events-page .special-event-panel .event-attending{color:#554866 !important;text-shadow:none;}
+#events #event-featured .event-attending::before,#events #event-featured .event-attending::after,.events-page #event-featured .event-attending::before,.events-page #event-featured .event-attending::after,.events-page .special-event-panel .event-attending::before,.events-page .special-event-panel .event-attending::after{background:rgba(92,77,108,.35);}
+#events #event-featured .attending-kitten-gallery,.events-page #event-featured .attending-kitten-gallery,.events-page .special-event-panel .attending-kitten-gallery{background:rgba(255,255,255,.24) !important;border-color:rgba(112,96,130,.3) !important;}
+.event-meta-row{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px 22px;width:min(100%,440px);margin:8px auto 10px !important;padding:12px 16px;border-top:1px solid rgba(91,78,107,.22);border-bottom:1px solid rgba(91,78,107,.22);color:#403e45;}
+.event-meta-row .event-date,.event-meta-row .event-time{margin:0 !important;font-size:clamp(15px,1.55vw,18px);}
+.event-location-block{display:flex;flex-direction:column;align-items:center;gap:7px;width:100%;margin:4px auto 8px;}
+.event-location-block .event-location-name{margin:0 !important;}
+.event-location-block .event-address{margin:0 auto !important;}
+#events #event-featured .event-card-content > .event-meta-row,.events-page #event-featured .event-card-content > .event-meta-row{grid-column:1;grid-row:4;}
+#events #event-featured .event-card-content > .event-location-block,.events-page #event-featured .event-card-content > .event-location-block{grid-column:1;grid-row:5 / span 2;}
+@media(max-width:760px){#events #event-featured .event-card-content > .event-meta-row,.events-page #event-featured .event-card-content > .event-meta-row,#events #event-featured .event-card-content > .event-location-block,.events-page #event-featured .event-card-content > .event-location-block{grid-column:1 !important;grid-row:auto !important;}}
+.events-page .event-panels{display:flex !important;flex-direction:column;gap:26px;}
+.events-page #event-featured{display:block;width:100% !important;max-width:none !important;min-height:0 !important;height:auto !important;padding:0 !important;margin:0 !important;border:0 !important;border-radius:0 !important;background:transparent !important;box-shadow:none !important;}
+.events-page #event-featured .event-card--compact{width:100% !important;max-width:none !important;min-height:0 !important;height:auto !important;margin:0 !important;padding:clamp(22px,3vw,36px) !important;border-radius:24px !important;}
+.events-page .special-event-panel{display:block;width:100% !important;max-width:none !important;min-height:0 !important;height:auto !important;padding:0 !important;margin:0 !important;border:0 !important;border-radius:0 !important;background:transparent !important;box-shadow:none !important;}
+.events-page .special-event-panel .special-event-entry{display:block !important;width:100% !important;max-width:none !important;min-height:0 !important;height:auto !important;padding:0 !important;margin:0 !important;border:0 !important;border-radius:0 !important;background:transparent !important;box-shadow:none !important;}
+@media(max-width:760px){.events-page #event-featured .event-card--compact{padding:22px 18px !important;}}
+@media(min-width:761px){
+.alumni-litter-pair > .alumni-litter--paired:first-child .alumni-cards{padding-left:84px !important;}
+.alumni-litter-pair > .alumni-litter--paired:last-child .alumni-litter-heading{transform:translateX(-88px) !important;}
+.alumni-litter-pair > .alumni-litter--paired:last-child .alumni-cards{padding-left:0 !important;}
+}
