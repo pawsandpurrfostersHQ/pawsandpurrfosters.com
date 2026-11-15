@@ -4110,3 +4110,122 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
     gap:18px!important;
   }
 }
+
+
+/* HOMEPAGE ONLY — Upcoming Adoption Event: balanced two-column landscape card.
+   The homepage renderer nests the details and attendee gallery in .event-card-content. */
+#events > #event-featured {
+  display:block !important;
+  width:100% !important;
+  max-width:1120px !important;
+  margin:0 auto !important;
+  min-width:0 !important;
+}
+#events > #event-featured .event-card--compact {
+  display:block !important;
+  width:100% !important;
+  max-width:none !important;
+  min-width:0 !important;
+  min-height:370px !important;
+  height:auto !important;
+  box-sizing:border-box !important;
+  padding:34px clamp(26px,4vw,48px) !important;
+  border:1px solid #8979A5 !important;
+  border-radius:26px !important;
+  background:#8979A5 !important;
+  color:#fff !important;
+  box-shadow:0 12px 30px rgba(82,72,92,.14) !important;
+}
+#events > #event-featured .event-card-content {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  grid-template-rows:repeat(6,auto) !important;
+  align-content:center !important;
+  align-items:center !important;
+  justify-items:center !important;
+  column-gap:clamp(26px,4vw,52px) !important;
+  row-gap:7px !important;
+  width:100% !important;
+  max-width:none !important;
+  min-width:0 !important;
+  min-height:300px !important;
+  height:100% !important;
+  text-align:center !important;
+  box-sizing:border-box !important;
+}
+#events > #event-featured .event-card-content > .eyebrow {
+  grid-column:1 !important; grid-row:1 !important;
+  justify-self:center !important; text-align:center !important;
+  color:#fff !important; margin:0 0 2px !important;
+}
+#events > #event-featured .event-card-content > h2 {
+  grid-column:1 !important; grid-row:2 !important;
+  justify-self:center !important; text-align:center !important;
+  color:#fff !important; font-family:"Playfair Display",Georgia,serif !important;
+  font-size:clamp(27px,3vw,36px) !important; line-height:1.15 !important;
+  margin:0 0 5px !important;
+}
+#events > #event-featured .event-card-content > .event-date {
+  grid-column:1 !important; grid-row:3 !important;
+  justify-self:center !important; text-align:center !important;
+  color:#fff !important; margin:2px 0 !important;
+}
+#events > #event-featured .event-card-content > .event-time {
+  grid-column:1 !important; grid-row:4 !important;
+  justify-self:center !important; text-align:center !important;
+  color:#fff !important; margin:2px 0 !important;
+}
+#events > #event-featured .event-card-content > .event-location-name {
+  grid-column:1 !important; grid-row:5 !important;
+  justify-self:center !important; text-align:center !important;
+  color:#fff !important; margin:2px 0 !important;
+}
+#events > #event-featured .event-card-content > .event-address {
+  grid-column:1 !important; grid-row:6 !important;
+  justify-self:center !important; text-align:center !important;
+  color:#57456F !important; margin:5px auto 0 !important;
+}
+#events > #event-featured .event-card-content > .event-attending-block {
+  grid-column:2 !important; grid-row:1 / span 6 !important;
+  align-self:center !important; justify-self:stretch !important;
+  display:flex !important; flex-direction:column !important;
+  align-items:center !important; justify-content:center !important;
+  width:100% !important; max-width:none !important; min-width:0 !important;
+  margin:0 !important; text-align:center !important;
+}
+#events > #event-featured .event-attending {
+  color:#fff !important; text-align:center !important;
+  font-family:"Playfair Display",Georgia,serif !important;
+  font-size:clamp(22px,2.4vw,29px) !important;
+  font-weight:600 !important; margin:0 0 12px !important;
+}
+#events > #event-featured .attending-kitten-gallery {
+  width:100% !important; max-width:460px !important;
+  height:250px !important; margin:0 auto !important;
+}
+#events > #event-featured .attending-kitten-slide img {
+  height:195px !important; flex-basis:195px !important;
+}
+#events > #event-featured .event-card-content p,
+#events > #event-featured .event-card-content strong {
+  color:#fff !important;
+}
+@media(max-width:760px) {
+  #events > #event-featured .event-card--compact {
+    min-height:0 !important; padding:26px 20px !important;
+  }
+  #events > #event-featured .event-card-content {
+    display:flex !important; flex-direction:column !important;
+    align-items:center !important; min-height:0 !important;
+    height:auto !important; gap:9px !important;
+  }
+  #events > #event-featured .event-card-content > * {
+    width:100% !important; text-align:center !important;
+    grid-column:auto !important; grid-row:auto !important;
+  }
+  #events > #event-featured .event-card-content > .event-attending-block {
+    margin:14px auto 0 !important;
+  }
+  #events > #event-featured .attending-kitten-gallery { height:205px !important; }
+  #events > #event-featured .attending-kitten-slide img { height:155px !important; flex-basis:155px !important; }
+}
