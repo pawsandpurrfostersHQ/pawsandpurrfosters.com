@@ -225,17 +225,27 @@ function renderKittenCards() {
     const card = track.querySelector(".kitten-card");
     if (card) track.scrollBy({ left: direction * (card.getBoundingClientRect().width + 22), behavior: "smooth" });
   };
-  const setScrollbarVisible = visible => carousel.classList.toggle("is-scrollbar-visible", visible);
+  let scrollbarHideTimer = null;
+  const setScrollbarVisible = (visible, linger = false) => {
+    if (scrollbarHideTimer) clearTimeout(scrollbarHideTimer);
+    carousel.classList.toggle("is-scrollbar-visible", visible);
+    if (visible && linger) {
+      scrollbarHideTimer = setTimeout(() => setScrollbarVisible(false), 12000);
+    }
+  };
   track.addEventListener("pointerover", event => {
-    if (event.pointerType === "mouse" && event.target.closest(".kitten-card")) setScrollbarVisible(true);
+    if (event.pointerType === "mouse" && event.target.closest(".kitten-card")) setScrollbarVisible(true, true);
   });
   track.addEventListener("pointerout", event => {
     if (event.pointerType !== "mouse" || !event.target.closest(".kitten-card")) return;
-    if (!event.relatedTarget?.closest?.(".kitten-card")) setScrollbarVisible(false);
+    if (!event.relatedTarget?.closest?.(".kitten-card")) setScrollbarVisible(true, true);
   });
-  track.addEventListener("focusin", () => setScrollbarVisible(true));
+  track.addEventListener("pointerdown", event => {
+    if (event.pointerType === "mouse" && event.target.closest(".kitten-track")) setScrollbarVisible(true, true);
+  });
+  track.addEventListener("focusin", () => setScrollbarVisible(true, true));
   track.addEventListener("focusout", event => {
-    if (!track.contains(event.relatedTarget)) setScrollbarVisible(false);
+    if (!track.contains(event.relatedTarget)) setScrollbarVisible(true, true);
   });
   previous.addEventListener("click", () => scrollCards(-1));
   next.addEventListener("click", () => scrollCards(1));
@@ -247,6 +257,37 @@ function renderKittenCards() {
 function mapsLink(address, mapsUrl = "") {
   return mapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address || "")}`;
 }
+
+
+// Small, auto-advancing photo strip for kittens attending an adoption event.
+window.renderPawsAttendeeGallery = function(names) {
+  const kittens = Array.isArray(window.PAWS_KITTENS) ? window.PAWS_KITTENS : [];
+  const records = (names || []).map(name => kittens.find(k => k.name === name)).filter(Boolean);
+  if (!records.length) return "";
+  const prefix = document.body.classList.contains("events-page") ? "../" : "";
+  const slides = records.map((kitten, index) => {
+    const photo = kitten.image || (Array.isArray(kitten.photos) ? kitten.photos[0] : "");
+    if (!photo) return "";
+    return `<figure class="attending-kitten-slide${index === 0 ? " is-active" : ""}">
+      <img src="${escapeHTML(prefix + photo)}" alt="${escapeHTML(kitten.name)}" loading="lazy">
+      <figcaption>${escapeHTML(kitten.name)}</figcaption>
+    </figure>`;
+  }).filter(Boolean).join("");
+  return slides ? `<div class="attending-kitten-gallery" aria-label="Photos of kittens attending">${slides}</div>` : "";
+};
+window.initPawsAttendeeGalleries = function(root = document) {
+  root.querySelectorAll(".attending-kitten-gallery:not([data-rotating])").forEach(gallery => {
+    gallery.dataset.rotating = "true";
+    const slides = Array.from(gallery.querySelectorAll(".attending-kitten-slide"));
+    if (slides.length < 2) return;
+    let active = 0;
+    setInterval(() => {
+      slides[active].classList.remove("is-active");
+      active = (active + 1) % slides.length;
+      slides[active].classList.add("is-active");
+    }, 3200);
+  });
+};
 
 function renderEvents() {
   const data = window.PAWS_EVENT_DATA;
@@ -271,7 +312,7 @@ function renderEvents() {
       ? [attending.slice(0,4), attending.slice(4,8)].filter(line => line.length).map(line => line.map(escapeHTML).join(", ")).join("<br>")
       : attending.map(escapeHTML).join(", ");
     const attendingMarkup = attending.length
-      ? `<p class="event-attending"><strong>Kittens attending:</strong><br>${attendingLines}</p>`
+      ? `<div class="event-attending-block"><p class="event-attending"><strong>Kittens attending</strong></p>${window.renderPawsAttendeeGallery ? window.renderPawsAttendeeGallery(attending) : ""}<p class="event-attending-names">${attendingLines}</p></div>`
       : "";
     const value = currentEvent
       ? { date:event.date || "Coming Soon", time:event.time || "Coming Soon", location:event.location || "Coming Soon", address:event.address || "Coming Soon" }
