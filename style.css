@@ -2176,14 +2176,13 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
   .kitten-track::-webkit-scrollbar-thumb { transition:none; }
 }
 
-/* Single-kitten foster litters stay card-sized and centered like the other rows. */
-.all-litters__cards--single { justify-content:center; }
-.all-litters__cards--single > .kitten-card {
-  flex:0 0 clamp(220px, calc((100% - 66px) / 4), 320px);
-}
-@media(max-width:760px) {
-  .all-litters__cards--single > .kitten-card { flex-basis:min(78vw,320px); }
+
+
+/* Center one-card Foster Alumni litters without stretching the card. */
+.alumni-cards--single { justify-content:center; }
+.alumni-cards--single > .alumni-card {
+  flex:0 0 clamp(220px, calc((100% - 44px) / 3), 320px);
 }
 @media(max-width:500px) {
-  .all-litters__cards--single > .kitten-card { flex-basis:min(76vw,300px); }
+  .alumni-cards--single > .alumni-card { flex-basis:min(76vw,310px); }
 }
