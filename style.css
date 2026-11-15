@@ -4316,3 +4316,27 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
     height:189px !important;
   }
 }
+
+
+/* Final homepage layout correction: the event section itself must not create
+   two columns. The featured card owns its own left/right two-column layout. */
+#events.event.section {
+  display:block !important;
+  width:100% !important;
+  max-width:1120px !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+#events.event.section > #event-featured,
+#events.event.section > #home-special-event,
+#events.event.section > .event-page-link {
+  width:100% !important;
+  max-width:none !important;
+  min-width:0 !important;
+}
+#events.event.section > #event-featured {
+  margin:0 auto !important;
+}
+@media (max-width:760px) {
+  #events.event.section { display:block !important; }
+}
