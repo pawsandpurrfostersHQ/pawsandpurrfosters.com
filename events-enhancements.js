@@ -60,7 +60,7 @@ function init(){
    if(next){const n=next.item;html+='<div class="event-next-preview"><p class="eyebrow">Up next</p><h3>'+esc(eventHeading(n,next.kind))+'</h3><p class="event-date"><strong>'+esc(n.date||"Date coming soon")+'</strong></p>'+renderActivity(n,missed.next.start,n.status==="canceled"||n.status==="rescheduled")+(n.description?'<p>'+esc(n.description)+'</p>':"")+'<p class="event-location-name"><strong>'+esc(n.location||"Location details to be announced")+'</strong></p>'+map(n.address,n.mapsUrl)+(kittensFor(n).length?'<p class="event-attending"><strong>Kittens Attending:</strong><br>'+kittensFor(n).map(esc).join(", ")+'</p>':"")+'</div>';}
    else html+='<p>Check back soon for our next opportunity to meet our adoptable kittens.</p>';return html;
   }
-  html+='<p class="eyebrow event-next-label">Next Event</p><h2>'+esc(eventHeading(item,record.kind))+'</h2>';
+  html+='<p class="eyebrow event-next-label">Coming Up Next</p><h2>'+esc(eventHeading(item,record.kind))+'</h2>';
   if(changed)html+=scheduleChange(item,item.status);
   if(record.kind==="special")html+='<p class="event-date"><strong>'+esc(item.date||"Date coming soon")+'</strong></p>'+renderActivity(item,record.start,changed)+(item.description?'<p>'+esc(item.description)+'</p>':"");
   else html+=countdown(record.start,record.end)+(record.start<=new Date()?'<p class="event-live-label">Happening Now!</p>':"")+'<div class="event-meta-row"><p class="event-date"><strong>'+esc(item.date||"Date coming soon")+'</strong></p><p class="event-time"><strong>'+esc(timeForVisitor(item.time||"10 a.m. – 4 p.m.",record.start))+'</strong></p></div>';
@@ -73,7 +73,7 @@ function init(){
   const activity=renderActivity(item,record.start,changed);
   const meta='<div class="event-meta-row"><p class="event-date"><strong>'+esc(item.date||"Date coming soon")+'</strong></p><p class="event-time"><strong>'+esc(item.time||item.adoptionTime||"Time to be announced")+'</strong></p></div>';
   const location='<div class="event-location-block"><p class="event-location-name"><strong>'+esc(item.location||"Location details to be announced")+'</strong></p>'+map(item.address,item.mapsUrl)+'</div>';
-  return '<article class="event-card event-card--compact"><div class="event-card-content"><p class="eyebrow event-next-label">Next Event</p><h2>'+esc(item.title||"Special Adoption Event")+'</h2>'+(changed?scheduleChange(item,item.status):"")+(record.start?countdown(record.start,record.end):"")+meta+'<div class="special-event-activities">'+activity+'</div>'+location+'<p class="special-event-description">'+esc(item.description||"Come meet our foster kittens and learn more about this special event.")+'</p>'+attending+'</div></article>';
+  return '<article class="event-card event-card--compact"><div class="event-card-content"><p class="eyebrow event-next-label">Coming Up Next</p><h2>'+esc(item.title||"Special Adoption Event")+'</h2>'+(changed?scheduleChange(item,item.status):"")+(record.start?countdown(record.start,record.end):"")+meta+'<div class="special-event-activities">'+activity+'</div>'+location+'<p class="special-event-description">'+esc(item.description||"Come meet our foster kittens and learn more about this special event.")+'</p>'+attending+'</div></article>';
  };
  function renderDisplays(){
   const now=new Date(),today=todayLA(),events=allEvents(),canceledFeatured=events.find(x=>x.kind==="featured"&&x.canceled&&now<x.end);
