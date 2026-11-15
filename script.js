@@ -259,7 +259,7 @@ function mapsLink(address, mapsUrl = "") {
 }
 
 
-// Small, auto-advancing photo strip for kittens attending an adoption event.
+// Attendee photo carousel with profile links and one shared rotation loop.
 window.renderPawsAttendeeGallery = function(names) {
   const kittens = Array.isArray(window.PAWS_KITTENS) ? window.PAWS_KITTENS : [];
   const records = (names || []).map(name => kittens.find(k => k.name === name)).filter(Boolean);
@@ -268,25 +268,32 @@ window.renderPawsAttendeeGallery = function(names) {
   const slides = records.map((kitten, index) => {
     const photo = kitten.image || (Array.isArray(kitten.photos) ? kitten.photos[0] : "");
     if (!photo) return "";
+    const profile = kitten.profileUrl ? prefix + kitten.profileUrl : "#";
     return `<figure class="attending-kitten-slide${index === 0 ? " is-active" : ""}">
       <img src="${escapeHTML(prefix + photo)}" alt="${escapeHTML(kitten.name)}" loading="lazy">
-      <figcaption>${escapeHTML(kitten.name)}</figcaption>
+      <figcaption><a class="attending-kitten-name" href="${escapeHTML(profile)}">${escapeHTML(kitten.name)}</a></figcaption>
     </figure>`;
   }).filter(Boolean).join("");
   return slides ? `<div class="attending-kitten-gallery" aria-label="Photos of kittens attending">${slides}</div>` : "";
 };
 window.initPawsAttendeeGalleries = function(root = document) {
-  root.querySelectorAll(".attending-kitten-gallery:not([data-rotating])").forEach(gallery => {
-    gallery.dataset.rotating = "true";
+  root.querySelectorAll(".attending-kitten-gallery").forEach(gallery => {
     const slides = Array.from(gallery.querySelectorAll(".attending-kitten-slide"));
-    if (slides.length < 2) return;
-    let active = 0;
-    setInterval(() => {
-      slides[active].classList.remove("is-active");
-      active = (active + 1) % slides.length;
-      slides[active].classList.add("is-active");
-    }, 3200);
+    const active = slides.findIndex(slide => slide.classList.contains("is-active"));
+    gallery.dataset.activeIndex = String(Math.max(0, active));
   });
+  if (window.__pawsAttendeeGalleryTimer) return;
+  window.__pawsAttendeeGalleryTimer = setInterval(() => {
+    document.querySelectorAll(".attending-kitten-gallery").forEach(gallery => {
+      const slides = Array.from(gallery.querySelectorAll(".attending-kitten-slide"));
+      if (slides.length < 2) return;
+      let active = Number(gallery.dataset.activeIndex || 0);
+      if (slides[active]) slides[active].classList.remove("is-active");
+      active = (active + 1) % slides.length;
+      if (slides[active]) slides[active].classList.add("is-active");
+      gallery.dataset.activeIndex = String(active);
+    });
+  }, 5500);
 };
 
 function renderEvents() {
@@ -312,7 +319,7 @@ function renderEvents() {
       ? [attending.slice(0,4), attending.slice(4,8)].filter(line => line.length).map(line => line.map(escapeHTML).join(", ")).join("<br>")
       : attending.map(escapeHTML).join(", ");
     const attendingMarkup = attending.length
-      ? `<div class="event-attending-block"><p class="event-attending"><strong>Kittens attending</strong></p>${window.renderPawsAttendeeGallery ? window.renderPawsAttendeeGallery(attending) : ""}<p class="event-attending-names">${attendingLines}</p></div>`
+      ? `<div class="event-attending-block"><p class="event-attending"><strong>Kittens attending</strong></p>${window.renderPawsAttendeeGallery ? window.renderPawsAttendeeGallery(attending) : ""}</div>`
       : "";
     const value = currentEvent
       ? { date:event.date || "Coming Soon", time:event.time || "Coming Soon", location:event.location || "Coming Soon", address:event.address || "Coming Soon" }
