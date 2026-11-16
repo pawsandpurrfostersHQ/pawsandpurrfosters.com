@@ -901,6 +901,17 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
   color:var(--muted);
   line-height:1.7;
 }
+.faq-page .faq-item > ul {
+  margin:0;
+  padding:0 30px 18px 44px;
+  color:var(--muted);
+  line-height:1.7;
+}
+.faq-page .faq-item > ul li {
+  padding-left:4px;
+  margin:0 0 8px;
+}
+.faq-page .faq-item > ul li:last-child { margin-bottom:0; }
 .faq-page .faq-item[open] > p:first-of-type { padding-top:15px; }
 .faq-page .faq-item a,
 .faq-page .faq-footer-note a { color:var(--purple-dark); font-weight:700; text-decoration:underline; text-underline-offset:3px; }
