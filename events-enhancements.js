@@ -33,18 +33,21 @@ function cd(start,end,label){
  const now=new Date(),ms=start-now;
  if(ms>0){
   if(ms>86400000){const days=Math.ceil(ms/86400000);return days===1?"Coming tomorrow!":"Coming in "+days+" days!";}
-  if(ms>=3600000){const hours=Math.floor(ms/3600000);return "Happening in "+hours+" "+(hours===1?"hour":"hours")+"!";}
-  const minutes=Math.max(1,Math.ceil(ms/60000));return "Happening in "+minutes+" "+(minutes===1?"minute":"minutes")+"!";
+  const totalMinutes=Math.max(1,Math.floor(ms/60000));
+  const hours=Math.floor(totalMinutes/60),minutes=totalMinutes%60;
+  if(hours&&minutes)return "Happening in "+hours+" "+(hours===1?"hour":"hours")+" and "+minutes+" "+(minutes===1?"minute":"minutes")+"!";
+  if(hours)return "Happening in "+hours+" "+(hours===1?"hour":"hours")+"!";
+  return "Happening in "+totalMinutes+" "+(totalMinutes===1?"minute":"minutes")+"!";
  }
  if(end&&now>=end)return "You missed us today!";
  if(!end&&label==="Kitty Yoga")return "Kitty Yoga is starting!";
- if(now-start<5*60000)return "Just started!";
+ if(now-start<60000)return "Just started!";
  if(end){
-  const remaining=end-now;
-  if(remaining>=3600000){const hours=Math.floor(remaining/3600000);return hours+" "+(hours===1?"hour":"hours")+" left!";}
-  const minutes=Math.max(1,Math.ceil(remaining/60000));
-  if(minutes<=30)return "Last chance to visit our kittens today! "+minutes+" "+(minutes===1?"minute":"minutes")+" left!";
-  return minutes+" minutes left!";
+  const totalMinutes=Math.max(1,Math.floor((end-now)/60000));
+  const hours=Math.floor(totalMinutes/60),minutes=totalMinutes%60;
+  if(hours&&minutes)return hours+" "+(hours===1?"hour":"hours")+" and "+minutes+" "+(minutes===1?"minute":"minutes")+" left!";
+  if(hours)return hours+" "+(hours===1?"hour":"hours")+" left!";
+  return totalMinutes+" "+(totalMinutes===1?"minute":"minutes")+" left!";
  }
  return "Happening Now!";
 }
