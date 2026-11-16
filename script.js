@@ -325,7 +325,7 @@ function renderEvents() {
       ? [attending.slice(0,4), attending.slice(4,8)].filter(line => line.length).map(line => line.map(escapeHTML).join(", ")).join("<br>")
       : attending.map(escapeHTML).join(", ");
     const attendingMarkup = attending.length
-      ? `<div class="event-attending-block"><p class="event-attending"><strong>Kittens attended</strong></p>${window.renderPawsAttendeeGallery ? window.renderPawsAttendeeGallery(attending) : ""}</div>`
+      ? `<div class="event-attending-block"><p class="event-attending"><strong>Kittens Attended</strong></p>${window.renderPawsAttendeeGallery ? window.renderPawsAttendeeGallery(attending) : ""}</div>`
       : "";
     const value = currentEvent
       ? { date:event.date || "Coming Soon", time:event.time || "Coming Soon", location:event.location || "Coming Soon", address:event.address || "Coming Soon" }
@@ -367,10 +367,16 @@ function renderEvents() {
           return;
         }
         const remaining = startAt.getTime() - Date.now();
-        const hours = Math.ceil(remaining / 3600000);
-        countdown.textContent = hours < 1 ? "Starts in less than an hour" : hours < 24
-          ? `Starts in ${hours} ${hours === 1 ? "hour" : "hours"}`
-          : `Starts in ${Math.ceil(hours / 24)} ${Math.ceil(hours / 24) === 1 ? "day" : "days"}`;
+        if (remaining > 86400000) {
+          const days = Math.ceil(remaining / 86400000);
+          countdown.textContent = days === 1 ? "Coming tomorrow!" : `Coming in ${days} days!`;
+        } else if (remaining > 3600000) {
+          const hours = Math.ceil(remaining / 3600000);
+          countdown.textContent = `Happening in ${hours} ${hours === 1 ? "hour" : "hours"}!`;
+        } else {
+          const minutes = Math.max(1, Math.ceil(remaining / 60000));
+          countdown.textContent = `Happening in ${minutes} ${minutes === 1 ? "minute" : "minutes"}!`;
+        }
         countdown.hidden = false;
       };
       refreshCountdown();
