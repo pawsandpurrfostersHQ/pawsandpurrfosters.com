@@ -275,7 +275,19 @@ h3 { font-family: "Playfair Display", serif; font-size: 27px; margin: 6px 0; }
   background: white; border: 1px solid var(--line);
 }
 .contact-card p:not(.eyebrow) { color: var(--muted); }
-.social-buttons { display: flex; justify-content: center; gap: 12px; margin-top: 25px; }
+.social-buttons { display: flex; justify-content: center; gap: 12px; margin-top: 25px; flex-wrap: wrap; }
+.social-buttons .email-contact-button {
+  background: var(--sage);
+  color: #fff;
+  border-color: var(--sage);
+}
+.social-buttons .email-contact-button:hover {
+  background: #718b72;
+  border-color: #718b72;
+}
+.contact-email { margin: 14px 0 0; font-weight: 600; }
+.contact-email a { color: var(--sage-dark); text-decoration: none; }
+.contact-email a:hover { text-decoration: underline; }
 
 footer {
   display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap;
