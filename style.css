@@ -4776,3 +4776,21 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .adoption-home-checklist strong {
   color: var(--ink);
 }
+
+
+/* Collapsible FAQ question form */
+.faq-question-accordion{margin-top:18px;border:1px solid rgba(117,98,141,.2);border-radius:16px;background:rgba(255,255,255,.72);overflow:hidden}
+.faq-question-summary{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 22px;cursor:pointer;list-style:none}
+.faq-question-summary::-webkit-details-marker{display:none}
+.faq-question-heading{display:grid;gap:7px;min-width:0}
+.faq-question-heading strong{color:var(--ink);font-family:"Playfair Display",Georgia,serif;font-size:clamp(23px,3vw,30px);line-height:1.2}
+.faq-question-heading>span{color:var(--muted);font-size:14px;line-height:1.65}
+.faq-question-toggle{display:inline-flex;align-items:center;justify-content:center;gap:10px;flex:0 0 auto;padding:10px 15px;border:1px solid rgba(117,98,141,.24);border-radius:10px;background:#fff;color:var(--purple-dark);font-size:13px;font-weight:750;white-space:nowrap}
+.faq-question-toggle>span{font-size:19px;line-height:1;transition:transform .18s ease}
+.faq-question-accordion[open] .faq-question-toggle>span{transform:rotate(180deg)}
+.faq-question-summary:hover .faq-question-toggle{border-color:var(--purple);background:#f8f5fa}
+.faq-question-summary:focus-visible{outline:3px solid var(--sage-dark);outline-offset:-4px}
+.faq-question-content{padding:0 22px 24px;border-top:1px solid rgba(117,98,141,.13)}
+.faq-question-content h3{margin:20px 0 8px;color:var(--purple-dark);font-family:"Playfair Display",Georgia,serif;font-size:23px}
+.faq-question-content>p{color:var(--muted);margin:0 0 15px}
+@media(max-width:640px){.faq-question-summary{align-items:flex-start;flex-direction:column;gap:14px;padding:17px}.faq-question-toggle{font-size:12px;padding:9px 13px}.faq-question-content{padding:0 16px 20px}}
