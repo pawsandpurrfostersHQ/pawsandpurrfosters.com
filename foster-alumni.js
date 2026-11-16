@@ -252,6 +252,14 @@ function renderFosterAlumni(kittenList, today = new Date()) {
     return renderAlumniLitter(litter, kittens, alumniIds, today);
   }).join("");
 
+  // Start every alumni card row at its true leading edge on first page load.
+  // Mobile browsers can restore a stale horizontal scroll offset before layout settles;
+  // resetting on the next frame prevents the first card appearing clipped/off-center.
+  container.querySelectorAll(".alumni-litter:not(.alumni-litter--paired):not(.alumni-litter--temporary) .alumni-cards").forEach(track => {
+    track.scrollLeft = 0;
+    requestAnimationFrame(() => { track.scrollLeft = 0; });
+  });
+
   container.querySelectorAll(".alumni-photo-carousel").forEach(carousel => {
     const image = carousel.querySelector(".alumni-main-photo > img");
     const photoArea = carousel.querySelector(".alumni-main-photo");
