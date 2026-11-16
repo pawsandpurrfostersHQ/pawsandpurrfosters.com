@@ -4806,3 +4806,61 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .faq-question-content h3{margin:20px 0 8px;color:var(--purple-dark);font-family:"Playfair Display",Georgia,serif;font-size:23px}
 .faq-question-content>p{color:var(--muted);margin:0 0 15px}
 @media(max-width:640px){.faq-question-summary{align-items:flex-start;flex-direction:column;gap:14px;padding:17px}.faq-question-toggle{font-size:12px;padding:9px 13px}.faq-question-content{padding:0 16px 20px}}
+
+
+/* Mobile refinements requested after reviewing the live site on a phone. */
+@media (max-width: 760px) {
+  /* Keep current-foster cards within the usable carousel width, including arrow gutters. */
+  .all-litters__carousel.has-overflow { padding: 0 38px; }
+  .all-litters__cards { min-width: 0; width: 100%; }
+  .all-litters__cards > .kitten-card {
+    flex: 0 0 min(100%, 420px);
+    width: min(100%, 420px);
+    min-width: 0;
+  }
+
+  /* Foster Alumni cards and temporary notices should never exceed their carousel viewport. */
+  .alumni-carousel { padding: 0 38px; }
+  .alumni-carousel--paired { padding: 0; }
+  .alumni-cards { min-width: 0; width: 100%; }
+  .alumni-card { flex: 0 0 min(100%, 420px); width: min(100%, 420px); min-width: 0; }
+  .alumni-temporary-notice--pair,
+  .alumni-temporary-notice--eleventh { flex: 0 0 min(100%, 420px); width: min(100%, 420px); }
+  .alumni-cards--single { grid-template-columns: minmax(0, 1fr) !important; }
+  .alumni-cards--single > .alumni-card {
+    grid-column: 1 !important;
+    width: min(100%, 420px) !important;
+    justify-self: center;
+  }
+
+  /* Keep the decorative rules balanced on both sides of "Kittens Attended". */
+  #event-featured .event-attending,
+  .events-page #event-featured .event-attending,
+  .events-page .event-card-list .event-attending {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+  #event-featured .event-attending strong,
+  .events-page #event-featured .event-attending strong,
+  .events-page .event-card-list .event-attending strong {
+    display: inline !important;
+    width: auto !important;
+    max-width: none !important;
+    white-space: nowrap !important;
+  }
+  #event-featured .event-attending::before,
+  #event-featured .event-attending::after,
+  .events-page #event-featured .event-attending::before,
+  .events-page #event-featured .event-attending::after,
+  .events-page .event-card-list .event-attending::before,
+  .events-page .event-card-list .event-attending::after {
+    display: block !important;
+    flex: 0 1 54px !important;
+    width: clamp(20px, 8vw, 54px) !important;
+    height: 1px !important;
+  }
+}
