@@ -275,7 +275,19 @@ h3 { font-family: "Playfair Display", serif; font-size: 27px; margin: 6px 0; }
   background: white; border: 1px solid var(--line);
 }
 .contact-card p:not(.eyebrow) { color: var(--muted); }
-.social-buttons { display: flex; justify-content: center; gap: 12px; margin-top: 25px; }
+.social-buttons { display: flex; justify-content: center; gap: 12px; margin-top: 25px; flex-wrap: wrap; }
+.social-buttons .email-contact-button {
+  background: var(--sage);
+  color: #fff;
+  border-color: var(--sage);
+}
+.social-buttons .email-contact-button:hover {
+  background: #718b72;
+  border-color: #718b72;
+}
+.contact-email { margin: 14px 0 0; font-weight: 600; }
+.contact-email a { color: var(--sage-dark); text-decoration: none; }
+.contact-email a:hover { text-decoration: underline; }
 
 footer {
   display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap;
@@ -901,6 +913,17 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
   color:var(--muted);
   line-height:1.7;
 }
+.faq-page .faq-item > ul {
+  margin:0;
+  padding:0 30px 18px 44px;
+  color:var(--muted);
+  line-height:1.7;
+}
+.faq-page .faq-item > ul li {
+  padding-left:4px;
+  margin:0 0 8px;
+}
+.faq-page .faq-item > ul li:last-child { margin-bottom:0; }
 .faq-page .faq-item[open] > p:first-of-type { padding-top:15px; }
 .faq-page .faq-item a,
 .faq-page .faq-footer-note a { color:var(--purple-dark); font-weight:700; text-decoration:underline; text-underline-offset:3px; }
@@ -4689,3 +4712,97 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 #events.event.section > #event-featured {
   scroll-margin-top: 110px;
 }
+
+
+/* How to Adopt — keep application list text consistent with the step descriptions. */
+.adoption-step .adoption-application-options li {
+  color: var(--muted);
+}
+.adoption-step .adoption-application-options li::marker {
+  color: var(--muted);
+}
+
+
+/* Mobile adoption cards: keep the attendee heading on one line and give the kitten gallery clear space. */
+@media (max-width: 760px) {
+  #event-featured .event-attending-block,
+  .events-page #event-featured .event-attending-block {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    gap: 8px !important;
+    margin: 8px auto 0 !important;
+    text-align: center !important;
+  }
+  #event-featured .event-attending,
+  #event-featured .event-attending strong,
+  .events-page #event-featured .event-attending,
+  .events-page #event-featured .event-attending strong {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto 4px !important;
+    white-space: nowrap !important;
+    font-size: clamp(21px, 6vw, 27px) !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+  }
+  #event-featured .attending-kitten-gallery,
+  .events-page #event-featured .attending-kitten-gallery {
+    width: min(100%, 360px) !important;
+    height: 190px !important;
+    margin: 4px auto 0 !important;
+  }
+  #event-featured .attending-kitten-slide img,
+  .events-page #event-featured .attending-kitten-slide img {
+    height: 154px !important;
+  }
+  #event-featured .attending-kitten-slide figcaption,
+  .events-page #event-featured .attending-kitten-slide figcaption {
+    height: 36px !important;
+    padding: 5px 8px !important;
+  }
+  .events-page #event-featured .event-card--compact {
+    padding: 22px 18px !important;
+  }
+}
+
+
+/* How to Adopt — make the final take-home instructions easy to scan. */
+.adoption-home-checklist {
+  margin: 14px 0 8px;
+  padding-left: 22px;
+  color: var(--muted);
+}
+.adoption-home-checklist li {
+  margin: 10px 0;
+  padding-left: 5px;
+  line-height: 1.65;
+}
+.adoption-home-checklist li::marker {
+  color: var(--sage-dark);
+}
+.adoption-home-checklist strong {
+  color: var(--ink);
+}
+
+
+/* Collapsible FAQ question form */
+.faq-question-accordion{margin-top:18px;border:1px solid rgba(117,98,141,.2);border-radius:16px;background:rgba(255,255,255,.72);overflow:hidden}
+.faq-question-summary{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 22px;cursor:pointer;list-style:none}
+.faq-question-summary::-webkit-details-marker{display:none}
+.faq-question-heading{display:grid;gap:7px;min-width:0}
+.faq-question-heading strong{color:var(--ink);font-family:"Playfair Display",Georgia,serif;font-size:clamp(23px,3vw,30px);line-height:1.2}
+.faq-question-heading>span{color:var(--muted);font-size:14px;line-height:1.65}
+.faq-question-toggle{display:inline-flex;align-items:center;justify-content:center;gap:10px;flex:0 0 auto;padding:10px 15px;border:1px solid rgba(117,98,141,.24);border-radius:10px;background:#fff;color:var(--purple-dark);font-size:13px;font-weight:750;white-space:nowrap}
+.faq-question-toggle>span{font-size:19px;line-height:1;transition:transform .18s ease}
+.faq-question-accordion[open] .faq-question-toggle>span{transform:rotate(180deg)}
+.faq-question-summary:hover .faq-question-toggle{border-color:var(--purple);background:#f8f5fa}
+.faq-question-summary:focus-visible{outline:3px solid var(--sage-dark);outline-offset:-4px}
+.faq-question-content{padding:0 22px 24px;border-top:1px solid rgba(117,98,141,.13)}
+.faq-question-content h3{margin:20px 0 8px;color:var(--purple-dark);font-family:"Playfair Display",Georgia,serif;font-size:23px}
+.faq-question-content>p{color:var(--muted);margin:0 0 15px}
+@media(max-width:640px){.faq-question-summary{align-items:flex-start;flex-direction:column;gap:14px;padding:17px}.faq-question-toggle{font-size:12px;padding:9px 13px}.faq-question-content{padding:0 16px 20px}}
