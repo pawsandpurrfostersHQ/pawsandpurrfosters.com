@@ -370,8 +370,8 @@ function renderEvents() {
         if (remaining > 86400000) {
           const days = Math.ceil(remaining / 86400000);
           countdown.textContent = days === 1 ? "Coming tomorrow!" : `Coming in ${days} days!`;
-        } else if (remaining > 3600000) {
-          const hours = Math.ceil(remaining / 3600000);
+        } else if (remaining >= 3600000) {
+          const hours = Math.floor(remaining / 3600000);
           countdown.textContent = `Happening in ${hours} ${hours === 1 ? "hour" : "hours"}!`;
         } else {
           const minutes = Math.max(1, Math.ceil(remaining / 60000));
