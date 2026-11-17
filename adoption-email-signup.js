@@ -1,6 +1,7 @@
 (function () {
   "use strict";
   const ENDPOINT = "https://ovnbbpcrwbvotyevghcx.supabase.co/functions/v1/adoption-event-emails";
+  const SITE_BASE = "https://pawsandpurrfostershq.github.io/pawsandpurrfosters.com";
   const modal = document.createElement("div");
   modal.className = "adoption-email-modal";
   modal.hidden = true;
