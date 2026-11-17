@@ -84,6 +84,7 @@
     confirmation.className = "adoption-unsubscribe-modal";
     confirmation.innerHTML = `
       <section class="adoption-unsubscribe-dialog" role="dialog" aria-modal="true" aria-labelledby="adoption-unsubscribe-title" aria-describedby="adoption-unsubscribe-description">
+        <button type="button" class="adoption-unsubscribe-close" aria-label="Close confirmation" hidden>×</button>
         <p class="eyebrow">Paws &amp; Purr Fosters</p>
         <h2 id="adoption-unsubscribe-title">Are You Sure You Want to Unsubscribe?</h2>
         <p id="adoption-unsubscribe-description">Would you like to stop receiving email notifications about upcoming kitten adoption events?</p>
@@ -102,6 +103,8 @@
     const status = confirmation.querySelector(".adoption-unsubscribe-status");
     const yes = confirmation.querySelector(".adoption-unsubscribe-yes");
     const no = confirmation.querySelector(".adoption-unsubscribe-no");
+    const close = confirmation.querySelector(".adoption-unsubscribe-close");
+    let completed = false;
 
     function cleanUrl() {
       url.searchParams.delete("unsubscribe");
@@ -111,7 +114,16 @@
       confirmation.remove();
       document.body.classList.remove("adoption-email-modal-open");
       cleanUrl();
+      document.removeEventListener("keydown", handleConfirmationKeydown);
     }
+    function handleConfirmationKeydown(event) {
+      if (completed && event.key === "Escape") closeConfirmation();
+    }
+    close.addEventListener("click", closeConfirmation);
+    confirmation.addEventListener("click", function (event) {
+      if (completed && event.target === confirmation) closeConfirmation();
+    });
+    document.addEventListener("keydown", handleConfirmationKeydown);
 
     no.addEventListener("click", function () {
       title.textContent = "You're Staying Subscribed";
@@ -136,6 +148,9 @@
         });
         const result = await response.json();
         if (!response.ok || !result.ok) throw new Error(result.error || "We couldn't update your subscription. Please try again.");
+        completed = true;
+        confirmation.classList.add("is-complete");
+        close.hidden = false;
         title.textContent = "You've Been Unsubscribed";
         description.textContent = "You've been unsubscribed from adoption event emails. If you change your mind, you can resubscribe at any time by signing up for Adoption Event Updates on this website.";
         actions.innerHTML = "";
