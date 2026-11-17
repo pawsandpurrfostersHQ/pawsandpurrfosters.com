@@ -1,8 +1,9 @@
 /* Adoption Event Updates signup */
 .adoption-email-open {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
+  width: fit-content;
   margin: 18px auto 4px;
   padding: 13px 23px;
   border: 0;
