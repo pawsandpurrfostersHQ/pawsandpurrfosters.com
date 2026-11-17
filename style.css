@@ -5341,3 +5341,29 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
     padding: clamp(24px, 2.6vw, 34px) clamp(28px, 3.2vw, 44px) clamp(30px, 3.2vw, 42px) !important;
   }
 }
+
+
+/* Homepage Coming Soon: give the new signup button room within larger, balanced frames. */
+@media (min-width: 761px) {
+  #events.event.section > #event-featured.home-event-feature.is-coming-soon > .event-card--compact {
+    aspect-ratio: 2.1 / 1 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: clamp(30px, 3.2vw, 42px) !important;
+  }
+  #events.event.section > #event-featured.home-event-feature.is-coming-soon .event-feature-layout {
+    width: 100% !important;
+    max-width: none !important;
+  }
+  #events.event.section > #event-featured.home-event-feature.is-coming-soon .event-feature-details.event-coming-soon {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: none !important;
+    padding: clamp(28px, 3vw, 40px) clamp(30px, 3.5vw, 48px) !important;
+  }
+  #events.event.section > #event-featured.home-event-feature.is-coming-soon .adoption-email-open {
+    padding: 10px 18px !important;
+    font-size: .94em !important;
+    margin-top: 14px !important;
+  }
+}
