@@ -5315,3 +5315,17 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
   border: 0 !important;
   box-shadow: 0 12px 30px rgba(42,31,59,.16) !important;
 }
+
+
+/* Homepage Coming Soon card: modestly enlarge both frames while keeping the inset centered. */
+@media (min-width: 761px) {
+  #events.event.section > #event-featured.home-event-feature.is-coming-soon > .event-card--compact {
+    aspect-ratio: 2.5 / 1 !important;
+    padding: clamp(24px, 2.7vw, 34px) !important;
+  }
+  #events.event.section > #event-featured.home-event-feature.is-coming-soon .event-feature-details.event-coming-soon {
+    width: min(100%, 1040px) !important;
+    max-width: 1040px !important;
+    padding: clamp(22px, 2.4vw, 30px) clamp(28px, 3.2vw, 44px) !important;
+  }
+}
