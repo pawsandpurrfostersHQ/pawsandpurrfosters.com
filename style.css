@@ -5273,7 +5273,7 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
     max-width: none !important; min-width: 0 !important; min-height: 0 !important;
     height: auto !important; aspect-ratio: 2.65 / 1 !important;
     padding: clamp(20px, 2.4vw, 30px) !important; overflow: hidden !important;
-    background: #554477 !important; border: 0 !important;
+    background: #8979A5 !important; border: 0 !important;
     border-radius: 30px !important; box-shadow: 0 12px 30px rgba(42,31,59,.16) !important;
   }
   .events-page #event-featured.is-coming-soon > .event-card--compact::before {
@@ -5309,9 +5309,9 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
   }
 }
 
-/* Homepage Coming Soon outer frame: use the exact purple from the Events page. */
+/* Homepage and Events Coming Soon outer frames: use the supplied RGB(137,121,165) purple. */
 #event-featured.home-event-feature.is-coming-soon > .event-card--compact {
-  background: #554477 !important;
+  background: #8979A5 !important;
   border: 0 !important;
   box-shadow: 0 12px 30px rgba(42,31,59,.16) !important;
 }
