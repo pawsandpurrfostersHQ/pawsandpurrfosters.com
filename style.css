@@ -5257,3 +5257,54 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
     text-align: center !important;
   }
 }
+
+
+/* Events page Coming Soon card — match Homepage Edit One.
+   The page class is on <main>, not <body>; scope styles accordingly. */
+@media (min-width: 761px) {
+  .events-page #event-featured.is-coming-soon {
+    width: 100% !important; max-width: 1120px !important; min-width: 0 !important;
+    margin: 12px auto 34px !important;
+  }
+  .events-page #event-featured.is-coming-soon > .event-card--compact {
+    display: flex !important; flex-direction: column !important;
+    align-items: stretch !important; justify-content: center !important;
+    box-sizing: border-box !important; width: 100% !important;
+    max-width: none !important; min-width: 0 !important; min-height: 0 !important;
+    height: auto !important; aspect-ratio: 2.65 / 1 !important;
+    padding: clamp(20px, 2.4vw, 30px) !important; overflow: hidden !important;
+    background: #554477 !important; border: 0 !important;
+    border-radius: 30px !important; box-shadow: 0 12px 30px rgba(42,31,59,.16) !important;
+  }
+  .events-page #event-featured.is-coming-soon > .event-card--compact::before {
+    content: none !important; display: none !important;
+  }
+  .events-page #event-featured.is-coming-soon .event-feature-layout {
+    display: flex !important; flex: 1 1 auto !important; flex-direction: column !important;
+    align-items: stretch !important; justify-content: center !important;
+    box-sizing: border-box !important; width: 100% !important; min-width: 0 !important;
+    min-height: 0 !important; height: 100% !important; gap: 0 !important;
+    grid-template-columns: none !important; grid-template-areas: none !important;
+  }
+  .events-page #event-featured.is-coming-soon .event-feature-details.event-coming-soon {
+    display: flex !important; flex: 1 1 auto !important; flex-direction: column !important;
+    align-items: center !important; justify-content: center !important;
+    box-sizing: border-box !important; width: 100% !important; max-width: none !important;
+    min-width: 0 !important; min-height: 0 !important; height: 100% !important;
+    margin: 0 !important; padding: clamp(22px, 2.6vw, 34px) clamp(28px, 4vw, 52px) !important;
+    border: 0 !important; border-radius: 22px !important;
+    background: #f4f0f8 !important; color: #302442 !important; text-align: center !important;
+  }
+  .events-page #event-featured.is-coming-soon .event-feature-details.event-coming-soon > * {
+    max-width: 100% !important; text-align: center !important;
+  }
+  .events-page #event-featured.is-coming-soon .coming-soon-schedule-note {
+    margin: 8px 0 0 !important; color: #44364b !important;
+    font-size: 15px !important; font-weight: 700 !important;
+  }
+}
+@media (max-width: 760px) {
+  .events-page #event-featured.is-coming-soon .coming-soon-schedule-note {
+    margin: 8px 0 0 !important; text-align: center !important;
+  }
+}
