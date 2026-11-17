@@ -4865,3 +4865,57 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
     text-underline-offset:3px;
   }
 }
+
+
+/* Events tab Coming Soon state — add a white inset panel for depth and readable copy. */
+.events-page #event-featured .event-feature-layout:has(.event-feature-details.event-coming-soon) {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 0 !important;
+  height: auto !important;
+}
+.events-page #event-featured .event-feature-details.event-coming-soon {
+  width: min(100%, 900px) !important;
+  max-width: 900px !important;
+  min-height: 0 !important;
+  margin: 0 auto !important;
+  padding: clamp(24px, 3.5vw, 42px) !important;
+  border: 1px solid rgba(255,255,255,.72) !important;
+  border-radius: 22px !important;
+  background: #fff !important;
+  box-shadow: 0 10px 28px rgba(39,25,53,.16), inset 0 1px 0 rgba(255,255,255,.9) !important;
+  color: #44364b !important;
+  text-align: center !important;
+}
+.events-page #event-featured .event-feature-details.event-coming-soon .coming-soon-title {
+  margin: 0 0 8px !important;
+  color: #563674 !important;
+  -webkit-text-fill-color: #563674 !important;
+  font-size: clamp(34px, 4.5vw, 48px) !important;
+  line-height: 1.12 !important;
+}
+.events-page #event-featured .event-feature-details.event-coming-soon .coming-soon-secondary-title {
+  margin: 0 0 8px !important;
+  color: #315c3d !important;
+  -webkit-text-fill-color: #315c3d !important;
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: clamp(21px, 2.5vw, 27px) !important;
+  line-height: 1.3 !important;
+}
+.events-page #event-featured .event-feature-details.event-coming-soon .coming-soon-secondary-copy,
+.events-page #event-featured .event-feature-details.event-coming-soon .coming-soon-copy {
+  max-width: 720px !important;
+  margin: 8px auto 0 !important;
+  color: #44364b !important;
+  -webkit-text-fill-color: #44364b !important;
+  font-size: 16px !important;
+  line-height: 1.7 !important;
+  text-align: center !important;
+}
+@media (max-width: 760px) {
+  .events-page #event-featured .event-feature-details.event-coming-soon {
+    padding: 24px 18px !important;
+    border-radius: 18px !important;
+  }
+}
