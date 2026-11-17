@@ -5329,3 +5329,15 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
     padding: clamp(22px, 2.4vw, 30px) clamp(28px, 3.2vw, 44px) !important;
   }
 }
+
+
+/* Homepage Coming Soon: bring the inset closer to the outer frame for a unified composition. */
+@media (min-width: 761px) {
+  #events.event.section > #event-featured.home-event-feature.is-coming-soon .event-feature-details.event-coming-soon {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 auto !important;
+    padding: clamp(24px, 2.6vw, 34px) clamp(28px, 3.2vw, 44px) clamp(30px, 3.2vw, 42px) !important;
+  }
+}
