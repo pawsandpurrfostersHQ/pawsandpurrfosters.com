@@ -5014,3 +5014,54 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
     margin: 0 auto !important;
   }
 }
+
+/* Definitive desktop-only Coming Soon layout.
+   Higher-specificity selectors replace the older two-column/350px event-card rules.
+   Actual event cards, the Events tab, and mobile styling remain unchanged. */
+@media (min-width: 761px) {
+  #events > #event-featured.home-event-feature:has(.event-feature-details.event-coming-soon) {
+    display: block !important;
+    box-sizing: border-box !important;
+    width: min(100%, 1120px) !important;
+    max-width: 1120px !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 auto !important;
+  }
+  #events > #event-featured.home-event-feature:has(.event-feature-details.event-coming-soon) > .event-card--compact {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: auto !important;
+    padding: clamp(26px, 3vw, 38px) !important;
+  }
+  #events > #event-featured.home-event-feature:has(.event-feature-details.event-coming-soon) .event-feature-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    gap: 0 !important;
+  }
+  #events > #event-featured.home-event-feature:has(.event-feature-details.event-coming-soon) .event-feature-details.event-coming-soon {
+    display: block !important;
+    box-sizing: border-box !important;
+    flex: 0 1 980px !important;
+    width: min(100%, 980px) !important;
+    max-width: 980px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    padding: clamp(24px, 2.8vw, 34px) clamp(32px, 4vw, 52px) !important;
+  }
+}
