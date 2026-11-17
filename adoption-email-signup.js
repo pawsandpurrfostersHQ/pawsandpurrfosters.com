@@ -137,8 +137,8 @@
         const result = await response.json();
         if (!response.ok || !result.ok) throw new Error(result.error || "We couldn't update your subscription. Please try again.");
         title.textContent = "You've Been Unsubscribed";
-        description.textContent = "You've been unsubscribed from adoption event emails. You can sign up again at any time.";
-        actions.innerHTML = '<a class="adoption-unsubscribe-website" href="' + SITE_BASE + '/">Visit Paws &amp; Purr Fosters</a>';
+        description.textContent = "You've been unsubscribed from adoption event emails. If you change your mind, you can resubscribe at any time by signing up for Adoption Event Updates on this website.";
+        actions.innerHTML = "";
         status.textContent = "";
         cleanUrl();
       } catch (error) {
