@@ -16,7 +16,7 @@
   box-shadow: 0 7px 18px rgba(42,31,59,.14);
   transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
 }
-.adoption-email-open:hover { background: #75658f; transform: translateY(-1px); box-shadow: 0 9px 22px rgba(42,31,59,.18); }
+.adoption-email-open:hover { background: #8da483; transform: translateY(-2px); box-shadow: 0 9px 22px rgba(42,31,59,.18); }\n.adoption-email-open:active { transform: translateY(1px) scale(.98); }
 .adoption-email-open:focus-visible,
 .adoption-email-close:focus-visible,
 .adoption-email-submit:focus-visible { outline: 3px solid #b9adc9; outline-offset: 3px; }
