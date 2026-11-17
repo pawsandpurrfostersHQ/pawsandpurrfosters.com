@@ -51,6 +51,7 @@
     event.preventDefault();
     if (!form.reportValidity()) return;
     submit.disabled = true;
+    submit.textContent = "Signing Up…";
     try {
       const response = await fetch(ENDPOINT, {
         method: "POST",
