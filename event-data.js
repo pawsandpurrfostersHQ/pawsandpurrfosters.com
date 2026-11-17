@@ -48,10 +48,10 @@ window.PAWS_EVENT_DATA = {
     "active": true,
     "locations": [
       {
-        "name": "Pittsburg PetSmart",
-        "timing": "1st & 3rd Saturday of each month",
-        "address": "4655 Century Blvd, Pittsburg, CA 94565",
-        "mapsUrl": "https://maps.app.goo.gl/FSasx3ZRVWMepJCB7"
+        "name": "Pet Food Express",
+        "timing": "Every 3rd Saturday of each month",
+        "address": "5829 Lone Tree Way, Suite B, Antioch, CA 94531",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Pet+Food+Express%2C+5829+Lone+Tree+Way%2C+Antioch%2C+CA+94531"
       },
       {
         "name": "Antioch PetSmart",

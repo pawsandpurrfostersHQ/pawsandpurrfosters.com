@@ -55,6 +55,9 @@ appRoot.PAWS_KITTENS = [
       "olderChildren": "Yes",
       "youngerChildren": "Possibly — no direct experience"
     },
+    "pairingPhotos": [
+      "assets/kittens/diego-pair-1794902546009-1.jpg"
+    ],
     "adoptionStatus": "Available",
     "healthChecklist": [
       "Neutered",
@@ -73,8 +76,7 @@ appRoot.PAWS_KITTENS = [
       "Attention-loving",
       "Loves other cats"
     ],
-    "adoptionRequirements": [],
-    "pairingPhotos": []
+    "adoptionRequirements": []
   },
   {
     "id": "valentina",
@@ -109,6 +111,9 @@ appRoot.PAWS_KITTENS = [
       "olderChildren": "Yes",
       "youngerChildren": "Possibly — no direct experience"
     },
+    "pairingPhotos": [
+      "assets/kittens/diego-pair-1794902546009-1.jpg"
+    ],
     "adoptionStatus": "Available",
     "healthChecklist": [
       "Spayed",
@@ -127,8 +132,7 @@ appRoot.PAWS_KITTENS = [
       "Affectionate",
       "Vocal"
     ],
-    "adoptionRequirements": [],
-    "pairingPhotos": []
+    "adoptionRequirements": []
   },
   {
     "id": "claudia",
@@ -163,6 +167,9 @@ appRoot.PAWS_KITTENS = [
       "olderChildren": "Yes",
       "youngerChildren": "Possibly — no direct experience"
     },
+    "pairingPhotos": [
+      "assets/kittens/claudia-pair-1794902546038-2.jpg"
+    ],
     "adoptionStatus": "Available",
     "healthChecklist": [
       "Spayed",
@@ -183,8 +190,7 @@ appRoot.PAWS_KITTENS = [
     ],
     "pairingDescription": "Claudia and Paloma are biological sisters who are incredibly bonded and are always together. They love playing, chasing each other, and curling up together for naps. You will often find one right behind the other, and their close bond makes them an extra special pair to welcome into your home.",
     "adoptionRequirements": [],
-    "blackCatAdoptionNotice": true,
-    "pairingPhotos": []
+    "blackCatAdoptionNotice": true
   },
   {
     "id": "paloma",
@@ -219,6 +225,9 @@ appRoot.PAWS_KITTENS = [
       "olderChildren": "Yes",
       "youngerChildren": "Possibly — no direct experience"
     },
+    "pairingPhotos": [
+      "assets/kittens/claudia-pair-1794902546038-2.jpg"
+    ],
     "adoptionStatus": "Available",
     "healthChecklist": [
       "Spayed",
@@ -238,8 +247,7 @@ appRoot.PAWS_KITTENS = [
       "Cuddly"
     ],
     "pairingDescription": "Claudia and Paloma are sisters with a special bond and are rarely far apart. They follow each other everywhere, love chasing and playing together, and curl up side by side for naps. They are two super sweet kittens with so much love to give to their future family.",
-    "adoptionRequirements": [],
-    "pairingPhotos": []
+    "adoptionRequirements": []
   },
   {
     "id": "harvey",
@@ -274,6 +282,9 @@ appRoot.PAWS_KITTENS = [
       "olderChildren": "Yes",
       "youngerChildren": "No"
     },
+    "pairingPhotos": [
+      "assets/kittens/harvey-pair-1794902546059-3.jpg"
+    ],
     "adoptionStatus": "Available",
     "healthChecklist": [
       "Neutered",
@@ -293,8 +304,7 @@ appRoot.PAWS_KITTENS = [
       "Sweet"
     ],
     "pairingDescription": "Harvey and Melody are siblings, and these two tuxedo kittens are the sweetest twin duo! They love grooming each other, napping together, and playing side by side. When you see one, the other is never far behind.",
-    "adoptionRequirements": [],
-    "pairingPhotos": []
+    "adoptionRequirements": []
   },
   {
     "id": "melody",
@@ -329,6 +339,9 @@ appRoot.PAWS_KITTENS = [
       "olderChildren": "Yes",
       "youngerChildren": "No"
     },
+    "pairingPhotos": [
+      "assets/kittens/harvey-pair-1794902546059-3.jpg"
+    ],
     "adoptionStatus": "Available",
     "healthChecklist": [
       "Spayed",
@@ -348,8 +361,7 @@ appRoot.PAWS_KITTENS = [
       "Playful"
     ],
     "pairingDescription": "Melody and Harvey are brother and sister, and they are the sweetest twin tuxedo kitten pair ever! They are very bonded and enjoy grooming one another, playing together, and curling up for naps. When one is around, the other is usually close by.",
-    "adoptionRequirements": [],
-    "pairingPhotos": []
+    "adoptionRequirements": []
   },
   {
     "id": "wally",
@@ -384,6 +396,10 @@ appRoot.PAWS_KITTENS = [
       "olderChildren": "Yes",
       "youngerChildren": "No"
     },
+    "pairingPhotos": [
+      "assets/kittens/wally-pair-1794902546074-4.jpg",
+      "assets/kittens/wally-pair-1794902546099-4.jpg"
+    ],
     "adoptionStatus": "Returned — Available",
     "healthChecklist": [
       "Neutered",
@@ -403,10 +419,7 @@ appRoot.PAWS_KITTENS = [
       "Cuddly"
     ],
     "pairingDescription": "Wally and Raymond have been together since they were about 10 weeks old and have formed an incredibly strong bond. Raymond helps Wally feel confident and comfortable, while Wally is happiest when his brother is nearby. They play together, nap together, and look to each other for comfort, so they need to find a home together.",
-    "adoptionRequirements": [],
-    "pairingPhotos": [
-      "assets/kittens/wally-pair-1794722613187-1.jpg"
-    ]
+    "adoptionRequirements": []
   },
   {
     "id": "raymond",
@@ -441,6 +454,10 @@ appRoot.PAWS_KITTENS = [
       "olderChildren": "Yes",
       "youngerChildren": "No"
     },
+    "pairingPhotos": [
+      "assets/kittens/wally-pair-1794902546074-4.jpg",
+      "assets/kittens/wally-pair-1794902546099-4.jpg"
+    ],
     "adoptionStatus": "Returned — Available",
     "healthChecklist": [
       "Neutered",
@@ -460,10 +477,7 @@ appRoot.PAWS_KITTENS = [
       "Social"
     ],
     "pairingDescription": "Raymond and Wally are foster brothers who have been together since they were 10 weeks old and bonded almost right away. As a bonded pair, they are deeply attached and count on each other to feel confident and comfortable; they do just about everything together. They should not be separated and need to be adopted as a pair.",
-    "adoptionRequirements": [],
-    "pairingPhotos": [
-      "assets/kittens/wally-pair-1794722613187-1.jpg"
-    ]
+    "adoptionRequirements": []
   }
 ];
 
