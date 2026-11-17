@@ -4935,3 +4935,31 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
     font-size: clamp(27px, 8vw, 36px) !important;
   }
 }
+
+
+/* Coming Soon copy on the Events tab: override the older white event-card typography.
+   Keep the existing panel/background design; only correct text contrast and subtitle color. */
+.events-page #event-featured .event-feature-details.event-coming-soon,
+.events-page #event-featured .event-feature-details.event-coming-soon * {
+  color: #44364b !important;
+  -webkit-text-fill-color: #44364b !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+}
+.events-page #event-featured .event-feature-details.event-coming-soon .coming-soon-title {
+  color: #563674 !important;
+  -webkit-text-fill-color: #563674 !important;
+}
+.events-page #event-featured .event-feature-details.event-coming-soon .coming-soon-secondary-title {
+  color: #315c3d !important;
+  -webkit-text-fill-color: #315c3d !important;
+}
+.events-page #event-featured .event-feature-details.event-coming-soon .coming-soon-secondary-copy,
+.events-page #event-featured .event-feature-details.event-coming-soon .coming-soon-copy {
+  color: #44364b !important;
+  -webkit-text-fill-color: #44364b !important;
+}
+.events-page #event-featured .event-feature-details.event-coming-soon a {
+  color: #563674 !important;
+  -webkit-text-fill-color: #563674 !important;
+}
