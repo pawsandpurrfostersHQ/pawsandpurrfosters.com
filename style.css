@@ -4861,7 +4861,10 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
     display: block !important;
     flex: 0 1 54px !important;
     width: clamp(20px, 8vw, 54px) !important;
-    height: 1 
+    height: 1px !important;
+  }
+}
+
 /* Coming Soon copy on the Events tab: override the older white event-card typography.
    Keep the existing panel/background design; only correct text contrast and subtitle color. */
 .events-page #event-featured .event-feature-details.event-coming-soon,
@@ -4897,86 +4900,6 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
   -webkit-text-fill-color: #44364b !important;
   opacity: 1 !important;
   text-shadow: none !important;
-}
-
-
-/* 2026-11-17: final Coming Soon card cleanup.
-   Remove decorative paw badge, keep homepage copy fully inside its white panel,
-   and let the Events-page Coming Soon panel span the full purple card. */
-@media (min-width: 761px) {
-  /* Homepage: the old pseudo-element paw badge was consuming vertical space
-     and pushing the heading into the top edge of the white inset panel. */
-  #events.event.section > #event-featured.home-event-feature.is-coming-soon > .event-card--compact::before {
-    content: none !important;
-    display: none !important;
-  }
-  #events.event.section > #event-featured.home-event-feature.is-coming-soon > .event-card--compact {
-    aspect-ratio: 2.65 / 1 !important;
-    min-height: 0 !important;
-    height: auto !important;
-    padding: clamp(22px, 2.4vw, 30px) !important;
-    overflow: visible !important;
-  }
-  #events.event.section > #event-featured.home-event-feature.is-coming-soon .event-feature-layout {
-    width: 100% !important;
-    min-height: 0 !important;
-    height: auto !important;
-    gap: 0 !important;
-  }
-  #events.event.section > #event-featured.home-event-feature.is-coming-soon .event-feature-details.event-coming-soon {
-    width: 100% !important;
-    max-width: 980px !important;
-    min-height: 0 !important;
-    height: auto !important;
-    padding: clamp(20px, 2.2vw, 28px) clamp(24px, 3vw, 40px) !important;
-    overflow: visible !important;
-  }
-
-  /* Events page: override the legacy two-column details/gallery grid.
-     Coming Soon has no kitten gallery, so its white panel should fill the card. */
-  body.events-page #event-featured.is-coming-soon .event-card--compact::before {
-    content: none !important;
-    display: none !important;
-  }
-  body.events-page #event-featured.is-coming-soon .event-card--compact {
-    aspect-ratio: 2.15 / 1 !important;
-    min-height: 0 !important;
-    height: auto !important;
-  }
-  body.events-page #event-featured.is-coming-soon .event-feature-layout {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    justify-content: center !important;
-    grid-template-columns: none !important;
-    grid-template-areas: none !important;
-    grid-template-rows: none !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    min-height: 0 !important;
-    height: auto !important;
-    gap: 0 !important;
-  }
-  body.events-page #event-featured.is-coming-soon .event-feature-details.event-coming-soon {
-    display: flex !important;
-    flex: 1 1 auto !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    box-sizing: border-box !important;
-    width: 100% !important;
-    max-width: none !important;
-    min-width: 0 !important;
-    min-height: 0 !important;
-    height: auto !important;
-    margin: 0 !important;
-    padding: clamp(24px, 3vw, 38px) !important;
-    text-align: center !important;
-  }
-  body.events-page #event-featured.is-coming-soon .event-feature-details.event-coming-soon > * {
-    max-width: 100% !important;
-    text-align: center !important;
-  }
 }
 
 
@@ -5030,157 +4953,148 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
   }
 }
 
-/* Homepage and Events Coming Soon outer frames: use the supplied RGB(137,121,165) purple. */
-#event-featured.home-event-feature.is-coming-soon > .event-card--compact {
-  background: #8979A5 !important;
-  border: 0 !important;
-  box-shadow: 0 12px 30px rgba(42,31,59,.16) !important;
-}
 
-/* Consolidated homepage Coming Soon card layout.
-   One source of truth: content determines height, so the inner panel and signup
-   button cannot be cropped by competing aspect-ratio or fixed-height rules.
-   Scoped to the homepage only; Events-page styling is intentionally separate. */
+/* Homepage Coming Soon card — single source of truth.
+   Keep this separate from the Events page styles above. The card grows with its
+   content instead of forcing a fixed aspect ratio that can crop the copy/button. */
 #events.event.section > #event-featured.home-event-feature.is-coming-soon {
-  box-sizing: border-box !important;
-  display: block !important;
-  width: min(100%, 1120px) !important;
-  max-width: 1120px !important;
-  min-width: 0 !important;
-  height: auto !important;
-  min-height: 0 !important;
-  margin: 12px auto 34px !important;
+  box-sizing: border-box;
+  display: block;
+  width: min(100%, 1120px);
+  max-width: 1120px;
+  min-width: 0;
+  height: auto;
+  min-height: 0;
+  margin: 12px auto 34px;
 }
 #events.event.section > #event-featured.home-event-feature.is-coming-soon > .event-card--compact {
-  box-sizing: border-box !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: stretch !important;
-  justify-content: center !important;
-  width: 100% !important;
-  max-width: none !important;
-  min-width: 0 !important;
-  height: auto !important;
-  min-height: 420px !important;
-  max-height: none !important;
-  aspect-ratio: auto !important;
-  padding: clamp(24px, 3vw, 38px) !important;
-  overflow: visible !important;
-  background: #8979A5 !important;
-  border: 0 !important;
-  border-radius: 30px !important;
-  box-shadow: 0 12px 30px rgba(42,31,59,.16) !important;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+  height: auto;
+  min-height: 320px;
+  max-height: none;
+  aspect-ratio: auto;
+  margin: 0;
+  padding: clamp(22px, 3vw, 34px);
+  overflow: visible;
+  border: 0;
+  border-radius: 28px;
+  background: #8979A5;
+  box-shadow: 0 12px 30px rgba(42,31,59,.16);
 }
 #events.event.section > #event-featured.home-event-feature.is-coming-soon > .event-card--compact::before {
-  content: none !important;
-  display: none !important;
+  content: none;
+  display: none;
 }
 #events.event.section > #event-featured.home-event-feature.is-coming-soon .event-feature-layout {
-  box-sizing: border-box !important;
-  display: flex !important;
-  flex: 0 1 auto !important;
-  flex-direction: column !important;
-  align-items: stretch !important;
-  justify-content: center !important;
-  width: 100% !important;
-  max-width: none !important;
-  min-width: 0 !important;
-  min-height: 0 !important;
-  height: auto !important;
-  gap: 0 !important;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  height: auto;
+  gap: 0;
 }
 #events.event.section > #event-featured.home-event-feature.is-coming-soon .event-feature-details.event-coming-soon {
-  box-sizing: border-box !important;
-  display: flex !important;
-  flex: 0 1 auto !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 100% !important;
-  max-width: none !important;
-  min-width: 0 !important;
-  min-height: 0 !important;
-  height: auto !important;
-  margin: 0 auto !important;
-  padding: clamp(24px, 2.8vw, 36px) clamp(24px, 3.5vw, 48px) !important;
-  overflow: visible !important;
-  border: 1px solid #e4dbea !important;
-  border-radius: 22px !important;
-  background: #fff !important;
-  color: #44364b !important;
-  text-align: center !important;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  min-height: 0;
+  height: auto;
+  margin: 0 auto;
+  padding: clamp(24px, 3vw, 38px) clamp(22px, 4vw, 48px);
+  overflow: visible;
+  border: 1px solid #e4dbea;
+  border-radius: 20px;
+  background: #fff;
+  color: #44364b;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(42,31,59,.08);
 }
 #events.event.section > #event-featured.home-event-feature.is-coming-soon .event-feature-details.event-coming-soon > * {
-  max-width: 100% !important;
-  text-align: center !important;
+  max-width: 100%;
+  text-align: center;
 }
 #events.event.section > #event-featured.home-event-feature.is-coming-soon .coming-soon-title {
-  margin: 0 0 10px !important;
-  color: #563674 !important;
-  -webkit-text-fill-color: #563674 !important;
-  font-size: clamp(30px, 3.8vw, 44px) !important;
-  line-height: 1.12 !important;
+  margin: 0 0 10px;
+  color: #563674;
+  -webkit-text-fill-color: #563674;
+  font-size: clamp(30px, 3.8vw, 44px);
+  line-height: 1.12;
 }
 #events.event.section > #event-featured.home-event-feature.is-coming-soon .coming-soon-secondary-title {
-  margin: 0 0 8px !important;
-  color: #315c3d !important;
-  -webkit-text-fill-color: #315c3d !important;
-  font-family: "Playfair Display", Georgia, serif !important;
-  font-size: clamp(20px, 2.4vw, 25px) !important;
-  line-height: 1.3 !important;
+  margin: 0 0 8px;
+  color: #315c3d;
+  -webkit-text-fill-color: #315c3d;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(20px, 2.4vw, 25px);
+  line-height: 1.3;
 }
 #events.event.section > #event-featured.home-event-feature.is-coming-soon .coming-soon-secondary-copy,
 #events.event.section > #event-featured.home-event-feature.is-coming-soon .coming-soon-copy {
-  max-width: 700px !important;
-  margin: 8px auto 0 !important;
-  color: #44364b !important;
-  -webkit-text-fill-color: #44364b !important;
-  font-size: 16px !important;
-  line-height: 1.7 !important;
-  text-align: center !important;
+  max-width: 700px;
+  margin: 8px auto 0;
+  color: #44364b;
+  -webkit-text-fill-color: #44364b;
+  font-size: 16px;
+  line-height: 1.7;
+  text-align: center;
 }
 #events.event.section > #event-featured.home-event-feature.is-coming-soon .coming-soon-details {
-  box-sizing: border-box !important;
-  width: min(100%, 760px) !important;
-  max-width: 760px !important;
-  margin: 14px auto 0 !important;
-  padding: 14px 18px !important;
-  border: 1px solid #e4dbea !important;
-  border-radius: 14px !important;
-  background: #f8f6fa !important;
-  color: #44364b !important;
+  box-sizing: border-box;
+  width: min(100%, 760px);
+  max-width: 760px;
+  margin: 14px auto 0;
+  padding: 14px 18px;
+  border: 1px solid #e4dbea;
+  border-radius: 14px;
+  background: #f8f6fa;
+  color: #44364b;
 }
 #events.event.section > #event-featured.home-event-feature.is-coming-soon .coming-soon-details p {
-  color: #44364b !important;
-  -webkit-text-fill-color: #44364b !important;
-  text-align: center !important;
+  margin: 4px 0;
+  color: #44364b;
+  -webkit-text-fill-color: #44364b;
+  text-align: center;
 }
 #events.event.section > #event-featured.home-event-feature.is-coming-soon .coming-soon-details a {
-  color: #563674 !important;
-  font-weight: 800 !important;
+  color: #563674;
+  font-weight: 800;
   text-underline-offset: 3px;
 }
 #events.event.section > #event-featured.home-event-feature.is-coming-soon .adoption-email-open {
-  margin-top: 14px !important;
-  padding: 10px 18px !important;
-  font-size: .94em !important;
+  margin-top: 14px;
+  padding: 10px 18px;
+  font-size: .94em;
 }
 @media (max-width: 760px) {
   #events.event.section > #event-featured.home-event-feature.is-coming-soon {
-    width: 100% !important;
-    margin: 10px auto 26px !important;
+    width: 100%;
+    margin: 10px auto 26px;
   }
   #events.event.section > #event-featured.home-event-feature.is-coming-soon > .event-card--compact {
-    min-height: 0 !important;
-    aspect-ratio: auto !important;
-    padding: 16px !important;
-    border-radius: 22px !important;
+    min-height: 0;
+    padding: 14px;
+    border-radius: 22px;
   }
   #events.event.section > #event-featured.home-event-feature.is-coming-soon .event-feature-details.event-coming-soon {
-    padding: 22px 18px !important;
-    border-radius: 18px !important;
+    padding: 22px 18px;
+    border-radius: 18px;
   }
   #events.event.section > #event-featured.home-event-feature.is-coming-soon .coming-soon-title {
-    font-size: clamp(27px, 8vw, 36px) !important;
+    font-size: clamp(27px, 8vw, 36px);
   }
 }
