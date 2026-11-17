@@ -184,6 +184,22 @@ body.adoption-email-modal-open { overflow: hidden; }
   background: #f7f5f9;
   color: #514365;
 }
+.adoption-unsubscribe-actions button:not(:disabled) {
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+.adoption-unsubscribe-actions button:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 16px rgba(42,31,59,.16);
+}
+.adoption-unsubscribe-actions .adoption-unsubscribe-yes:not(:disabled):hover {
+  background: #786792;
+}
+.adoption-unsubscribe-actions .adoption-unsubscribe-no:not(:disabled):hover {
+  background: #eee9f3;
+}
+.adoption-unsubscribe-actions button:not(:disabled):active {
+  transform: translateY(1px) scale(.98);
+}
 .adoption-unsubscribe-actions button:disabled { opacity: .65; cursor: wait; }
 .adoption-unsubscribe-actions button:focus-visible,
 .adoption-unsubscribe-website:focus-visible {
@@ -193,7 +209,17 @@ body.adoption-email-modal-open { overflow: hidden; }
 .adoption-unsubscribe-status { margin: 12px 0 0; color: #5b4b70; font-size: .92rem; }
 @media (max-width: 520px) {
   .adoption-unsubscribe-dialog { padding: 30px 22px 24px; border-radius: 18px; }
-  .adoption-unsubscribe-actions { flex-direction: column; }
+  .adoption-unsubscribe-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
   .adoption-unsubscribe-actions button,
-  .adoption-unsubscribe-website { width: 100%; }
+  .adoption-unsubscribe-website {
+    flex: 0 1 auto;
+    width: auto;
+    max-width: 100%;
+    min-height: 42px;
+    padding: 9px 16px;
+  }
 }
