@@ -368,6 +368,7 @@ function renderProfile(kitten) {
     <section class="profile-detail profile-reminder">
       <h2>Interested in adopting ${escapeHTML(kitten.name)}?</h2>
       ${pairingData ? `<p>${escapeHTML(kitten.name)} ${pairingData.type === "bonded" ? "must be adopted with" : "is happiest with"} <a class="text-link" href="${escapeHTML(`profile-template.html?id=${pairingData.kittenId}`)}">${escapeHTML(pairingData.kittenName)}</a>.</p>` : "<p>We would love to hear from you.</p>"}
+      <p>See upcoming adoption events and locations on our <a class="text-link" href="../events/">Events</a> page. For common questions about meeting kittens and the adoption process, visit our <a class="text-link" href="../faq/">Frequently Asked Questions</a>.</p>
       <a class="button primary" href="../how-to-adopt/">Learn How to Adopt</a>
     </section>
   `;
