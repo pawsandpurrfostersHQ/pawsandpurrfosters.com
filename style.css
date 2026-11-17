@@ -5308,3 +5308,10 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
     margin: 8px 0 0 !important; text-align: center !important;
   }
 }
+
+/* Homepage Coming Soon outer frame: use the exact purple from the Events page. */
+#event-featured.home-event-feature.is-coming-soon > .event-card--compact {
+  background: #554477 !important;
+  border: 0 !important;
+  box-shadow: 0 12px 30px rgba(42,31,59,.16) !important;
+}
