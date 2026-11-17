@@ -5116,3 +5116,64 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
     padding: clamp(24px, 2.8vw, 34px) clamp(32px, 4vw, 52px) !important;
   }
 }
+
+
+/* 2026-11-17: final homepage Coming Soon landscape correction.
+   Explicitly remove the legacy 390px card / 320px layout minimums and
+   the old two-column layout. This rule is homepage-only and desktop-only. */
+@media (min-width: 761px) {
+  #events.event.section > #event-featured.home-event-feature.is-coming-soon {
+    display: block !important;
+    box-sizing: border-box !important;
+    width: min(100%, 1120px) !important;
+    max-width: 1120px !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 auto !important;
+  }
+  #events.event.section > #event-featured.home-event-feature.is-coming-soon > .event-card--compact {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: 2.65 / 1 !important;
+    padding: clamp(20px, 2.5vw, 32px) !important;
+    overflow: hidden !important;
+  }
+  #events.event.section > #event-featured.home-event-feature.is-coming-soon .event-feature-layout {
+    display: flex !important;
+    flex: 0 1 auto !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    gap: 0 !important;
+  }
+  #events.event.section > #event-featured.home-event-feature.is-coming-soon .event-feature-details.event-coming-soon {
+    display: flex !important;
+    flex: 0 1 auto !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    width: min(100%, 980px) !important;
+    max-width: 980px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    padding: clamp(18px, 2vw, 26px) clamp(24px, 3vw, 40px) !important;
+  }
+}
