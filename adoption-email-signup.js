@@ -51,8 +51,6 @@
     event.preventDefault();
     if (!form.reportValidity()) return;
     submit.disabled = true;
-    submit.textContent = "Signing Up…";
-    status.textContent = "Saving your subscription…";
     try {
       const response = await fetch(ENDPOINT, {
         method: "POST",
