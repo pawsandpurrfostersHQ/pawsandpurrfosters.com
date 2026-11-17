@@ -4963,3 +4963,13 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
   color: #563674 !important;
   -webkit-text-fill-color: #563674 !important;
 }
+
+
+/* Final, high-specificity contrast fix for the Events-page recharging paragraph. */
+body.events-page #event-featured .event-feature-details.event-coming-soon p.coming-soon-secondary-copy,
+body.events-page #event-featured .event-feature-details.event-coming-soon p.coming-soon-copy {
+  color: #44364b !important;
+  -webkit-text-fill-color: #44364b !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+}
