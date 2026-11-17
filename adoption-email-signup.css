@@ -1,0 +1,199 @@
+/* Adoption Event Updates signup */
+.adoption-email-open {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin: 18px auto 4px;
+  padding: 13px 23px;
+  border: 0;
+  border-radius: 999px;
+  background: #9caf91;
+  color: #263b2b;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 7px 18px rgba(42,31,59,.14);
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.adoption-email-open:hover { background: #8da483; transform: translateY(-2px); box-shadow: 0 9px 22px rgba(42,31,59,.18); }
+.adoption-email-open:active { transform: translateY(1px) scale(.98); }
+.adoption-email-open:focus-visible,
+.adoption-email-close:focus-visible,
+.adoption-email-submit:focus-visible { outline: 3px solid #b9adc9; outline-offset: 3px; }
+
+.adoption-email-modal[hidden] { display: none !important; }
+.adoption-email-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(35, 29, 43, .58);
+}
+.adoption-email-dialog {
+  position: relative;
+  width: min(100%, 470px);
+  max-height: min(90vh, 720px);
+  overflow-y: auto;
+  padding: 34px 30px 30px;
+  border-radius: 22px;
+  background: #fff;
+  color: #40384b;
+  box-shadow: 0 22px 70px rgba(20, 14, 28, .28);
+}
+.adoption-email-dialog .eyebrow {
+  margin: 0 0 8px;
+  color: #8979A5;
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.adoption-email-dialog h2 {
+  margin: 0 36px 12px 0;
+  color: #514365;
+  font-size: clamp(1.5rem, 5vw, 1.9rem);
+  line-height: 1.2;
+}
+.adoption-email-dialog p { margin: 0 0 18px; line-height: 1.6; }
+.adoption-email-close {
+  position: absolute;
+  top: 13px;
+  right: 15px;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: #f2eff5;
+  color: #5b4b70;
+  font-size: 1.55rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.adoption-email-form label {
+  display: block;
+  margin: 0 0 7px;
+  color: #514365;
+  font-weight: 700;
+}
+.adoption-email-form input[type="email"] {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 48px;
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border: 1px solid #d8d1e1;
+  border-radius: 10px;
+  background: #fff;
+  color: #40384b;
+  font: inherit;
+}
+.adoption-email-form input[type="email"]:focus { outline: 2px solid #8979A5; outline-offset: 2px; }
+.adoption-email-submit {
+  width: 100%;
+  min-height: 48px;
+  border: 0;
+  border-radius: 999px;
+  background: #8979A5;
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.adoption-email-submit:disabled { opacity: .65; cursor: wait; }
+.adoption-email-status { min-height: 1.4em; margin: 12px 0 0 !important; font-size: .92rem; }
+.adoption-email-honeypot { position: absolute !important; left: -10000px !important; width: 1px !important; height: 1px !important; opacity: 0 !important; }
+.adoption-email-notice {
+  margin: 16px auto;
+  padding: 13px 16px;
+  border: 1px solid #d7cfe1;
+  border-radius: 12px;
+  background: #f7f5f9;
+  color: #514365;
+  text-align: center;
+}
+body.adoption-email-modal-open { overflow: hidden; }
+@media (max-width: 520px) {
+  .adoption-email-dialog { padding: 30px 22px 24px; border-radius: 18px; }
+}
+
+
+/* Unsubscribe confirmation flow */
+.adoption-unsubscribe-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(35, 29, 43, .62);
+}
+.adoption-unsubscribe-dialog {
+  width: min(100%, 480px);
+  box-sizing: border-box;
+  padding: 34px 30px 28px;
+  border-radius: 22px;
+  background: #fff;
+  color: #40384b;
+  box-shadow: 0 22px 70px rgba(20, 14, 28, .28);
+}
+.adoption-unsubscribe-dialog .eyebrow {
+  margin: 0 0 8px;
+  color: #8979A5;
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.adoption-unsubscribe-dialog h2 {
+  margin: 0 0 12px;
+  color: #514365;
+  font-size: clamp(1.45rem, 5vw, 1.85rem);
+  line-height: 1.2;
+}
+.adoption-unsubscribe-dialog p { line-height: 1.6; }
+.adoption-unsubscribe-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+.adoption-unsubscribe-actions button,
+.adoption-unsubscribe-website {
+  display: inline-flex;
+  flex: 1 1 160px;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  box-sizing: border-box;
+  padding: 11px 16px;
+  border: 0;
+  border-radius: 999px;
+  background: #8979A5;
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+.adoption-unsubscribe-actions .adoption-unsubscribe-no {
+  border: 1px solid #d8d1e1;
+  background: #f7f5f9;
+  color: #514365;
+}
+.adoption-unsubscribe-actions button:disabled { opacity: .65; cursor: wait; }
+.adoption-unsubscribe-actions button:focus-visible,
+.adoption-unsubscribe-website:focus-visible {
+  outline: 3px solid #b9adc9;
+  outline-offset: 3px;
+}
+.adoption-unsubscribe-status { margin: 12px 0 0; color: #5b4b70; font-size: .92rem; }
+@media (max-width: 520px) {
+  .adoption-unsubscribe-dialog { padding: 30px 22px 24px; border-radius: 18px; }
+  .adoption-unsubscribe-actions { flex-direction: column; }
+  .adoption-unsubscribe-actions button,
+  .adoption-unsubscribe-website { width: 100%; }
+}
