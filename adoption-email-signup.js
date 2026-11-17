@@ -9,7 +9,7 @@
       <button class="adoption-email-close" type="button" aria-label="Close">×</button>
       <p class="eyebrow">Paws &amp; Purr Fosters</p>
       <h2 id="adoption-email-title">Adoption Event Updates</h2>
-      <p id="adoption-email-description">Enter your email address to subscribe. You'll receive email notifications when new adoption events are posted. This subscription is only for adoption event updates, not general promotional emails. You can unsubscribe at any time using the link included in our emails.</p>
+      <p id="adoption-email-description">Enter your email address to subscribe. You'll receive email notifications when new adoption events are posted. You can unsubscribe at any time using the link included in our emails.</p>
       <form class="adoption-email-form">
         <label for="adoption-email-address">Email address</label>
         <input id="adoption-email-address" name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@example.com" required>
