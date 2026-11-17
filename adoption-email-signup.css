@@ -131,6 +131,7 @@ body.adoption-email-modal-open { overflow: hidden; }
   background: rgba(35, 29, 43, .62);
 }
 .adoption-unsubscribe-dialog {
+  position: relative;
   width: min(100%, 480px);
   box-sizing: border-box;
   padding: 34px 30px 28px;
@@ -222,4 +223,28 @@ body.adoption-email-modal-open { overflow: hidden; }
     min-height: 42px;
     padding: 9px 16px;
   }
+}
+
+
+/* Dismiss control appears after unsubscribe succeeds */
+.adoption-unsubscribe-close[hidden] { display: none !important; }
+.adoption-unsubscribe-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: #f2eff5;
+  color: #5b4b70;
+  font-size: 1.55rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.adoption-unsubscribe-close:focus-visible {
+  outline: 3px solid #b9adc9;
+  outline-offset: 3px;
 }
