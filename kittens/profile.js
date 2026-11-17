@@ -210,12 +210,15 @@ function renderProfile(kitten) {
   const pairingPartner = pairingData.kittenId ? window.PAWS_KITTENS?.find(item => item.id === pairingData.kittenId) : null;
   const pairingPhotos = [...new Set([...(kitten.pairingPhotos || []), ...(pairingPartner?.pairingPhotos || [])].filter(Boolean))];
   const pairingPhotoMarkup = pairingPhotos.length
-    ? `<div class="pairing-photo-gallery" data-pairing-gallery>
-        ${pairingPhotos.map((photo, index) => `<button class="pairing-photo-open" type="button" data-pair-index="${index}" aria-label="Open bonded-pair photo ${index + 1}">
-          <img src="${escapeHTML(profilePhotoSource(photo))}" alt="${escapeHTML(kitten.name)} and ${escapeHTML(pairingData.kittenName)} together, photo ${index + 1}" loading="lazy">
-          ${index === 1 ? `<span class="pairing-more pairing-more-mobile" ${pairingPhotos.length <= 2 ? "hidden" : ""}>+${pairingPhotos.length - 2} more</span>` : ""}
-          ${index === 3 ? `<span class="pairing-more pairing-more-desktop" ${pairingPhotos.length <= 4 ? "hidden" : ""}>+${pairingPhotos.length - 4} more</span>` : ""}
-        </button>`).join("")}
+    ? `<div class="pairing-photo-gallery" data-pairing-gallery data-photo-count="${pairingPhotos.length}">
+        <div class="pairing-photo-grid">
+          ${pairingPhotos.slice(0, 2).map((photo, index) => `<button class="pairing-photo-open" type="button" data-pair-index="${index}" aria-label="Open bonded-pair photo ${index + 1}">
+            <img src="${escapeHTML(profilePhotoSource(photo))}" alt="${escapeHTML(kitten.name)} and ${escapeHTML(pairingData.kittenName)} together, photo ${index + 1}" loading="lazy">
+          </button>`).join("")}
+        </div>
+        ${pairingPhotos.length > 2 ? `<div class="pairing-photo-dots" role="group" aria-label="Bonded-pair photo pages">
+          ${Array.from({ length: Math.ceil(pairingPhotos.length / 2) }, (_, page) => `<button type="button" class="pairing-photo-dot${page === 0 ? " is-active" : ""}" data-pair-page="${page}" aria-label="Show bonded-pair photos ${page * 2 + 1} to ${Math.min(page * 2 + 2, pairingPhotos.length)}" aria-pressed="${page === 0 ? "true" : "false"}"></button>`).join("")}
+        </div>` : ""}
       </div>`
     : "";
   const pairingCopy = pairingDescription ? `<p class="pairing-description">${escapeHTML(pairingDescription)}</p>` : "";
@@ -396,29 +399,58 @@ function renderProfile(kitten) {
   let activeLightboxPhotos = galleryPhotos;
   let activeLightboxLabel = kitten.name;
 
+  let lightboxReturnFocus = null;
   const openLightbox = (index, photos = activeLightboxPhotos, label = activeLightboxLabel) => {
     if (!lightbox || !lightboxImage || !photos.length) return;
+    if (!lightbox.open) lightboxReturnFocus = document.activeElement;
     activeLightboxPhotos = photos;
     activeLightboxLabel = label;
     const nextIndex = (index + photos.length) % photos.length;
     lightboxImage.src = profilePhotoSource(photos[nextIndex]);
     lightboxImage.alt = `${label} photo ${nextIndex + 1}`;
     lightbox.dataset.index = String(nextIndex);
-    lightbox.showModal();
+    if (!lightbox.open) lightbox.showModal();
+    lightbox.focus({ preventScroll: true });
   };
 
   if (pairGallery) {
-    pairGallery.querySelectorAll(".pairing-photo-open").forEach(button => {
+    const pairButtons = [...pairGallery.querySelectorAll(".pairing-photo-open")];
+    const pairDots = [...pairGallery.querySelectorAll(".pairing-photo-dot")];
+    const showPairPage = page => {
+      const start = page * 2;
+      pairButtons.forEach((button, slot) => {
+        const photoIndex = start + slot;
+        const photo = pairingPhotos[photoIndex];
+        button.hidden = !photo;
+        if (!photo) return;
+        const image = button.querySelector("img");
+        image.src = profilePhotoSource(photo);
+        image.alt = `${kitten.name} and ${pairingData.kittenName} together, photo ${photoIndex + 1}`;
+        button.dataset.pairIndex = String(photoIndex);
+        button.setAttribute("aria-label", `Open bonded-pair photo ${photoIndex + 1}`);
+      });
+      pairDots.forEach((dot, index) => {
+        const active = index === page;
+        dot.classList.toggle("is-active", active);
+        dot.setAttribute("aria-pressed", String(active));
+      });
+    };
+    pairButtons.forEach(button => {
       button.addEventListener("click", () => {
         const index = Number(button.dataset.pairIndex || 0);
         openLightbox(index, pairingPhotos, `${kitten.name} and ${pairingData.kittenName} together`);
       });
     });
+    pairDots.forEach(dot => dot.addEventListener("click", () => showPairPage(Number(dot.dataset.pairPage || 0))));
   }
 
   const closeLightbox = () => {
     if (lightbox && typeof lightbox.close === "function") lightbox.close();
   };
+  lightbox?.addEventListener("close", () => {
+    if (lightboxReturnFocus instanceof HTMLElement) lightboxReturnFocus.focus({ preventScroll: true });
+    lightboxReturnFocus = null;
+  });
 
   root.querySelectorAll(".photo-open").forEach(button => {
     button.addEventListener("click", () => {
