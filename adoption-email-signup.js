@@ -85,18 +85,17 @@
     confirmation.innerHTML = `
       <section class="adoption-unsubscribe-dialog" role="dialog" aria-modal="true" aria-labelledby="adoption-unsubscribe-title" aria-describedby="adoption-unsubscribe-description">
         <p class="eyebrow">Paws &amp; Purr Fosters</p>
-        <h2 id="adoption-unsubscribe-title">Unsubscribe from Adoption Updates?</h2>
-        <p id="adoption-unsubscribe-description">Are you sure you no longer want to receive email notifications about upcoming kitten adoption events?</p>
+        <h2 id="adoption-unsubscribe-title">Are You Sure You Want to Unsubscribe?</h2>
+        <p id="adoption-unsubscribe-description">Would you like to stop receiving email notifications about upcoming kitten adoption events?</p>
         <div class="adoption-unsubscribe-actions">
           <button type="button" class="adoption-unsubscribe-no">No, keep me subscribed</button>
-          <button type="button" class="adoption-unsubscribe-yes">Yes, continue</button>
+          <button type="button" class="adoption-unsubscribe-yes">Yes, unsubscribe</button>
         </div>
         <p class="adoption-unsubscribe-status" role="status" aria-live="polite"></p>
       </section>`;
     document.body.appendChild(confirmation);
     document.body.classList.add("adoption-email-modal-open");
 
-    const dialog = confirmation.querySelector(".adoption-unsubscribe-dialog");
     const title = confirmation.querySelector("#adoption-unsubscribe-title");
     const description = confirmation.querySelector("#adoption-unsubscribe-description");
     const actions = confirmation.querySelector(".adoption-unsubscribe-actions");
@@ -104,47 +103,31 @@
     const yes = confirmation.querySelector(".adoption-unsubscribe-yes");
     const no = confirmation.querySelector(".adoption-unsubscribe-no");
 
-    function finish() {
-      confirmation.remove();
-      document.body.classList.remove("adoption-email-modal-open");
+    function cleanUrl() {
       url.searchParams.delete("unsubscribe");
       window.history.replaceState({}, "", url.pathname + url.search + url.hash);
     }
+    function closeConfirmation() {
+      confirmation.remove();
+      document.body.classList.remove("adoption-email-modal-open");
+      cleanUrl();
+    }
+
     no.addEventListener("click", function () {
-      title.textContent = "You're staying subscribed";
+      title.textContent = "You're Staying Subscribed";
       description.textContent = "No changes were made. You'll continue receiving adoption event email notifications.";
-      actions.innerHTML = '<a class="adoption-unsubscribe-website" href="' + SITE_BASE + '/">Return to Paws &amp; Purr Fosters</a>';
+      actions.innerHTML = '<a class="adoption-unsubscribe-website" href="' + SITE_BASE + '/">Visit Paws &amp; Purr Fosters</a>';
       status.textContent = "";
-      url.searchParams.delete("unsubscribe");
-      window.history.replaceState({}, "", url.pathname + url.search + url.hash);
+      cleanUrl();
     });
 
-    yes.addEventListener("click", function () {
-      title.textContent = "Please Confirm";
-      description.textContent = "Select Confirm Unsubscribe below to stop receiving adoption event emails. You can sign up again at any time.";
-      actions.innerHTML = '<button type="button" class="adoption-unsubscribe-no">Go Back</button><button type="button" class="adoption-unsubscribe-confirm">Confirm Unsubscribe</button>';
-      actions.querySelector(".adoption-unsubscribe-no").addEventListener("click", function () {
-        title.textContent = "Unsubscribe from Adoption Updates?";
-        description.textContent = "Are you sure you no longer want to receive email notifications about upcoming kitten adoption events?";
-        actions.innerHTML = '<button type="button" class="adoption-unsubscribe-no">No, keep me subscribed</button><button type="button" class="adoption-unsubscribe-yes">Yes, continue</button>';
-        actions.querySelector(".adoption-unsubscribe-no").addEventListener("click", function () {
-          title.textContent = "You're staying subscribed";
-          description.textContent = "No changes were made. You'll continue receiving adoption event email notifications.";
-          actions.innerHTML = '<a class="adoption-unsubscribe-website" href="' + SITE_BASE + '/">Return to Paws &amp; Purr Fosters</a>';
-          url.searchParams.delete("unsubscribe");
-          window.history.replaceState({}, "", url.pathname + url.search + url.hash);
-        });
-        actions.querySelector(".adoption-unsubscribe-yes").addEventListener("click", confirmStep);
-      });
-      actions.querySelector(".adoption-unsubscribe-confirm").addEventListener("click", confirmUnsubscribe);
-    });
-
-    async function confirmUnsubscribe() {
-      const confirmButton = actions.querySelector(".adoption-unsubscribe-confirm");
-      if (confirmButton) { confirmButton.disabled = true; confirmButton.textContent = "Unsubscribing…"; }
-      title.textContent = "Confirming Your Unsubscription";
-      description.textContent = "Please wait while we update your email preferences.";
-      status.textContent = "Processing your request…";
+    yes.addEventListener("click", async function () {
+      yes.disabled = true;
+      no.disabled = true;
+      yes.textContent = "Unsubscribing…";
+      title.textContent = "Updating Your Email Preferences";
+      description.textContent = "Please wait while we process your request.";
+      status.textContent = "";
       try {
         const response = await fetch(ENDPOINT, {
           method: "POST",
@@ -152,41 +135,21 @@
           body: JSON.stringify({ action: "unsubscribe", token })
         });
         const result = await response.json();
-        if (!response.ok || !result.ok) throw new Error(result.error || "We couldn't update your subscription.");
+        if (!response.ok || !result.ok) throw new Error(result.error || "We couldn't update your subscription. Please try again.");
         title.textContent = "You've Been Unsubscribed";
-        description.textContent = "You will no longer receive adoption event email notifications from Paws & Purr Fosters. You can sign up again at any time.";
+        description.textContent = "You've been unsubscribed from adoption event emails. You can sign up again at any time.";
         actions.innerHTML = '<a class="adoption-unsubscribe-website" href="' + SITE_BASE + '/">Visit Paws &amp; Purr Fosters</a>';
-        status.textContent = "Your email preferences have been updated.";
-        url.searchParams.delete("unsubscribe");
-        window.history.replaceState({}, "", url.pathname + url.search + url.hash);
+        status.textContent = "";
+        cleanUrl();
       } catch (error) {
-        title.textContent = "We Couldn't Update Your Preferences";
-        description.textContent = error.message || "We couldn't process this unsubscribe request. Please try again.";
-        actions.innerHTML = '<button type="button" class="adoption-unsubscribe-retry">Try Again</button><a class="adoption-unsubscribe-website" href="' + SITE_BASE + '/">Visit Paws &amp; Purr Fosters</a>';
-        actions.querySelector(".adoption-unsubscribe-retry").addEventListener("click", confirmUnsubscribe);
+        title.textContent = "We Couldn't Complete Your Request";
+        description.textContent = error.message || "We couldn't process your unsubscribe request. Please try again.";
+        yes.disabled = false;
+        no.disabled = false;
+        yes.textContent = "Yes, unsubscribe";
         status.textContent = "";
       }
-    }
-
-    function confirmStep() {
-      title.textContent = "Please Confirm";
-      description.textContent = "Select Confirm Unsubscribe below to stop receiving adoption event emails. You can sign up again at any time.";
-      actions.innerHTML = '<button type="button" class="adoption-unsubscribe-no">Go Back</button><button type="button" class="adoption-unsubscribe-confirm">Confirm Unsubscribe</button>';
-      actions.querySelector(".adoption-unsubscribe-confirm").addEventListener("click", confirmUnsubscribe);
-      actions.querySelector(".adoption-unsubscribe-no").addEventListener("click", function () {
-        title.textContent = "Unsubscribe from Adoption Updates?";
-        description.textContent = "Are you sure you no longer want to receive email notifications about upcoming kitten adoption events?";
-        actions.innerHTML = '<button type="button" class="adoption-unsubscribe-no">No, keep me subscribed</button><button type="button" class="adoption-unsubscribe-yes">Yes, continue</button>';
-        actions.querySelector(".adoption-unsubscribe-no").addEventListener("click", function () {
-          title.textContent = "You're staying subscribed";
-          description.textContent = "No changes were made. You'll continue receiving adoption event email notifications.";
-          actions.innerHTML = '<a class="adoption-unsubscribe-website" href="' + SITE_BASE + '/">Return to Paws &amp; Purr Fosters</a>';
-          url.searchParams.delete("unsubscribe");
-          window.history.replaceState({}, "", url.pathname + url.search + url.hash);
-        });
-        actions.querySelector(".adoption-unsubscribe-yes").addEventListener("click", confirmStep);
-      });
-    }
+    });
 
     yes.focus();
   }
