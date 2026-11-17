@@ -311,3 +311,13 @@
   }
   .profile-lightbox img { max-height:calc(78vh - 64px); }
 }
+
+/* Desktop bonded-pair photos: use the full card width and center the pair. */
+@media(min-width:761px) {
+  .profile-details .profile-pairing { grid-column:1 / -1!important; }
+  .profile-pairing .pairing-photo-grid {
+    max-width:980px;
+    margin-inline:auto;
+    gap:22px;
+  }
+}
