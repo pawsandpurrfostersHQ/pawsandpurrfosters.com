@@ -399,3 +399,11 @@
   .all-photos-dialog { width: 96vw; padding: 16px; }
   .all-photos-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 }
+
+
+/* View All Photos refinements: keep six thumbnails and support intentional image zoom. */
+.profile-thumbnails { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.profile-view-all-photos { width: fit-content; justify-self: center; }
+.profile-lightbox img { cursor: zoom-in; transition: transform .18s ease; transform-origin: center center; }
+.profile-lightbox img.is-zoomed { cursor: zoom-out; transform: scale(1.8); }
+.profile-lightbox { overflow: auto; }
