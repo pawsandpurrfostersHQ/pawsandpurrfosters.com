@@ -5121,3 +5121,47 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
     padding-bottom: 26px !important;
   }
 }
+
+
+/* 2026-11-18 Events tab only: keep the attendee name label fully inside its mobile gallery. */
+@media (max-width: 760px) {
+  .events-page #event-featured .event-attending-block .attending-kitten-gallery {
+    box-sizing: border-box !important;
+    height: 230px !important;
+    min-height: 230px !important;
+    padding: 9px !important;
+    overflow: hidden !important;
+  }
+  .events-page #event-featured .event-attending-block .attending-kitten-slide {
+    inset: 9px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    box-sizing: border-box !important;
+  }
+  .events-page #event-featured .event-attending-block .attending-kitten-slide img {
+    display: block !important;
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    object-fit: contain !important;
+    object-position: center !important;
+  }
+  .events-page #event-featured .event-attending-block .attending-kitten-slide figcaption {
+    display: flex !important;
+    flex: 0 0 42px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    height: 42px !important;
+    padding: 4px 8px !important;
+    overflow: visible !important;
+  }
+  .events-page #event-featured .event-attending-block .attending-kitten-name {
+    display: inline-block !important;
+    max-width: 100% !important;
+    line-height: 1.25 !important;
+    transform: none !important;
+  }
+}
