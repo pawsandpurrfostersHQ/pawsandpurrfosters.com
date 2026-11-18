@@ -18,16 +18,16 @@ window.PAWS_EVENT_DATA = {
     "attendingKittens": []
   },
   "featuredEvent": {
-    "date": "Sunday, November 15, 2026",
-    "time": "11 a.m. – 3 p.m.",
+    "date": "Saturday, November 21, 2026",
+    "time": "11 a.m. – 2 p.m.",
     "title": "Kitten Adoption Event",
     "active": true,
     "status": "upcoming",
-    "address": "5879 Lone Tree Way, Antioch, CA 94531",
-    "dateISO": "2026-11-15",
-    "endTime": "15:00",
-    "mapsUrl": "https://maps.app.goo.gl/bDa3qbVxZ8EPSCqG6",
-    "location": "Antioch PetSmart",
+    "address": "5829 Lone Tree Way, Antioch, CA 94531",
+    "dateISO": "2026-11-21",
+    "endTime": "14:00",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Pet+Food+Express%2C+5829+Lone+Tree+Way%2C+Antioch%2C+CA+94531",
+    "location": "Pet Food Express",
     "startTime": "11:00",
     "description": "",
     "statusReason": "",
@@ -41,7 +41,7 @@ window.PAWS_EVENT_DATA = {
       "Raymond",
       "Diego"
     ],
-    "locationPresetId": "antioch"
+    "locationPresetId": "custom"
   },
   "regularSchedule": {
     "note": "Schedule is subject to change. Special adoption events and additional locations may be added.",

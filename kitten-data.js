@@ -56,7 +56,7 @@ appRoot.PAWS_KITTENS = [
       "youngerChildren": "Possibly — no direct experience"
     },
     "pairingPhotos": [
-      "assets/kittens/diego-pair-1794902546009-1.jpg"
+      "assets/kittens/diego-pair-1795036559761-1.jpg"
     ],
     "adoptionStatus": "Available",
     "healthChecklist": [
@@ -112,7 +112,7 @@ appRoot.PAWS_KITTENS = [
       "youngerChildren": "Possibly — no direct experience"
     },
     "pairingPhotos": [
-      "assets/kittens/diego-pair-1794902546009-1.jpg"
+      "assets/kittens/diego-pair-1795036559761-1.jpg"
     ],
     "adoptionStatus": "Available",
     "healthChecklist": [
@@ -168,7 +168,7 @@ appRoot.PAWS_KITTENS = [
       "youngerChildren": "Possibly — no direct experience"
     },
     "pairingPhotos": [
-      "assets/kittens/claudia-pair-1794902546038-2.jpg"
+      "assets/kittens/claudia-pair-1795036559789-2.jpg"
     ],
     "adoptionStatus": "Available",
     "healthChecklist": [
@@ -226,7 +226,7 @@ appRoot.PAWS_KITTENS = [
       "youngerChildren": "Possibly — no direct experience"
     },
     "pairingPhotos": [
-      "assets/kittens/claudia-pair-1794902546038-2.jpg"
+      "assets/kittens/claudia-pair-1795036559789-2.jpg"
     ],
     "adoptionStatus": "Available",
     "healthChecklist": [
@@ -283,7 +283,7 @@ appRoot.PAWS_KITTENS = [
       "youngerChildren": "No"
     },
     "pairingPhotos": [
-      "assets/kittens/harvey-pair-1794902546059-3.jpg"
+      "assets/kittens/harvey-pair-1795036559807-3.jpg"
     ],
     "adoptionStatus": "Available",
     "healthChecklist": [
@@ -340,7 +340,7 @@ appRoot.PAWS_KITTENS = [
       "youngerChildren": "No"
     },
     "pairingPhotos": [
-      "assets/kittens/harvey-pair-1794902546059-3.jpg"
+      "assets/kittens/harvey-pair-1795036559807-3.jpg"
     ],
     "adoptionStatus": "Available",
     "healthChecklist": [
@@ -397,8 +397,8 @@ appRoot.PAWS_KITTENS = [
       "youngerChildren": "No"
     },
     "pairingPhotos": [
-      "assets/kittens/wally-pair-1794902546074-4.jpg",
-      "assets/kittens/wally-pair-1794902546099-4.jpg"
+      "assets/kittens/wally-pair-1795036559822-4.jpg",
+      "assets/kittens/wally-pair-1795036559846-4.jpg"
     ],
     "adoptionStatus": "Returned — Available",
     "healthChecklist": [
@@ -455,8 +455,8 @@ appRoot.PAWS_KITTENS = [
       "youngerChildren": "No"
     },
     "pairingPhotos": [
-      "assets/kittens/wally-pair-1794902546074-4.jpg",
-      "assets/kittens/wally-pair-1794902546099-4.jpg"
+      "assets/kittens/wally-pair-1795036559822-4.jpg",
+      "assets/kittens/wally-pair-1795036559846-4.jpg"
     ],
     "adoptionStatus": "Returned — Available",
     "healthChecklist": [
