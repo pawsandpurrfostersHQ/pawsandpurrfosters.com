@@ -5098,3 +5098,26 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
     font-size: clamp(27px, 8vw, 36px) !important;
   }
 }
+
+
+/* Events tab only — keep the top of the featured Coming Up Next card clear
+   of the sticky mobile header and allow the card to size to its full content. */
+.events-page #event-featured {
+  margin-top: 22px !important;
+  scroll-margin-top: 125px;
+}
+.events-page #event-featured > .event-card--compact {
+  box-sizing: border-box !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+@media (max-width: 760px) {
+  .events-page #event-featured {
+    margin-top: 28px !important;
+  }
+  .events-page #event-featured > .event-card--compact {
+    padding-top: 30px !important;
+    padding-bottom: 26px !important;
+  }
+}
