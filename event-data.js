@@ -50,7 +50,7 @@ window.PAWS_EVENT_DATA = {
       {
         "name": "Pet Food Express",
         "timing": "Every 3rd Saturday of each month",
-        "address": "5829 Lone Tree Way, Suite B, Antioch, CA 94531",
+        "address": "5829 Lone Tree Way, Antioch, CA 94531",
         "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Pet+Food+Express%2C+5829+Lone+Tree+Way%2C+Antioch%2C+CA+94531"
       },
       {
