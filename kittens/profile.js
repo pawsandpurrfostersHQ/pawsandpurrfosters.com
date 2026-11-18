@@ -234,11 +234,11 @@ function renderProfile(kitten) {
         <button class="profile-main-photo photo-open" type="button" data-index="0" aria-label="Open ${escapeHTML(kitten.name)}'s main photo">
           <img src="${escapeHTML(mainImage)}" alt="${escapeHTML(kitten.name)}">
         </button>
-        <div class="profile-thumbnails">${galleryPhotos.slice(1, 6).map((photo, index) => `
+        <div class="profile-thumbnails">${galleryPhotos.slice(1, 7).map((photo, index) => `
           <button class="photo-open" type="button" data-index="${index + 1}" aria-label="Open ${escapeHTML(kitten.name)} photo ${index + 2}">
             <img src="${escapeHTML(profilePhotoSource(photo))}" alt="${escapeHTML(kitten.name)} photo ${index + 2}" loading="lazy">
           </button>`).join("")}</div>
-        ${galleryPhotos.length > 6 ? `<button class="profile-view-all-photos" type="button" aria-haspopup="dialog" aria-controls="all-photos-dialog">View All Photos</button>` : ""}
+        ${galleryPhotos.length > 7 ? `<button class="profile-view-all-photos" type="button" aria-haspopup="dialog" aria-controls="all-photos-dialog">View All Photos</button>` : ""}
       </div>`
     : '<div class="profile-photo-placeholder">Add this kitten\'s photos in assets/kittens/</div>';
 
@@ -402,6 +402,7 @@ function renderProfile(kitten) {
   let activeLightboxLabel = kitten.name;
 
   let lightboxReturnFocus = null;
+  let returnToAllPhotosAfterLightbox = false;
   const openLightbox = (index, photos = activeLightboxPhotos, label = activeLightboxLabel) => {
     if (!lightbox || !lightboxImage || !photos.length) return;
     if (!lightbox.open) lightboxReturnFocus = document.activeElement;
@@ -451,7 +452,7 @@ function renderProfile(kitten) {
   const viewAllPhotosButton = root.querySelector(".profile-view-all-photos");
   if (allPhotosDialog && allPhotosGrid && viewAllPhotosButton) {
     allPhotosGrid.innerHTML = galleryPhotos.slice(1).map((photo, index) => `
-      <button class="all-photos-item" type="button" data-index="${index + 1}" aria-label="View ${kitten.name} photo ${index + 2}">
+      <button class="all-photos-item" type="button" data-index="${index + 1}" aria-label="View ${escapeHTML(kitten.name)} photo ${index + 2}">
         <img src="${escapeHTML(profilePhotoSource(photo))}" alt="${escapeHTML(kitten.name)} photo ${index + 2}" loading="lazy">
       </button>`).join("");
     viewAllPhotosButton.addEventListener("click", () => {
@@ -461,6 +462,7 @@ function renderProfile(kitten) {
       const photoButton = event.target.closest(".all-photos-item");
       if (!photoButton) return;
       const index = Number(photoButton.dataset.index || 1);
+      returnToAllPhotosAfterLightbox = true;
       allPhotosDialog.close();
       openLightbox(index);
     });
@@ -474,6 +476,11 @@ function renderProfile(kitten) {
     if (lightbox && typeof lightbox.close === "function") lightbox.close();
   };
   lightbox?.addEventListener("close", () => {
+    if (returnToAllPhotosAfterLightbox && allPhotosDialog) {
+      returnToAllPhotosAfterLightbox = false;
+      allPhotosDialog.showModal();
+      return;
+    }
     if (lightboxReturnFocus instanceof HTMLElement) lightboxReturnFocus.focus({ preventScroll: true });
     lightboxReturnFocus = null;
   });
@@ -485,6 +492,13 @@ function renderProfile(kitten) {
     });
   });
 
+  lightboxImage?.addEventListener("dblclick", event => {
+    event.preventDefault();
+    lightboxImage.classList.toggle("is-zoomed");
+  });
+  lightboxPrev?.addEventListener("dblclick", event => { event.preventDefault(); event.stopPropagation(); });
+  lightboxNext?.addEventListener("dblclick", event => { event.preventDefault(); event.stopPropagation(); });
+  lightbox?.addEventListener("close", () => lightboxImage?.classList.remove("is-zoomed"));
   lightboxPrev?.addEventListener("click", () => {
     const currentIndex = Number(lightbox.dataset.index || 0);
     openLightbox(currentIndex - 1);
