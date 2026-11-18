@@ -324,8 +324,11 @@ function renderEvents() {
     const attendingLines = attending.length > 4
       ? [attending.slice(0,4), attending.slice(4,8)].filter(line => line.length).map(line => line.map(escapeHTML).join(", ")).join("<br>")
       : attending.map(escapeHTML).join(", ");
+    const attendeeHeading = document.querySelector(".events-page") && currentEvent
+      ? "Kittens Attending"
+      : "Kittens Attended";
     const attendingMarkup = attending.length
-      ? `<div class="event-attending-block"><p class="event-attending"><strong>Kittens Attended</strong></p>${window.renderPawsAttendeeGallery ? window.renderPawsAttendeeGallery(attending) : ""}</div>`
+      ? `<div class="event-attending-block"><p class="event-attending"><strong>${attendeeHeading}</strong></p>${window.renderPawsAttendeeGallery ? window.renderPawsAttendeeGallery(attending) : ""}</div>`
       : "";
     const value = currentEvent
       ? { date:event.date || "Coming Soon", time:event.time || "Coming Soon", location:event.location || "Coming Soon", address:event.address || "Coming Soon" }
