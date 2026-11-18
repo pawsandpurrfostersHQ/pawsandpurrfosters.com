@@ -234,10 +234,11 @@ function renderProfile(kitten) {
         <button class="profile-main-photo photo-open" type="button" data-index="0" aria-label="Open ${escapeHTML(kitten.name)}'s main photo">
           <img src="${escapeHTML(mainImage)}" alt="${escapeHTML(kitten.name)}">
         </button>
-        <div class="profile-thumbnails">${galleryPhotos.slice(1).map((photo, index) => `
+        <div class="profile-thumbnails">${galleryPhotos.slice(1, 6).map((photo, index) => `
           <button class="photo-open" type="button" data-index="${index + 1}" aria-label="Open ${escapeHTML(kitten.name)} photo ${index + 2}">
             <img src="${escapeHTML(profilePhotoSource(photo))}" alt="${escapeHTML(kitten.name)} photo ${index + 2}" loading="lazy">
           </button>`).join("")}</div>
+        ${galleryPhotos.length > 6 ? `<button class="profile-view-all-photos" type="button" aria-haspopup="dialog" aria-controls="all-photos-dialog">View All Photos</button>` : ""}
       </div>`
     : '<div class="profile-photo-placeholder">Add this kitten\'s photos in assets/kittens/</div>';
 
@@ -443,6 +444,30 @@ function renderProfile(kitten) {
       });
     });
     pairDots.forEach(dot => dot.addEventListener("click", () => showPairPage(Number(dot.dataset.pairPage || 0))));
+  }
+
+  const allPhotosDialog = document.querySelector("#all-photos-dialog");
+  const allPhotosGrid = allPhotosDialog?.querySelector(".all-photos-grid");
+  const viewAllPhotosButton = root.querySelector(".profile-view-all-photos");
+  if (allPhotosDialog && allPhotosGrid && viewAllPhotosButton) {
+    allPhotosGrid.innerHTML = galleryPhotos.slice(1).map((photo, index) => `
+      <button class="all-photos-item" type="button" data-index="${index + 1}" aria-label="View ${kitten.name} photo ${index + 2}">
+        <img src="${escapeHTML(profilePhotoSource(photo))}" alt="${escapeHTML(kitten.name)} photo ${index + 2}" loading="lazy">
+      </button>`).join("");
+    viewAllPhotosButton.addEventListener("click", () => {
+      if (!allPhotosDialog.open) allPhotosDialog.showModal();
+    });
+    allPhotosGrid.addEventListener("click", event => {
+      const photoButton = event.target.closest(".all-photos-item");
+      if (!photoButton) return;
+      const index = Number(photoButton.dataset.index || 1);
+      allPhotosDialog.close();
+      openLightbox(index);
+    });
+    allPhotosDialog.querySelector(".all-photos-close")?.addEventListener("click", () => allPhotosDialog.close());
+    allPhotosDialog.addEventListener("click", event => {
+      if (event.target === allPhotosDialog) allPhotosDialog.close();
+    });
   }
 
   const closeLightbox = () => {
