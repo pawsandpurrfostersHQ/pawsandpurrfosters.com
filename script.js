@@ -120,16 +120,20 @@ function renderAbout() {
     return `<p>${linked}</p>`;
   };
   const sections = ABOUT_STORY.sections.map((section, index) => `
-    <section class="about-story-section">
-      ${index === 0 ? "" : `<h3>${escapeHTML(section.heading)}</h3>`}
-      ${section.paragraphs.map(renderParagraph).join("")}
-    </section>`).join("");
+    <details class="about-story-accordion">
+      <summary class="about-story-summary">
+        <span>${escapeHTML(section.heading)}</span>
+        <span class="about-story-chevron" aria-hidden="true">⌄</span>
+      </summary>
+      <div class="about-story-body">
+        ${section.paragraphs.map(renderParagraph).join("")}
+      </div>
+    </details>`).join("");
 
   container.innerHTML = `
     <div class="about-accent"><span>Since</span><strong>2024</strong><span>${totals.kittenCount} kittens fostered</span></div>
     <div>
       <p class="eyebrow">About Paws &amp; Purr Fosters</p>
-      <h2>${escapeHTML(ABOUT_STORY.sections[0].heading)}</h2>
       ${sections}
     </div>`;
 }
