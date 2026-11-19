@@ -29,6 +29,7 @@ appRoot.PAWS_KITTENS = [
     "image": "assets/kittens/Diego-halloween.jpg",
     "gender": "Male",
     "photos": [
+      "assets/kittens/diego-1795046589578-1.jpg",
       "assets/kittens/diego-main.png",
       "assets/kittens/Diego-2.jpg",
       "assets/kittens/Diego-3.jpg",
@@ -85,6 +86,7 @@ appRoot.PAWS_KITTENS = [
     "image": "assets/kittens/Valentina-halloween.jpg",
     "gender": "Female",
     "photos": [
+      "assets/kittens/valentina-1795046589606-2.jpg",
       "assets/kittens/Valentina-1.png",
       "assets/kittens/Valentina-2.jpg",
       "assets/kittens/Valentina.4.jpg",
@@ -141,6 +143,7 @@ appRoot.PAWS_KITTENS = [
     "image": "assets/kittens/Claudia-halloween.jpg",
     "gender": "Female",
     "photos": [
+      "assets/kittens/claudia-1795046589633-3.jpg",
       "assets/kittens/claudia-main.png",
       "assets/kittens/claudia-1793504031844-1.jpg",
       "assets/kittens/claudia-photo-2.png",
@@ -199,6 +202,7 @@ appRoot.PAWS_KITTENS = [
     "image": "assets/kittens/Paloma-halloween.jpg",
     "gender": "Female",
     "photos": [
+      "assets/kittens/paloma-1795046589658-4.jpg",
       "assets/kittens/paloma-main.png",
       "assets/kittens/paloma-1793504031855-2.jpg",
       "assets/kittens/paloma-photo-2.png",
@@ -256,6 +260,7 @@ appRoot.PAWS_KITTENS = [
     "image": "assets/kittens/Harvey-halloween.jpg",
     "gender": "Male",
     "photos": [
+      "assets/kittens/harvey-1795046589683-5.jpg",
       "assets/kittens/harvey-main.png",
       "assets/kittens/harvey-1793504031862-3.jpg",
       "assets/kittens/harvey-photo-2.png",
@@ -313,6 +318,7 @@ appRoot.PAWS_KITTENS = [
     "image": "assets/kittens/Melody-halloween.jpg",
     "gender": "Female",
     "photos": [
+      "assets/kittens/melody-1795046589708-6.jpg",
       "assets/kittens/melody-main.png",
       "assets/kittens/melody-photo-2.png",
       "assets/kittens/melody-photo-3.png",
@@ -370,6 +376,7 @@ appRoot.PAWS_KITTENS = [
     "image": "assets/kittens/Wally-halloween.jpg",
     "gender": "Male",
     "photos": [
+      "assets/kittens/wally-1795046589734-7.jpg",
       "assets/kittens/wally-main.png",
       "assets/kittens/wally-photo-2.png",
       "assets/kittens/wally-photo-3.png",
@@ -428,6 +435,7 @@ appRoot.PAWS_KITTENS = [
     "image": "assets/kittens/Raymond-halloween.jpg",
     "gender": "Male",
     "photos": [
+      "assets/kittens/raymond-1795046589761-8.jpg",
       "assets/kittens/raymond-main.png",
       "assets/kittens/raymond-photo-2.png",
       "assets/kittens/raymond-photo-3.png",
