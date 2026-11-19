@@ -37,7 +37,7 @@ window.PAWS_FOSTER_CAROUSEL_PHOTOS = FOSTER_CAROUSEL_PHOTOS;
 const ABOUT_STORY = {
   sections: [
     {
-      heading: "A brother-and-sister foster team.",
+      heading: "The People Behind Paws & Purrs",
       paragraphs: [
         "Paws & Purr Fosters is a brother-and-sister foster team run by my brother and me, with the love and support of our family. We each bring something different to fostering. My brother primarily cares for our younger kittens, while I focus on much of the social media, along with caring for our older kittens. Our roles may be different, but neither of us could do this without the other. We work together as a team, and we're grateful to share this experience.",
         "We officially began fostering on February 29, 2024, with No Paws Left Behind Kitty Rescue. Kittens are placed in our home through the rescue, which we're incredibly grateful for. The rescue provides support throughout the fostering and adoption process, including medical care, supplies, and handling adoptions. Our role is to provide each kitten with a loving foster home, get to know their individual personality, and help prospective adopters learn more about finding the right match for their home."
