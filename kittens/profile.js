@@ -238,7 +238,7 @@ function renderProfile(kitten) {
           <button class="photo-open" type="button" data-index="${index + 1}" aria-label="Open ${escapeHTML(kitten.name)} photo ${index + 2}">
             <img src="${escapeHTML(profilePhotoSource(photo))}" alt="${escapeHTML(kitten.name)} photo ${index + 2}" loading="lazy">
           </button>`).join("")}
-          ${galleryPhotos.length > 7 ? `<button class="profile-view-all-photos photo-open" type="button" data-index="6" aria-haspopup="dialog" aria-controls="all-photos-dialog" aria-label="View all ${galleryPhotos.length} photos of ${escapeHTML(kitten.name)}">
+          ${galleryPhotos.length > 7 ? `<button class="profile-view-all-photos" type="button" aria-haspopup="dialog" aria-controls="all-photos-dialog" aria-label="View all ${galleryPhotos.length} photos of ${escapeHTML(kitten.name)}">
             <img src="${escapeHTML(profilePhotoSource(galleryPhotos[6]))}" alt="" aria-hidden="true" loading="lazy">
             <span class="profile-view-all-overlay"><strong>View All Photos</strong><small>${galleryPhotos.length} photos</small></span>
           </button>` : ""}
