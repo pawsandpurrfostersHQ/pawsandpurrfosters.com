@@ -234,11 +234,15 @@ function renderProfile(kitten) {
         <button class="profile-main-photo photo-open" type="button" data-index="0" aria-label="Open ${escapeHTML(kitten.name)}'s main photo">
           <img src="${escapeHTML(mainImage)}" alt="${escapeHTML(kitten.name)}">
         </button>
-        <div class="profile-thumbnails">${galleryPhotos.slice(1, 7).map((photo, index) => `
+        <div class="profile-thumbnails">${galleryPhotos.slice(1, galleryPhotos.length > 7 ? 6 : 7).map((photo, index) => `
           <button class="photo-open" type="button" data-index="${index + 1}" aria-label="Open ${escapeHTML(kitten.name)} photo ${index + 2}">
             <img src="${escapeHTML(profilePhotoSource(photo))}" alt="${escapeHTML(kitten.name)} photo ${index + 2}" loading="lazy">
-          </button>`).join("")}</div>
-        ${galleryPhotos.length > 7 ? `<button class="profile-view-all-photos" type="button" aria-haspopup="dialog" aria-controls="all-photos-dialog">View All Photos</button>` : ""}
+          </button>`).join("")}
+          ${galleryPhotos.length > 7 ? `<button class="profile-view-all-photos photo-open" type="button" data-index="6" aria-haspopup="dialog" aria-controls="all-photos-dialog" aria-label="View all ${galleryPhotos.length} photos of ${escapeHTML(kitten.name)}">
+            <img src="${escapeHTML(profilePhotoSource(galleryPhotos[6]))}" alt="" aria-hidden="true" loading="lazy">
+            <span class="profile-view-all-overlay"><strong>View All Photos</strong><small>${galleryPhotos.length} photos</small></span>
+          </button>` : ""}
+        </div>
       </div>`
     : '<div class="profile-photo-placeholder">Add this kitten\'s photos in assets/kittens/</div>';
 
@@ -451,9 +455,11 @@ function renderProfile(kitten) {
   const allPhotosGrid = allPhotosDialog?.querySelector(".all-photos-grid");
   const viewAllPhotosButton = root.querySelector(".profile-view-all-photos");
   if (allPhotosDialog && allPhotosGrid && viewAllPhotosButton) {
-    allPhotosGrid.innerHTML = galleryPhotos.slice(1).map((photo, index) => `
-      <button class="all-photos-item" type="button" data-index="${index + 1}" aria-label="View ${escapeHTML(kitten.name)} photo ${index + 2}">
-        <img src="${escapeHTML(profilePhotoSource(photo))}" alt="${escapeHTML(kitten.name)} photo ${index + 2}" loading="lazy">
+    const allPhotosHeading = allPhotosDialog.querySelector(".all-photos-dialog-header h2");
+    if (allPhotosHeading) allPhotosHeading.textContent = `All Photos — ${kitten.name}`;
+    allPhotosGrid.innerHTML = galleryPhotos.map((photo, index) => `
+      <button class="all-photos-item" type="button" data-index="${index}" aria-label="View ${escapeHTML(kitten.name)} photo ${index + 1}">
+        <img src="${escapeHTML(profilePhotoSource(photo))}" alt="${escapeHTML(kitten.name)} photo ${index + 1}" loading="lazy">
       </button>`).join("");
     viewAllPhotosButton.addEventListener("click", () => {
       if (!allPhotosDialog.open) allPhotosDialog.showModal();
@@ -461,7 +467,7 @@ function renderProfile(kitten) {
     allPhotosGrid.addEventListener("click", event => {
       const photoButton = event.target.closest(".all-photos-item");
       if (!photoButton) return;
-      const index = Number(photoButton.dataset.index || 1);
+      const index = Number(photoButton.dataset.index || 0);
       returnToAllPhotosAfterLightbox = true;
       allPhotosDialog.close();
       openLightbox(index);
