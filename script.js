@@ -35,11 +35,29 @@ window.PAWS_FOSTER_CAROUSEL_PHOTOS = FOSTER_CAROUSEL_PHOTOS;
 // Keep the story paragraphs together in this object.
 // ==========================================
 const ABOUT_STORY = {
-  paragraphs: [
-    "Paws & Purr Fosters is a small foster team run by my brother and me, with the help of our family. We officially began fostering kittens on February 29, 2024. Before we officially began fostering, we unexpectedly raised a single kitten. That kitten was Figaro, but we called him Fig. Fig passed away in 2020. Fig showed me how much love I could have for a kitten and inspired me to begin fostering.",
-    "Beginning fostering on February 29, 2024 allowed me to honor Fig's impact by helping other kittens. We are now on our {{currentLitter}} litter and have fostered {{kittenCount}} kittens so far. Every kitten receives love, care, socialization, positive experiences, play, and opportunities to build confidence while waiting for their forever homes.",
-    "All of our kittens are harness-trained to some degree while in our care. The longer they stay with us, the more opportunity they have to become fully comfortable with the harness. Harness training helps kittens build confidence and experience new things, including safe trips to the veterinarian and fun adventures with their future families. We're proud of what we do and look forward to helping many more kittens find the loving homes they deserve.",
-    "We are a foster team working in partnership with No Paws Left Behind Kitty Rescue. The kittens are placed in our home through the rescue, and all adoption applications, application reviews and approvals, contracts, adoption fees, and final adoptions are handled by the rescue. Our role is to provide a safe, loving foster home, get to know each kitten, and help you find the right match for your home."
+  sections: [
+    {
+      heading: "A brother-and-sister foster team.",
+      paragraphs: [
+        "Paws & Purr Fosters is a brother-and-sister foster team run by my brother and me, with the love and support of our family. We each bring something different to fostering. My brother primarily cares for our younger kittens, while I focus on much of the social media, along with caring for our older kittens. Our roles may be different, but neither of us could do this without the other. We work together as a team, and we're grateful to share this experience.",
+        "We officially began fostering on February 29, 2024, with No Paws Left Behind Kitty Rescue. Kittens are placed in our home through the rescue, which we're incredibly grateful for. The rescue provides support throughout the fostering and adoption process, including medical care, supplies, and handling adoptions. Our role is to provide each kitten with a loving foster home, get to know their individual personality, and help prospective adopters learn more about finding the right match for their home."
+      ]
+    },
+    {
+      heading: "The story behind our logo",
+      paragraphs: [
+        "Before officially becoming a foster home, we unexpectedly took in and raised a little kitten named Figaro, whom we affectionately called Fig. Sadly, he unexpectedly passed away in 2020. Although our time with him was short, raising Fig showed us just how special and rewarding caring for a kitten could be.",
+        "Fig left a lasting impact on our lives and inspired us to begin fostering. Paws & Purr Fosters is one way we continue to honor his memory and the love he brought into our home."
+      ]
+    },
+    {
+      heading: "A little about our foster care",
+      paragraphs: [
+        "We are now caring for litter number {{currentLitter}} and have welcomed {{kittenCount}} kittens into our home so far. Each kitten receives individualized care, affection, socialization, playtime, and positive experiences that help them build confidence while they wait for their forever homes.",
+        "We also introduce our kittens to harnesses during their time in our care. Every kitten progresses at their own pace, and the amount of time they spend with us can make a difference in how comfortable they become. Harness training gives them opportunities to build confidence and become familiar with new experiences, from safe outings to trips to the veterinarian.",
+        "We take pride in giving every kitten the time, patience, and care they deserve. We're grateful to be part of their journey and look forward to welcoming many more little personalities into our home."
+      ]
+    }
   ]
 };
 
@@ -95,19 +113,24 @@ function renderAbout() {
     container.innerHTML = '<p class="empty-state" role="alert">Foster history totals could not be loaded.</p>';
     return;
   }
-  const paragraphs = ABOUT_STORY.paragraphs.map(text => {
+  const rescueName = "No Paws Left Behind Kitty Rescue";
+  const renderParagraph = text => {
     const escaped = escapeHTML(text.replaceAll("{{currentLitter}}", totals.currentLitter).replaceAll("{{kittenCount}}", String(totals.kittenCount)));
-    const rescueName = "No Paws Left Behind Kitty Rescue";
     const linked = escaped.replace(rescueName, `<strong><a href="https://www.nopawsleftbehindkittyrescue.com/" target="_blank" rel="noopener noreferrer">${rescueName}</a></strong>`);
     return `<p>${linked}</p>`;
-  }).join("");
+  };
+  const sections = ABOUT_STORY.sections.map((section, index) => `
+    <section class="about-story-section">
+      ${index === 0 ? "" : `<h3>${escapeHTML(section.heading)}</h3>`}
+      ${section.paragraphs.map(renderParagraph).join("")}
+    </section>`).join("");
 
   container.innerHTML = `
     <div class="about-accent"><span>Since</span><strong>2024</strong><span>${totals.kittenCount} kittens fostered</span></div>
     <div>
       <p class="eyebrow">About Paws &amp; Purr Fosters</p>
-      <h2>A small foster team, with a lot of love to give.</h2>
-      ${paragraphs}
+      <h2>${escapeHTML(ABOUT_STORY.sections[0].heading)}</h2>
+      ${sections}
     </div>`;
 }
 
