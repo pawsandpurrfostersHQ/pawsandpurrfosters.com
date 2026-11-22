@@ -5510,3 +5510,52 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
     padding:2px 0 14px!important;
   }
 }
+
+
+/* Foster Alumni refinement: compact cards, one clean photo viewer, and clear celebration meanings. */
+.alumni-litter-heading { scroll-margin-top:112px; }
+.alumni-litter-heading h2 { line-height:1.2; }
+.alumni-main-photo { position:relative; overflow:hidden; aspect-ratio:4/3; }
+.alumni-main-photo-button { position:relative; display:block; width:100%; height:100%; min-height:0; padding:0; overflow:hidden; border:0; border-radius:inherit; background:var(--sage-light); cursor:zoom-in; }
+.alumni-main-photo-button>img { display:block; width:100%; height:100%; min-height:0; aspect-ratio:4/3; object-fit:contain; }
+.alumni-main-photo-button:focus-visible { outline:3px solid var(--purple); outline-offset:3px; }
+.alumni-photo-hint { position:absolute; left:50%; bottom:10px; transform:translateX(-50%); display:inline-flex; align-items:center; gap:7px; max-width:calc(100% - 20px); padding:6px 11px; border:1px solid rgba(255,255,255,.72); border-radius:999px; background:rgba(35,32,39,.68); color:#fff; font-size:11px; font-weight:700; white-space:nowrap; pointer-events:none; opacity:.94; }
+.alumni-photo-hint--mobile { display:none; }
+.alumni-photo-hint__icon { font-size:15px; line-height:1; }
+@media(hover:hover) { .alumni-photo-hint { opacity:0; transition:opacity .18s ease; } .alumni-main-photo-button:hover .alumni-photo-hint,.alumni-main-photo-button:focus-visible .alumni-photo-hint { opacity:1; } }
+.alumni-photo-symbols { position:absolute; top:10px; right:10px; z-index:2; display:flex; gap:7px; pointer-events:none; }
+.alumni-photo-symbol { display:grid; place-items:center; width:36px; height:36px; border:1px solid rgba(117,98,141,.2); border-radius:50%; background:rgba(255,255,255,.96); box-shadow:0 3px 12px rgba(62,67,57,.12); font-size:20px; }
+.alumni-photo-indicators { display:flex; justify-content:center; align-items:center; gap:7px; padding:9px 0 1px; }
+.alumni-photo-indicator { width:7px; height:7px; flex:0 0 7px; padding:0; border:0; border-radius:50%; background:#d9d5df; cursor:pointer; }
+.alumni-photo-indicator[aria-pressed="true"] { background:var(--purple); transform:scale(1.18); }
+.alumni-photo-indicator:focus-visible { outline:2px solid var(--purple-dark); outline-offset:3px; }
+.alumni-card-content { padding-top:13px; }
+.alumni-card-content h3 { display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin:0 0 12px; }
+.alumni-graduation-badge { display:inline-flex; align-items:center; gap:4px; padding:4px 8px; border-radius:999px; background:var(--purple-light); color:var(--purple-dark); font-size:10px; font-weight:700; line-height:1.2; }
+.alumni-details { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px 14px; }
+.alumni-details>div { display:flex; flex-direction:column; align-items:flex-start; justify-content:flex-start; gap:3px; min-width:0; }
+.alumni-details dt { font-size:11px; line-height:1.25; }
+.alumni-details dd { text-align:left; font-size:12px; line-height:1.35; overflow-wrap:anywhere; }
+.alumni-celebration { margin-top:11px; padding:9px 11px; font-size:12px; line-height:1.45; }
+.alumni-temporary-notice--pair { flex:1 1 100%; max-width:none; padding:18px 20px; }
+.alumni-temporary-notice--pair h3 { margin:0 0 7px; color:var(--purple-dark); font-size:18px; }
+.alumni-temporary-notice--pair p { margin:0; line-height:1.55; }
+.alumni-temporary-notice--pair .text-link { font-weight:800; }
+.alumni-litter--temporary .alumni-cards { overflow:visible; }
+@media(max-width:760px) {
+  .alumni-litters { gap:30px; }
+  .alumni-litter-heading { margin-bottom:12px; scroll-margin-top:94px; }
+  .alumni-litter-heading h2 { font-size:clamp(22px,6vw,28px); }
+  .alumni-cards,.alumni-litter--paired .alumni-cards { display:grid!important; grid-template-columns:minmax(0,1fr); justify-items:center; gap:14px; overflow:visible!important; padding:0 0 4px!important; scroll-snap-type:none!important; }
+  .alumni-card,.alumni-litter--paired .alumni-card { width:min(100%,390px)!important; max-width:390px!important; min-width:0; flex:none!important; margin:0 auto!important; scroll-snap-align:none!important; }
+  .alumni-main-photo { aspect-ratio:4/3; }
+  .alumni-photo-hint--desktop { display:none; }
+  .alumni-photo-hint--mobile { display:inline; }
+  .alumni-photo-hint { opacity:1; bottom:8px; padding:5px 9px; font-size:10px; }
+  .alumni-card-content { padding:13px 15px 16px; }
+  .alumni-details { gap:9px 12px; }
+  .alumni-details dt { font-size:10px; }
+  .alumni-details dd { font-size:12px; }
+  .alumni-temporary-notice--pair { width:min(100%,390px); flex:none; margin:0 auto; padding:18px; }
+  .alumni-carousel-controls { display:none!important; }
+}
