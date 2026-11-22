@@ -226,52 +226,49 @@ function renderFosterAlumni(kittenList, today = new Date()) {
   if (!container) return;
 
   const alumni = sortAlumniByLitterAndAdoptionDate(getConfirmedAlumni(kittenList));
-  if (!alumni.length) {
+  const currentKittens = (Array.isArray(window.PAWS_KITTENS) ? window.PAWS_KITTENS : [])
+    .filter(kitten => (kitten.adoptionStatus || kitten.status) !== "Adopted" && Number(kitten.litterNumber ?? kitten.litter) > 0);
+  if (!alumni.length && !currentKittens.length) {
     container.innerHTML = '<div class="empty-state">Our forever-home alumni will be celebrated here. Check back to meet the kittens who have found their families!</div>';
     return;
   }
 
   const alumniIds = new Map(alumni.map(kitten => [kitten.id, kitten.name]));
-  const raymondNotice = document.querySelector("#raymond-wally-notice")?.innerHTML.trim();
-  const twelfthLitterNotice = document.querySelector("#twelfth-litter-notice")?.innerHTML.trim();
-  const eleventhLitterNotice = document.querySelector("#eleventh-litter-notice")?.innerHTML.trim();
-  if (!raymondNotice || !twelfthLitterNotice || !eleventhLitterNotice) {
-    container.innerHTML = '<div class="empty-state" role="alert">Foster alumni notices could not be loaded. Please try again later.</div>';
-    console.error("Foster alumni temporary notice templates are missing.");
-    return;
-  }
   const groups = new Map();
   alumni.forEach(kitten => {
     const litter = Number(kitten.fosterLitter);
     if (!groups.has(litter)) groups.set(litter, []);
     groups.get(litter).push(kitten);
   });
+  const currentGroups = new Map();
+  currentKittens.forEach(kitten => {
+    const litter = Number(kitten.litterNumber ?? kitten.litter);
+    if (!currentGroups.has(litter)) currentGroups.set(litter, []);
+    currentGroups.get(litter).push(kitten);
+  });
 
   const hasDiabloFinnPair = groups.has(5) && groups.has(4);
-  let eleventhLitterRendered = false;
-  container.innerHTML = [...groups.entries()].map(([litter, kittens]) => {
-    if (litter === 12) {
-      eleventhLitterRendered = true;
-      const twelfthLitter = renderAlumniLitter(litter, kittens, alumniIds, today, false, twelfthLitterNotice, kittens[kittens.length - 1]?.id);
-      return `${twelfthLitter}${renderTemporaryAlumniLitter(11, eleventhLitterNotice)}`;
-    }
-    if (litter === 10) {
-      const litterTen = renderAlumniLitter(litter, kittens, alumniIds, today, false, raymondNotice, "matilda");
-      return `${eleventhLitterRendered ? "" : renderTemporaryAlumniLitter(11, eleventhLitterNotice)}${litterTen}`;
-    }
+  const litterNumbers = [...new Set([...groups.keys(), ...currentGroups.keys()])].sort((a, b) => b - a);
+  container.innerHTML = litterNumbers.map(litter => {
+    const kittens = groups.get(litter) || [];
+    const waiting = currentGroups.get(litter) || [];
+    const noticeMarkup = waiting.length ? renderTemporaryAlumniCard(litter, waiting) : "";
     if (hasDiabloFinnPair && litter === 5) {
-      return `<div class="alumni-litter-pair">
-        ${renderAlumniLitter(5, groups.get(5), alumniIds, today, true)}
-        ${renderAlumniLitter(4, groups.get(4), alumniIds, today, true)}
-      </div>`;
+      const fifth = renderAlumniLitter(5, groups.get(5), alumniIds, today, true, noticeMarkup, groups.get(5).at(-1)?.id || "");
+      const fourthWaiting = currentGroups.get(4) || [];
+      const fourthNotice = fourthWaiting.length ? renderTemporaryAlumniCard(4, fourthWaiting) : "";
+      const fourth = renderAlumniLitter(4, groups.get(4), alumniIds, today, true, fourthNotice, groups.get(4).at(-1)?.id || "");
+      return '<div class="alumni-litter-pair">' + fifth + fourth + '</div>';
     }
     if (hasDiabloFinnPair && litter === 4) return "";
-    return renderAlumniLitter(litter, kittens, alumniIds, today);
+    if (kittens.length) {
+      return renderAlumniLitter(litter, kittens, alumniIds, today, false, noticeMarkup, kittens[kittens.length - 1]?.id || "");
+    }
+    return renderTemporaryAlumniLitter(litter, waiting);
   }).join("");
 
-  // Start every alumni card row at its true leading edge on first page load.
-  // Mobile browsers can restore a stale horizontal scroll offset before layout settles;
-  // resetting on the next frame prevents the first card appearing clipped/off-center.
+  initAlumniPhotoLightbox(container, alumni);
+
   container.querySelectorAll(".alumni-litter:not(.alumni-litter--paired):not(.alumni-litter--temporary) .alumni-cards").forEach(track => {
     track.scrollLeft = 0;
     requestAnimationFrame(() => { track.scrollLeft = 0; });
@@ -282,21 +279,17 @@ function renderFosterAlumni(kittenList, today = new Date()) {
     const photoArea = carousel.querySelector(".alumni-main-photo");
     const indicators = [...carousel.querySelectorAll(".alumni-photo-indicator")];
     if (!image || !photoArea || indicators.length !== 2) return;
-
     let activeIndex = 0;
     const showPhoto = index => {
       activeIndex = (index + indicators.length) % indicators.length;
       const indicator = indicators[activeIndex];
       image.src = indicator.dataset.photo;
-      image.alt = `${carousel.closest(".alumni-card").querySelector("h3").textContent.trim()} photo ${activeIndex + 1}`;
+      image.alt = carousel.closest(".alumni-card").querySelector("h3").textContent.trim() + " photo " + (activeIndex + 1);
       indicators.forEach((button, buttonIndex) => button.setAttribute("aria-pressed", String(buttonIndex === activeIndex)));
     };
     indicators.forEach((button, index) => button.addEventListener("click", () => showPhoto(index)));
-
     let touchStartX = null;
-    photoArea.addEventListener("touchstart", event => {
-      touchStartX = event.touches[0]?.clientX ?? null;
-    }, { passive: true });
+    photoArea.addEventListener("touchstart", event => { touchStartX = event.touches[0]?.clientX ?? null; }, { passive: true });
     photoArea.addEventListener("touchend", event => {
       const touchEndX = event.changedTouches[0]?.clientX;
       if (touchStartX === null || touchEndX === undefined) return;
@@ -309,6 +302,7 @@ function renderFosterAlumni(kittenList, today = new Date()) {
   container.querySelectorAll(".alumni-litter:not(.alumni-litter--paired):not(.alumni-litter--temporary)").forEach(section => {
     const track = section.querySelector(".alumni-cards");
     const [previous, next] = section.querySelectorAll(".alumni-arrow");
+    if (!track || !previous || !next) return;
     const updateControls = () => {
       const maxScroll = track.scrollWidth - track.clientWidth;
       previous.disabled = track.scrollLeft <= 2;
@@ -322,12 +316,52 @@ function renderFosterAlumni(kittenList, today = new Date()) {
       const gap = Number.parseFloat(getComputedStyle(track).columnGap) || 0;
       track.scrollBy({ left: direction * (card.getBoundingClientRect().width + gap), behavior: "smooth" });
     };
-
     previous.addEventListener("click", () => scrollCards(-1));
     next.addEventListener("click", () => scrollCards(1));
     track.addEventListener("scroll", updateControls, { passive: true });
     window.addEventListener("resize", updateControls);
     updateControls();
+  });
+}
+
+function initAlumniPhotoLightbox(container, alumni) {
+  const dialog = document.querySelector("#alumni-photo-lightbox");
+  const image = dialog?.querySelector("img");
+  const close = dialog?.querySelector(".alumni-lightbox-close");
+  const previous = dialog?.querySelector(".alumni-lightbox-prev");
+  const next = dialog?.querySelector(".alumni-lightbox-next");
+  if (!dialog || !image) return;
+  let photos = [], index = 0, returnFocus = null, label = "Foster alumni";
+  const show = nextIndex => {
+    index = (nextIndex + photos.length) % photos.length;
+    image.src = photos[index];
+    image.alt = label + " photo " + (index + 1) + " of " + photos.length;
+    if (previous) previous.hidden = photos.length < 2;
+    if (next) next.hidden = photos.length < 2;
+  };
+  container.querySelectorAll("[data-alumni-gallery]").forEach(button => button.addEventListener("click", () => {
+    const kitten = alumni.find(item => item.id === button.dataset.alumniGallery);
+    if (!kitten) return;
+    photos = getAlumniGalleryPhotos(kitten);
+    if (!photos.length) return;
+    label = kitten.name;
+    returnFocus = button;
+    show(Number(button.dataset.photoIndex || 0));
+    if (!dialog.open) dialog.showModal();
+  }));
+  close?.addEventListener("click", () => dialog.close());
+  previous?.addEventListener("click", () => show(index - 1));
+  next?.addEventListener("click", () => show(index + 1));
+  dialog.addEventListener("click", event => { if (event.target === dialog) dialog.close(); });
+  dialog.addEventListener("close", () => {
+    image.removeAttribute("src");
+    if (returnFocus?.isConnected) returnFocus.focus({ preventScroll: true });
+    returnFocus = null;
+  });
+  document.addEventListener("keydown", event => {
+    if (!dialog.open) return;
+    if (event.key === "ArrowLeft") { event.preventDefault(); show(index - 1); }
+    if (event.key === "ArrowRight") { event.preventDefault(); show(index + 1); }
   });
 }
 
