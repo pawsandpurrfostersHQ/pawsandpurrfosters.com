@@ -117,7 +117,7 @@ function renderAllKittens() {
   }).join("");
 
   const targetId = typeof window !== "undefined" ? decodeURIComponent(window.location.hash.slice(1)) : "";
-  const targetMatch = targetId.match(/^litter-(\\d+)(?:--(.+))?$/);
+  const targetMatch = targetId.match(/^litter-(\d+)(?:--(.+))?$/);
   if (targetMatch) {
     const target = document.getElementById("litter-" + targetMatch[1]);
     if (target) {
