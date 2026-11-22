@@ -146,7 +146,7 @@ function renderAlumniCard(kitten, alumniIds, today = new Date()) {
           (celebrations.celebratesBirthday ? '<span class="alumni-symbol-wrap"><button class="alumni-photo-symbol" type="button" data-alumni-info aria-expanded="false" aria-label="Birthday information for ' + escapeHTML(kitten.name) + '">' + (celebrations.birthdayMessage ? "🎂" : "🎁") + '</button><span class="alumni-symbol-tooltip" role="status" hidden>' + (celebrations.birthdayMessage ? 'Happy birthday! Today is ' + escapeHTML(kitten.name) + "'s special day." : escapeHTML(kitten.name) + "'s birthday is this month. Their birthday is " + escapeHTML(formatAlumniDate(birthdayDate)) + ".") + '</span></span>' : "") +
           (celebrations.gotchaDayMessage ? '<span class="alumni-symbol-wrap"><button class="alumni-photo-symbol" type="button" data-alumni-info aria-expanded="false" aria-label="Gotcha Day information for ' + escapeHTML(kitten.name) + '">🎉</button><span class="alumni-symbol-tooltip" role="status" hidden>Happy Gotcha Day! It has been one year since ' + escapeHTML(kitten.name) + ' found their forever home.</span></span>' : "") +
         '</span>' +
-        (celebrations.graduationMessage ? '<span class="alumni-graduation-corner"><button class="alumni-graduation-icon" type="button" aria-label="Celebrate ' + escapeHTML(kitten.name) + "'s recent graduation" + '" aria-expanded="false" data-graduation-info>🎓</button><span class="alumni-graduation-tooltip" role="status" hidden><strong>A whole week to celebrate!</strong> ' + escapeHTML(kitten.name) + ' has officially graduated from foster care. This week is all about celebrating their happy new chapter!</span></span>' : '') +
+        (celebrations.graduationMessage ? '<span class="alumni-graduation-corner"><button class="alumni-graduation-icon" type="button" aria-label="Celebrate ' + escapeHTML(kitten.name) + "'s recent graduation" + '" aria-expanded="false" data-graduation-info>🎓</button><span class="alumni-graduation-tooltip" role="status" hidden><strong>A whole week to celebrate!</strong> ' + escapeHTML(kitten.name) + ' has officially graduated from foster care. This week is all about celebrating them and their happy new chapter!</span></span>' : '') +
         '</div>' +
         (photos.length > 1 ? '<div class="alumni-photo-indicators" role="group" aria-label="' + escapeHTML(kitten.name) + ' photo navigation">' +
           photos.map((photo,index) => '<button class="alumni-photo-indicator" type="button" data-index="' + index + '" aria-label="Show photo ' + (index+1) + ' of ' + photos.length + '" aria-pressed="' + (index===0) + '"></button>').join("") +
@@ -173,7 +173,7 @@ function renderAlumniCard(kitten, alumniIds, today = new Date()) {
         '<div><dt>Birthday</dt><dd>' + formatAlumniBirthday(birthdayDate) + '</dd></div>' +
         '<div><dt>Age</dt><dd>' + (age === null ? "—" : escapeHTML(age) + " old") + '</dd></div>' +
         '<div><dt>Zodiac</dt><dd>' + escapeHTML(getZodiacSign(kitten.birthday)) + '</dd></div>' +
-        '<div><dt>Gotcha Day</dt><dd>' + formatAlumniDate(parseAlumniDate(kitten.adoptionDate)) + '</dd></div>' +
+        '<div><dt>Gotcha Day</dt><dd>' + formatAlumniBirthday(parseAlumniDate(kitten.adoptionDate)) + '</dd></div>' +
         '<div><dt>Foster litter</dt><dd>' + escapeHTML(formatAlumniLitter(kitten.fosterLitter)) + '</dd></div>' +
         (companionName ? '<div><dt>Adopted with</dt><dd>' + escapeHTML(companionName) + '</dd></div>' : '') +
       '</dl>' + celebrationMessages + '</div></article>';
@@ -215,9 +215,9 @@ function renderTemporaryAlumniCard(litter, kittens) {
   const meetLabel = kittenNames.length > 1
     ? 'Meet ' + kittenNames.slice(0, -1).join(', ') + ' and ' + kittenNames[kittenNames.length - 1]
     : 'Meet ' + (kittenNames[0] || 'these kittens');
-  return '<article class="alumni-temporary-notice alumni-temporary-notice--pair"><h3>Still waiting for their forever homes</h3>' +
+  return '<article class="alumni-temporary-notice alumni-temporary-notice--pair"><h3>Their Next Chapter Starts With You</h3>' +
     '<p>' + countText + " " + verb + ' still in foster care and waiting for their forever homes. Meet ' + joinedNames + '.</p>' +
-    '<a class="alumni-current-fosters-link" href="' + currentFostersLink + '">' + escapeHTML(meetLabel) + ' in Current Fosters →</a></article>';
+    '<a class="alumni-current-fosters-link" href="' + currentFostersLink + '--' + kittens.map(kitten => encodeURIComponent(kitten.id)).join(',') + '">' + escapeHTML(meetLabel) + '</a></article>';
 }
 function renderTemporaryAlumniLitter(litter, kittens) {
   const total = getAlumniLitterTotal(litter);

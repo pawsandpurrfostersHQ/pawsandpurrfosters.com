@@ -77,11 +77,11 @@ function renderKittenCard(kitten) {
     ? `<img src="${escapeHTML(kitten.image)}" alt="${escapeHTML(kitten.name)}" loading="lazy">`
     : `<div class="photo-placeholder card-photo"><span>Photo coming soon</span></div>`;
 
-  return `<article class="kitten-card">
+  return `<article class="kitten-card" data-kitten-id="${escapeHTML(kitten.id)}">
     <div class="card-photo-wrap">${photo}</div>
     <div class="card-content">
       <span class="status-badge ${statusClassName(status)}">${escapeHTML(status)}</span>
-      <h3>${escapeHTML(kitten.name)}</h3>
+      <h3><span class="all-litters__name">${escapeHTML(kitten.name)}</span></h3>
       <p>${escapeHTML(shortBlurb(kitten))}</p>
       <a class="card-link" href="${escapeHTML(kitten.profileUrl ? `${kitten.profileUrl}${kitten.profileUrl.includes("?") ? "&" : "?"}from=current&back=${encodeURIComponent(window.location.href)}` : "#")}">Get to Know ${escapeHTML(kitten.name)} →</a>
     </div>
@@ -116,15 +116,21 @@ function renderAllKittens() {
     `;
   }).join("");
 
-  const targetId = typeof window !== "undefined" ? window.location.hash.slice(1) : "";
-  if (targetId.startsWith("litter-")) {
-    const target = document.getElementById(targetId);
+  const targetId = typeof window !== "undefined" ? decodeURIComponent(window.location.hash.slice(1)) : "";
+  const targetMatch = targetId.match(/^litter-(\d+)(?:--(.+))?$/);
+  if (targetMatch) {
+    const target = document.getElementById("litter-" + targetMatch[1]);
     if (target) {
-      target.classList.add("is-highlighted");
+      const highlightedNames = (targetMatch[2] || "").split(",").filter(Boolean);
+      const nameTargets = highlightedNames.length
+        ? highlightedNames.map(id => target.querySelector('.kitten-card[data-kitten-id="' + CSS.escape(id) + '"] .all-litters__name')).filter(Boolean)
+        : [];
+      const highlightTargets = nameTargets.length ? nameTargets : [target];
+      highlightTargets.forEach(item => item.classList.add("is-highlighted"));
       requestAnimationFrame(() => target.scrollIntoView({ behavior: "smooth", block: "start" }));
       const dismissHighlight = event => {
         if (!target.contains(event.target)) {
-          target.classList.remove("is-highlighted");
+          highlightTargets.forEach(item => item.classList.remove("is-highlighted"));
           document.removeEventListener("click", dismissHighlight, true);
           if (window.history?.replaceState) window.history.replaceState(null, "", window.location.pathname + window.location.search);
         }
