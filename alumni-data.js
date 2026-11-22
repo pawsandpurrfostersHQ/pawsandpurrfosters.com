@@ -6,6 +6,141 @@ const alumniRoot = typeof window !== "undefined" ? window : globalThis;
 
 alumniRoot.PAWS_FOSTER_ALUMNI = [
   {
+    "id": "claudia",
+    "bio": "Meet Claudia! Claudia is a sweet, playful girl who loves being around people. She’ll happily come up to greet you, rub against your legs, and even meow for your attention when she wants to be picked up. She doesn’t mind being held and absolutely adores ear rubs, often responding with the loudest purrs! She’s full of energy, loves chasing toys and wrestling with her siblings, and never wants to miss out on the fun. When playtime is over, Claudia is just as happy soaking up affection and settling in right beside you. She’s a loving, people-oriented kitten with a big personality and plenty of affection to give!",
+    "name": "Claudia",
+    "image": "assets/kittens/claudia-photo-4.png",
+    "gender": "Female",
+    "photos": [
+      "assets/kittens/claudia-1795047984420-3.jpg",
+      "assets/kittens/claudia-main.png",
+      "assets/kittens/claudia-1793504031844-1.jpg",
+      "assets/kittens/claudia-photo-2.png",
+      "assets/kittens/claudia-photo-3.png",
+      "assets/kittens/claudia-photo-4.png",
+      "assets/kittens/claudia-photo-5.png"
+    ],
+    "status": "Adopted",
+    "pairing": {
+      "type": "bonded",
+      "kittenId": "paloma"
+    },
+    "birthday": "2026-03-24",
+    "videoUrl": "",
+    "idealHome": "Ideal Home\n\nClaudia would do well in a loving home where she can enjoy plenty of attention, affection, and playtime. She is very people-oriented and loves being petted, held, and included in whatever you’re doing. She should do well with older children, though she has not had direct experience with younger children. She can also live with other cats with a slow, proper introduction. Above all, Claudia is looking for a home where she can be her affectionate, playful self and receive all the love she has to give.",
+    "profileUrl": "kittens/profile-template.html?id=claudia",
+    "description": "A sweet, affectionate kitten who loves people, playtime, and cuddles.",
+    "whereToMeet": "",
+    "litterNumber": 11,
+    "petfinderUrl": "https://www.petfinder.com/cat/claudia-ab77cbff-645f-41c9-9920-514a578d8796/ca/oakley/no-paws-left-behind-kitty-rescue-ca3018/details/",
+    "compatibility": {
+      "cats": "Yes — with proper introduction",
+      "dogs": "Unknown — no direct experience",
+      "olderChildren": "Yes",
+      "youngerChildren": "Possibly — no direct experience"
+    },
+    "pairingPhotos": [
+      "assets/kittens/claudia-pair-1795036559789-2.jpg"
+    ],
+    "adoptionStatus": "Adopted",
+    "healthChecklist": [
+      "Spayed",
+      "Fully vaccinated",
+      "Dewormed",
+      "Flea treated",
+      "Microchipped",
+      "Fostered and socialized"
+    ],
+    "eventInformation": "",
+    "personalityTraits": [
+      "Timid at first",
+      "Playful",
+      "Energetic",
+      "Affectionate",
+      "Sweet",
+      "Loving"
+    ],
+    "pairingDescription": "Claudia and Paloma are biological sisters who are incredibly bonded and are always together. They love playing, chasing each other, and curling up together for naps. You will often find one right behind the other, and their close bond makes them an extra special pair to welcome into your home.",
+    "adoptionRequirements": [],
+    "blackCatAdoptionNotice": true,
+    "adoptionDate": "2026-11-21",
+    "profileImage": "assets/kittens/Claudia-halloween.jpg",
+    "alumniImage": "assets/kittens/claudia-photo-4.png",
+    "fosterLitter": 11,
+    "companionId": "paloma",
+    "adoptionHistory": [],
+    "returnDisclaimerEnabled": false,
+    "returnDisclaimerText": "Claudia was recently returned to foster care and may need a few weeks to a month to settle back into a familiar routine. We are giving Claudia time, patience, and support as they adjust. Please check back for updates.",
+    "returnedAt": null
+  },
+  {
+    "id": "paloma",
+    "bio": "Meet Paloma! Paloma is a sweet, affectionate kitten who can be a little shy when meeting new people, but she warms up surprisingly quickly. Once she feels comfortable, her loving personality really shines. She loves being close to her people, rubbing her face against yours, giving kisses, and curling up beside you for cuddles. She’s a little calmer than her siblings and enjoys cozy naps, kneading soft blankets, and spending quiet time with her favorite people. Don’t be surprised if she chooses to sleep right next to you at night or greets you with morning kisses!",
+    "name": "Paloma",
+    "image": "assets/kittens/paloma-photo-4.png",
+    "gender": "Female",
+    "photos": [
+      "assets/kittens/paloma-1795047984438-4.jpg",
+      "assets/kittens/paloma-main.png",
+      "assets/kittens/paloma-1793504031855-2.jpg",
+      "assets/kittens/paloma-photo-2.png",
+      "assets/kittens/paloma-photo-3.png",
+      "assets/kittens/paloma-photo-4.png",
+      "assets/kittens/paloma-photo-5.png"
+    ],
+    "status": "Adopted",
+    "pairing": {
+      "type": "bonded",
+      "kittenId": "claudia"
+    },
+    "birthday": "2026-03-24",
+    "videoUrl": "",
+    "idealHome": "Paloma would do best in a loving home that gives her a little time to warm up to new people and surroundings. She comes out of her shell quickly and becomes an incredibly affectionate companion who loves cuddling, giving kisses, and sleeping right beside you. She should do well with older children, though she hasn’t had direct experience with younger children. She also gets along with other cats and can live with them with a proper introduction. Above all, Paloma wants a home where she can share all the love and affection she has to give.",
+    "profileUrl": "kittens/profile-template.html?id=paloma",
+    "description": "A curious and friendly kitten who loves exploring and then settling in for cuddles.",
+    "whereToMeet": "",
+    "litterNumber": 11,
+    "petfinderUrl": "https://www.petfinder.com/cat/paloma-4a4706d0-5d49-4ff9-bd0a-c969e5d121c0/ca/oakley/no-paws-left-behind-kitty-rescue-ca3018/details/",
+    "compatibility": {
+      "cats": "Yes — with proper introduction",
+      "dogs": "Unknown — no direct experience",
+      "olderChildren": "Yes",
+      "youngerChildren": "Possibly — no direct experience"
+    },
+    "pairingPhotos": [
+      "assets/kittens/claudia-pair-1795036559789-2.jpg"
+    ],
+    "adoptionStatus": "Adopted",
+    "healthChecklist": [
+      "Spayed",
+      "Fully vaccinated",
+      "Dewormed",
+      "Flea treated",
+      "Microchipped",
+      "Fostered and socialized"
+    ],
+    "eventInformation": "",
+    "personalityTraits": [
+      "Sweet",
+      "Gentle",
+      "Shy at first",
+      "Calm",
+      "Affectionate",
+      "Cuddly"
+    ],
+    "pairingDescription": "Claudia and Paloma are sisters with a special bond and are rarely far apart. They follow each other everywhere, love chasing and playing together, and curl up side by side for naps. They are two super sweet kittens with so much love to give to their future family.",
+    "adoptionRequirements": [],
+    "adoptionDate": "2026-11-21",
+    "profileImage": "assets/kittens/Paloma-halloween.jpg",
+    "alumniImage": "assets/kittens/paloma-photo-4.png",
+    "fosterLitter": 11,
+    "companionId": "claudia",
+    "adoptionHistory": [],
+    "returnDisclaimerEnabled": false,
+    "returnDisclaimerText": "Paloma was recently returned to foster care and may need a few weeks to a month to settle back into a familiar routine. We are giving Paloma time, patience, and support as they adjust. Please check back for updates.",
+    "returnedAt": null
+  },
+  {
     "id": "freya",
     "name": "Freya",
     "image": "assets/kittens/alumni-freya.png",
@@ -15,7 +150,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2026-03-14",
     "companionId": "farrah",
     "adoptionDate": "2026-09-12",
-    "fosterLitter": 12
+    "fosterLitter": 12,
+    "pairingPhotos": []
   },
   {
     "id": "farrah",
@@ -27,7 +163,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2026-03-14",
     "companionId": "freya",
     "adoptionDate": "2026-09-12",
-    "fosterLitter": 12
+    "fosterLitter": 12,
+    "pairingPhotos": []
   },
   {
     "id": "eloise",
@@ -39,7 +176,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2026-02-09",
     "companionId": "matilda",
     "adoptionDate": "2026-05-09",
-    "fosterLitter": 10
+    "fosterLitter": 10,
+    "pairingPhotos": []
   },
   {
     "id": "matilda",
@@ -51,7 +189,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2026-02-09",
     "companionId": "eloise",
     "adoptionDate": "2026-05-09",
-    "fosterLitter": 10
+    "fosterLitter": 10,
+    "pairingPhotos": []
   },
   {
     "id": "edgar",
@@ -63,7 +202,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2025-09-24",
     "companionId": "franklin",
     "adoptionDate": "2026-03-15",
-    "fosterLitter": 9
+    "fosterLitter": 9,
+    "pairingPhotos": []
   },
   {
     "id": "sabrina",
@@ -75,7 +215,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2025-09-24",
     "companionId": "victoria",
     "adoptionDate": "2025-12-22",
-    "fosterLitter": 9
+    "fosterLitter": 9,
+    "pairingPhotos": []
   },
   {
     "id": "victoria",
@@ -87,7 +228,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2025-09-24",
     "companionId": "sabrina",
     "adoptionDate": "2025-12-22",
-    "fosterLitter": 9
+    "fosterLitter": 9,
+    "pairingPhotos": []
   },
   {
     "id": "arthur",
@@ -99,7 +241,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2025-09-10",
     "companionId": "gavin",
     "adoptionDate": "2026-02-15",
-    "fosterLitter": 8
+    "fosterLitter": 8,
+    "pairingPhotos": []
   },
   {
     "id": "gavin",
@@ -111,7 +254,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2025-09-10",
     "companionId": "arthur",
     "adoptionDate": "2026-02-15",
-    "fosterLitter": 8
+    "fosterLitter": 8,
+    "pairingPhotos": []
   },
   {
     "id": "franklin",
@@ -123,7 +267,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2025-09-10",
     "companionId": "edgar",
     "adoptionDate": "2026-03-15",
-    "fosterLitter": 8
+    "fosterLitter": 8,
+    "pairingPhotos": []
   },
   {
     "id": "timothy",
@@ -134,7 +279,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "status": "Adopted",
     "birthday": "2025-09-10",
     "adoptionDate": "2026-02-03",
-    "fosterLitter": 8
+    "fosterLitter": 8,
+    "pairingPhotos": []
   },
   {
     "id": "freddy",
@@ -146,7 +292,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2025-04-02",
     "companionId": "frannie",
     "adoptionDate": "2025-08-09",
-    "fosterLitter": 7
+    "fosterLitter": 7,
+    "pairingPhotos": []
   },
   {
     "id": "frannie",
@@ -158,7 +305,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2025-04-02",
     "companionId": "freddy",
     "adoptionDate": "2025-08-09",
-    "fosterLitter": 7
+    "fosterLitter": 7,
+    "pairingPhotos": []
   },
   {
     "id": "skylar",
@@ -172,7 +320,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2025-04-02",
     "adoptionDate": "2026-03-07",
     "fosterLitter": 7,
-    "secondChance": true
+    "secondChance": true,
+    "pairingPhotos": []
   },
   {
     "id": "scout",
@@ -186,7 +335,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2025-04-02",
     "adoptionDate": "2026-02-07",
     "fosterLitter": 7,
-    "secondChance": true
+    "secondChance": true,
+    "pairingPhotos": []
   },
   {
     "id": "ruben",
@@ -198,7 +348,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2025-03-23",
     "companionId": "otto",
     "adoptionDate": "2025-09-06",
-    "fosterLitter": 6
+    "fosterLitter": 6,
+    "pairingPhotos": []
   },
   {
     "id": "otto",
@@ -210,7 +361,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2025-03-23",
     "companionId": "ruben",
     "adoptionDate": "2025-09-06",
-    "fosterLitter": 6
+    "fosterLitter": 6,
+    "pairingPhotos": []
   },
   {
     "id": "clementine",
@@ -222,7 +374,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2025-03-23",
     "companionId": "charlotte",
     "adoptionDate": "2025-09-17",
-    "fosterLitter": 6
+    "fosterLitter": 6,
+    "pairingPhotos": []
   },
   {
     "id": "charlotte",
@@ -234,7 +387,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2025-03-23",
     "companionId": "clementine",
     "adoptionDate": "2025-09-17",
-    "fosterLitter": 6
+    "fosterLitter": 6,
+    "pairingPhotos": []
   },
   {
     "id": "diablo",
@@ -247,7 +401,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "status": "Adopted",
     "birthday": "2024-11-13",
     "adoptionDate": "2025-05-17",
-    "fosterLitter": 5
+    "fosterLitter": 5,
+    "pairingPhotos": []
   },
   {
     "id": "lyra",
@@ -259,7 +414,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2024-07-07",
     "companionId": "hamlet",
     "adoptionDate": "2024-10-27",
-    "fosterLitter": 3
+    "fosterLitter": 3,
+    "pairingPhotos": []
   },
   {
     "id": "hamlet",
@@ -271,7 +427,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2024-07-07",
     "companionId": "lyra",
     "adoptionDate": "2024-10-27",
-    "fosterLitter": 3
+    "fosterLitter": 3,
+    "pairingPhotos": []
   },
   {
     "id": "iris",
@@ -283,7 +440,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2024-07-07",
     "companionId": "lucy",
     "adoptionDate": "2024-11-16",
-    "fosterLitter": 3
+    "fosterLitter": 3,
+    "pairingPhotos": []
   },
   {
     "id": "lucy",
@@ -295,7 +453,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2024-07-07",
     "companionId": "iris",
     "adoptionDate": "2024-11-16",
-    "fosterLitter": 3
+    "fosterLitter": 3,
+    "pairingPhotos": []
   },
   {
     "id": "marceline",
@@ -307,7 +466,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2024-07-07",
     "companionId": "finn",
     "adoptionDate": "2024-12-21",
-    "fosterLitter": 3
+    "fosterLitter": 3,
+    "pairingPhotos": []
   },
   {
     "id": "finn",
@@ -319,7 +479,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2024-07-07",
     "companionId": "marceline",
     "adoptionDate": "2024-12-21",
-    "fosterLitter": 4
+    "fosterLitter": 4,
+    "pairingPhotos": []
   },
   {
     "id": "mavis",
@@ -334,7 +495,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "companionId": "fawn",
     "adoptionDate": "2025-04-27",
     "fosterLitter": 3,
-    "secondChance": true
+    "secondChance": true,
+    "pairingPhotos": []
   },
   {
     "id": "fawn",
@@ -349,7 +511,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "companionId": "mavis",
     "adoptionDate": "2025-04-27",
     "fosterLitter": 3,
-    "secondChance": true
+    "secondChance": true,
+    "pairingPhotos": []
   },
   {
     "id": "oscar",
@@ -360,7 +523,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "status": "Adopted",
     "birthday": "2024-04-04",
     "adoptionDate": "2024-08-10",
-    "fosterLitter": 2
+    "fosterLitter": 2,
+    "pairingPhotos": []
   },
   {
     "id": "roscoe",
@@ -372,7 +536,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2024-04-04",
     "fosterFail": true,
     "adoptionDate": "2024-08-03",
-    "fosterLitter": 2
+    "fosterLitter": 2,
+    "pairingPhotos": []
   },
   {
     "id": "bea",
@@ -383,7 +548,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "status": "Adopted",
     "birthday": "2024-04-04",
     "adoptionDate": "2024-08-10",
-    "fosterLitter": 2
+    "fosterLitter": 2,
+    "pairingPhotos": []
   },
   {
     "id": "rosie",
@@ -395,7 +561,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2024-01-12",
     "companionId": "lily",
     "adoptionDate": "2024-06-23",
-    "fosterLitter": 1
+    "fosterLitter": 1,
+    "pairingPhotos": []
   },
   {
     "id": "lily",
@@ -407,7 +574,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2024-01-12",
     "companionId": "rosie",
     "adoptionDate": "2024-06-23",
-    "fosterLitter": 1
+    "fosterLitter": 1,
+    "pairingPhotos": []
   },
   {
     "id": "mouse",
@@ -418,7 +586,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "status": "Adopted",
     "birthday": "2024-01-12",
     "adoptionDate": "2025-04-11",
-    "fosterLitter": 1
+    "fosterLitter": 1,
+    "pairingPhotos": []
   },
   {
     "id": "smudge",
@@ -430,6 +599,7 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "birthday": "2024-01-12",
     "fosterFail": true,
     "adoptionDate": "2024-04-23",
-    "fosterLitter": 1
+    "fosterLitter": 1,
+    "pairingPhotos": []
   }
 ];
