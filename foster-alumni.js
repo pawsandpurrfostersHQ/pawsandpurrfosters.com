@@ -199,7 +199,8 @@ function renderTemporaryAlumniCard(litter, kittens) {
     '<p>' + countText + " " + verb + ' still in foster care and waiting for their forever homes. Meet ' + joinedNames + '.</p></article>';
 }
 function renderTemporaryAlumniLitter(litter, kittens) {
-  const heading = formatAlumniLitter(litter) + " — " + getAlumniLitterTotal(litter) + " kittens";
+  const total = getAlumniLitterTotal(litter);
+  const heading = formatAlumniLitter(litter) + " — " + total + (total === 1 ? " kitten" : " kittens");
   return '<section class="alumni-litter alumni-litter--temporary" aria-labelledby="alumni-litter-' + litter + '">' +
     '<div class="alumni-litter-heading"><h2 id="alumni-litter-' + litter + '">' + escapeHTML(heading) + '</h2></div>' +
     '<div class="alumni-cards" role="region" aria-label="' + escapeHTML(heading) + '">' + renderTemporaryAlumniCard(litter, kittens) + '</div>' +
@@ -334,6 +335,15 @@ function initAlumniPhotoLightbox(container, alumni) {
   close?.addEventListener("click", () => dialog.close());
   previous?.addEventListener("click", () => show(index - 1));
   next?.addEventListener("click", () => show(index + 1));
+  let lightboxTouchStartX = null;
+  image.addEventListener("touchstart", event => { lightboxTouchStartX = event.touches[0]?.clientX ?? null; }, { passive:true });
+  image.addEventListener("touchend", event => {
+    const endX = event.changedTouches[0]?.clientX;
+    if (lightboxTouchStartX === null || endX === undefined) return;
+    const movement = endX - lightboxTouchStartX;
+    if (Math.abs(movement) > 40 && photos.length > 1) show(index + (movement < 0 ? 1 : -1));
+    lightboxTouchStartX = null;
+  }, { passive:true });
   dialog.addEventListener("click", event => { if (event.target === dialog) dialog.close(); });
   dialog.addEventListener("close", () => {
     image.removeAttribute("src");
