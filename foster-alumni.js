@@ -136,6 +136,7 @@ function renderAlumniCard(kitten, alumniIds, today = new Date()) {
       : "";
   const photos = getAlumniGalleryPhotos(kitten);
   const mainPhoto = photos[0] || "";
+  const birthdayDate = parseAlumniDate(kitten.birthday);
   const photoCarousel = mainPhoto
     ? '<div class="alumni-photo-carousel"><div class="card-photo-wrap alumni-main-photo">' +
         '<button class="alumni-main-photo-button" type="button" data-alumni-gallery="' + escapeHTML(kitten.id) + '" data-photo-index="0" aria-label="Open all photos of ' + escapeHTML(kitten.name) + '">' +
@@ -153,7 +154,6 @@ function renderAlumniCard(kitten, alumniIds, today = new Date()) {
     : "";
   const companionId = kitten.companionId || kitten.pairing?.kittenId;
   const companionName = (kitten.adoptedWith || (companionId && alumniIds.has(companionId) ? alumniIds.get(companionId) : "")) || "";
-  const birthdayDate = parseAlumniDate(kitten.birthday);
   const birthdayMessage = celebrations.birthdayMessage
     ? celebrations.birthdayYears > 0 ? "Happy " + formatBirthdayOrdinal(celebrations.birthdayYears) + " birthday, " + escapeHTML(kitten.name) + "!" : "Happy birthday, " + escapeHTML(kitten.name) + "!"
     : "";
