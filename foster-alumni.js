@@ -283,18 +283,29 @@ function renderFosterAlumni(kittenList, today = new Date()) {
   });
 
   if (typeof IntersectionObserver !== "undefined") {
-    container.querySelectorAll(".alumni-cards").forEach(track => {
-      const hintTimers = new WeakMap();
+    container.querySelectorAll(".alumni-card").forEach(card => {
+      const hint = card.querySelector(".alumni-photo-hint");
+      if (!hint) return;
+      let showTimer = null;
+      let hideTimer = null;
       const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
-          const hint = entry.target.querySelector(".alumni-photo-hint");
-          if (!hint || !entry.isIntersecting || entry.intersectionRatio < 0.6) return;
-          hint.classList.add("is-hint-active");
-          clearTimeout(hintTimers.get(hint));
-          hintTimers.set(hint, setTimeout(() => hint.classList.remove("is-hint-active"), 2400));
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+            clearTimeout(showTimer);
+            clearTimeout(hideTimer);
+            showTimer = setTimeout(() => {
+              if (!card.isConnected) return;
+              hint.classList.add("is-hint-active");
+              hideTimer = setTimeout(() => hint.classList.remove("is-hint-active"), 2400);
+            }, 450);
+          } else {
+            clearTimeout(showTimer);
+            clearTimeout(hideTimer);
+            hint.classList.remove("is-hint-active");
+          }
         });
-      }, { root: track, threshold: [0.6, 0.8] });
-      track.querySelectorAll(".alumni-card").forEach(card => observer.observe(card));
+      }, { threshold: [0, 0.6] });
+      observer.observe(card);
     });
   }
 
