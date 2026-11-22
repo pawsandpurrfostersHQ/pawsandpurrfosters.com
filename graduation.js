@@ -8,7 +8,7 @@
     var adopted=new Date(k.adoptionDate+"T00:00:00");
     var age=now.getTime()-adopted.getTime();
     return Number.isFinite(age)&&age>=0&&age<7*24*60*60*1000;
-  });
+  }).sort(function(a,b){return b.adoptionDate.localeCompare(a.adoptionDate);});
   if(!active.length)return;
   var used=new Set(),groups=[];
   active.forEach(function(kitten){
@@ -21,32 +21,47 @@
   function esc(value){return String(value==null?"":value).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
   function photosFor(k){
     var list=Array.isArray(k.photos)?k.photos.filter(Boolean):[];
+    if(k.image&&!list.includes(k.image))list.unshift(k.image);
     return list.length?list:[k.image||"assets/main-logo.PNG"];
   }
-  var photoSets=groups.map(function(group){return group.map(photosFor);});
   function dateText(value){return new Intl.DateTimeFormat("en-US",{month:"long",day:"numeric",year:"numeric"}).format(new Date(value+"T12:00:00"));}
-  var frames=[];
-  groups.forEach(function(group,groupIndex){
-    var sets=photoSets[groupIndex],count=Math.max.apply(null,sets.map(function(list){return list.length;}));
-    for(var index=0;index<count;index++)frames.push({group:group,sets:sets,index:index});
-  });
-  var maxSlides=frames.length;
-  var slides=frames.map(function(frame,slideIndex){
-    var group=frame.group,sets=frame.sets,index=frame.index;
-    var figures=group.map(function(k,slot){return "<figure><img src=\""+esc(sets[slot][index%sets[slot].length])+"\" alt=\""+esc(k.name)+"\" loading=\""+(slideIndex===0?"eager":"lazy")+"\"><figcaption>"+esc(k.name)+"</figcaption></figure>";}).join("");
-    var copy=group.map(function(k){return esc(k.description||k.bio||"");}).filter(Boolean).join(" ");
-    return "<div class=\"graduate-slide"+(slideIndex===0?" is-active":"")+"\" style=\"--graduate-columns:"+group.length+"\">"+figures+"<p class=\"graduate-slide-copy\">"+copy+"</p><p class=\"graduate-date\">Graduated "+group.map(function(k){return dateText(k.adoptionDate);}).join(" · ")+"</p></div>";
-  }).join("");
-  var controls=maxSlides>1?"<div class=\"graduate-controls\"><button type=\"button\" data-graduate-prev aria-label=\"Previous graduation photo\">‹</button><div class=\"graduate-dots\">"+Array.from({length:maxSlides},function(_,i){return "<button class=\"graduate-dot\" type=\"button\" data-graduate-dot=\""+i+"\" aria-label=\"Show photo "+(i+1)+"\" aria-pressed=\""+(i===0)+"\"></button>";}).join("")+"</div><button type=\"button\" data-graduate-next aria-label=\"Next graduation photo\">›</button></div>":"";
-  root.innerHTML="<div class=\"graduate-celebration__banner\"><div class=\"graduate-celebration__heading\"><p class=\"eyebrow\">A new chapter begins</p><h2>Celebrating Our Newest Graduates</h2><p>Celebrating the kittens who have recently found their forever homes.</p></div><div class=\"graduate-slides\" aria-label=\"Recently adopted foster kittens\">"+slides+"</div>"+controls+"</div>";
+  function groupMarkup(group,groupIndex){
+    var names=group.map(function(k){return k.name;}).join(" & ");
+    var photoSets=group.map(photosFor);
+    var sharedPhotos=group.length>1?Array.from(new Set(group.flatMap(function(k){return Array.isArray(k.pairingPhotos)?k.pairingPhotos.filter(Boolean):[];}))):[];
+    var frames=sharedPhotos.map(function(photo){return {shared:photo};});
+    var count=Math.max.apply(null,photoSets.map(function(list){return list.length;}));
+    for(var index=0;index<count;index++)frames.push({index:index});
+    var slides=frames.map(function(frame,index){
+      var figures=frame.shared
+        ? "<figure class=\"graduate-photo-slide__shared\"><img src=\""+esc(frame.shared)+"\" alt=\""+esc(names)+" together\" loading=\""+(index===0?"eager":"lazy")+"\"></figure>"
+        : group.map(function(k,slot){
+            var photo=photoSets[slot][frame.index%photoSets[slot].length];
+            return "<figure><img src=\""+esc(photo)+"\" alt=\""+esc(k.name)+"\" loading=\""+(index===0?"eager":"lazy")+"\"><figcaption>"+esc(k.name)+"</figcaption></figure>";
+          }).join("");
+      return "<div class=\"graduate-photo-slide"+(index===0?" is-active":"")+"\" style=\"--graduate-columns:"+(frame.shared?1:group.length)+"\">"+figures+"</div>";
+    }).join("");
+    var description=group.map(function(k){return k.graduationDescription||"";}).find(Boolean)
+      ||(group.length>1?group.map(function(k){return k.description||k.bio||"";}).filter(Boolean).join(" "):(group[0].description||group[0].bio||""));
+    return "<article class=\"graduate-card\" data-graduate-card=\""+groupIndex+"\">"
+      +"<div class=\"graduate-photo-slides\" aria-label=\"Photos of "+esc(names)+"\">"+slides+"</div>"
+      +"<h3 class=\"graduate-card__names\">"+esc(names)+"</h3>"
+      +"<p class=\"graduate-card__copy\">"+esc(description)+"</p>"
+      +"<p class=\"graduate-date\">Graduated "+dateText(group[0].adoptionDate)+"</p>"
+      +"</article>";
+  }
+  root.innerHTML="<div class=\"graduate-celebration__banner\">"
+    +"<div class=\"graduate-celebration__heading\"><p class=\"eyebrow\">A new chapter begins</p><h2>Celebrating Our Newest Graduates</h2><p>Celebrating the kittens who have recently found their forever homes.</p></div>"
+    +"<div class=\"graduate-grid\">"+groups.map(groupMarkup).join("")+"</div></div>";
   root.hidden=false;
-  var slideNodes=Array.from(root.querySelectorAll(".graduate-slide")),dots=Array.from(root.querySelectorAll("[data-graduate-dot]"));
-  var current=0,timer=null;
-  function show(index){current=(index+slideNodes.length)%slideNodes.length;slideNodes.forEach(function(el,i){el.classList.toggle("is-active",i===current);});dots.forEach(function(el,i){el.setAttribute("aria-pressed",String(i===current));});}
-  root.querySelector("[data-graduate-prev]")?.addEventListener("click",function(){show(current-1);});
-  root.querySelector("[data-graduate-next]")?.addEventListener("click",function(){show(current+1);});
-  dots.forEach(function(dot){dot.addEventListener("click",function(){show(Number(dot.dataset.graduateDot));});});
-  if(slideNodes.length>1&&!window.matchMedia("(prefers-reduced-motion: reduce)").matches)timer=window.setInterval(function(){show(current+1);},5500);
-  root.addEventListener("mouseenter",function(){if(timer){clearInterval(timer);timer=null;}});
-  root.addEventListener("mouseleave",function(){if(!timer&&slideNodes.length>1&&!window.matchMedia("(prefers-reduced-motion: reduce)").matches)timer=window.setInterval(function(){show(current+1);},5500);});
+  root.querySelectorAll(".graduate-card").forEach(function(card){
+    var slides=Array.from(card.querySelectorAll(".graduate-photo-slide"));
+    if(slides.length<2||window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+    var current=0;
+    window.setInterval(function(){
+      slides[current].classList.remove("is-active");
+      current=(current+1)%slides.length;
+      slides[current].classList.add("is-active");
+    },5600);
+  });
 })();
