@@ -277,7 +277,9 @@ function renderProfile(kitten) {
 
   const octoberDates = getOctoberNoticeDates(typeof window !== "undefined" ? window.PAWS_EVENT_DATA?.octoberNotice : null);
   const adoptionNotices = getProfileAdoptionNotices(kitten, pairingData, octoberDates);
-  const safetyNotice = adoptionNotices.map(notice => `<section class="profile-detail profile-reminder profile-october-notice">
+  const returnedNotice = kitten.status === "Returned — Available" && kitten.returnDisclaimerEnabled && kitten.returnDisclaimerText
+    ? `<section class="profile-detail profile-reminder profile-return-notice"><h2>Recently Returned</h2><p>${escapeHTML(kitten.returnDisclaimerText)}</p></section>` : "";
+  const safetyNotice = returnedNotice + adoptionNotices.map(notice => `<section class="profile-detail profile-reminder profile-october-notice">
       <h2>${escapeHTML(notice.title)}</h2><p>${escapeHTML(notice.message)}</p>
     </section>`).join("");
 
@@ -385,7 +387,7 @@ function renderProfile(kitten) {
     <div>${photoGallery}</div>
     <div class="profile-intro">
       <h1>${escapeHTML(kitten.name)}</h1>
-      <p class="profile-status${["raymond", "wally"].includes(kitten.id) && (kitten.adoptionStatus || kitten.status) === "Returned — Available" ? " status-returned" : ""}">${escapeHTML(kitten.adoptionStatus || kitten.status || "")}</p>
+      <p class="profile-status${(kitten.adoptionStatus || kitten.status) === "Returned — Available" ? " status-returned" : ""}">${escapeHTML(kitten.adoptionStatus || kitten.status || "")}</p>
       ${kitten.birthday ? `<p><strong>Birthday:</strong> ${escapeHTML(formatBirthday(kitten.birthday))}${kittenAge(kitten.birthday) ? ` · ${escapeHTML(kittenAge(kitten.birthday))} old` : ""}</p>` : ""}
       ${kitten.gender ? `<p><strong>Gender:</strong> ${escapeHTML(kitten.gender)}</p>` : ""}
       ${bioMarkup}
