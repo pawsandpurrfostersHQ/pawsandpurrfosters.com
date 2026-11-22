@@ -122,10 +122,10 @@ function renderAllKittens() {
     const target = document.getElementById("litter-" + targetMatch[1]);
     if (target) {
       const highlightedNames = (targetMatch[2] || "").split(",").filter(Boolean);
-      const nameTargets = highlightedNames.length
-        ? highlightedNames.map(id => target.querySelector('.kitten-card[data-kitten-id="' + CSS.escape(id) + '"] .all-litters__name')).filter(Boolean)
+      const kittenCards = highlightedNames.length
+        ? highlightedNames.map(id => target.querySelector('.kitten-card[data-kitten-id="' + CSS.escape(id) + '"]')).filter(Boolean)
         : [];
-      const highlightTargets = nameTargets.length ? nameTargets : [target];
+      const highlightTargets = kittenCards.length ? kittenCards : [target];
       highlightTargets.forEach(item => item.classList.add("is-highlighted"));
       requestAnimationFrame(() => target.scrollIntoView({ behavior: "smooth", block: "start" }));
       const dismissHighlight = event => {
