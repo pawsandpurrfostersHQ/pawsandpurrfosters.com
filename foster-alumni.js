@@ -53,20 +53,18 @@ function getAlumniCelebrations(kitten, today = new Date()) {
   const birthday = parseAlumniDate(kitten.birthday);
   const adoptionDate = parseAlumniDate(kitten.adoptionDate);
   const celebratesBirthday = Boolean(birthday && today.getMonth() === birthday.getMonth());
-  const birthdayMessage = Boolean(birthday
-    && today.getMonth() === birthday.getMonth()
-    && today.getDate() === birthday.getDate());
-  const gotchaDayMessage = Boolean(adoptionDate
-    && today.getMonth() === adoptionDate.getMonth()
-    && today.getDate() === adoptionDate.getDate());
-
+  const birthdayMessage = Boolean(birthday && today.getMonth() === birthday.getMonth() && today.getDate() === birthday.getDate());
+  const adoptionStart = adoptionDate ? new Date(adoptionDate.getFullYear(), adoptionDate.getMonth(), adoptionDate.getDate()) : null;
+  const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const daysSinceAdoption = adoptionStart ? Math.floor((todayStart - adoptionStart) / 86400000) : -1;
   return {
     celebratesBirthday,
     birthdayMessage,
     birthdayYears: birthdayMessage ? today.getFullYear() - birthday.getFullYear() : null,
-    gotchaDayMessage
+    graduationMessage: daysSinceAdoption >= 0 && daysSinceAdoption < 7
   };
 }
+
 
 function getConfirmedAlumni(kittenList) {
   return kittenList.filter(kitten =>
