@@ -5628,3 +5628,42 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
 }
 .all-litters__group.is-highlighted { outline:none!important; box-shadow:none!important; }
 .all-litters__group.is-highlighted .all-litters__number { display:inline-block; padding:3px 9px; margin:-3px 3px -3px 0; border:2px solid #6b9c70; border-radius:9px; background:#edf6eb; color:#315d39; box-shadow:0 0 0 3px rgba(107,156,112,.12); }
+
+
+/* Alumni carousel controls sit outside the profile cards, never over card content. */
+.alumni-carousel { padding:0!important; }
+.alumni-carousel-controls {
+  position:static!important;
+  inset:auto!important;
+  justify-content:center!important;
+  align-items:center!important;
+  gap:7px!important;
+  margin:10px auto 0!important;
+  pointer-events:auto!important;
+}
+.alumni-carousel-controls .alumni-arrow {
+  width:28px!important;
+  height:28px!important;
+  min-width:28px!important;
+  box-shadow:none!important;
+}
+@media(max-width:760px) {
+  .alumni-carousel { padding:0!important; }
+  .alumni-carousel-controls { margin:8px auto 0!important; }
+  .alumni-carousel-controls .alumni-arrow {
+    width:24px!important;
+    height:24px!important;
+    min-width:24px!important;
+    font-size:13px!important;
+  }
+}
+.all-litters__group .all-litters__name.is-highlighted {
+  display:inline-block;
+  padding:3px 9px;
+  margin:-3px -9px;
+  border:2px solid #6b9c70;
+  border-radius:9px;
+  background:#edf6eb;
+  color:#315d39;
+  box-shadow:0 0 0 3px rgba(107,156,112,.12);
+}
