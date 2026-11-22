@@ -21,7 +21,7 @@
   function esc(value){return String(value==null?"":value).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
   function photosFor(k){
     var list=Array.isArray(k.photos)?k.photos.filter(Boolean):[];
-    if(k.image&&!list.includes(k.image))list.unshift(k.image);
+    if(k.image)list=[k.image].concat(list.filter(function(photo){return photo!==k.image;}));
     return list.length?list:[k.image||"assets/main-logo.PNG"];
   }
   function dateText(value){return new Intl.DateTimeFormat("en-US",{month:"long",day:"numeric",year:"numeric"}).format(new Date(value+"T12:00:00"));}
