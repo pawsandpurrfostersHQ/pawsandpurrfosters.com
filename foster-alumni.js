@@ -107,6 +107,14 @@ function formatBirthdayOrdinal(years) {
 
 const alumniPhotoCarouselIds = new Set(["mavis", "fawn", "diablo", "scout", "skylar"]);
 
+function getAlumniGalleryPhotos(kitten) {
+  return [...new Set([
+    ...(kitten.image ? [kitten.image] : []),
+    ...(Array.isArray(kitten.photos) ? kitten.photos : []),
+    ...(Array.isArray(kitten.pairingPhotos) ? kitten.pairingPhotos : [])
+  ].filter(photo => typeof photo === "string" && photo.trim()))];
+}
+
 function renderAlumniCard(kitten, alumniIds, today = new Date()) {
   const celebrations = getAlumniCelebrations(kitten, today);
   const age = getAlumniAge(kitten.birthday, today);
@@ -119,54 +127,50 @@ function renderAlumniCard(kitten, alumniIds, today = new Date()) {
     ? kitten.photos.filter(photo => typeof photo === "string" && photo.trim())
     : [];
   const hasPhotoCarousel = alumniPhotoCarouselIds.has(kitten.id) && kitten.image && photos.length === 1;
-  const gallery = photos.length && !hasPhotoCarousel
-    ? `<div class="alumni-gallery" aria-label="More photos of ${escapeHTML(kitten.name)}">${photos.map((photo, index) => `
-      <img src="${escapeHTML(photo)}" alt="${escapeHTML(kitten.name)}${photos.length > 1 ? `, additional photo ${index + 1}` : ", additional photo"}" loading="lazy">
-    `).join("")}</div>`
+  const galleryPhotos = getAlumniGalleryPhotos(kitten);
+  const gallery = galleryPhotos.length
+    ? '<div class="alumni-gallery" aria-label="Photos of ' + escapeHTML(kitten.name) + '">' + galleryPhotos.map((photo, index) =>
+      '<button class="alumni-gallery-item" type="button" data-alumni-gallery="' + escapeHTML(kitten.id) + '" data-photo-index="' + index + '" aria-label="Open ' + escapeHTML(kitten.name) + ' photo ' + (index + 1) + '">' +
+      '<img src="' + escapeHTML(photo) + '" alt="' + escapeHTML(kitten.name) + ' photo ' + (index + 1) + '" loading="lazy"></button>'
+    ).join("") + '</div>'
     : "";
   const photoIndicators = hasPhotoCarousel
-    ? `<div class="alumni-photo-indicators" role="group" aria-label="${escapeHTML(kitten.name)} photos">
-        ${[kitten.image, ...photos].map((photo, index) => `<button class="alumni-photo-indicator" type="button" data-photo="${escapeHTML(photo)}" data-index="${index}" aria-label="Show ${escapeHTML(kitten.name)} photo ${index + 1}" aria-pressed="${index === 0}"></button>`).join("")}
-      </div>`
+    ? '<div class="alumni-photo-indicators" role="group" aria-label="' + escapeHTML(kitten.name) + ' photos">' +
+        [kitten.image, ...photos].map((photo, index) => '<button class="alumni-photo-indicator" type="button" data-photo="' + escapeHTML(photo) + '" data-index="' + index + '" aria-label="Show ' + escapeHTML(kitten.name) + ' photo ' + (index + 1) + '" aria-pressed="' + (index === 0) + '"></button>').join("") +
+      '</div>'
     : "";
   const companionLink = kitten.companionId && alumniIds.has(kitten.companionId)
-    ? `<p class="alumni-companion">Adopted with ${escapeHTML(alumniIds.get(kitten.companionId))}</p>`
+    ? '<p class="alumni-companion">Adopted with ' + escapeHTML(alumniIds.get(kitten.companionId)) + '</p>'
     : "";
   const birthdayDate = parseAlumniDate(kitten.birthday);
-  const birthdayTooltip = `${birthdayDate.toLocaleString("en-US", { month: "long" })} is ${kitten.name}'s birthday month.`;
+  const birthdayTooltip = birthdayDate ? birthdayDate.toLocaleString("en-US", { month: "long" }) + " is " + kitten.name + "'s birthday month." : "";
   const birthdayMessage = celebrations.birthdayMessage
     ? celebrations.birthdayYears > 0
-      ? `It's ${escapeHTML(kitten.name)}'s ${formatBirthdayOrdinal(celebrations.birthdayYears)} birthday!`
-      : `It's ${escapeHTML(kitten.name)}'s birthday!`
+      ? "It's " + escapeHTML(kitten.name) + "'s " + formatBirthdayOrdinal(celebrations.birthdayYears) + " birthday!"
+      : "It's " + escapeHTML(kitten.name) + "'s birthday!"
     : "";
   const celebrationMessages = [
-    celebrations.birthdayMessage ? `<p class="alumni-celebration" role="status">${birthdayMessage}</p>` : "",
-    celebrations.gotchaDayMessage ? `<p class="alumni-celebration alumni-gotcha" role="status">Happy Gotcha Day, ${escapeHTML(kitten.name)}!</p>` : ""
+    celebrations.birthdayMessage ? '<p class="alumni-celebration" role="status">' + birthdayMessage + '</p>' : "",
+    celebrations.graduationMessage ? '<p class="alumni-celebration alumni-graduation" role="status">Congratulations, ' + escapeHTML(kitten.name) + '! You have graduated from foster care!</p>' : ""
   ].join("");
 
-  return `<article class="kitten-card alumni-card" id="alumni-${escapeHTML(kitten.id)}">
-    ${hasPhotoCarousel ? '<div class="alumni-photo-carousel">' : ""}
-    <div class="card-photo-wrap alumni-main-photo">
-      ${kitten.image ? `<img src="${escapeHTML(kitten.image)}" alt="${escapeHTML(kitten.name)}" loading="lazy">` : ""}
-      ${celebrations.celebratesBirthday ? `<span class="alumni-birthday-cake" role="img" tabindex="0" aria-label="${escapeHTML(birthdayTooltip)}" title="${escapeHTML(birthdayTooltip)}" data-tooltip="${escapeHTML(birthdayTooltip)}">🎂</span>` : ""}
-    </div>
-    ${photoIndicators}
-    ${hasPhotoCarousel ? "</div>" : ""}
-    <div class="card-content alumni-card-content">
-      <h3>${escapeHTML(kitten.name)}${designation ? ` ${designation}` : ""}</h3>
-      <dl class="alumni-details">
-        <div><dt>Gender</dt><dd>${escapeHTML(kitten.gender)}</dd></div>
-        <div><dt>Birthday</dt><dd>${formatAlumniDate(parseAlumniDate(kitten.birthday))}</dd></div>
-        <div><dt>Zodiac</dt><dd>${escapeHTML(getZodiacSign(kitten.birthday))}</dd></div>
-        <div><dt>Age</dt><dd>${age === null ? "—" : `${escapeHTML(age)} old`}</dd></div>
-        <div><dt>Gotcha Day</dt><dd>${formatAlumniDate(parseAlumniDate(kitten.adoptionDate))}</dd></div>
-        <div><dt>Foster litter</dt><dd>${escapeHTML(formatAlumniLitter(kitten.fosterLitter))}</dd></div>
-      </dl>
-      ${gallery}
-      ${celebrationMessages}
-      ${companionLink}
-    </div>
-  </article>`;
+  return '<article class="kitten-card alumni-card" id="alumni-' + escapeHTML(kitten.id) + '">' +
+    (hasPhotoCarousel ? '<div class="alumni-photo-carousel">' : "") +
+    '<div class="card-photo-wrap alumni-main-photo">' +
+      (kitten.image ? '<img src="' + escapeHTML(kitten.image) + '" alt="' + escapeHTML(kitten.name) + '" loading="lazy">' : "") +
+      (celebrations.celebratesBirthday ? '<span class="alumni-birthday-cake" role="img" tabindex="0" aria-label="' + escapeHTML(birthdayTooltip) + '" title="' + escapeHTML(birthdayTooltip) + '" data-tooltip="' + escapeHTML(birthdayTooltip) + '">🎂</span>' : "") +
+    '</div>' + photoIndicators + (hasPhotoCarousel ? '</div>' : "") +
+    '<div class="card-content alumni-card-content">' +
+      '<h3>' + escapeHTML(kitten.name) + (designation ? " " + designation : "") + '</h3>' +
+      '<dl class="alumni-details">' +
+        '<div><dt>Gender</dt><dd>' + escapeHTML(kitten.gender) + '</dd></div>' +
+        '<div><dt>Birthday</dt><dd>' + formatAlumniDate(parseAlumniDate(kitten.birthday)) + '</dd></div>' +
+        '<div><dt>Zodiac</dt><dd>' + escapeHTML(getZodiacSign(kitten.birthday)) + '</dd></div>' +
+        '<div><dt>Age</dt><dd>' + (age === null ? "—" : escapeHTML(age) + " old") + '</dd></div>' +
+        '<div><dt>Gotcha Day</dt><dd>' + formatAlumniDate(parseAlumniDate(kitten.adoptionDate)) + '</dd></div>' +
+        '<div><dt>Foster litter</dt><dd>' + escapeHTML(formatAlumniLitter(kitten.fosterLitter)) + '</dd></div>' +
+      '</dl>' + gallery + celebrationMessages + companionLink +
+    '</div></article>';
 }
 
 function renderAlumniLitter(litter, kittens, alumniIds, today, paired = false, extraCardMarkup = "", extraCardAfterId = "") {
