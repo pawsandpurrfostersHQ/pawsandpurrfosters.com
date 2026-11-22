@@ -5381,6 +5381,9 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
 }
 .alumni-lightbox-close,
 .alumni-lightbox-nav {
+  /* Prevent accidental browser double-tap zoom on navigation controls only. */
+  touch-action:manipulation;
+
   position:absolute;
   z-index:2;
   display:grid;
