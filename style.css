@@ -5495,3 +5495,18 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
     margin-inline:auto;
   }
 }
+
+@media(max-width:760px) {
+  .alumni-litter-pair > .alumni-litter--paired:first-child,
+  .alumni-litter-pair > .alumni-litter--paired:last-child { grid-column:1!important; }
+  .alumni-litter-pair > .alumni-litter--paired:first-child .alumni-carousel,
+  .alumni-litter-pair > .alumni-litter--paired:last-child .alumni-carousel { display:block!important; }
+  .alumni-litter-pair > .alumni-litter--paired:first-child .alumni-cards,
+  .alumni-litter-pair > .alumni-litter--paired:last-child .alumni-cards {
+    grid-column:1!important;
+    grid-row:2!important;
+    display:flex!important;
+    justify-content:center!important;
+    padding:2px 0 14px!important;
+  }
+}
