@@ -195,14 +195,29 @@ function renderAlumniLitter(litter, kittens, alumniIds, today, paired = false, e
   </section>`;
 }
 
-function renderTemporaryAlumniLitter(litter, noticeMarkup) {
+function renderTemporaryAlumniCard(litter, kittens) {
+  const names = kittens.map(kitten => {
+    const href = kitten.profileUrl || "kittens/profile-template.html?id=" + encodeURIComponent(kitten.id);
+    return '<a class="text-link" href="' + escapeHTML(href) + '">' + escapeHTML(kitten.name) + '</a>';
+  });
+  const joinedNames = names.length > 1
+    ? names.slice(0, -1).join(", ") + " and " + names[names.length - 1]
+    : names[0] || "Our kittens";
+  const countText = names.length === 1 ? "One kitten from this litter" : names.length + " kittens from this litter";
+  const verb = names.length === 1 ? "is" : "are";
+  return '<article class="alumni-temporary-notice alumni-temporary-notice--pair">' +
+    '<h2>Still Looking for Their Forever Homes</h2>' +
+    '<p>' + countText + ", " + joinedNames + " " + verb + ' still in foster care and waiting for their forever homes. Meet them below!</p>' +
+    '<a class="button primary" href="all-kittens/#litter-' + Number(litter) + '">Meet the ' + escapeHTML(formatAlumniLitter(litter).replace(" Foster Litter", "")) + ' Litter →</a>' +
+    '</article>';
+}
+
+function renderTemporaryAlumniLitter(litter, kittens) {
   const heading = formatAlumniLitter(litter);
-  return `<section class="alumni-litter alumni-litter--temporary" aria-labelledby="alumni-litter-${litter}">
-    <div class="alumni-litter-heading">
-      <h2 id="alumni-litter-${litter}">${escapeHTML(heading)}</h2>
-    </div>
-    <div class="alumni-cards" role="region" aria-label="${escapeHTML(heading)}" tabindex="0">${noticeMarkup}</div>
-  </section>`;
+  return '<section class="alumni-litter alumni-litter--temporary" aria-labelledby="alumni-litter-' + litter + '">' +
+    '<div class="alumni-litter-heading"><h2 id="alumni-litter-' + litter + '">' + escapeHTML(heading) + '</h2></div>' +
+    '<div class="alumni-cards" role="region" aria-label="' + escapeHTML(heading) + '">' + renderTemporaryAlumniCard(litter, kittens) + '</div>' +
+    '</section>';
 }
 
 function renderFosterAlumni(kittenList, today = new Date()) {
