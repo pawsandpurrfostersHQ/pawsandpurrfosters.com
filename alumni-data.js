@@ -29,10 +29,16 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "videoUrl": "",
     "idealHome": "Ideal Home\n\nClaudia would do well in a loving home where she can enjoy plenty of attention, affection, and playtime. She is very people-oriented and loves being petted, held, and included in whatever you’re doing. She should do well with older children, though she has not had direct experience with younger children. She can also live with other cats with a slow, proper introduction. Above all, Claudia is looking for a home where she can be her affectionate, playful self and receive all the love she has to give.",
     "profileUrl": "kittens/profile-template.html?id=claudia",
+    "returnedAt": null,
+    "alumniImage": "assets/kittens/claudia-photo-4.png",
+    "companionId": "paloma",
     "description": "A sweet, affectionate kitten who loves people, playtime, and cuddles.",
     "whereToMeet": "",
+    "adoptionDate": "2026-11-21",
+    "fosterLitter": 11,
     "litterNumber": 11,
     "petfinderUrl": "https://www.petfinder.com/cat/claudia-ab77cbff-645f-41c9-9920-514a578d8796/ca/oakley/no-paws-left-behind-kitty-rescue-ca3018/details/",
+    "profileImage": "assets/kittens/Claudia-halloween.jpg",
     "compatibility": {
       "cats": "Yes — with proper introduction",
       "dogs": "Unknown — no direct experience",
@@ -43,6 +49,7 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
       "assets/kittens/claudia-pair-1795036559789-2.jpg"
     ],
     "adoptionStatus": "Adopted",
+    "adoptionHistory": [],
     "healthChecklist": [
       "Spayed",
       "Fully vaccinated",
@@ -62,17 +69,9 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     ],
     "pairingDescription": "Claudia and Paloma are biological sisters who are incredibly bonded and are always together. They love playing, chasing each other, and curling up together for naps. You will often find one right behind the other, and their close bond makes them an extra special pair to welcome into your home.",
     "adoptionRequirements": [],
-    "blackCatAdoptionNotice": true,
-    "adoptionDate": "2026-11-21",
-    "profileImage": "assets/kittens/Claudia-halloween.jpg",
-    "alumniImage": "assets/kittens/claudia-photo-4.png",
-    "fosterLitter": 11,
-    "companionId": "paloma",
-    "graduationDescription": "Claudia and Paloma were two sweet, affectionate girls who loved being held and soaking up attention. They shared a special bond and were always playing together or curled up close for a nap. These best friends brought so much joy to our home, and we couldn't be happier that they found their forever home together.",
-    "adoptionHistory": [],
-    "returnDisclaimerEnabled": false,
     "returnDisclaimerText": "Claudia was recently returned to foster care and may need a few weeks to a month to settle back into a familiar routine. We are giving Claudia time, patience, and support as they adjust. Please check back for updates.",
-    "returnedAt": null
+    "blackCatAdoptionNotice": true,
+    "returnDisclaimerEnabled": false
   },
   {
     "id": "paloma",
@@ -98,10 +97,16 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "videoUrl": "",
     "idealHome": "Paloma would do best in a loving home that gives her a little time to warm up to new people and surroundings. She comes out of her shell quickly and becomes an incredibly affectionate companion who loves cuddling, giving kisses, and sleeping right beside you. She should do well with older children, though she hasn’t had direct experience with younger children. She also gets along with other cats and can live with them with a proper introduction. Above all, Paloma wants a home where she can share all the love and affection she has to give.",
     "profileUrl": "kittens/profile-template.html?id=paloma",
+    "returnedAt": null,
+    "alumniImage": "assets/kittens/paloma-photo-4.png",
+    "companionId": "claudia",
     "description": "A curious and friendly kitten who loves exploring and then settling in for cuddles.",
     "whereToMeet": "",
+    "adoptionDate": "2026-11-21",
+    "fosterLitter": 11,
     "litterNumber": 11,
     "petfinderUrl": "https://www.petfinder.com/cat/paloma-4a4706d0-5d49-4ff9-bd0a-c969e5d121c0/ca/oakley/no-paws-left-behind-kitty-rescue-ca3018/details/",
+    "profileImage": "assets/kittens/Paloma-halloween.jpg",
     "compatibility": {
       "cats": "Yes — with proper introduction",
       "dogs": "Unknown — no direct experience",
@@ -112,6 +117,7 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
       "assets/kittens/claudia-pair-1795036559789-2.jpg"
     ],
     "adoptionStatus": "Adopted",
+    "adoptionHistory": [],
     "healthChecklist": [
       "Spayed",
       "Fully vaccinated",
@@ -131,16 +137,8 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     ],
     "pairingDescription": "Claudia and Paloma are sisters with a special bond and are rarely far apart. They follow each other everywhere, love chasing and playing together, and curl up side by side for naps. They are two super sweet kittens with so much love to give to their future family.",
     "adoptionRequirements": [],
-    "adoptionDate": "2026-11-21",
-    "profileImage": "assets/kittens/Paloma-halloween.jpg",
-    "alumniImage": "assets/kittens/paloma-photo-4.png",
-    "fosterLitter": 11,
-    "companionId": "claudia",
-    "graduationDescription": "Claudia and Paloma were two sweet, affectionate girls who loved being held and soaking up attention. They shared a special bond and were always playing together or curled up close for a nap. These best friends brought so much joy to our home, and we couldn't be happier that they found their forever home together.",
-    "adoptionHistory": [],
-    "returnDisclaimerEnabled": false,
     "returnDisclaimerText": "Paloma was recently returned to foster care and may need a few weeks to a month to settle back into a familiar routine. We are giving Paloma time, patience, and support as they adjust. Please check back for updates.",
-    "returnedAt": null
+    "returnDisclaimerEnabled": false
   },
   {
     "id": "freya",
@@ -189,6 +187,7 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "gender": "Female",
     "photos": [
       "assets/kittens/eloise-alumni-20261122-01.jpg",
+      "assets/kittens/eloise-alumni-20261122-02.jpg",
       "assets/kittens/eloise-alumni-20261122-03.jpg",
       "assets/kittens/eloise-alumni-20261122-04.jpg",
       "assets/kittens/eloise-alumni-20261122-05.jpg"
