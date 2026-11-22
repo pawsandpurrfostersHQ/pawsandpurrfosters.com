@@ -99,7 +99,7 @@ function sortAlumniByLitterAndAdoptionDate(kittenList) {
   );
 }
 
-const ALUMNI_LITTER_TOTALS = { 1:4, 2:3, 3:7, 4:1, 5:1, 6:4, 7:4, 8:3, 9:4, 10:4, 11:4, 12:4 };
+const ALUMNI_LITTER_TOTALS = { 1:4, 2:3, 3:7, 4:1, 5:1, 6:4, 7:4, 8:4, 9:3, 10:4, 11:4, 12:4 };
 function getAlumniLitterTotal(litterNumber) { return ALUMNI_LITTER_TOTALS[Number(litterNumber)] || 0; }
 
 function formatAlumniLitter(litterNumber) {
