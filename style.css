@@ -5598,3 +5598,33 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
   .alumni-graduation-icon { width:30px; height:30px; font-size:18px; }
   .alumni-graduation-tooltip { top:37px; }
 }
+
+
+/* Foster Alumni: celebration controls, compact navigation, and readable dates. */
+.alumni-card-badges { display:flex; flex-wrap:wrap; align-items:center; gap:5px; margin:0 0 7px; }
+.alumni-card-badges .alumni-special-badge,
+.alumni-card-badges .alumni-graduation-badge { margin:0; }
+.alumni-graduation-badge { font-size:10px; }
+.alumni-graduation-corner { left:auto!important; right:10px!important; align-items:flex-end!important; }
+.alumni-graduation-tooltip { left:auto!important; right:0!important; }
+.alumni-photo-symbols { pointer-events:auto!important; }
+.alumni-symbol-wrap { position:relative; display:inline-flex; }
+.alumni-photo-symbol { padding:0; cursor:pointer; pointer-events:auto; }
+.alumni-photo-symbol:focus-visible { outline:3px solid var(--purple); outline-offset:2px; }
+.alumni-symbol-tooltip { position:absolute; top:42px; right:0; z-index:7; width:min(220px,70vw); padding:9px 11px; border:1px solid rgba(117,98,141,.25); border-radius:11px; background:#fff; color:var(--ink); box-shadow:0 6px 22px rgba(38,35,42,.18); font-size:11px; line-height:1.45; }
+.alumni-symbol-tooltip[hidden] { display:none; }
+.alumni-date-short { display:none; }
+.alumni-photo-hint { opacity:0; transition:opacity .2s ease; }
+.alumni-photo-hint.is-hint-active { opacity:1; }
+@media(max-width:760px) {
+  .alumni-date-full { display:none; }
+  .alumni-date-short { display:inline; }
+  .alumni-carousel-controls { display:flex!important; justify-content:center!important; align-items:center!important; gap:5px!important; margin:3px auto 0!important; }
+  .alumni-carousel-controls .alumni-arrow { display:grid!important; place-items:center!important; width:22px!important; height:22px!important; min-width:22px!important; padding:0!important; border-radius:50%!important; font-size:13px!important; line-height:1!important; box-shadow:none!important; }
+  .alumni-carousel-controls .alumni-arrow[hidden] { display:none!important; }
+  .alumni-graduation-icon { width:30px; height:30px; }
+  .alumni-graduation-tooltip { top:37px; }
+  .alumni-symbol-tooltip { top:37px; }
+}
+.all-litters__group.is-highlighted { outline:none!important; box-shadow:none!important; }
+.all-litters__group.is-highlighted .all-litters__number { display:inline-block; padding:3px 9px; margin:-3px 3px -3px 0; border:2px solid #6b9c70; border-radius:9px; background:#edf6eb; color:#315d39; box-shadow:0 0 0 3px rgba(107,156,112,.12); }
