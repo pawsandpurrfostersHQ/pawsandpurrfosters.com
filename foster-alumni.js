@@ -203,7 +203,8 @@ function renderTemporaryAlumniCard(litter, kittens) {
   const joinedNames = names.length > 1
     ? names.slice(0, -1).join(", ") + " and " + names[names.length - 1]
     : names[0] || "Our kittens";
-  const countText = names.length === 1 ? "One kitten from this litter" : names.length + " kittens from this litter";
+  const countWords = ["Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"];
+  const countText = (countWords[names.length] || names.length) + (names.length === 1 ? " kitten from this litter" : " kittens from this litter");
   const verb = names.length === 1 ? "is" : "are";
   return '<article class="alumni-temporary-notice alumni-temporary-notice--pair">' +
     '<h2>Still Looking for Their Forever Homes</h2>' +
