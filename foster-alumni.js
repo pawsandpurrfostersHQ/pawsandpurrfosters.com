@@ -24,6 +24,14 @@ function formatAlumniDate(date) {
   }).format(date);
 }
 
+function formatAlumniBirthday(date) {
+  const full = formatAlumniDate(date);
+  const short = date ? new Intl.DateTimeFormat(undefined, {
+    year: "numeric", month: "short", day: "numeric"
+  }).format(date) : "—";
+  return '<span class="alumni-date-full">' + escapeHTML(full) + '</span><span class="alumni-date-short">' + escapeHTML(short) + '</span>';
+}
+
 function getZodiacSign(birthday) {
   const date = parseAlumniDate(birthday);
   if (!date) return "";
@@ -54,7 +62,8 @@ function getAlumniCelebrations(kitten, today = new Date()) {
   const adoptionDate = parseAlumniDate(kitten.adoptionDate);
   const celebratesBirthday = Boolean(birthday && today.getMonth() === birthday.getMonth());
   const birthdayMessage = Boolean(birthday && today.getMonth() === birthday.getMonth() && today.getDate() === birthday.getDate());
-  const gotchaDayMessage = Boolean(adoptionDate && today.getMonth() === adoptionDate.getMonth() && today.getDate() === adoptionDate.getDate());
+  const yearsSinceAdoption = adoptionDate ? today.getFullYear() - adoptionDate.getFullYear() - (today.getMonth() < adoptionDate.getMonth() || (today.getMonth() === adoptionDate.getMonth() && today.getDate() < adoptionDate.getDate()) ? 1 : 0) : 0;
+  const gotchaDayMessage = Boolean(adoptionDate && yearsSinceAdoption >= 1 && today.getMonth() === adoptionDate.getMonth() && today.getDate() === adoptionDate.getDate());
   const adoptionStart = adoptionDate ? new Date(adoptionDate.getFullYear(), adoptionDate.getMonth(), adoptionDate.getDate()) : null;
   const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
   const daysSinceAdoption = adoptionStart ? Math.floor((todayStart - adoptionStart) / 86400000) : -1;
@@ -133,10 +142,10 @@ function renderAlumniCard(kitten, alumniIds, today = new Date()) {
           '<img src="' + escapeHTML(mainPhoto) + '" alt="' + escapeHTML(kitten.name) + '" loading="lazy">' +
           (photos.length > 1 ? '<span class="alumni-photo-hint" aria-hidden="true"><span class="alumni-photo-hint--desktop">Click to view photos</span><span class="alumni-photo-hint--mobile">Tap to view photos</span><span class="alumni-photo-hint__icon">↗</span></span>' : '') +
         '</button><span class="alumni-photo-symbols">' +
-          (celebrations.celebratesBirthday ? '<span class="alumni-photo-symbol" role="img" aria-label="' + (celebrations.birthdayMessage ? "Today is " + escapeHTML(kitten.name) + "'s birthday" : escapeHTML(kitten.name) + "'s birthday month") + '" title="' + (celebrations.birthdayMessage ? "Birthday today!" : "Birthday month") + '">' + (celebrations.birthdayMessage ? "🎂" : "🎁") + '</span>' : "") +
-          (celebrations.gotchaDayMessage ? '<span class="alumni-photo-symbol" role="img" aria-label="Happy Gotcha Day, ' + escapeHTML(kitten.name) + '" title="Gotcha Day!">🎉</span>' : "") +
+          (celebrations.celebratesBirthday ? '<span class="alumni-symbol-wrap"><button class="alumni-photo-symbol" type="button" data-alumni-info aria-expanded="false" aria-label="Birthday information for ' + escapeHTML(kitten.name) + '">' + (celebrations.birthdayMessage ? "🎂" : "🎁") + '</button><span class="alumni-symbol-tooltip" role="status" hidden>' + (celebrations.birthdayMessage ? 'Happy birthday! Today is ' + escapeHTML(kitten.name) + "'s special day." : escapeHTML(kitten.name) + "'s birthday is this month. Their birthday is " + escapeHTML(formatAlumniDate(birthdayDate)) + ".") + '</span></span>' : "") +
+          (celebrations.gotchaDayMessage ? '<span class="alumni-symbol-wrap"><button class="alumni-photo-symbol" type="button" data-alumni-info aria-expanded="false" aria-label="Gotcha Day information for ' + escapeHTML(kitten.name) + '">🎉</button><span class="alumni-symbol-tooltip" role="status" hidden>Happy Gotcha Day! It has been one year since ' + escapeHTML(kitten.name) + ' found their forever home.</span></span>' : "") +
         '</span>' +
-        (celebrations.graduationMessage ? '<span class="alumni-graduation-corner"><button class="alumni-graduation-icon" type="button" aria-label="What does the graduation cap mean for ' + escapeHTML(kitten.name) + '?" aria-expanded="false" data-graduation-info>🎓</button><span class="alumni-graduation-tooltip" role="status" hidden>Recently graduated! This celebration appears during the first seven days after leaving foster care.</span></span>' : '') +
+        (celebrations.graduationMessage ? '<span class="alumni-graduation-corner"><button class="alumni-graduation-icon" type="button" aria-label="Celebrate ' + escapeHTML(kitten.name) + "'s recent graduation" + '" aria-expanded="false" data-graduation-info>🎓</button><span class="alumni-graduation-tooltip" role="status" hidden><strong>A whole week to celebrate!</strong> ' + escapeHTML(kitten.name) + ' has officially graduated from foster care. This week is all about celebrating their happy new chapter!</span></span>' : '') +
         '</div>' +
         (photos.length > 1 ? '<div class="alumni-photo-indicators" role="group" aria-label="' + escapeHTML(kitten.name) + ' photo navigation">' +
           photos.map((photo,index) => '<button class="alumni-photo-indicator" type="button" data-index="' + index + '" aria-label="Show photo ' + (index+1) + ' of ' + photos.length + '" aria-pressed="' + (index===0) + '"></button>').join("") +
@@ -153,13 +162,15 @@ function renderAlumniCard(kitten, alumniIds, today = new Date()) {
     celebrations.birthdayMessage ? '<p class="alumni-celebration alumni-birthday-message" role="status">' + birthdayMessage + '</p>' : "",
     celebrations.gotchaDayMessage ? '<p class="alumni-celebration alumni-gotcha" role="status">Happy Gotcha Day, ' + escapeHTML(kitten.name) + '!</p>' : ""
   ].join("");
-  const graduationBadge = celebrations.graduationMessage ? '<span class="alumni-graduation-badge" title="Recently graduated from foster care">🎓 Recent Graduate</span>' : "";
+  const graduationBadge = celebrations.graduationMessage ? '<span class="alumni-graduation-badge">Recent Graduate</span>' : "";
+  const badges = [designation, graduationBadge].filter(Boolean).join("");
   return '<article class="kitten-card alumni-card" id="alumni-' + escapeHTML(kitten.id) + '">' +
     photoCarousel + '<div class="card-content alumni-card-content">' +
-      '<h3>' + escapeHTML(kitten.name) + (designation ? " " + designation : "") + graduationBadge + '</h3>' +
+      (badges ? '<div class="alumni-card-badges">' + badges + '</div>' : '') +
+      '<h3>' + escapeHTML(kitten.name) + '</h3>' +
       '<dl class="alumni-details">' +
         '<div><dt>Gender</dt><dd>' + escapeHTML(kitten.gender || "—") + '</dd></div>' +
-        '<div><dt>Birthday</dt><dd>' + formatAlumniDate(parseAlumniDate(kitten.birthday)) + '</dd></div>' +
+        '<div><dt>Birthday</dt><dd>' + formatAlumniBirthday(birthdayDate) + '</dd></div>' +
         '<div><dt>Age</dt><dd>' + (age === null ? "—" : escapeHTML(age) + " old") + '</dd></div>' +
         '<div><dt>Zodiac</dt><dd>' + escapeHTML(getZodiacSign(kitten.birthday)) + '</dd></div>' +
         '<div><dt>Gotcha Day</dt><dd>' + formatAlumniDate(parseAlumniDate(kitten.adoptionDate)) + '</dd></div>' +
@@ -199,10 +210,14 @@ function renderTemporaryAlumniCard(litter, kittens) {
   const countWords = ["Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"];
   const countText = (countWords[names.length] || names.length) + (names.length === 1 ? " kitten from this litter" : " kittens from this litter");
   const verb = names.length === 1 ? "is" : "are";
-  const currentFostersLink = '../all-kittens/#litter-' + Number(litter);
+  const currentFostersLink = 'all-kittens/#litter-' + Number(litter);
+  const kittenNames = kittens.map(kitten => kitten.name);
+  const meetLabel = kittenNames.length > 1
+    ? 'Meet ' + kittenNames.slice(0, -1).join(', ') + ' and ' + kittenNames[kittenNames.length - 1]
+    : 'Meet ' + (kittenNames[0] || 'these kittens');
   return '<article class="alumni-temporary-notice alumni-temporary-notice--pair"><h3>Still waiting for their forever homes</h3>' +
     '<p>' + countText + " " + verb + ' still in foster care and waiting for their forever homes. Meet ' + joinedNames + '.</p>' +
-    '<a class="alumni-current-fosters-link" href="' + currentFostersLink + '">Meet them in Current Fosters →</a></article>';
+    '<a class="alumni-current-fosters-link" href="' + currentFostersLink + '">' + escapeHTML(meetLabel) + ' in Current Fosters →</a></article>';
 }
 function renderTemporaryAlumniLitter(litter, kittens) {
   const total = getAlumniLitterTotal(litter);
@@ -256,16 +271,32 @@ function renderFosterAlumni(kittenList, today = new Date()) {
     requestAnimationFrame(() => { track.scrollLeft = 0; });
   });
 
-  container.querySelectorAll("[data-graduation-info]").forEach(button => {
+  container.querySelectorAll("[data-graduation-info], [data-alumni-info]").forEach(button => {
     button.addEventListener("click", event => {
       event.preventDefault();
       event.stopPropagation();
-      const tooltip = button.parentElement?.querySelector(".alumni-graduation-tooltip");
+      const tooltip = button.parentElement?.querySelector(".alumni-graduation-tooltip, .alumni-symbol-tooltip");
       const isOpen = button.getAttribute("aria-expanded") === "true";
       button.setAttribute("aria-expanded", String(!isOpen));
       if (tooltip) tooltip.hidden = isOpen;
     });
   });
+
+  if (typeof IntersectionObserver !== "undefined") {
+    container.querySelectorAll(".alumni-cards").forEach(track => {
+      const hintTimers = new WeakMap();
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          const hint = entry.target.querySelector(".alumni-photo-hint");
+          if (!hint || !entry.isIntersecting || entry.intersectionRatio < 0.6) return;
+          hint.classList.add("is-hint-active");
+          clearTimeout(hintTimers.get(hint));
+          hintTimers.set(hint, setTimeout(() => hint.classList.remove("is-hint-active"), 2400));
+        });
+      }, { root: track, threshold: [0.6, 0.8] });
+      track.querySelectorAll(".alumni-card").forEach(card => observer.observe(card));
+    });
+  }
 
   container.querySelectorAll(".alumni-photo-carousel").forEach(carousel => {
     const image = carousel.querySelector(".alumni-main-photo-button > img");
