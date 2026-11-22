@@ -187,7 +187,13 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "name": "Eloise",
     "image": "assets/kittens/alumni-eloise.png",
     "gender": "Female",
-    "photos": [],
+    "photos": [
+      "assets/kittens/eloise-alumni-20261122-01.jpg",
+      "assets/kittens/eloise-alumni-20261122-02.jpg",
+      "assets/kittens/eloise-alumni-20261122-03.jpg",
+      "assets/kittens/eloise-alumni-20261122-04.jpg",
+      "assets/kittens/eloise-alumni-20261122-05.jpg"
+    ],
     "status": "Adopted",
     "birthday": "2026-02-09",
     "companionId": "matilda",
@@ -200,7 +206,13 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "name": "Matilda",
     "image": "assets/kittens/alumni-matilda.png",
     "gender": "Female",
-    "photos": [],
+    "photos": [
+      "assets/kittens/matilda-alumni-20261122-01.jpg",
+      "assets/kittens/matilda-alumni-20261122-02.jpg",
+      "assets/kittens/matilda-alumni-20261122-03.jpg",
+      "assets/kittens/matilda-alumni-20261122-04.jpg",
+      "assets/kittens/matilda-alumni-20261122-05.jpg"
+    ],
     "status": "Adopted",
     "birthday": "2026-02-09",
     "companionId": "eloise",
