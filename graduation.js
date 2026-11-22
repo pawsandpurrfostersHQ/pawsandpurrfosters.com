@@ -21,17 +21,21 @@
   function esc(value){return String(value==null?"":value).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
   function photosFor(k){
     var list=Array.isArray(k.photos)?k.photos.filter(Boolean):[];
-    var ordered=[k.image].concat(list.filter(function(photo){return photo!==k.image;})).filter(Boolean);
-    return ordered.length?ordered:[k.image||"assets/main-logo.PNG"];
+    return list.length?list:[k.image||"assets/main-logo.PNG"];
   }
   var photoSets=groups.map(function(group){return group.map(photosFor);});
-  var maxSlides=Math.max.apply(null,[1].concat(photoSets.map(function(group){return Math.max.apply(null,group.map(function(list){return list.length;}));})));
   function dateText(value){return new Intl.DateTimeFormat("en-US",{month:"long",day:"numeric",year:"numeric"}).format(new Date(value+"T12:00:00"));}
-  var slides=Array.from({length:maxSlides},function(_,index){
-    var group=groups[index%groups.length],sets=photoSets[index%photoSets.length];
-    var figures=group.map(function(k,slot){return "<figure><img src=\""+esc(sets[slot][index%sets[slot].length])+"\" alt=\""+esc(k.name)+"\" loading=\""+(index===0?"eager":"lazy")+"\"><figcaption>"+esc(k.name)+"</figcaption></figure>";}).join("");
+  var frames=[];
+  groups.forEach(function(group,groupIndex){
+    var sets=photoSets[groupIndex],count=Math.max.apply(null,sets.map(function(list){return list.length;}));
+    for(var index=0;index<count;index++)frames.push({group:group,sets:sets,index:index});
+  });
+  var maxSlides=frames.length;
+  var slides=frames.map(function(frame,slideIndex){
+    var group=frame.group,sets=frame.sets,index=frame.index;
+    var figures=group.map(function(k,slot){return "<figure><img src=\\""+esc(sets[slot][index%sets[slot].length])+"\\" alt=\\""+esc(k.name)+"\\" loading=\\""+(slideIndex===0?"eager":"lazy")+"\\"><figcaption>"+esc(k.name)+"</figcaption></figure>";}).join("");
     var copy=group.map(function(k){return esc(k.description||k.bio||"");}).filter(Boolean).join(" ");
-    return "<div class=\"graduate-slide"+(index===0?" is-active":"")+"\" style=\"--graduate-columns:"+group.length+"\">"+figures+"<p class=\"graduate-slide-copy\">"+copy+"</p><p class=\"graduate-date\">Graduated "+group.map(function(k){return dateText(k.adoptionDate);}).join(" · ")+"</p></div>";
+    return "<div class=\\"graduate-slide"+(slideIndex===0?" is-active":"")+"\\" style=\\"--graduate-columns:"+group.length+"\\">"+figures+"<p class=\\"graduate-slide-copy\\">"+copy+"</p><p class=\\"graduate-date\\">Graduated "+group.map(function(k){return dateText(k.adoptionDate);}).join(" · ")+"</p></div>";
   }).join("");
   var controls=maxSlides>1?"<div class=\"graduate-controls\"><button type=\"button\" data-graduate-prev aria-label=\"Previous graduation photo\">‹</button><div class=\"graduate-dots\">"+Array.from({length:maxSlides},function(_,i){return "<button class=\"graduate-dot\" type=\"button\" data-graduate-dot=\""+i+"\" aria-label=\"Show photo "+(i+1)+"\" aria-pressed=\""+(i===0)+"\"></button>";}).join("")+"</div><button type=\"button\" data-graduate-next aria-label=\"Next graduation photo\">›</button></div>":"";
   root.innerHTML="<div class=\"graduate-celebration__banner\"><div class=\"graduate-celebration__heading\"><p class=\"eyebrow\">A new chapter begins</p><h2>Celebrating Our Newest Graduates</h2><p>Celebrating the kittens who have recently found their forever homes.</p></div><div class=\"graduate-slides\" aria-label=\"Recently adopted foster kittens\">"+slides+"</div>"+controls+"</div>";
