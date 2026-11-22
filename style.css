@@ -5559,3 +5559,42 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
   .alumni-temporary-notice--pair { width:min(100%,390px); flex:none; margin:0 auto; padding:18px; }
   .alumni-carousel-controls { display:none!important; }
 }
+
+
+/* Alumni: restore the compact horizontal row carousel on phones. */
+.alumni-photo-hint { padding:4px 8px; font-size:10px; gap:4px; }
+.alumni-photo-hint__icon { font-size:12px; }
+.alumni-photo-symbols { pointer-events:none; }
+.alumni-graduation-corner { position:absolute; top:10px; left:10px; z-index:5; display:flex; flex-direction:column; align-items:flex-start; pointer-events:auto; }
+.alumni-graduation-icon { display:grid; place-items:center; width:34px; height:34px; padding:0; border:1px solid rgba(117,98,141,.24); border-radius:50%; background:rgba(255,255,255,.97); box-shadow:0 3px 12px rgba(62,67,57,.14); font-size:20px; cursor:pointer; }
+.alumni-graduation-icon:focus-visible { outline:3px solid var(--purple); outline-offset:2px; }
+.alumni-graduation-tooltip { position:absolute; top:42px; left:0; z-index:6; width:min(230px,70vw); padding:10px 12px; border:1px solid rgba(117,98,141,.25); border-radius:12px; background:#fff; color:var(--ink); box-shadow:0 6px 22px rgba(38,35,42,.18); font-size:12px; line-height:1.45; }
+.alumni-graduation-tooltip[hidden] { display:none; }
+.alumni-temporary-notice--pair { flex:0 0 clamp(220px,calc((100% - 44px)/3),320px); }
+.alumni-current-fosters-link { display:inline-flex; align-self:flex-start; margin-top:auto; padding:8px 12px; border-radius:999px; background:var(--sage-light); color:var(--sage-dark); font-size:12px; font-weight:800; text-decoration:none; }
+.alumni-current-fosters-link:hover,.alumni-current-fosters-link:focus-visible { background:var(--sage); color:#fff; }
+@media(max-width:760px) {
+  .alumni-litters { gap:25px; }
+  .alumni-cards,.alumni-litter--paired .alumni-cards {
+    display:flex!important; flex-direction:row!important; flex-wrap:nowrap!important; justify-content:flex-start!important;
+    gap:12px!important; overflow-x:auto!important; overflow-y:hidden!important; padding:2px 2px 12px!important;
+    scroll-snap-type:x mandatory!important; scroll-behavior:smooth; -webkit-overflow-scrolling:touch;
+  }
+  .alumni-card,.alumni-litter--paired .alumni-card {
+    flex:0 0 228px!important; width:228px!important; max-width:228px!important; min-width:0;
+    margin:0!important; scroll-snap-align:start!important;
+  }
+  .alumni-cards--single { justify-content:flex-start!important; }
+  .alumni-temporary-notice--pair { flex:0 0 228px!important; width:228px!important; max-width:228px!important; min-height:0; }
+  .alumni-main-photo { aspect-ratio:4/3; }
+  .alumni-card-content { padding:11px 12px 13px; }
+  .alumni-card-content h3 { font-size:18px; margin-bottom:9px; }
+  .alumni-details { gap:7px 10px; }
+  .alumni-details dt { font-size:10px; }
+  .alumni-details dd { font-size:11px; }
+  .alumni-photo-indicators { padding:7px 0 0; gap:6px; }
+  .alumni-photo-indicator { width:6px; height:6px; flex-basis:6px; }
+  .alumni-photo-hint { bottom:7px; padding:4px 7px; font-size:9px; }
+  .alumni-graduation-icon { width:30px; height:30px; font-size:18px; }
+  .alumni-graduation-tooltip { top:37px; }
+}

@@ -84,8 +84,8 @@ function getConfirmedAlumni(kittenList) {
 
 function sortAlumniByLitterAndAdoptionDate(kittenList) {
   return [...kittenList].sort((left, right) =>
-    Number(left.fosterLitter) - Number(right.fosterLitter)
-    || parseAlumniDate(left.adoptionDate) - parseAlumniDate(right.adoptionDate)
+    Number(right.fosterLitter) - Number(left.fosterLitter)
+    || parseAlumniDate(right.adoptionDate) - parseAlumniDate(left.adoptionDate)
     || left.name.localeCompare(right.name)
   );
 }
@@ -131,16 +131,19 @@ function renderAlumniCard(kitten, alumniIds, today = new Date()) {
     ? '<div class="alumni-photo-carousel"><div class="card-photo-wrap alumni-main-photo">' +
         '<button class="alumni-main-photo-button" type="button" data-alumni-gallery="' + escapeHTML(kitten.id) + '" data-photo-index="0" aria-label="Open all photos of ' + escapeHTML(kitten.name) + '">' +
           '<img src="' + escapeHTML(mainPhoto) + '" alt="' + escapeHTML(kitten.name) + '" loading="lazy">' +
-          '<span class="alumni-photo-hint" aria-hidden="true"><span class="alumni-photo-hint--desktop">Click to view photos</span><span class="alumni-photo-hint--mobile">Tap to view photos</span><span class="alumni-photo-hint__icon">↗</span></span>' +
+          (photos.length > 1 ? '<span class="alumni-photo-hint" aria-hidden="true"><span class="alumni-photo-hint--desktop">Click to view photos</span><span class="alumni-photo-hint--mobile">Tap to view photos</span><span class="alumni-photo-hint__icon">↗</span></span>' : '') +
         '</button><span class="alumni-photo-symbols">' +
           (celebrations.celebratesBirthday ? '<span class="alumni-photo-symbol" role="img" aria-label="' + (celebrations.birthdayMessage ? "Today is " + escapeHTML(kitten.name) + "'s birthday" : escapeHTML(kitten.name) + "'s birthday month") + '" title="' + (celebrations.birthdayMessage ? "Birthday today!" : "Birthday month") + '">' + (celebrations.birthdayMessage ? "🎂" : "🎁") + '</span>' : "") +
           (celebrations.gotchaDayMessage ? '<span class="alumni-photo-symbol" role="img" aria-label="Happy Gotcha Day, ' + escapeHTML(kitten.name) + '" title="Gotcha Day!">🎉</span>' : "") +
-        '</span></div>' +
+        '</span>' +
+        (celebrations.graduationMessage ? '<span class="alumni-graduation-corner"><button class="alumni-graduation-icon" type="button" aria-label="What does the graduation cap mean for ' + escapeHTML(kitten.name) + '?" aria-expanded="false" data-graduation-info>🎓</button><span class="alumni-graduation-tooltip" role="status" hidden>Recently graduated! This celebration appears during the first seven days after leaving foster care.</span></span>' : '') +
+        '</div>' +
         (photos.length > 1 ? '<div class="alumni-photo-indicators" role="group" aria-label="' + escapeHTML(kitten.name) + ' photo navigation">' +
           photos.map((photo,index) => '<button class="alumni-photo-indicator" type="button" data-index="' + index + '" aria-label="Show photo ' + (index+1) + ' of ' + photos.length + '" aria-pressed="' + (index===0) + '"></button>').join("") +
         '</div>' : "") + '</div>'
     : "";
-  const companionName = kitten.companionId && alumniIds.has(kitten.companionId) ? alumniIds.get(kitten.companionId) : "—";
+  const companionId = kitten.companionId || kitten.pairing?.kittenId;
+  const companionName = (kitten.adoptedWith || (companionId && alumniIds.has(companionId) ? alumniIds.get(companionId) : "")) || "";
   const birthdayDate = parseAlumniDate(kitten.birthday);
   const birthdayMessage = celebrations.birthdayMessage
     ? celebrations.birthdayYears > 0 ? "Happy " + formatBirthdayOrdinal(celebrations.birthdayYears) + " birthday, " + escapeHTML(kitten.name) + "!" : "Happy birthday, " + escapeHTML(kitten.name) + "!"
@@ -161,7 +164,7 @@ function renderAlumniCard(kitten, alumniIds, today = new Date()) {
         '<div><dt>Zodiac</dt><dd>' + escapeHTML(getZodiacSign(kitten.birthday)) + '</dd></div>' +
         '<div><dt>Gotcha Day</dt><dd>' + formatAlumniDate(parseAlumniDate(kitten.adoptionDate)) + '</dd></div>' +
         '<div><dt>Foster litter</dt><dd>' + escapeHTML(formatAlumniLitter(kitten.fosterLitter)) + '</dd></div>' +
-        '<div><dt>Adopted with</dt><dd>' + escapeHTML(companionName) + '</dd></div>' +
+        (companionName ? '<div><dt>Adopted with</dt><dd>' + escapeHTML(companionName) + '</dd></div>' : '') +
       '</dl>' + celebrationMessages + '</div></article>';
 }
 function renderAlumniLitter(litter, kittens, alumniIds, today, paired = false, extraCardMarkup = "", extraCardAfterId = "") {
@@ -196,8 +199,10 @@ function renderTemporaryAlumniCard(litter, kittens) {
   const countWords = ["Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"];
   const countText = (countWords[names.length] || names.length) + (names.length === 1 ? " kitten from this litter" : " kittens from this litter");
   const verb = names.length === 1 ? "is" : "are";
+  const currentFostersLink = '../all-kittens/#litter-' + Number(litter);
   return '<article class="alumni-temporary-notice alumni-temporary-notice--pair"><h3>Still waiting for their forever homes</h3>' +
-    '<p>' + countText + " " + verb + ' still in foster care and waiting for their forever homes. Meet ' + joinedNames + '.</p></article>';
+    '<p>' + countText + " " + verb + ' still in foster care and waiting for their forever homes. Meet ' + joinedNames + '.</p>' +
+    '<a class="alumni-current-fosters-link" href="' + currentFostersLink + '">Meet them in Current Fosters →</a></article>';
 }
 function renderTemporaryAlumniLitter(litter, kittens) {
   const total = getAlumniLitterTotal(litter);
@@ -235,7 +240,7 @@ function renderFosterAlumni(kittenList, today = new Date()) {
     currentGroups.get(litter).push(kitten);
   });
 
-  const litterNumbers = [...new Set([...groups.keys(), ...currentGroups.keys()])].sort((a, b) => a - b);
+  const litterNumbers = [...new Set([...groups.keys(), ...currentGroups.keys()])].sort((a, b) => b - a);
   container.innerHTML = litterNumbers.map(litter => {
     const kittens = groups.get(litter) || [];
     const waiting = currentGroups.get(litter) || [];
@@ -249,6 +254,17 @@ function renderFosterAlumni(kittenList, today = new Date()) {
   container.querySelectorAll(".alumni-litter:not(.alumni-litter--temporary) .alumni-cards").forEach(track => {
     track.scrollLeft = 0;
     requestAnimationFrame(() => { track.scrollLeft = 0; });
+  });
+
+  container.querySelectorAll("[data-graduation-info]").forEach(button => {
+    button.addEventListener("click", event => {
+      event.preventDefault();
+      event.stopPropagation();
+      const tooltip = button.parentElement?.querySelector(".alumni-graduation-tooltip");
+      const isOpen = button.getAttribute("aria-expanded") === "true";
+      button.setAttribute("aria-expanded", String(!isOpen));
+      if (tooltip) tooltip.hidden = isOpen;
+    });
   });
 
   container.querySelectorAll(".alumni-photo-carousel").forEach(carousel => {
