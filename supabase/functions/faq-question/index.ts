@@ -148,6 +148,14 @@ Deno.serve(async (req: Request) => {
       return json({ error: "Please complete your name, email address, and question." }, 400);
     }
 
+    const rateLimit = await checkQuestionRateLimit(req, email);
+    if (!rateLimit.allowed) {
+      const message = rateLimit.reason === "day"
+        ? "You've reached the daily question limit. Please try again in 24 hours."
+        : "You've sent several questions in a short time. Please wait about an hour before sending another.";
+      return json({ error: message, retry_after_seconds: rateLimit.retry_after_seconds }, 429);
+    }
+
     await storeQuestion({
       first_name: first,
       last_name: last,
