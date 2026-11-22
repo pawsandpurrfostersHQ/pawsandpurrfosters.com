@@ -5236,3 +5236,5 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
 .graduate-dot[aria-pressed="true"] { background:var(--purple)!important; }
 .graduate-date { margin:16px 0 0; text-align:center; color:var(--muted); font-size:13px; }
 @media(max-width:560px){.graduate-celebration__banner{padding:21px 16px}.graduate-slide{gap:9px}.graduate-slide figcaption{font-size:18px}.graduate-slide img{border-radius:12px}}
+
+.graduate-slide-copy,.graduate-date{grid-column:1/-1}
