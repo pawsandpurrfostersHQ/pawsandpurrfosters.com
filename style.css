@@ -5214,3 +5214,25 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
   .about-story-summary { padding: 16px; font-size: 20px; }
   .about-story-body { padding: 0 16px 10px; }
 }
+
+
+/* Newly graduated foster kittens — seven-day homepage spotlight */
+.graduate-celebration { padding-top: 28px; padding-bottom: 54px; }
+.graduate-celebration__banner { max-width: 1120px; margin: 0 auto; padding: clamp(22px,4vw,38px); border: 1px solid rgba(117,98,141,.2); border-radius: 26px; background: linear-gradient(120deg,var(--purple-light),#f7f8f1 70%); }
+.graduate-celebration__heading { text-align:center; margin:0 auto 24px; }
+.graduate-celebration__heading h2 { margin:5px 0 8px; color:var(--purple-dark); font-size:clamp(27px,3.4vw,38px); }
+.graduate-celebration__heading p { margin:0; color:var(--muted); }
+.graduate-slides { position:relative; max-width:860px; margin:auto; }
+.graduate-slide { display:none; grid-template-columns:repeat(var(--graduate-columns,1),minmax(0,1fr)); gap:16px; align-items:start; }
+.graduate-slide.is-active { display:grid; }
+.graduate-slide figure { margin:0; min-width:0; text-align:center; }
+.graduate-slide img { display:block; width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:18px; background:white; }
+.graduate-slide figcaption { margin-top:10px; color:var(--purple-dark); font-family:"Playfair Display",serif; font-size:22px; font-weight:700; }
+.graduate-slide-copy { margin:12px auto 0; max-width:680px; color:var(--muted); text-align:center; line-height:1.65; }
+.graduate-controls { display:flex; align-items:center; justify-content:center; gap:14px; margin-top:20px; }
+.graduate-controls button { border:1px solid var(--line); border-radius:999px; background:#fff; color:var(--purple-dark); min-width:40px; min-height:40px; cursor:pointer; }
+.graduate-dots { display:flex; align-items:center; justify-content:center; gap:7px; }
+.graduate-dot { width:9px!important; min-width:9px!important; height:9px!important; min-height:9px!important; padding:0; border:0!important; background:#c9c3d0!important; }
+.graduate-dot[aria-pressed="true"] { background:var(--purple)!important; }
+.graduate-date { margin:16px 0 0; text-align:center; color:var(--muted); font-size:13px; }
+@media(max-width:560px){.graduate-celebration__banner{padding:21px 16px}.graduate-slide{gap:9px}.graduate-slide figcaption{font-size:18px}.graduate-slide img{border-radius:12px}}
