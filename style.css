@@ -5238,3 +5238,230 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
 @media(max-width:560px){.graduate-celebration__banner{padding:21px 16px}.graduate-slide{gap:9px}.graduate-slide figcaption{font-size:18px}.graduate-slide img{border-radius:12px}}
 
 .graduate-slide-copy,.graduate-date{grid-column:1/-1}
+
+
+/* Graduate spotlight: two adoption stories per row, with quietly synchronized photo fades. */
+.graduate-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:22px;
+  align-items:stretch;
+}
+.graduate-card {
+  min-width:0;
+  padding:20px;
+  border:1px solid rgba(117,98,141,.18);
+  border-radius:20px;
+  background:rgba(255,255,255,.88);
+  box-shadow:0 8px 24px rgba(62,67,57,.05);
+}
+.graduate-photo-slides {
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  align-items:start;
+}
+.graduate-photo-slide {
+  grid-area:1/1;
+  display:grid;
+  grid-template-columns:repeat(var(--graduate-columns,1),minmax(0,1fr));
+  gap:14px;
+  min-width:0;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .9s ease;
+  pointer-events:none;
+}
+.graduate-photo-slide.is-active {
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+.graduate-photo-slide figure {
+  min-width:0;
+  margin:0;
+  text-align:center;
+}
+.graduate-photo-slide figure:first-child:not(:only-child) {
+  padding-right:14px;
+  border-right:1px solid var(--line);
+}
+.graduate-photo-slide img {
+  display:block;
+  width:100%;
+  aspect-ratio:4/3;
+  border-radius:14px;
+  background:var(--sage-light);
+  object-fit:contain;
+}
+.graduate-photo-slide figcaption {
+  margin-top:8px;
+  color:var(--purple-dark);
+  font-weight:700;
+  font-size:14px;
+}
+.graduate-photo-slide__shared {
+  grid-column:1/-1;
+}
+.graduate-card__names {
+  margin:16px 0 8px;
+  color:var(--purple-dark);
+  text-align:center;
+  font-family:"Playfair Display",serif;
+  font-size:clamp(21px,2.2vw,27px);
+}
+.graduate-card__copy {
+  max-width:620px;
+  margin:0 auto;
+  color:var(--muted);
+  text-align:center;
+  line-height:1.7;
+}
+.graduate-card .graduate-date {
+  margin:13px 0 0;
+  padding-top:12px;
+  border-top:1px solid var(--line);
+  color:var(--sage-dark);
+  font-size:13px;
+  font-weight:700;
+  text-align:center;
+}
+@media(max-width:760px) {
+  .graduate-grid { grid-template-columns:minmax(0,1fr); gap:16px; }
+  .graduate-card { padding:16px; }
+  .graduate-photo-slide { gap:10px; }
+  .graduate-photo-slide figure:first-child:not(:only-child) { padding-right:10px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .graduate-photo-slide { transition:none; }
+}
+
+/* Foster alumni gallery thumbnails open in a full-screen, keyboard- and swipe-friendly viewer. */
+.alumni-gallery { flex-wrap:wrap; overflow:visible; }
+.alumni-gallery-item {
+  display:block;
+  width:62px;
+  height:62px;
+  flex:0 0 62px;
+  padding:0;
+  overflow:hidden;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--sage-light);
+  cursor:zoom-in;
+}
+.alumni-gallery-item img {
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+.alumni-gallery-item:focus-visible {
+  outline:3px solid var(--purple);
+  outline-offset:3px;
+}
+.alumni-photo-lightbox {
+  position:fixed;
+  inset:0;
+  width:min(94vw,1100px);
+  max-width:none;
+  max-height:92dvh;
+  margin:auto;
+  padding:56px 64px 34px;
+  overflow:visible;
+  border:1px solid rgba(255,255,255,.28);
+  border-radius:20px;
+  background:#242326;
+}
+.alumni-photo-lightbox::backdrop { background:rgba(22,21,24,.88); }
+.alumni-photo-lightbox > img {
+  display:block;
+  width:100%;
+  height:min(76dvh,780px);
+  object-fit:contain;
+}
+.alumni-lightbox-close,
+.alumni-lightbox-nav {
+  position:absolute;
+  z-index:2;
+  display:grid;
+  place-items:center;
+  width:42px;
+  height:42px;
+  padding:0;
+  border:1px solid rgba(255,255,255,.35);
+  border-radius:50%;
+  background:rgba(255,255,255,.13);
+  color:white;
+  font-size:30px;
+  line-height:1;
+  cursor:pointer;
+}
+.alumni-lightbox-close { top:12px; right:12px; }
+.alumni-lightbox-prev { top:50%; left:12px; transform:translateY(-50%); }
+.alumni-lightbox-next { top:50%; right:12px; transform:translateY(-50%); }
+.alumni-lightbox-nav[hidden] { display:none!important; }
+.alumni-lightbox-close:hover,.alumni-lightbox-nav:hover { background:rgba(255,255,255,.25); }
+.alumni-graduation { background:var(--purple-light); color:var(--purple-dark); }
+@media(max-width:600px) {
+  .alumni-photo-lightbox { width:100vw; max-width:none; max-height:100dvh; height:100dvh; padding:58px 48px 24px; border:0; border-radius:0; }
+  .alumni-photo-lightbox > img { height:calc(100dvh - 90px); }
+  .alumni-lightbox-prev { left:5px; }
+  .alumni-lightbox-next { right:5px; }
+}
+
+/* On phones, show Diablo's fourth litter first and Finn's fifth litter next, one centered card at a time. */
+@media(max-width:760px) {
+  .alumni-litters > .alumni-litter-pair {
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    row-gap:26px!important;
+  }
+  .alumni-litter-pair > .alumni-litter--paired {
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    grid-template-rows:auto auto!important;
+    width:100%;
+    order:2;
+  }
+  .alumni-litter-pair > .alumni-litter--paired:last-child { order:1; }
+  .alumni-litter-pair > .alumni-litter--paired .alumni-litter-heading {
+    grid-column:1!important;
+    grid-row:1!important;
+    margin:0 0 14px!important;
+  }
+  .alumni-litter-pair > .alumni-litter--paired .alumni-carousel {
+    display:block!important;
+    grid-column:1!important;
+    grid-row:2!important;
+    width:100%!important;
+    padding:0 38px!important;
+  }
+  .alumni-litter-pair .alumni-cards {
+    display:flex!important;
+    justify-content:center!important;
+    width:100%!important;
+    overflow:visible!important;
+    padding:2px 0 14px!important;
+  }
+  .alumni-litter-pair .alumni-card {
+    flex:0 0 min(100%,310px)!important;
+    width:min(100%,310px)!important;
+    max-width:310px!important;
+    margin:0 auto!important;
+  }
+  .alumni-litter:not(.alumni-litter--paired):not(.alumni-litter--temporary) .alumni-carousel {
+    padding:0 38px!important;
+  }
+  .alumni-litter:not(.alumni-litter--paired):not(.alumni-litter--temporary) .alumni-cards {
+    justify-content:flex-start;
+    gap:14px;
+    padding:2px 0 14px!important;
+    scroll-padding-inline:0;
+  }
+  .alumni-litter:not(.alumni-litter--paired):not(.alumni-litter--temporary) .alumni-card {
+    flex:0 0 100%!important;
+    width:100%!important;
+    max-width:420px!important;
+    scroll-snap-align:center;
+  }
+}
