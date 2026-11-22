@@ -165,7 +165,8 @@ function renderAlumniCard(kitten, alumniIds, today = new Date()) {
       '</dl>' + celebrationMessages + '</div></article>';
 }
 function renderAlumniLitter(litter, kittens, alumniIds, today, paired = false, extraCardMarkup = "", extraCardAfterId = "") {
-  const heading = formatAlumniLitter(litter);
+  const total = getAlumniLitterTotal(litter);
+  const heading = formatAlumniLitter(litter) + " — " + total + (total === 1 ? " kitten" : " kittens");
   const cards = kittens.map(kitten =>
     `${renderAlumniCard(kitten, alumniIds, today)}${kitten.id === extraCardAfterId ? extraCardMarkup : ""}`
   ).join("");
