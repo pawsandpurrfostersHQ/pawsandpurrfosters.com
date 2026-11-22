@@ -110,8 +110,6 @@ function formatBirthdayOrdinal(years) {
   return `${years}${suffix}`;
 }
 
-const alumniPhotoCarouselIds = new Set(["mavis", "fawn", "diablo", "scout", "skylar"]);
-
 function getAlumniGalleryPhotos(kitten) {
   return [...new Set([
     ...(kitten.image ? [kitten.image] : []),
@@ -153,11 +151,11 @@ function renderAlumniCard(kitten, alumniIds, today = new Date()) {
     celebrations.gotchaDayMessage ? '<p class="alumni-celebration alumni-gotcha" role="status">Happy Gotcha Day, ' + escapeHTML(kitten.name) + '!</p>' : ""
   ].join("");
   const graduationBadge = celebrations.graduationMessage ? '<span class="alumni-graduation-badge" title="Recently graduated from foster care">🎓 Recent Graduate</span>' : "";
-  const birthdayTooltip = birthdayDate ? birthdayDate.toLocaleString("en-US", {month:"long"}) + " is " + kitten.name + "'s birthday month." : "";
   return '<article class="kitten-card alumni-card" id="alumni-' + escapeHTML(kitten.id) + '">' +
     photoCarousel + '<div class="card-content alumni-card-content">' +
       '<h3>' + escapeHTML(kitten.name) + (designation ? " " + designation : "") + graduationBadge + '</h3>' +
       '<dl class="alumni-details">' +
+        '<div><dt>Gender</dt><dd>' + escapeHTML(kitten.gender || "—") + '</dd></div>' +
         '<div><dt>Birthday</dt><dd>' + formatAlumniDate(parseAlumniDate(kitten.birthday)) + '</dd></div>' +
         '<div><dt>Age</dt><dd>' + (age === null ? "—" : escapeHTML(age) + " old") + '</dd></div>' +
         '<div><dt>Zodiac</dt><dd>' + escapeHTML(getZodiacSign(kitten.birthday)) + '</dd></div>' +
@@ -264,6 +262,7 @@ function renderFosterAlumni(kittenList, today = new Date()) {
       activeIndex = (index + photos.length) % photos.length;
       image.src = photos[activeIndex];
       image.alt = kitten.name + " photo " + (activeIndex + 1);
+      trigger.dataset.photoIndex = String(activeIndex);
       indicators.forEach((button, buttonIndex) => button.setAttribute("aria-pressed", String(buttonIndex === activeIndex)));
     };
     indicators.forEach((button,index) => button.addEventListener("click", () => showPhoto(index)));
