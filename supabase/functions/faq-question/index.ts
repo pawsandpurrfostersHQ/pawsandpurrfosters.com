@@ -22,6 +22,48 @@ const escapeHtml = (value: unknown) => String(value ?? "").replace(/[&<>"']/g, c
 }[c] || c));
 const validEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && value.length <= 254;
 
+
+async function hmacFingerprint(value: string) {
+  const key = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(SUPABASE_SERVICE_ROLE_KEY),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"],
+  );
+  const signature = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(value));
+  return Array.from(new Uint8Array(signature), byte => byte.toString(16).padStart(2, "0")).join("");
+}
+
+async function checkQuestionRateLimit(req: Request, email: string) {
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+    throw new Error("Question protection is temporarily unavailable.");
+  }
+
+  const rawIp = req.headers.get("cf-connecting-ip")
+    || req.headers.get("x-real-ip")
+    || req.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
+    || "";
+  const emailHash = await hmacFingerprint("email:" + email);
+  const ipHash = rawIp ? await hmacFingerprint("ip:" + rawIp) : null;
+
+  const response = await fetch(SUPABASE_URL + "/rest/v1/rpc/check_faq_question_rate_limit", {
+    method: "POST",
+    headers: {
+      "apikey": SUPABASE_SERVICE_ROLE_KEY,
+      "Authorization": "Bearer " + SUPABASE_SERVICE_ROLE_KEY,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ p_email_hash: emailHash, p_ip_hash: ipHash }),
+  });
+
+  if (!response.ok) {
+    console.error("[faq-question] rate limit check failed", response.status, (await response.text()).slice(0, 300));
+    throw new Error("Question protection is temporarily unavailable. Please try again later.");
+  }
+
+  return await response.json() as { allowed: boolean; retry_after_seconds: number; reason: string | null };
+}
 async function sendEmail(to: string, subject: string, html: string) {
   if (!BREVO_KEY) throw new Error("Email service is not configured.");
   const response = await fetch("https://api.brevo.com/v3/smtp/email", {
