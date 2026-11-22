@@ -202,7 +202,11 @@ function renderAlumniLitter(litter, kittens, alumniIds, today, paired = false, e
 }
 
 function renderTemporaryAlumniCard(litter, kittens) {
-  const names = kittens.map(kitten => {
+  const preferredPairOrder = { raymond: 0, wally: 1, melody: 0, harvey: 1, diego: 0, valentina: 1 };
+  const orderedKittens = [...kittens].sort((a, b) =>
+    (preferredPairOrder[a.id] ?? 99) - (preferredPairOrder[b.id] ?? 99)
+  );
+  const names = orderedKittens.map(kitten => {
     const href = kitten.profileUrl || "kittens/profile-template.html?id=" + encodeURIComponent(kitten.id);
     return '<a class="text-link" href="' + escapeHTML(href) + '">' + escapeHTML(kitten.name) + '</a>';
   });
@@ -211,13 +215,13 @@ function renderTemporaryAlumniCard(litter, kittens) {
   const countText = (countWords[names.length] || names.length) + (names.length === 1 ? " kitten from this litter" : " kittens from this litter");
   const verb = names.length === 1 ? "is" : "are";
   const currentFostersLink = 'all-kittens/#litter-' + Number(litter);
-  const kittenNames = kittens.map(kitten => kitten.name);
+  const kittenNames = orderedKittens.map(kitten => kitten.name);
   const meetLabel = kittenNames.length > 1
     ? 'Meet ' + kittenNames.slice(0, -1).join(', ') + ' and ' + kittenNames[kittenNames.length - 1]
     : 'Meet ' + (kittenNames[0] || 'these kittens');
   return '<article class="alumni-temporary-notice alumni-temporary-notice--pair"><h3>Their Next Chapter Starts With You</h3>' +
     '<p>' + countText + " " + verb + ' still in foster care and waiting for their forever homes. Meet ' + joinedNames + '.</p>' +
-    '<a class="alumni-current-fosters-link" href="' + currentFostersLink + '--' + kittens.map(kitten => encodeURIComponent(kitten.id)).join(',') + '">' + escapeHTML(meetLabel) + ' →</a></article>';
+    '<a class="alumni-current-fosters-link" href="' + currentFostersLink + '--' + orderedKittens.map(kitten => encodeURIComponent(kitten.id)).join(',') + '">' + escapeHTML(meetLabel) + ' →</a></article>';
 }
 function renderTemporaryAlumniLitter(litter, kittens) {
   const total = getAlumniLitterTotal(litter);
