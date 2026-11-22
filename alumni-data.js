@@ -189,7 +189,6 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "gender": "Female",
     "photos": [
       "assets/kittens/eloise-alumni-20261122-01.jpg",
-      "assets/kittens/eloise-alumni-20261122-02.jpg",
       "assets/kittens/eloise-alumni-20261122-03.jpg",
       "assets/kittens/eloise-alumni-20261122-04.jpg",
       "assets/kittens/eloise-alumni-20261122-05.jpg"
