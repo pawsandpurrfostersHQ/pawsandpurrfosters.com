@@ -330,18 +330,8 @@ function renderFosterAlumni(kittenList, today = new Date()) {
       indicators.forEach((button, buttonIndex) => button.setAttribute("aria-pressed", String(buttonIndex === activeIndex)));
     };
     indicators.forEach((button,index) => button.addEventListener("click", () => showPhoto(index)));
-    let touchStartX = null;
-    photoArea.addEventListener("touchstart", event => { touchStartX = event.touches[0]?.clientX ?? null; }, {passive:true});
-    photoArea.addEventListener("touchend", event => {
-      const touchEndX = event.changedTouches[0]?.clientX;
-      if (touchStartX === null || touchEndX === undefined) return;
-      const movement = touchEndX - touchStartX;
-      if (Math.abs(movement) > 40) {
-        showPhoto(activeIndex + (movement < 0 ? 1 : -1));
-        trigger.dataset.ignoreNextClick = "true";
-      }
-      touchStartX = null;
-    }, {passive:true});
+    // Photo changes are controlled by the visible indicators and lightbox.
+    // Do not capture horizontal touch gestures here; allow normal page scrolling.
   });
 
   container.querySelectorAll(".alumni-litter:not(.alumni-litter--temporary)").forEach(section => {
