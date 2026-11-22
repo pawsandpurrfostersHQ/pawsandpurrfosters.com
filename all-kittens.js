@@ -103,9 +103,10 @@ function renderAllKittens() {
 
   container.innerHTML = groups.map(({ litterNumber, kittens }) => {
     const heading = formatLitterHeading(litterNumber);
+    const headingMarkup = heading.replace(/^(\d+(?:st|nd|rd|th))/, '<span class="all-litters__number">$1</span>');
     return `
       <section class="all-litters__group" id="litter-${escapeHTML(litterNumber)}">
-        <h3 class="all-litters__heading">${escapeHTML(heading)}</h3>
+        <h3 class="all-litters__heading">${headingMarkup}</h3>
         <div class="all-litters__carousel">
           <button class="carousel-button all-litters__arrow" type="button" aria-label="Previous kittens in ${escapeHTML(heading)}">‹</button>
           <div class="all-litters__cards" role="region" aria-label="${escapeHTML(heading)} kittens" tabindex="0">${kittens.map(renderKittenCard).join("")}</div>
