@@ -5465,3 +5465,33 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
     scroll-snap-align:center;
   }
 }
+
+/* A single current graduate story gets a little extra room; additional stories form a two-column row. */
+.graduate-grid:not(:has(.graduate-card:nth-child(2))) .graduate-card {
+  grid-column:1/-1;
+  width:min(100%,780px);
+  justify-self:center;
+}
+@media(max-width:760px) {
+  .alumni-litter-pair .alumni-card {
+    flex:0 0 min(100%,290px)!important;
+    width:min(100%,290px)!important;
+    max-width:290px!important;
+  }
+  .alumni-litter:not(.alumni-litter--paired):not(.alumni-litter--temporary) .alumni-cards {
+    padding:2px 12px 14px!important;
+    scroll-padding-inline:12px;
+  }
+  .alumni-litter:not(.alumni-litter--paired):not(.alumni-litter--temporary) .alumni-card {
+    flex:0 0 min(100%,290px)!important;
+    width:min(100%,290px)!important;
+    max-width:290px!important;
+    scroll-snap-align:center;
+  }
+  .alumni-litter--temporary .alumni-cards { justify-content:center; }
+  .alumni-litter--temporary .alumni-temporary-notice {
+    flex:0 0 min(100%,290px)!important;
+    width:min(100%,290px)!important;
+    margin-inline:auto;
+  }
+}
