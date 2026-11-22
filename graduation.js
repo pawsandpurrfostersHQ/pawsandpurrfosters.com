@@ -21,25 +21,22 @@
   function esc(value){return String(value==null?"":value).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
   function photosFor(k){
     var list=Array.isArray(k.photos)?k.photos.filter(Boolean):[];
-    if(k.image&&!list.includes(k.image))list.unshift(k.image);
+    if(k.image)list=[k.image].concat(list.filter(function(photo){return photo!==k.image;}));
     return list.length?list:[k.image||"assets/main-logo.PNG"];
   }
   function dateText(value){return new Intl.DateTimeFormat("en-US",{month:"long",day:"numeric",year:"numeric"}).format(new Date(value+"T12:00:00"));}
   function groupMarkup(group,groupIndex){
     var names=group.map(function(k){return k.name;}).join(" & ");
     var photoSets=group.map(photosFor);
-    var sharedPhotos=group.length>1?Array.from(new Set(group.flatMap(function(k){return Array.isArray(k.pairingPhotos)?k.pairingPhotos.filter(Boolean):[];}))):[];
-    var frames=sharedPhotos.map(function(photo){return {shared:photo};});
+    var frames=[];
     var count=Math.max.apply(null,photoSets.map(function(list){return list.length;}));
     for(var index=0;index<count;index++)frames.push({index:index});
     var slides=frames.map(function(frame,index){
-      var figures=frame.shared
-        ? "<figure class=\"graduate-photo-slide__shared\"><img src=\""+esc(frame.shared)+"\" alt=\""+esc(names)+" together\" loading=\""+(index===0?"eager":"lazy")+"\"></figure>"
-        : group.map(function(k,slot){
+      var figures=group.map(function(k,slot){
             var photo=photoSets[slot][frame.index%photoSets[slot].length];
             return "<figure><img src=\""+esc(photo)+"\" alt=\""+esc(k.name)+"\" loading=\""+(index===0?"eager":"lazy")+"\"><figcaption>"+esc(k.name)+"</figcaption></figure>";
           }).join("");
-      return "<div class=\"graduate-photo-slide"+(index===0?" is-active":"")+"\" style=\"--graduate-columns:"+(frame.shared?1:group.length)+"\">"+figures+"</div>";
+      return "<div class=\"graduate-photo-slide"+(index===0?" is-active":"")+"\" style=\"--graduate-columns:"+group.length+"\">"+figures+"</div>";
     }).join("");
     var description=group.map(function(k){return k.graduationDescription||"";}).find(Boolean)
       ||(group.length>1?group.map(function(k){return k.description||k.bio||"";}).filter(Boolean).join(" "):(group[0].description||group[0].bio||""));
