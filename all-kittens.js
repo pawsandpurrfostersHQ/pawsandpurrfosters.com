@@ -103,7 +103,7 @@ function renderAllKittens() {
 
   container.innerHTML = groups.map(({ litterNumber, kittens }) => {
     const heading = formatLitterHeading(litterNumber);
-    const headingMarkup = heading.replace(/^(\\d+(?:st|nd|rd|th))/, '<span class="all-litters__number">$1</span>');
+    const headingMarkup = heading.replace(/^(\d+(?:st|nd|rd|th))/, '<span class="all-litters__number">$1</span>');
     return `
       <section class="all-litters__group" id="litter-${escapeHTML(litterNumber)}">
         <h3 class="all-litters__heading">${headingMarkup}</h3>
