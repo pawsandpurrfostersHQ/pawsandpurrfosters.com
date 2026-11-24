@@ -238,9 +238,8 @@ function renderTemporaryAlumniCard(litter, kittens, notice={}) {
       '</div>'
     : "";
 
-  const pairButton = orderedKittens.length > 1
-    ? '<a class="alumni-current-fosters-link alumni-pair-meet-button" href="../all-kittens/">Meet ' + escapeHTML(kittenNames.join(" & ")) + '</a>'
-    : '<a class="alumni-current-fosters-link alumni-pair-meet-button" href="../all-kittens/">Meet ' + escapeHTML(kittenNames[0]) + '</a>';
+  const pairTarget = '../all-kittens/#litter-' + encodeURIComponent(litter) + '--' + orderedKittens.map(kitten => encodeURIComponent(kitten.id)).join(',');
+  const pairButton = '<a class="alumni-current-fosters-link alumni-pair-meet-button" href="' + escapeHTML(pairTarget) + '">Meet ' + escapeHTML(kittenNames.join(" & ")) + '</a>';
 
   return '<article class="alumni-temporary-notice alumni-temporary-notice--pair alumni-temporary-notice--alternating">' +
     '<h3>' + escapeHTML(title) + '</h3><p>' + escapeHTML(message) + '</p>' +
