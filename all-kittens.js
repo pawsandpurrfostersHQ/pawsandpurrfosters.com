@@ -77,13 +77,15 @@ function renderKittenCard(kitten) {
     ? `<img src="${escapeHTML(kitten.image)}" alt="${escapeHTML(kitten.name)}" loading="lazy">`
     : `<div class="photo-placeholder card-photo"><span>Photo coming soon</span></div>`;
 
-  return `<article class="kitten-card" data-kitten-id="${escapeHTML(kitten.id)}">
+  const profileUrl = kitten.profileUrl
+    ? `${kitten.profileUrl}${kitten.profileUrl.includes("?") ? "&" : "?"}from=current&back=${encodeURIComponent(window.location.href)}`
+    : "";
+  return `<article class="kitten-card" data-kitten-id="${escapeHTML(kitten.id)}"${profileUrl ? ` data-profile-url="${escapeHTML(profileUrl)}" role="link" tabindex="0" aria-label="Meet ${escapeHTML(kitten.name)}"` : ""}>
     <div class="card-photo-wrap">${photo}</div>
     <div class="card-content">
       <span class="status-badge ${statusClassName(status)}">${escapeHTML(status)}</span>
       <h3><span class="all-litters__name">${escapeHTML(kitten.name)}</span></h3>
       <p>${escapeHTML(shortBlurb(kitten))}</p>
-      <a class="card-link" href="${escapeHTML(kitten.profileUrl ? `${kitten.profileUrl}${kitten.profileUrl.includes("?") ? "&" : "?"}from=current&back=${encodeURIComponent(window.location.href)}` : "#")}">Get to Know ${escapeHTML(kitten.name)} →</a>
     </div>
   </article>`;
 }
@@ -138,10 +140,12 @@ function renderAllKittens() {
 
         const positionPairHighlight = () => {
           if (!pairHighlight?.isConnected || !kittenCards.every(card => card.isConnected)) return;
-          const left = Math.min(...kittenCards.map(card => card.offsetLeft));
-          const top = Math.min(...kittenCards.map(card => card.offsetTop));
-          const right = Math.max(...kittenCards.map(card => card.offsetLeft + card.offsetWidth));
-          const bottom = Math.max(...kittenCards.map(card => card.offsetTop + card.offsetHeight));
+          const trackRect = cardsTrack.getBoundingClientRect();
+          const cardRects = kittenCards.map(card => card.getBoundingClientRect());
+          const left = Math.min(...cardRects.map(rect => rect.left - trackRect.left + cardsTrack.scrollLeft));
+          const top = Math.min(...cardRects.map(rect => rect.top - trackRect.top + cardsTrack.scrollTop));
+          const right = Math.max(...cardRects.map(rect => rect.right - trackRect.left + cardsTrack.scrollLeft));
+          const bottom = Math.max(...cardRects.map(rect => rect.bottom - trackRect.top + cardsTrack.scrollTop));
           pairHighlight.style.left = (left - 8) + "px";
           pairHighlight.style.top = (top - 8) + "px";
           pairHighlight.style.width = (right - left + 16) + "px";
@@ -174,6 +178,20 @@ function renderAllKittens() {
       document.addEventListener("click", dismissHighlight, true);
     }
   }
+
+  container.querySelectorAll(".kitten-card[data-profile-url]").forEach(card => {
+    const openProfile = () => { window.location.href = card.dataset.profileUrl; };
+    card.addEventListener("click", event => {
+      if (event.target.closest("a, button")) return;
+      openProfile();
+    });
+    card.addEventListener("keydown", event => {
+      if ((event.key === "Enter" || event.key === " ") && event.target === card) {
+        event.preventDefault();
+        openProfile();
+      }
+    });
+  });
 
   container.querySelectorAll(".all-litters__carousel").forEach(carousel => {
     const track = carousel.querySelector(".all-litters__cards");
