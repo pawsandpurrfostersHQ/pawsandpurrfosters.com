@@ -5827,3 +5827,9 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
     justify-self:center;
   }
 }
+
+/* Recent Graduate celebrations use the same soft blue family as their badge. */
+.graduate-card { background:#eef5fb; border-color:#d4e3f1; }
+.graduate-card .graduate-card__names { color:#426487; }
+.graduate-card .graduate-date { color:#557b9f; border-top-color:#d8e5f0; }
+@media(prefers-reduced-motion:reduce){.alumni-notice-slide{transition:none}}
