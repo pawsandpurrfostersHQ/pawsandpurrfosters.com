@@ -1,5 +1,4 @@
 (() => {
-  if (window.location.pathname !== "/" && !window.location.pathname.endsWith("/index.html")) return;
   if (sessionStorage.getItem("paws_match_prompt_dismissed") === "1") return;
 
   const style = document.createElement("style");
