@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Take the Paws & Purr Fosters kitten matching quiz to discover which foster pair may fit your home and lifestyle.">
+  <base href="../">
+  <title>Find Your Kitten Match | Paws &amp; Purr Fosters</title>
+  <link rel="icon" type="image/png" href="assets/main-logo.PNG">
+  <link rel="stylesheet" href="style.css?v=20261125-foster-snap-clickable3">
+  <link rel="stylesheet" href="find-your-match/quiz.css?v=20261124-match-quiz1">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="Paws &amp; Purr Fosters home">
+      <img class="brand-logo" src="assets/main-logo.PNG" alt="Paws &amp; Purr Fosters">
+      <span><strong>Paws &amp; Purr</strong><small>FOSTERS</small></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="./">Home</a>
+      <a href="all-kittens/">Current Fosters</a>
+      <a href="foster-alumni/">Foster Alumni</a>
+      <a href="available-kittens/">Adoptable Kittens</a>
+      <a href="how-to-adopt/">How to Adopt</a>
+      <a href="find-your-match/" aria-current="page">Find Your Match</a>
+      <a href="events/">Events</a>
+      <a href="faq/">FAQ</a>
+      <a href="./#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="page-shell match-page">
+    <header class="page-intro foster-page-intro">
+      <p class="eyebrow">A thoughtful match</p>
+      <h1>Find Your Kitten Match</h1>
+      <p>Every kitten has their own personality, pace, and preferences. Tell us a little about your home and what you’re hoping for, and we’ll help you explore which of our foster pairs may be a good place to start.</p>
+      <p class="match-intro-note">This quiz is a starting point, not an adoption approval or a guarantee of compatibility. The rescue makes all adoption decisions, and our foster team can help answer questions about a kitten’s individual needs.</p>
+    </header>
+
+    <section class="match-quiz-card" id="match-quiz" aria-labelledby="match-quiz-heading">
+      <div class="match-quiz-top">
+        <div>
+          <p class="eyebrow">Your home, your future companion</p>
+          <h2 id="match-quiz-heading">Let’s get to know your household.</h2>
+        </div>
+        <span class="match-step-count" id="quiz-step-count">Step 1</span>
+      </div>
+      <div class="match-progress" aria-hidden="true"><span id="quiz-progress-fill"></span></div>
+      <p class="match-progress-label" id="quiz-progress-label">A few questions to help us find a thoughtful match.</p>
+      <div id="quiz-step-content" class="quiz-step-content" aria-live="polite"></div>
+      <div class="quiz-controls" id="quiz-controls">
+        <button class="button secondary" id="quiz-back" type="button" disabled>Back</button>
+        <button class="button primary" id="quiz-next" type="button" disabled>Continue</button>
+      </div>
+      <div id="quiz-results" class="quiz-results" hidden aria-live="polite"></div>
+    </section>
+
+    <section class="match-quiz-footnote">
+      <h2>Why do we ask so many questions?</h2>
+      <p>We want to consider more than energy level or who looks cutest in a photo. Your existing pets, how slowly you can introduce a new kitten, the amount of affection you’re hoping for, and whether you’re open to a pair can all matter. We’ll be honest when we don’t have enough information to recommend a match confidently.</p>
+      <p>All adoptions are handled by <a href="https://www.nopawsleftbehindkittyrescue.com/" target="_blank" rel="noopener noreferrer">No Paws Left Behind Kitty Rescue</a>.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div><strong>Paws &amp; Purr Fosters</strong><span>Helping little paws find their forever homes.</span></div>
+    <span>© 2026 Paws &amp; Purr Fosters</span>
+  </footer>
+
+  <script src="navigation.js"></script>
+  <script src="kitten-data.js?v=mwsd1wg6"></script>
+  <script src="find-your-match/quiz.js?v=20261124-match-quiz1"></script>
+</body>
+</html>
