@@ -5831,6 +5831,7 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
 .alumni-litter--temporary .alumni-cards { overflow-x:auto; scroll-snap-type:x mandatory; }
 @media(max-width:760px) {
   .alumni-temporary-notice--pair { width:min(100%,390px); flex:0 0 min(100%,390px); margin:0; padding:20px; }
+  .alumni-litter:not(.alumni-litter--paired) .alumni-cards > .alumni-temporary-notice { flex:0 0 100%; width:100%; max-width:420px; scroll-snap-align:start; }
 }
 
 @media(min-width:761px) {
@@ -5842,7 +5843,7 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
 }
 
 /* Recent Graduate celebrations use the same soft blue family as their badge. */
-.graduate-card { background:#eef5fb; border-color:#d4e3f1; }
+.graduate-card { background:rgba(255,255,255,.88); border-color:rgba(117,98,141,.18); }
 .graduate-card .graduate-card__names { color:#426487; }
 .graduate-card .graduate-date { color:#557b9f; border-top-color:#d8e5f0; }
 @media(prefers-reduced-motion:reduce){.alumni-notice-slide{transition:none}}
