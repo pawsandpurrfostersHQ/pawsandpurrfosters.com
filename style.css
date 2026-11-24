@@ -5690,3 +5690,125 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
   .alumni-card-heading h3 { font-size:clamp(19px,5.5vw,24px); }
   .alumni-card-heading .alumni-card-badges { gap:4px; }
 }
+
+
+/* Refined graduation cards: stable, clickable names sit beneath the photo slideshow. */
+.graduate-card__names {
+  display:flex;
+  justify-content:center;
+  align-items:stretch;
+  gap:10px;
+  margin:14px 0 9px;
+  min-height:44px;
+}
+.graduate-card__name-link {
+  display:flex;
+  flex:1 1 0;
+  min-width:0;
+  min-height:42px;
+  align-items:center;
+  justify-content:center;
+  padding:8px 12px;
+  border:1px solid rgba(117,98,141,.18);
+  border-radius:11px;
+  background:var(--sage-light);
+  color:var(--purple-dark);
+  font-weight:800;
+  line-height:1.25;
+  text-align:center;
+  text-decoration:none;
+}
+.graduate-card__name-link:hover,.graduate-card__name-link:focus-visible {
+  border-color:var(--purple);
+  background:var(--purple-light);
+  text-decoration:underline;
+}
+.graduate-grid.has-multiple-graduates .graduate-card:last-child:nth-child(odd) {
+  grid-column:1 / -1;
+  width:calc((100% - 22px) / 2);
+  justify-self:center;
+}
+.graduate-grid.has-single-graduate .graduate-card { width:100%; }
+@media(max-width:760px) {
+  .graduate-grid.has-multiple-graduates {
+    display:flex;
+    gap:14px;
+    overflow-x:auto;
+    padding:0 2px 10px;
+    scroll-snap-type:x mandatory;
+    scroll-padding-inline:2px;
+    -webkit-overflow-scrolling:touch;
+  }
+  .graduate-grid.has-multiple-graduates .graduate-card {
+    flex:0 0 min(86vw,420px);
+    width:auto;
+    padding:16px;
+    scroll-snap-align:start;
+    scroll-snap-stop:always;
+  }
+  .graduate-grid.has-single-graduate {
+    display:grid;
+    grid-template-columns:minmax(0,1fr);
+    overflow:visible;
+  }
+  .graduate-grid.has-single-graduate .graduate-card {
+    width:100%;
+    min-width:0;
+  }
+  .graduate-grid.has-multiple-graduates .graduate-card:last-child:nth-child(odd) {
+    width:auto;
+  }
+  .graduate-card__names { gap:7px; min-height:40px; }
+  .graduate-card__name-link { min-height:40px; padding:7px 8px; font-size:14px; }
+}
+
+/* The three alumni status labels use one shared size and baseline. */
+.alumni-card-badges { align-items:center; }
+.alumni-card-badges .alumni-special-badge,
+.alumni-card-badges .alumni-graduation-badge {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:24px;
+  margin:0;
+  padding:4px 8px;
+  border-radius:999px;
+  font-size:10px;
+  font-weight:800;
+  line-height:1.2;
+  letter-spacing:.035em;
+  white-space:nowrap;
+}
+.alumni-graduation-badge { background:#e5edf7; color:#405b7d; border:1px solid #cbd8e8; }
+
+/* Temporary litter notice is a calm, polished card that follows the same snap rules as kitten cards. */
+.alumni-temporary-notice {
+  background:linear-gradient(135deg,#f4f1f7 0%,#f2f5ef 100%);
+  border:1px solid rgba(117,98,141,.22);
+  box-shadow:0 8px 24px rgba(62,67,57,.055);
+}
+.alumni-temporary-notice--pair {
+  flex:0 0 clamp(220px,calc((100% - 44px) / 3),320px);
+  min-width:0;
+  min-height:100%;
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+  justify-content:center;
+  gap:10px;
+  padding:22px;
+  border-top:4px solid var(--purple);
+  border-bottom:4px solid var(--sage);
+}
+.alumni-temporary-notice--pair h3 {
+  margin:0 0 4px;
+  color:var(--purple-dark);
+  font-family:"Playfair Display",Georgia,serif;
+  font-size:clamp(19px,2vw,24px);
+  line-height:1.25;
+}
+.alumni-temporary-notice--pair p { margin:0; color:var(--ink); line-height:1.65; }
+.alumni-temporary-notice--pair .text-link { color:var(--purple-dark); font-weight:800; }
+.alumni-litter--temporary .alumni-cards { overflow-x:auto; scroll-snap-type:x mandatory; }
+@media(max-width:760px) {
+  .alumni-temporary-notice--pair { width:min(100%,390px); flex:0 0 min(100%,390px); margin:0; padding:20px; }
+}
