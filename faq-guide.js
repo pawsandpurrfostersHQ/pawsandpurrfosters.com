@@ -114,6 +114,8 @@
 <p>If you have a question that isn't covered in a profile, we're happy to help. Your foster contact information will also be included in your take-home folder after adoption.</p>`},
   ];
 
+  const navHome = document.querySelector('.nav a[href="./"], .nav a[href="../"]');
+  const siteBase = navHome ? navHome.href : new URL("./", window.location.href).href;
   const categories = ["All topics", ...new Set(articles.map(a => a.cat))];
   const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const norm = s => s.toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
@@ -135,6 +137,7 @@
   }
   root.innerHTML = `
     <button class="paw-help-launcher" type="button" aria-label="Open kitten care question search" aria-expanded="false" aria-controls="paw-help-dialog"><span aria-hidden="true">🐾</span></button>
+    <aside class="paw-help-nudge" hidden><button class="paw-help-nudge-close" type="button" aria-label="Dismiss question reminder">×</button><button class="paw-help-nudge-open" type="button">Have a kitten question?</button></aside>
     <div class="paw-help-backdrop" hidden>
       <section class="paw-help-dialog" id="paw-help-dialog" role="dialog" aria-modal="true" aria-labelledby="guide-search-title">
         <div class="paw-help-heading"><div><p class="eyebrow">Paws &amp; Purr Fosters</p><h2 id="guide-search-title">Have a kitten question?</h2><p>Search our foster-informed care tips and adoption answers.</p></div><button class="paw-help-close" type="button" aria-label="Close question search">×</button></div>
@@ -158,7 +161,10 @@
   const categoryBox = root.querySelector("#guide-categories");
   function showArticle(a) {
     articleBox.hidden = false;
-    articleBox.innerHTML = `<button class="guide-back" type="button">← Back to topics</button><p class="eyebrow">${esc(a.cat)}</p><h2>${esc(a.q)}</h2><div class="guide-article-copy">${a.body}</div><p class="guide-perspective">These articles share suggestions from our foster experience and commonly used cat-care practices. Every kitten and household is different, so take what is useful, consider your own pet's needs, and ask a veterinarian or the rescue when you need advice specific to your situation.</p>`;
+    articleBox.innerHTML = `<button class="guide-back" type="button">← Back to topics</button><p class="eyebrow">${esc(a.cat)}</p><h2>${esc(a.q)}</h2><div class="guide-article-copy">${a.body}</div><p class="guide-perspective">These are suggestions based on our experience fostering these kittens, not one-size-fits-all rules. Every kitten and household is different. Have a question about one of our fosters? We are happy to help — your foster contact information will be included in your take-home folder at adoption.</p>`;
+    articleBox.querySelectorAll('a[data-site-link]').forEach(link=>{link.href=new URL(link.dataset.siteLink,siteBase).href;});
+    articleBox.querySelectorAll('a[href^="events/"],a[href^="available-kittens/"],a[href^="all-kittens/"],a[href^="how-to-adopt/"]').forEach(link=>{link.href=new URL(link.getAttribute("href"),siteBase).href;});
+    articleBox.querySelectorAll('a[data-guide-article]').forEach(link=>link.addEventListener("click",e=>{e.preventDefault();showArticle(articles.find(item=>item.id===link.dataset.guideArticle));}));
     articleBox.querySelector(".guide-back").addEventListener("click", () => {articleBox.hidden=true; articleBox.innerHTML="";});
     articleBox.scrollIntoView({behavior:"smooth",block:"nearest"});
   }
@@ -179,6 +185,13 @@
   function openSearch(){backdrop.hidden=false;launcher.setAttribute("aria-expanded","true");document.body.classList.add("paw-help-open");setTimeout(()=>input.focus(),80);}
   function closeSearch(){backdrop.hidden=true;launcher.setAttribute("aria-expanded","false");document.body.classList.remove("paw-help-open");launcher.focus();}
   launcher.addEventListener("click",openSearch);
+  const nudge=root.querySelector(".paw-help-nudge");
+  const nudgeOpen=root.querySelector(".paw-help-nudge-open");
+  let visitorHasScrolled=false, nudgeShown=false;
+  window.addEventListener("scroll",()=>{visitorHasScrolled=true;},{passive:true,once:true});
+  window.setTimeout(()=>{if(visitorHasScrolled&&!nudgeShown&&backdrop.hidden){nudgeShown=true;nudge.hidden=false;window.setTimeout(()=>{nudge.hidden=true;},60000);}},30*60*1000);
+  nudgeOpen.addEventListener("click",()=>{nudge.hidden=true;openSearch();});
+  root.querySelector(".paw-help-nudge-close").addEventListener("click",()=>{nudge.hidden=true;});
   closeButton.addEventListener("click",closeSearch);
   backdrop.addEventListener("click",e=>{if(e.target===backdrop)closeSearch();});
   document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!backdrop.hidden)closeSearch();});
