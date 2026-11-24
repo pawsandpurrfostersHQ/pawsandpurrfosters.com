@@ -269,6 +269,11 @@ function renderFosterAlumni(kittenList, today = new Date()) {
     return renderTemporaryAlumniLitter(litter, waiting);
   }).join("");
 
+  if (window.location.hash) {
+    const target = document.getElementById(window.location.hash.slice(1));
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" }));
+  }
+
   initAlumniPhotoLightbox(container, alumni);
 
   container.querySelectorAll(".alumni-litter:not(.alumni-litter--temporary) .alumni-cards").forEach(track => {
