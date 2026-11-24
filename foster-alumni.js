@@ -226,7 +226,12 @@ function renderTemporaryAlumniCard(litter, kittens, notice={}) {
   let carousel = "";
 
   if (useAlternatingCarousel) {
-    const slides = orderedKittens.flatMap(makeSlides);
+    const photoSets = orderedKittens.map(makeSlides);
+    const slides = [];
+    const longestSet = Math.max(0, ...photoSets.map(set => set.length));
+    for (let photoIndex = 0; photoIndex < longestSet; photoIndex++) {
+      photoSets.forEach(set => { if (set[photoIndex]) slides.push(set[photoIndex]); });
+    }
     carousel = slides.length
       ? '<div class="alumni-notice-carousel alumni-notice-carousel--alternating" aria-label="Alternating photos of ' + escapeHTML(kittenNames.join(" and ")) + '">' +
           slides.map((slide,index) =>
