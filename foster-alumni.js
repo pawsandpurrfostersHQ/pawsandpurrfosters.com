@@ -158,7 +158,7 @@ function renderAlumniCard(kitten, alumniIds, today = new Date()) {
     ? celebrations.birthdayYears > 0 ? "Happy " + formatBirthdayOrdinal(celebrations.birthdayYears) + " birthday, " + escapeHTML(kitten.name) + "!" : "Happy birthday, " + escapeHTML(kitten.name) + "!"
     : "";
   const celebrationMessages = [
-    celebrations.graduationMessage ? '<p class="alumni-celebration alumni-graduation" role="status">Congratulations, ' + escapeHTML(kitten.name) + '! You have graduated from foster care!</p>' : "",
+    celebrations.graduationMessage ? '<p class="alumni-celebration alumni-graduation" role="status">' + escapeHTML(kitten.graduationMessage || ("Congratulations, " + kitten.name + "! You have graduated from foster care!")) + '</p>' : "",
     celebrations.birthdayMessage ? '<p class="alumni-celebration alumni-birthday-message" role="status">' + birthdayMessage + '</p>' : "",
     celebrations.gotchaDayMessage ? '<p class="alumni-celebration alumni-gotcha" role="status">Happy Gotcha Day, ' + escapeHTML(kitten.name) + '!</p>' : ""
   ].join("");
