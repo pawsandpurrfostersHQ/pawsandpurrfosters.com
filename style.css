@@ -5985,3 +5985,26 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
 }
 .section-heading-link { color: inherit; text-decoration: none; }
 .section-heading-link:hover, .section-heading-link:focus-visible { color: var(--purple-dark); text-decoration: underline; text-underline-offset: 5px; }
+
+/* Compact expandable adoption policy on the Adoptable Kittens page */
+.adoption-policy-details { padding:0; overflow:hidden; }
+.adoption-policy-details > summary {
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  list-style:none; cursor:pointer; padding:14px 18px; color:var(--ink);
+  font-weight:750;
+}
+.adoption-policy-details > summary::-webkit-details-marker { display:none; }
+.adoption-policy-details > summary::after {
+  content:"+ "; flex:0 0 auto; color:var(--purple); font-size:22px; line-height:1;
+}
+.adoption-policy-details[open] > summary::after { content:"−"; }
+.adoption-policy-details .adoption-policy-toggle {
+  margin-left:auto; color:var(--muted); font-size:12px; font-weight:500;
+}
+.adoption-policy-details > p { padding:0 18px 16px; line-height:1.55; }
+@media(max-width:640px) {
+  .adoption-policy-details { margin-bottom:20px; border-radius:16px; }
+  .adoption-policy-details > summary { padding:12px 14px; font-size:15px; }
+  .adoption-policy-details .adoption-policy-toggle { font-size:11px; }
+  .adoption-policy-details > p { padding:0 14px 14px; font-size:13px; }
+}
