@@ -82,3 +82,8 @@ body.paw-help-open{position:fixed;left:0;right:0;width:100%;overflow:hidden}
 .paw-help-dialog{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y}
 .paw-help-topics .guide-all-topics{display:inline-flex;align-items:center;margin:0 0 10px;padding:7px 0;border:0;background:transparent;color:var(--purple);font:700 13px "DM Sans",sans-serif;cursor:pointer}
 .paw-help-topics .guide-category-title{margin:0 0 10px;color:var(--purple);font:600 18px/1.3 "Playfair Display",serif}
+
+/* Make every linked destination inside a helper answer unmistakably clickable. */
+.paw-help-dialog .guide-article-copy a{color:var(--purple);font-weight:750;text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px;cursor:pointer}
+.paw-help-dialog .guide-article-copy a:hover{color:#4f3568;text-decoration-thickness:2px}
+.paw-help-dialog .guide-article-copy a:focus-visible{outline:2px solid var(--sage);outline-offset:3px;border-radius:3px}
