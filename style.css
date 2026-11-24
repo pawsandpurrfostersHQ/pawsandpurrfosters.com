@@ -5842,3 +5842,45 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
   font-size:clamp(9px,2.4vw,12px);
   letter-spacing:-.02em;
 }
+
+
+/* Next Chapter cards: align the message at the top and keep the pair CTA at the bottom. */
+.alumni-temporary-notice--pair {
+  justify-content:flex-start;
+  gap:12px;
+  padding-top:24px;
+}
+.alumni-temporary-notice--pair h3 { margin:0 0 2px; }
+.alumni-temporary-notice--pair p { margin:0; }
+.alumni-notice-slide figcaption {
+  margin-top:8px;
+  color:var(--purple-dark);
+  font-family:"Playfair Display",Georgia,serif;
+  font-size:17px;
+  font-weight:700;
+}
+.alumni-notice-slide figcaption span { display:inline-block; }
+.alumni-temporary-notice--pair .alumni-pair-meet-button {
+  align-self:center;
+  margin-top:auto;
+  padding:11px 18px;
+  border:1px solid rgba(99,126,91,.24);
+  border-radius:12px;
+  background:var(--sage-light);
+  color:var(--sage-dark);
+  font-size:13px;
+  font-weight:800;
+  text-align:center;
+  text-decoration:none;
+  white-space:normal;
+  box-shadow:0 2px 8px rgba(64,82,58,.08);
+}
+.alumni-temporary-notice--pair .alumni-pair-meet-button:hover,
+.alumni-temporary-notice--pair .alumni-pair-meet-button:focus-visible {
+  background:var(--sage);
+  color:#fff;
+}
+@media(max-width:760px) {
+  .alumni-temporary-notice--pair { justify-content:flex-start; padding-top:22px; }
+  .alumni-temporary-notice--pair .alumni-pair-meet-button { align-self:center; }
+}
