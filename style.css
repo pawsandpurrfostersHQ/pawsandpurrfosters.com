@@ -383,14 +383,29 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .alumni-temporary-notice--pair p { margin-bottom: 18px; }
 .alumni-temporary-notice--pair { min-height: 470px; }
 .alumni-temporary-notice--pair h3 { font-family:"Playfair Display",serif; }
-.alumni-notice-carousel { position:relative; display:grid; grid-template-columns:minmax(0,1fr); align-items:center; width:min(100%,230px); margin:8px auto 18px; }
+.alumni-notice-carousel { position:relative; display:grid; grid-template-columns:minmax(0,1fr); align-items:center; width:min(100%,270px); margin:8px auto 18px; }
 .alumni-notice-slide { grid-area:1/1; min-width:0; margin:0; opacity:0; visibility:hidden; transition:opacity .65s ease; text-align:center; }
 .alumni-notice-slide.is-active { opacity:1; visibility:visible; }
-.alumni-notice-slide img { display:block; width:100%; height:112px; object-fit:contain; border-radius:14px; background:rgba(255,255,255,.7); }
+.alumni-notice-slide img { display:block; width:100%; height:170px; object-fit:contain; border-radius:14px; background:rgba(255,255,255,.7); }
 .alumni-notice-slide figcaption { margin-top:5px; color:var(--purple-dark); font-family:"Playfair Display",serif; font-size:17px; font-weight:600; }
 .alumni-temporary-notice--pair .alumni-current-fosters-link { align-self:flex-start; margin-top:auto; }
-.alumni-litter--temporary .alumni-cards { scroll-snap-type:x mandatory; scroll-behavior:smooth; -webkit-overflow-scrolling:touch; }
+.alumni-litter--temporary .alumni-cards,
+.alumni-litter:not(.alumni-litter--temporary) .alumni-cards { scroll-snap-type:x mandatory; scroll-behavior:smooth; -webkit-overflow-scrolling:touch; scroll-padding-inline:2px; }
+.alumni-cards > .alumni-temporary-notice { scroll-snap-align:start; flex:0 0 clamp(220px, calc((100% - 44px) / 3), 352px); min-width:0; }
 .alumni-litter--temporary .alumni-temporary-notice { scroll-snap-align:start; }
+.alumni-notice-slide figcaption a,.alumni-notice-name { color:var(--purple-dark); font-family:"Playfair Display",serif; font-size:16px; font-weight:700; text-decoration:none; }
+.alumni-notice-slide figcaption a:hover,.alumni-notice-name:hover { text-decoration:underline; text-underline-offset:3px; }
+.alumni-notice-stack { display:grid; gap:10px; width:min(100%,240px); margin:8px auto 16px; }
+.alumni-notice-stack__kitten { display:grid; justify-items:center; gap:2px; min-width:0; }
+.alumni-notice-stack .alumni-notice-carousel { width:100%; margin:0 auto 2px; }
+.alumni-notice-stack .alumni-notice-slide img { height:88px; }
+.alumni-notice-stack .alumni-notice-slide { grid-area:1/1; }
+.alumni-temporary-notice--stacked p,.alumni-temporary-notice--alternating p { font-size:13px; line-height:1.45; margin-bottom:8px; }
+.alumni-temporary-notice--stacked { padding-top:24px; padding-bottom:24px; }
+.alumni-temporary-notice--alternating .alumni-notice-carousel { width:min(100%,270px); }
+.alumni-temporary-notice--alternating .alumni-notice-slide img { height:170px; }
+.alumni-temporary-notice--alternating .alumni-notice-slide figcaption { margin-top:8px; }
+.alumni-notice-slide figcaption { margin-top:5px; }
 
 .alumni-temporary-notice--pair .button { align-self: flex-start; margin-top: auto; white-space: nowrap; }
 .alumni-litter--temporary .alumni-cards { overflow-x: auto; }
@@ -495,30 +510,7 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 }
 
 
-/* Prevent mobile carousel snapping from trapping temporary alumni notices */
-.alumni-litter--temporary .alumni-cards,
-.alumni-litter:has(.alumni-temporary-notice) .alumni-cards {
-  scroll-snap-type: none !important;
-  overscroll-behavior-x: contain;
-  touch-action: pan-x pan-y;
-  -webkit-overflow-scrolling: touch;
-}
-.alumni-litter--temporary .alumni-temporary-notice,
-.alumni-litter .alumni-temporary-notice {
-  scroll-snap-align: none !important;
-  flex-shrink: 0;
-}
-.alumni-litter--temporary .alumni-temporary-notice--pair {
-  flex-basis: min(84vw, 440px);
-}
 
-/* Mobile: allow natural horizontal swiping through every alumni notice/card */
-.alumni-cards { touch-action: pan-x pan-y; overscroll-behavior-x: contain; scroll-snap-stop: normal; }
-.alumni-litter--temporary .alumni-cards { scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; }
-.alumni-litter--temporary .alumni-temporary-notice { scroll-snap-align: start; }
-@media (max-width: 760px) {
-  .alumni-litter--temporary .alumni-cards { padding-right: 20px; }
-}
 
 @media (min-width: 761px) {
   #events #event-featured .event-card--compact { padding:17px 21px; }
@@ -526,9 +518,6 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 #events #event-featured .event-card--compact h2 { font-size:23px; margin:3px 0 7px; }
 #events #event-featured .event-card--compact p { margin:4px 0; font-size:14px; }
 
-/* Temporary alumni notices should not be trapped by mandatory snap points on phones. */
-.alumni-litter--temporary .alumni-cards { scroll-snap-type: none; }
-.alumni-litter--temporary .alumni-cards > * { scroll-snap-align: none; }
 
 /* Events page cards follow the same wide, stacked rhythm as the rest of the site. */
 .events-page .event-panels { display:flex; flex-direction:column; gap:22px; }
@@ -5413,7 +5402,7 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
 .alumni-lightbox-next { top:50%; right:12px; transform:translateY(-50%); }
 .alumni-lightbox-nav[hidden] { display:none!important; }
 .alumni-lightbox-close:hover,.alumni-lightbox-nav:hover { background:rgba(255,255,255,.25); }
-.alumni-graduation { background:var(--purple-light); color:var(--purple-dark); }
+.alumni-graduation { background:#e3eff8; color:#315b78; }
 @media(max-width:600px) {
   .alumni-photo-lightbox { width:100vw; max-width:none; max-height:100dvh; height:100dvh; padding:58px 48px 24px; border:0; border-radius:0; }
   .alumni-photo-lightbox > img { height:calc(100dvh - 90px); }
@@ -5558,7 +5547,6 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
   .alumni-litters { gap:30px; }
   .alumni-litter-heading { margin-bottom:12px; scroll-margin-top:94px; }
   .alumni-litter-heading h2 { font-size:clamp(22px,6vw,28px); }
-  .alumni-cards,.alumni-litter--paired .alumni-cards { display:grid!important; grid-template-columns:minmax(0,1fr); justify-items:center; gap:14px; overflow:visible!important; padding:0 0 4px!important; scroll-snap-type:none!important; }
   .alumni-card,.alumni-litter--paired .alumni-card { width:min(100%,390px)!important; max-width:390px!important; min-width:0; flex:none!important; margin:0 auto!important; scroll-snap-align:none!important; }
   .alumni-main-photo { aspect-ratio:4/3; }
   .alumni-photo-hint--desktop { display:none; }
@@ -5818,6 +5806,7 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
 .alumni-litter--temporary .alumni-cards { overflow-x:auto; scroll-snap-type:x mandatory; }
 @media(max-width:760px) {
   .alumni-temporary-notice--pair { width:min(100%,390px); flex:0 0 min(100%,390px); margin:0; padding:20px; }
+  .alumni-litter:not(.alumni-litter--paired) .alumni-cards > .alumni-temporary-notice { flex:0 0 100%; width:100%; max-width:420px; scroll-snap-align:start; }
 }
 
 @media(min-width:761px) {
@@ -5828,23 +5817,24 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
   }
 }
 
-/* Recent Graduate celebrations use the same soft blue family as their badge. */
-.graduate-card { background:#eef5fb; border-color:#d4e3f1; }
-.graduate-card .graduate-card__names { color:#426487; }
-.graduate-card .graduate-date { color:#557b9f; border-top-color:#d8e5f0; }
+/* Keep the homepage graduate card white and its graduation date in the original purple palette. */
+.graduate-card { background:rgba(255,255,255,.88); border-color:rgba(117,98,141,.18); }
+.graduate-card .graduate-date { color:var(--purple-dark); border-top-color:rgba(87,69,111,.22); }
 @media(prefers-reduced-motion:reduce){.alumni-notice-slide{transition:none}}
 
-/* Final alumni carousel alignment: every litter track, including paired and temporary cards, snaps consistently. */
-.alumni-litter--paired .alumni-cards,
-.alumni-litter--temporary .alumni-cards {
+/* All alumni tracks use one consistent horizontal snap behavior, including notice cards. */
+.alumni-litter .alumni-cards {
   overflow-x:auto;
   scroll-snap-type:x mandatory;
   scroll-behavior:smooth;
+  scroll-padding-inline:2px;
+  overscroll-behavior-x:contain;
   -webkit-overflow-scrolling:touch;
 }
-.alumni-litter--paired .alumni-card,
-.alumni-litter--temporary .alumni-temporary-notice {
+.alumni-litter .alumni-cards > .alumni-card,
+.alumni-litter .alumni-cards > .alumni-temporary-notice {
   scroll-snap-align:start;
+  scroll-snap-stop:always;
 }
 .alumni-current-fosters-link {
   white-space:nowrap;
@@ -5852,3 +5842,146 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
   font-size:clamp(9px,2.4vw,12px);
   letter-spacing:-.02em;
 }
+
+
+/* Next Chapter cards: align the message at the top and keep the pair CTA at the bottom. */
+.alumni-temporary-notice--pair {
+  justify-content:flex-start;
+  gap:12px;
+  padding-top:24px;
+}
+.alumni-temporary-notice--pair h3 { margin:0 0 2px; }
+.alumni-temporary-notice--pair p { margin:0; }
+.alumni-notice-slide figcaption {
+  margin-top:8px;
+  color:var(--purple-dark);
+  font-family:"Playfair Display",Georgia,serif;
+  font-size:17px;
+  font-weight:700;
+}
+.alumni-notice-slide figcaption span { display:inline-block; }
+.alumni-temporary-notice--pair .alumni-pair-meet-button {
+  align-self:center;
+  margin-top:auto;
+  padding:11px 18px;
+  border:1px solid rgba(99,126,91,.24);
+  border-radius:12px;
+  background:var(--sage-light);
+  color:var(--sage-dark);
+  font-size:13px;
+  font-weight:800;
+  text-align:center;
+  text-decoration:none;
+  white-space:normal;
+  box-shadow:0 2px 8px rgba(64,82,58,.08);
+}
+.alumni-temporary-notice--pair .alumni-pair-meet-button:hover,
+.alumni-temporary-notice--pair .alumni-pair-meet-button:focus-visible {
+  background:var(--sage);
+  color:#fff;
+}
+@media(max-width:760px) {
+  .alumni-temporary-notice--pair { justify-content:flex-start; padding-top:22px; }
+  .alumni-temporary-notice--pair .alumni-pair-meet-button { align-self:center; }
+}
+
+
+/* Shared highlight frame for paired kittens reached from an alumni Next Chapter card. */
+.all-litters__group { position:relative; }
+.all-litters__cards > .kitten-card { position:relative; z-index:1; }
+.kitten-pair-highlight {
+  position:absolute;
+  z-index:0;
+  box-sizing:border-box;
+  border:2px solid #6b9c70;
+  border-radius:18px;
+  background:rgba(237,246,235,.22);
+  box-shadow:0 0 0 3px rgba(107,156,112,.14);
+  pointer-events:none;
+  transition:opacity .2s ease;
+}
+@media(prefers-reduced-motion:reduce) {
+  .kitten-pair-highlight { transition:none; }
+}
+
+/* Celebration callouts: slightly smaller so the profile details stay visually dominant. */
+.alumni-celebration {
+  padding:8px 10px;
+  font-size:10px!important;
+  line-height:1.4;
+}
+
+/* Give taller Next Chapter cards a little more slideshow presence. */
+.alumni-temporary-notice--alternating .alumni-notice-carousel {
+  width:min(100%,320px);
+  margin:10px auto 14px;
+}
+.alumni-temporary-notice--alternating .alumni-notice-slide img {
+  height:210px;
+}
+@media(max-width:760px) {
+  .alumni-temporary-notice--alternating .alumni-notice-carousel { width:min(100%,300px); }
+  .alumni-temporary-notice--alternating .alumni-notice-slide img { height:190px; }
+}
+
+
+/* Keep horizontal card rows on a deliberate, predictable snap as users scroll. */
+.kitten-track,
+.all-litters__cards,
+.graduate-grid.has-multiple-graduates {
+  scroll-snap-stop: always;
+  scroll-padding-inline: 2px;
+  overscroll-behavior-x: contain;
+}
+.kitten-track .kitten-card,
+.all-litters__cards > .kitten-card,
+.graduate-grid.has-multiple-graduates .graduate-card {
+  scroll-snap-stop: always;
+}
+
+/* Make the shared paired-kitten frame easy to see, especially on phones. */
+.kitten-pair-highlight {
+  z-index: 5;
+  border: 3px solid #5f9666;
+  border-radius: 20px;
+  background: transparent;
+  box-shadow: 0 0 0 2px rgba(95, 150, 102, .16);
+}
+@media (max-width: 760px) {
+  .kitten-pair-highlight {
+    border-width: 3px;
+    border-radius: 16px;
+    box-shadow: 0 0 0 1px rgba(95, 150, 102, .14);
+  }
+}
+
+/* One-point increase to the graduate congratulations and milestone callouts. */
+.alumni-celebration {
+  font-size: 11px !important;
+}
+
+
+/* Reliable one-card-at-a-time snapping for the homepage and Current Fosters rows. */
+.kitten-track {
+  scroll-snap-type: x mandatory !important;
+  scroll-padding-inline: 10px;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+}
+.kitten-track > .kitten-card { scroll-snap-align: start; scroll-snap-stop: always; }
+@media (max-width: 1100px) {
+  .all-litters__cards {
+    scroll-snap-type: x mandatory !important;
+    scroll-padding-inline: 8px;
+    scroll-snap-stop: always;
+    overscroll-behavior-x: contain;
+  }
+  .all-litters__cards > .kitten-card { scroll-snap-align: start; scroll-snap-stop: always; }
+}
+.kitten-card[role="link"] { cursor: pointer; }
+.kitten-card[role="link"]:focus-visible {
+  outline: 3px solid var(--purple);
+  outline-offset: 4px;
+}
+.section-heading-link { color: inherit; text-decoration: none; }
+.section-heading-link:hover, .section-heading-link:focus-visible { color: var(--purple-dark); text-decoration: underline; text-underline-offset: 5px; }

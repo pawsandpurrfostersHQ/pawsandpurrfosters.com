@@ -77,13 +77,15 @@ function renderKittenCard(kitten) {
     ? `<img src="${escapeHTML(kitten.image)}" alt="${escapeHTML(kitten.name)}" loading="lazy">`
     : `<div class="photo-placeholder card-photo"><span>Photo coming soon</span></div>`;
 
-  return `<article class="kitten-card" data-kitten-id="${escapeHTML(kitten.id)}">
+  const profileUrl = kitten.profileUrl
+    ? `${kitten.profileUrl}${kitten.profileUrl.includes("?") ? "&" : "?"}from=current&back=${encodeURIComponent(window.location.href)}`
+    : "";
+  return `<article class="kitten-card" data-kitten-id="${escapeHTML(kitten.id)}"${profileUrl ? ` data-profile-url="${escapeHTML(profileUrl)}" role="link" tabindex="0" aria-label="Meet ${escapeHTML(kitten.name)}"` : ""}>
     <div class="card-photo-wrap">${photo}</div>
     <div class="card-content">
       <span class="status-badge ${statusClassName(status)}">${escapeHTML(status)}</span>
       <h3><span class="all-litters__name">${escapeHTML(kitten.name)}</span></h3>
       <p>${escapeHTML(shortBlurb(kitten))}</p>
-      <a class="card-link" href="${escapeHTML(kitten.profileUrl ? `${kitten.profileUrl}${kitten.profileUrl.includes("?") ? "&" : "?"}from=current&back=${encodeURIComponent(window.location.href)}` : "#")}">Get to Know ${escapeHTML(kitten.name)} →</a>
     </div>
   </article>`;
 }
@@ -126,11 +128,68 @@ function renderAllKittens() {
         ? highlightedNames.map(id => target.querySelector('.kitten-card[data-kitten-id="' + CSS.escape(id) + '"]')).filter(Boolean)
         : [];
       const highlightTargets = kittenCards.length ? kittenCards : [target];
-      highlightTargets.forEach(item => item.classList.add("is-highlighted"));
-      requestAnimationFrame(() => target.scrollIntoView({ behavior: "smooth", block: "start" }));
+      const cardsTrack = target.querySelector(".all-litters__cards");
+      let pairHighlight = null;
+      let resizeHighlight = null;
+
+      if (kittenCards.length > 1 && cardsTrack) {
+        pairHighlight = document.createElement("div");
+        pairHighlight.className = "kitten-pair-highlight";
+        pairHighlight.setAttribute("aria-hidden", "true");
+        // Place the frame on the litter section, not inside the horizontally
+        // scrolling track, whose overflow clips anything extending past its edges.
+        target.appendChild(pairHighlight);
+
+        const positionPairHighlight = () => {
+          if (!pairHighlight?.isConnected || !kittenCards.every(card => card.isConnected)) return;
+          const sectionRect = target.getBoundingClientRect();
+          const trackRect = cardsTrack.getBoundingClientRect();
+          const isMobile = window.matchMedia("(max-width: 760px)").matches;
+          const cardRects = kittenCards
+            .map(card => card.getBoundingClientRect())
+            .map(rect => isMobile ? ({
+              left: Math.max(rect.left, trackRect.left + 2),
+              right: Math.min(rect.right, trackRect.right - 2),
+              top: rect.top,
+              bottom: rect.bottom
+            }) : rect)
+            .filter(rect => rect.right > rect.left && rect.bottom > rect.top);
+          if (!cardRects.length) {
+            pairHighlight.style.opacity = "0";
+            return;
+          }
+          pairHighlight.style.opacity = "1";
+          const left = Math.min(...cardRects.map(rect => rect.left - sectionRect.left));
+          const top = Math.min(...cardRects.map(rect => rect.top - sectionRect.top));
+          const right = Math.max(...cardRects.map(rect => rect.right - sectionRect.left));
+          const bottom = Math.max(...cardRects.map(rect => rect.bottom - sectionRect.top));
+          const inset = isMobile ? 0 : 5;
+          pairHighlight.style.left = (left - inset) + "px";
+          pairHighlight.style.top = (top - 5) + "px";
+          pairHighlight.style.width = (right - left + inset * 2) + "px";
+          pairHighlight.style.height = (bottom - top + 10) + "px";
+        };
+
+        resizeHighlight = positionPairHighlight;
+        requestAnimationFrame(() => requestAnimationFrame(positionPairHighlight));
+        cardsTrack.addEventListener("scroll", positionPairHighlight, { passive: true });
+        window.addEventListener("resize", resizeHighlight);
+      } else {
+        highlightTargets.forEach(item => item.classList.add("is-highlighted"));
+      }
+
+      requestAnimationFrame(() => {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        if (cardsTrack && kittenCards.length) {
+          cardsTrack.scrollTo({ left: Math.max(0, kittenCards[0].offsetLeft - 8), behavior: "smooth" });
+        }
+      });
+
       const dismissHighlight = event => {
         if (!target.contains(event.target)) {
           highlightTargets.forEach(item => item.classList.remove("is-highlighted"));
+          pairHighlight?.remove();
+          if (resizeHighlight) window.removeEventListener("resize", resizeHighlight);
           document.removeEventListener("click", dismissHighlight, true);
           if (window.history?.replaceState) window.history.replaceState(null, "", window.location.pathname + window.location.search);
         }
@@ -138,6 +197,20 @@ function renderAllKittens() {
       document.addEventListener("click", dismissHighlight, true);
     }
   }
+
+  container.querySelectorAll(".kitten-card[data-profile-url]").forEach(card => {
+    const openProfile = () => { window.location.href = card.dataset.profileUrl; };
+    card.addEventListener("click", event => {
+      if (event.target.closest("a, button")) return;
+      openProfile();
+    });
+    card.addEventListener("keydown", event => {
+      if ((event.key === "Enter" || event.key === " ") && event.target === card) {
+        event.preventDefault();
+        openProfile();
+      }
+    });
+  });
 
   container.querySelectorAll(".all-litters__carousel").forEach(carousel => {
     const track = carousel.querySelector(".all-litters__cards");

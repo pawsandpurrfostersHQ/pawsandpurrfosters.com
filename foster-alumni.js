@@ -203,20 +203,47 @@ function renderAlumniLitter(litter, kittens, alumniIds, today, paired = false, e
 }
 
 function renderTemporaryAlumniCard(litter, kittens, notice={}) {
-  if(notice.enabled===false)return "";
-  const selectedIds=Array.isArray(notice.kittenIds)?new Set(notice.kittenIds.map(String)):null;
-  const selectedKittens=selectedIds?kittens.filter(k=>selectedIds.has(String(k.id))):kittens;
-  if(!selectedKittens.length)return "";
-  const preferredPairOrder={raymond:0,wally:1,melody:0,harvey:1,diego:0,valentina:1};
-  const orderedKittens=[...selectedKittens].sort((a,b)=>(preferredPairOrder[a.id]??99)-(preferredPairOrder[b.id]??99));
-  const kittenNames=orderedKittens.map(kitten=>kitten.name);
-  const meetLabel=kittenNames.length>1?"Meet "+kittenNames.slice(0,-1).join(", ")+" and "+kittenNames[kittenNames.length-1]:"Meet "+(kittenNames[0]||"these kittens");
-  const title="Their Next Chapter Starts With You";
-  const message=notice.message||"Some of this litter's kittens are still waiting for a place to call home. Get to know them below.";
-  const slides=orderedKittens.flatMap(kitten=>getAlumniGalleryPhotos(kitten).map((photo,index)=>({kitten,photo,index})));
-  const carousel=slides.length?'<div class="alumni-notice-carousel" aria-label="Featured kittens from this litter">'+slides.map((slide,index)=>'<figure class="alumni-notice-slide'+(index===0?' is-active':'')+'"><img src="'+escapeHTML(slide.photo)+'" alt="'+escapeHTML(slide.kitten.name)+'" loading="'+(index===0?'eager':'lazy')+'"><figcaption>'+escapeHTML(slide.kitten.name)+'</figcaption></figure>').join("")+'</div>':'';
-  const currentFostersLink="all-kittens/#litter-"+Number(litter);
-  return '<article class="alumni-temporary-notice alumni-temporary-notice--pair"><h3>'+escapeHTML(title)+'</h3><p>'+escapeHTML(message)+'</p>'+carousel+'<a class="alumni-current-fosters-link" href="'+currentFostersLink+'--'+orderedKittens.map(kitten=>encodeURIComponent(kitten.id)).join(",")+'">'+escapeHTML(meetLabel)+' →</a></article>';
+  if (notice.enabled === false) return "";
+  const selectedIds = Array.isArray(notice.kittenIds) ? new Set(notice.kittenIds.map(String)) : null;
+  const selectedKittens = selectedIds ? kittens.filter(k => selectedIds.has(String(k.id))) : kittens;
+  if (!selectedKittens.length) return "";
+
+  // Keep each pair in the requested display order; each kitten's gallery is newest-first.
+  const preferredPairOrder = { raymond:0, wally:1, diego:0, valentina:1, harvey:0, melody:1 };
+  const orderedKittens = [...selectedKittens].sort((a,b) => (preferredPairOrder[a.id] ?? 99) - (preferredPairOrder[b.id] ?? 99));
+  const kittenNames = orderedKittens.map(kitten => kitten.name);
+  const title = "Their Next Chapter Starts With You";
+  const message = notice.message || "Some of this litter's kittens are still waiting for a place to call home. Get to know them below.";
+  const makeSlides = kitten => {
+    const gallery = Array.isArray(kitten.photos) ? kitten.photos : [];
+    const photos = [...new Set([...gallery, ...(kitten.image ? [kitten.image] : [])].filter(photo => typeof photo === "string" && photo.trim()))];
+    return photos.map((photo,index) => ({ kitten, photo, index }));
+  };
+  const profileLink = kitten => '../kittens/profile-template.html?id=' + encodeURIComponent(kitten.id) + '&from=alumni';
+  const photoSets = orderedKittens.map(makeSlides);
+  const slides = [];
+  const longestSet = Math.max(0, ...photoSets.map(set => set.length));
+  for (let photoIndex = 0; photoIndex < longestSet; photoIndex++) {
+    photoSets.forEach(set => { if (set[photoIndex]) slides.push(set[photoIndex]); });
+  }
+
+  const carousel = slides.length
+    ? '<div class="alumni-notice-carousel alumni-notice-carousel--alternating" aria-label="Alternating photos of ' + escapeHTML(kittenNames.join(" and ")) + '">' +
+        slides.map((slide,index) =>
+          '<figure class="alumni-notice-slide' + (index === 0 ? ' is-active' : '') + '">' +
+            '<img src="' + escapeHTML(slide.photo) + '" alt="' + escapeHTML(slide.kitten.name) + '" loading="' + (index === 0 ? 'eager' : 'lazy') + '">' +
+            '<figcaption><span>' + escapeHTML(slide.kitten.name) + '</span></figcaption>' +
+          '</figure>'
+        ).join("") +
+      '</div>'
+    : "";
+
+  const pairTarget = '../all-kittens/#litter-' + encodeURIComponent(litter) + '--' + orderedKittens.map(kitten => encodeURIComponent(kitten.id)).join(',');
+  const pairButton = '<a class="alumni-current-fosters-link alumni-pair-meet-button" href="' + escapeHTML(pairTarget) + '">Meet ' + escapeHTML(kittenNames.join(" & ")) + '</a>';
+
+  return '<article class="alumni-temporary-notice alumni-temporary-notice--pair alumni-temporary-notice--alternating">' +
+    '<h3>' + escapeHTML(title) + '</h3><p>' + escapeHTML(message) + '</p>' +
+    carousel + pairButton + '</article>';
 }
 function renderTemporaryAlumniLitter(litter, kittens, notices=[]) {
   const total=getAlumniLitterTotal(litter),heading=formatAlumniLitter(litter)+" — "+total+(total===1?" kitten":" kittens");
@@ -262,9 +289,23 @@ function renderFosterAlumni(kittenList, today = new Date()) {
     return renderTemporaryAlumniLitter(litter, waiting, notices);
   }).join("");
 
+  const alignHashTarget = () => {
+    if (!window.location.hash) return;
+    let hashId = "";
+    try { hashId = decodeURIComponent(window.location.hash.slice(1)); } catch (_) { return; }
+    const target = document.getElementById(hashId);
+    if (!target) return;
+    const track = target.closest(".alumni-cards");
+    if (track) {
+      const targetLeft = target.getBoundingClientRect().left - track.getBoundingClientRect().left + track.scrollLeft;
+      track.scrollTo({ left: Math.max(0, targetLeft - 8), behavior: "smooth" });
+    }
+    const pageTop = target.getBoundingClientRect().top + window.scrollY - 88;
+    window.scrollTo({ top: Math.max(0, pageTop), behavior: "smooth" });
+  };
   if (window.location.hash) {
-    const target = document.getElementById(window.location.hash.slice(1));
-    if (target) requestAnimationFrame(() => target.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" }));
+    requestAnimationFrame(() => requestAnimationFrame(alignHashTarget));
+    window.addEventListener("load", alignHashTarget, { once: true });
   }
 
   container.querySelectorAll(".alumni-notice-carousel").forEach(carousel=>{

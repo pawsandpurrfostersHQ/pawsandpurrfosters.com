@@ -218,13 +218,16 @@ function renderKittenCards() {
     const photo = kitten.image
       ? `<img src="${escapeHTML(kitten.image)}" alt="${escapeHTML(kitten.name)}" loading="lazy">`
       : `<div class="photo-placeholder card-photo"><span>Photo coming soon</span></div>`;
-    const profileAction = kitten.profileUrl
-      ? `<a href="${escapeHTML(`${kitten.profileUrl}${kitten.profileUrl.includes("?") ? "&" : "?"}from=home&back=${encodeURIComponent(window.location.href)}`)}" class="card-link">Meet ${escapeHTML(kitten.name)} →</a>`
+    const profileUrl = kitten.profileUrl
+      ? `${kitten.profileUrl}${kitten.profileUrl.includes("?") ? "&" : "?"}from=home&back=${encodeURIComponent(window.location.href)}`
+      : "";
+    const profileAction = profileUrl
+      ? `<a href="${escapeHTML(profileUrl)}" class="card-link">Meet ${escapeHTML(kitten.name)} →</a>`
       : `<span class="card-link profile-coming-soon">Profile coming soon</span>`;
     const status = kitten.adoptionStatus || kitten.status || "Available";
     const returnedStatusClass = status === "Returned — Available" ? " status-returned" : "";
     const description = kitten.description || window.PAWS_KITTEN_CARD_DESCRIPTIONS?.[kitten.id];
-    return `<article class="kitten-card">
+    return `<article class="kitten-card"${profileUrl ? ` data-profile-url="${escapeHTML(profileUrl)}" role="link" tabindex="0" aria-label="Meet ${escapeHTML(kitten.name)}"` : ""}>
       <div class="card-photo-wrap">${photo}</div>
       <div class="card-content">
         <div class="status${returnedStatusClass}">${escapeHTML(status)}</div>
@@ -234,6 +237,47 @@ function renderKittenCards() {
       </div>
     </article>`;
   }).join("");
+
+  track.querySelectorAll(".kitten-card[data-profile-url]").forEach(card => {
+    const saveReturnPosition = () => {
+      try {
+        sessionStorage.setItem("pawsHomeFosterReturn", JSON.stringify({
+          scrollY: window.scrollY,
+          scrollLeft: track.scrollLeft
+        }));
+      } catch (_) {}
+    };
+    card.addEventListener("click", event => {
+      if (event.target.closest("a, button")) {
+        saveReturnPosition();
+        return;
+      }
+      saveReturnPosition();
+      window.location.href = card.dataset.profileUrl;
+    });
+    card.addEventListener("keydown", event => {
+      if ((event.key === "Enter" || event.key === " ") && event.target === card) {
+        event.preventDefault();
+        saveReturnPosition();
+        window.location.href = card.dataset.profileUrl;
+      }
+    });
+  });
+
+  // Restore the visitor to the same homepage section and carousel position after a profile visit.
+  try {
+    const savedReturn = sessionStorage.getItem("pawsHomeFosterReturn");
+    if (savedReturn) {
+      const position = JSON.parse(savedReturn);
+      sessionStorage.removeItem("pawsHomeFosterReturn");
+      const restoreHomePosition = () => {
+        track.scrollLeft = Number(position.scrollLeft) || 0;
+        window.scrollTo({ top: Number(position.scrollY) || 0, behavior: "instant" });
+      };
+      requestAnimationFrame(() => requestAnimationFrame(restoreHomePosition));
+      window.addEventListener("load", restoreHomePosition, { once: true });
+    }
+  } catch (_) {}
 
   const previous = document.querySelector("#kitten-previous");
   const next = document.querySelector("#kitten-next");

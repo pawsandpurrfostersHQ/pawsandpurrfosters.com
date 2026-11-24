@@ -58,16 +58,32 @@ function renderAvailableKittens() {
       ? `<img src="${escapeHTML(kitten.image)}" alt="${escapeHTML(kitten.name)}" loading="lazy">`
       : `<div class="photo-placeholder card-photo"><span>Photo coming soon</span></div>`;
 
-    return `<article class="kitten-card">
+    const profileUrl = kitten.profileUrl
+      ? `${kitten.profileUrl}${kitten.profileUrl.includes("?") ? "&" : "?"}from=available&back=${encodeURIComponent(window.location.href)}`
+      : "";
+    return `<article class="kitten-card"${profileUrl ? ` data-profile-url="${escapeHTML(profileUrl)}" role="link" tabindex="0" aria-label="Meet ${escapeHTML(kitten.name)}"` : ""}>
       <div class="card-photo-wrap">${photo}</div>
       <div class="card-content">
         <span class="status-badge ${statusClassName(status)}">${escapeHTML(status)}</span>
         <h3>${escapeHTML(kitten.name)}</h3>
         <p>${escapeHTML(shortBlurb(kitten))}</p>
-        <a class="card-link" href="${escapeHTML(kitten.profileUrl ? `${kitten.profileUrl}${kitten.profileUrl.includes("?") ? "&" : "?"}from=available&back=${encodeURIComponent(window.location.href)}` : "#")}">Get to Know ${escapeHTML(kitten.name)} →</a>
       </div>
     </article>`;
   }).join("");
+
+  container.querySelectorAll(".kitten-card[data-profile-url]").forEach(card => {
+    const openProfile = () => { window.location.href = card.dataset.profileUrl; };
+    card.addEventListener("click", event => {
+      if (event.target.closest("a, button")) return;
+      openProfile();
+    });
+    card.addEventListener("keydown", event => {
+      if ((event.key === "Enter" || event.key === " ") && event.target === card) {
+        event.preventDefault();
+        openProfile();
+      }
+    });
+  });
 }
 
 if (typeof globalThis !== "undefined") {
