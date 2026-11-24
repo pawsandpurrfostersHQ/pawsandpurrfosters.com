@@ -220,47 +220,31 @@ function renderTemporaryAlumniCard(litter, kittens, notice={}) {
     return photos.map((photo,index) => ({ kitten, photo, index }));
   };
   const profileLink = kitten => '../kittens/profile-template.html?id=' + encodeURIComponent(kitten.id) + '&from=alumni';
-  const isDiegoValentina = orderedKittens.some(k => k.id === "diego") && orderedKittens.some(k => k.id === "valentina");
-  const isHarveyMelody = orderedKittens.some(k => k.id === "harvey") && orderedKittens.some(k => k.id === "melody");
-  const useAlternatingCarousel = isDiegoValentina || isHarveyMelody;
-  let carousel = "";
-
-  if (useAlternatingCarousel) {
-    const photoSets = orderedKittens.map(makeSlides);
-    const slides = [];
-    const longestSet = Math.max(0, ...photoSets.map(set => set.length));
-    for (let photoIndex = 0; photoIndex < longestSet; photoIndex++) {
-      photoSets.forEach(set => { if (set[photoIndex]) slides.push(set[photoIndex]); });
-    }
-    carousel = slides.length
-      ? '<div class="alumni-notice-carousel alumni-notice-carousel--alternating" aria-label="Alternating photos of ' + escapeHTML(kittenNames.join(" and ")) + '">' +
-          slides.map((slide,index) =>
-            '<figure class="alumni-notice-slide' + (index === 0 ? ' is-active' : '') + '">' +
-              '<img src="' + escapeHTML(slide.photo) + '" alt="' + escapeHTML(slide.kitten.name) + '" loading="' + (index === 0 ? 'eager' : 'lazy') + '">' +
-              '<figcaption><a href="' + profileLink(slide.kitten) + '">' + escapeHTML(slide.kitten.name) + ' →</a></figcaption>' +
-            '</figure>'
-          ).join("") +
-        '</div>'
-      : "";
-  } else {
-    // Raymond and Wally retain their existing presentation.
-    const slides = orderedKittens.flatMap(makeSlides);
-    carousel = slides.length
-      ? '<div class="alumni-notice-carousel" aria-label="Featured kittens from this litter">' +
-          slides.map((slide,index) =>
-            '<figure class="alumni-notice-slide' + (index === 0 ? ' is-active' : '') + '">' +
-              '<img src="' + escapeHTML(slide.photo) + '" alt="' + escapeHTML(slide.kitten.name) + '" loading="' + (index === 0 ? 'eager' : 'lazy') + '">' +
-              '<figcaption><a href="' + profileLink(slide.kitten) + '">' + escapeHTML(slide.kitten.name) + ' →</a></figcaption>' +
-            '</figure>'
-          ).join("") +
-        '</div>'
-      : "";
+  const photoSets = orderedKittens.map(makeSlides);
+  const slides = [];
+  const longestSet = Math.max(0, ...photoSets.map(set => set.length));
+  for (let photoIndex = 0; photoIndex < longestSet; photoIndex++) {
+    photoSets.forEach(set => { if (set[photoIndex]) slides.push(set[photoIndex]); });
   }
 
-  return '<article class="alumni-temporary-notice alumni-temporary-notice--pair' +
-    (useAlternatingCarousel ? ' alumni-temporary-notice--alternating' : '') +
-    '"><h3>' + escapeHTML(title) + '</h3><p>' + escapeHTML(message) + '</p>' +
-    carousel + '</article>';
+  const carousel = slides.length
+    ? '<div class="alumni-notice-carousel alumni-notice-carousel--alternating" aria-label="Alternating photos of ' + escapeHTML(kittenNames.join(" and ")) + '">' +
+        slides.map((slide,index) =>
+          '<figure class="alumni-notice-slide' + (index === 0 ? ' is-active' : '') + '">' +
+            '<img src="' + escapeHTML(slide.photo) + '" alt="' + escapeHTML(slide.kitten.name) + '" loading="' + (index === 0 ? 'eager' : 'lazy') + '">' +
+            '<figcaption><span>' + escapeHTML(slide.kitten.name) + '</span></figcaption>' +
+          '</figure>'
+        ).join("") +
+      '</div>'
+    : "";
+
+  const pairButton = orderedKittens.length > 1
+    ? '<a class="alumni-current-fosters-link alumni-pair-meet-button" href="../all-kittens/">Meet ' + escapeHTML(kittenNames.join(" & ")) + '</a>'
+    : '<a class="alumni-current-fosters-link alumni-pair-meet-button" href="../all-kittens/">Meet ' + escapeHTML(kittenNames[0]) + '</a>';
+
+  return '<article class="alumni-temporary-notice alumni-temporary-notice--pair alumni-temporary-notice--alternating">' +
+    '<h3>' + escapeHTML(title) + '</h3><p>' + escapeHTML(message) + '</p>' +
+    carousel + pairButton + '</article>';
 }
 function renderTemporaryAlumniLitter(litter, kittens, notices=[]) {
   const total=getAlumniLitterTotal(litter),heading=formatAlumniLitter(litter)+" — "+total+(total===1?" kitten":" kittens");
