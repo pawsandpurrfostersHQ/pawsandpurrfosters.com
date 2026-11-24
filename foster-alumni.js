@@ -166,8 +166,9 @@ function renderAlumniCard(kitten, alumniIds, today = new Date()) {
   const badges = [designation, graduationBadge].filter(Boolean).join("");
   return '<article class="kitten-card alumni-card" id="alumni-' + escapeHTML(kitten.id) + '">' +
     photoCarousel + '<div class="card-content alumni-card-content">' +
-      (badges ? '<div class="alumni-card-badges">' + badges + '</div>' : '') +
-      '<h3>' + escapeHTML(kitten.name) + '</h3>' +
+      '<div class="alumni-card-heading"><h3>' + escapeHTML(kitten.name) + '</h3>' +
+        (badges ? '<div class="alumni-card-badges">' + badges + '</div>' : '') +
+      '</div>' +
       '<dl class="alumni-details">' +
         '<div><dt>Gender</dt><dd>' + escapeHTML(kitten.gender || "—") + '</dd></div>' +
         '<div><dt>Birthday</dt><dd>' + formatAlumniBirthday(birthdayDate) + '</dd></div>' +
