@@ -5833,3 +5833,22 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
 .graduate-card .graduate-card__names { color:#426487; }
 .graduate-card .graduate-date { color:#557b9f; border-top-color:#d8e5f0; }
 @media(prefers-reduced-motion:reduce){.alumni-notice-slide{transition:none}}
+
+/* Final alumni carousel alignment: every litter track, including paired and temporary cards, snaps consistently. */
+.alumni-litter--paired .alumni-cards,
+.alumni-litter--temporary .alumni-cards {
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+}
+.alumni-litter--paired .alumni-card,
+.alumni-litter--temporary .alumni-temporary-notice {
+  scroll-snap-align:start;
+}
+.alumni-current-fosters-link {
+  white-space:nowrap;
+  max-width:100%;
+  font-size:clamp(9px,2.4vw,12px);
+  letter-spacing:-.02em;
+}
