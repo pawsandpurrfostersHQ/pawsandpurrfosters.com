@@ -287,7 +287,8 @@
     const names = pair.kittens.map(k => k.name);
     const photoHtml = pair.kittens.map(pairPhoto).join("");
     const profileLinks = pair.kittens.map(k => '<a href="' + escapeHtml(k.profileUrl || "all-kittens/") + '">Meet ' + escapeHtml(k.name) + '</a>').join("");
-    const inquiryLinks = pair.kittens.map(k => k.petfinderUrl ? '<a class="primary-link" data-kitten-id="' + escapeHtml(k.id) + '" href="' + escapeHtml(k.petfinderUrl) + '" target="_blank" rel="noopener noreferrer">Inquire about ' + escapeHtml(k.name) + '</a>' : "").join("");
+    const inquiryKitten = pair.kittens.find(k => k.petfinderUrl);
+    const inquiryLinks = inquiryKitten ? '<a class="primary-link" data-kitten-id="' + escapeHtml(inquiryKitten.id) + '" href="' + escapeHtml(inquiryKitten.petfinderUrl) + '" target="_blank" rel="noopener noreferrer">Inquire about this pair</a>' : "";
     return '<article class="quiz-match-card"><div class="quiz-match-photos">' + photoHtml + '</div><div class="quiz-match-body"><p class="quiz-match-kicker">Bonded pair · Must stay together</p><h3>' + escapeHtml(names.join(" & ")) + '</h3><p>' + escapeHtml(pair.profile.summary) + '</p><p class="quiz-match-reason">' + escapeHtml(reasonOverride || pair.profile.reason) + '</p>' +
       (cautionOverride ? '<p class="quiz-match-caution">' + escapeHtml(cautionOverride) + '</p>' : '') +
       '<p>' + escapeHtml(pair.profile.intro) + '</p><div class="quiz-match-links">' + profileLinks + inquiryLinks + '</div></div></article>';
