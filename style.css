@@ -5683,7 +5683,7 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
 
 /* Alumni name and status labels share one compact, responsive line. */
 .alumni-card-heading { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:7px 10px; margin:0 0 12px; }
-.alumni-card-heading h3 { flex:1 1 auto; min-width:0; margin:0; }
+.alumni-card-heading h3 { display:block; flex:1 1 auto; min-width:0; margin:0; }
 .alumni-card-heading .alumni-card-badges { flex:0 1 auto; justify-content:flex-end; margin:0; }
 @media(max-width:560px) {
   .alumni-card-heading { align-items:center; gap:6px; }
