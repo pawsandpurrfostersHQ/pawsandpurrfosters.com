@@ -5887,7 +5887,7 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
 
 
 /* Shared highlight frame for paired kittens reached from an alumni Next Chapter card. */
-.all-litters__cards { position:relative; }
+.all-litters__group { position:relative; }
 .all-litters__cards > .kitten-card { position:relative; z-index:1; }
 .kitten-pair-highlight {
   position:absolute;
