@@ -201,11 +201,12 @@
         id: "pairConcern",
         title: "What would you like to know more about?",
         hint: "We’ll use this to make the pair-adoption information more helpful.",
+        multiple: true,
         options: [
-          ["cost","Adoption costs","I’d like to understand the fee for adopting two."],
-          ["space","Space and supplies","I’m not sure whether I have room for two."],
+          ["cost","Adoption costs","I’d like to understand the costs involved with adopting two."],
+          ["space","Space and supplies","I’m not sure whether I have room and the right supplies for two."],
           ["time","Time and care","I want to understand the daily care involved."],
-          ["first","I’m new to kitten adoption","I’d like to know whether two kittens are manageable."],
+          ["first","I’m new to kitten adoption","I’d like to know what to expect as a first-time adopter."],
           ["benefits","The benefits","I’m curious about why kittens are often adopted in pairs."]
         ]
       });
@@ -307,15 +308,16 @@
   }
 
   function pairInfoPanel() {
-    const concern = state.pairConcern;
-    const detail = {
-      cost: "Adoption fees are set by the rescue. The How to Adopt page explains how to request the current fee for a bonded pair.",
-      space: "Two kittens need room for their own resources, including litter boxes, food and water stations, resting spots, and places to climb and play. We can help you think through what your home setup may need.",
-      time: "A pair still needs daily play, attention, veterinary care, and individual bonding with their people. They also keep each other company and often play, groom, and nap together.",
-      first: "For many first-time kitten adopters, a bonded pair can be a lovely option. The kittens already have a familiar companion as they settle in, and you get to know each of their individual personalities.",
-      benefits: "Bonded pairs are a wonderful addition to a home. Two kittens may sound like twice the work, but they bring many benefits: they have a familiar friend, can feel less stressed while adjusting, keep each other active through play, and provide twice the fun and personality. They can comfort and entertain one another, while still needing daily attention and care from their people."
-    }[concern] || "Bonded pairs are a wonderful addition to a home. They have a familiar friend as they adjust, can feel less stressed with a companion, keep each other active through play, and bring twice the fun and personality. They still need daily attention and care from their people.";
-    return '<section class="quiz-info-panel"><h3>A little about adopting a bonded pair</h3><p>' + escapeHtml(detail) + '</p><p>At the moment, the kittens we have available for adoption are bonded pairs. We cannot separate these kittens or offer one kitten from a bonded pair on their own. New adopters often find that having two kittens can make the adjustment feel more comfortable because the kittens have each other for companionship, play, and reassurance.</p><p>Bonded pairs must stay together, and kittens five months and younger are also required to be adopted in pairs.</p></section>';
+    const concerns = Array.isArray(state.pairConcern) ? state.pairConcern : [];
+    const details = {
+      cost: "<strong>Adoption costs:</strong> Adoption fees are set by the rescue, so please check the How to Adopt page or ask the rescue for the current bonded-pair fee. Beyond the fee, two kittens do cost more to feed, provide litter for, insure if you choose, and care for medically. Some supplies can be shared, so the total is not necessarily exactly double, but it is important to budget for two animals and two potential veterinary needs.",
+      space: "<strong>Space and supplies:</strong> You will need room for separate resources. A common litter-box guideline is one box per cat plus one extra, along with multiple feeding and resting areas, scratching surfaces, toys, and safe places to climb and play.",
+      time: "<strong>Time and care:</strong> Two kittens still need daily feeding, litter care, play, veterinary appointments, and individual attention. They can also play and keep each other company, but a companion does not replace your responsibility to spend time with each kitten.",
+      first: "<strong>New to kitten adoption:</strong> A bonded pair can be a rewarding first experience because the kittens already know and rely on one another. You will still be learning two individual personalities, routines, and care needs, and we are happy to answer questions.",
+      benefits: "<strong>Benefits of a bonded pair:</strong> They have a familiar companion during a big transition, can play and interact together, and may provide one another with comfort and enrichment. You also get to enjoy two distinct personalities growing up together."
+    };
+    const detail = concerns.length ? concerns.map(key => details[key]).filter(Boolean).join("</p><p>") : "Bonded pairs can offer companionship, shared play, and comfort while settling into a new home. They still need individual attention and care from their people.";
+    return '<section class="quiz-info-panel"><h3>A little about adopting a bonded pair</h3><p>' + detail + '</p><p>At the moment, the kittens we have available for adoption are bonded pairs. We cannot separate these kittens or offer one kitten from a bonded pair on their own. New adopters often find that a pair can make the transition more comfortable because the kittens have a familiar companion for play and reassurance.</p><p>Bonded pairs must stay together, and kittens five months and younger are also required to be adopted in pairs. Adoption fees are set by the rescue; please confirm the current fee directly before applying.</p></section>';
   }
 
   function noMatchPanel(title, message) {
@@ -334,11 +336,6 @@
 
     if (state.pair === "single") {
       resultsHost.innerHTML = pairInfoPanel() + noMatchPanel("Looking for a single kitten?", "We completely understand that you may be hoping to adopt just one kitten. At the moment, the kittens we personally have available are bonded pairs, and we cannot separate a kitten from their bonded companion. If you are set on adopting one cat, we recommend exploring the wider listings from No Paws Left Behind Kitty Rescue. Their Petfinder page may include a single kitten or adult cat who is a better fit for what you are looking for. These are only the kittens we personally foster; other wonderful kittens in the rescue are cared for by fellow foster homes.");
-      return;
-    }
-
-    if (hasOtherPets()) {
-      resultsHost.innerHTML = noMatchPanel("Let’s make sure every pet is considered.", "Our current foster profiles do not contain enough documented compatibility information for every type of pet in your home. We would rather not guess about how a kitten may do with birds, small animals, or other pets. Please contact us so we can talk through your household before you decide whether one of our foster pairs may be a fit.");
       return;
     }
 
@@ -368,8 +365,9 @@
     }
     const topScore = best[0].score;
     const selected = best.filter(item => item.score >= topScore - 2).slice(0,2);
-    const header = '<div class="quiz-result-intro"><h3>Your potential matches</h3><p>These pairs appear to line up most closely with the preferences you shared. Please read each profile carefully and contact us with questions about your household before taking the next step. These are only the kittens we personally foster; No Paws Left Behind Kitty Rescue has many other kittens cared for by fellow foster homes, and we encourage you to explore the rescue’s wider listings if you do not see the right fit here.</p></div>';
-    resultsHost.innerHTML = header + (state.pair === "depends" ? pairInfoPanel() : "") + '<div class="quiz-match-list">' + selected.map(item => pairCard(item.pair, hasCats() && item.pair.profile.catFit === "slow" ? "This pair prefers to be the only cats in the home. They may adjust to resident cats, but introductions should be especially slow and patient." : "")).join("") + '</div>';
+    const otherPetNotice = hasOtherPets() ? '<section class="quiz-info-panel"><h3>A note about other pets in your home</h3><p>We have limited information about how our foster kittens may do with other types of animals, including birds, small animals, and other pets. We do not want to guess about their compatibility. You are welcome to contact us with questions so we can talk through your household. The potential matches below are based on the information we do have and are not a confirmation that a kitten will be safe or comfortable with another species.</p></section>' : "";
+    const header = '<div class="quiz-result-intro"><h3>Your most likely matches</h3><p>These pairs appear to line up most closely with the preferences you shared. Please read each profile carefully and contact us with questions about your household before taking the next step. These are only the kittens we personally foster; No Paws Left Behind Kitty Rescue has many other kittens cared for by fellow foster homes, and we encourage you to explore the rescue’s wider listings if you do not see the right fit here.</p></div>';
+    resultsHost.innerHTML = (state.pair === "depends" ? pairInfoPanel() : "") + otherPetNotice + header + '<div class="quiz-match-list">' + selected.map(item => pairCard(item.pair, hasCats() && item.pair.profile.catFit === "slow" ? "This pair prefers to be the only cats in the home. They may adjust to resident cats, but introductions should be especially slow and patient." : "")).join("") + '</div>';
   }
 
   document.querySelector("#quiz-restart").addEventListener("click", () => {
