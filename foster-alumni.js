@@ -213,10 +213,22 @@ function renderTemporaryAlumniCard(litter, kittens, notice={}) {
   const meetLabel=kittenNames.length>1?"Meet "+kittenNames.slice(0,-1).join(", ")+" and "+kittenNames[kittenNames.length-1]:"Meet "+(kittenNames[0]||"these kittens");
   const title="Their Next Chapter Starts With You";
   const message=notice.message||"Some of this litter's kittens are still waiting for a place to call home. Get to know them below.";
-  const slides=orderedKittens.flatMap(kitten=>getAlumniGalleryPhotos(kitten).map((photo,index)=>({kitten,photo,index})));
-  const carousel=slides.length?'<div class="alumni-notice-carousel" aria-label="Featured kittens from this litter">'+slides.map((slide,index)=>'<figure class="alumni-notice-slide'+(index===0?' is-active':'')+'"><img src="'+escapeHTML(slide.photo)+'" alt="'+escapeHTML(slide.kitten.name)+'" loading="'+(index===0?'eager':'lazy')+'"><figcaption>'+escapeHTML(slide.kitten.name)+'</figcaption></figure>').join("")+'</div>':'';
-  const currentFostersLink="all-kittens/#litter-"+Number(litter);
-  return '<article class="alumni-temporary-notice alumni-temporary-notice--pair"><h3>'+escapeHTML(title)+'</h3><p>'+escapeHTML(message)+'</p>'+carousel+'<a class="alumni-current-fosters-link" href="'+currentFostersLink+'--'+orderedKittens.map(kitten=>encodeURIComponent(kitten.id)).join(",")+'">'+escapeHTML(meetLabel)+' →</a></article>';
+  const makeSlides=(kitten)=>getAlumniGalleryPhotos(kitten).map((photo,index)=>({kitten,photo,index}));
+  const profileLink=(kitten)=>'../kittens/profile-template.html?id='+encodeURIComponent(kitten.id)+'&from=alumni';
+  const isDiegoValentina=orderedKittens.some(k=>k.id==="diego")&&orderedKittens.some(k=>k.id==="valentina");
+  const isMelodyHarvey=orderedKittens.some(k=>k.id==="melody")&&orderedKittens.some(k=>k.id==="harvey");
+  let carousel="";
+  if(isMelodyHarvey){
+    carousel='<div class="alumni-notice-stack">'+orderedKittens.map(kitten=>{
+      const slides=makeSlides(kitten);
+      return slides.length?'<div class="alumni-notice-stack__kitten" data-notice-kitten="'+escapeHTML(kitten.id)+'"><div class="alumni-notice-carousel" aria-label="Photos of '+escapeHTML(kitten.name)+'">'+slides.map((slide,index)=>'<figure class="alumni-notice-slide'+(index===0?' is-active':'')+'"><img src="'+escapeHTML(slide.photo)+'" alt="'+escapeHTML(kitten.name)+'" loading="'+(index===0?'eager':'lazy')+'"></figure>').join("")+'</div><a class="alumni-notice-name" href="'+profileLink(kitten)+'">'+escapeHTML(kitten.name)+' →</a></div>':'';
+    }).join("")+'</div>';
+  }else{
+    const slides=orderedKittens.flatMap(makeSlides);
+    carousel=slides.length?'<div class="alumni-notice-carousel'+(isDiegoValentina?' alumni-notice-carousel--alternating':'')+'" aria-label="Featured kittens from this litter">'+slides.map((slide,index)=>'<figure class="alumni-notice-slide'+(index===0?' is-active':'')+'"><img src="'+escapeHTML(slide.photo)+'" alt="'+escapeHTML(slide.kitten.name)+'" loading="'+(index===0?'eager':'lazy')+'"><figcaption><a href="'+profileLink(slide.kitten)+'">'+escapeHTML(slide.kitten.name)+' →</a></figcaption></figure>').join("")+'</div>':'';
+  }
+  const currentFostersLink="../all-kittens/#litter-"+Number(litter);
+  return '<article class="alumni-temporary-notice alumni-temporary-notice--pair'+(isDiegoValentina?' alumni-temporary-notice--alternating':'')+(isMelodyHarvey?' alumni-temporary-notice--stacked':'')+'"><h3>'+escapeHTML(title)+'</h3><p>'+escapeHTML(message)+'</p>'+carousel+'<a class="alumni-current-fosters-link" href="'+currentFostersLink+'--'+orderedKittens.map(kitten=>encodeURIComponent(kitten.id)).join(",")+'">'+escapeHTML(meetLabel)+' →</a></article>';
 }
 function renderTemporaryAlumniLitter(litter, kittens, notices=[]) {
   const total=getAlumniLitterTotal(litter),heading=formatAlumniLitter(litter)+" — "+total+(total===1?" kitten":" kittens");
