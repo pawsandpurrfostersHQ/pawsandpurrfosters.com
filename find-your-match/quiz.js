@@ -23,8 +23,8 @@
       dogFit: "unknown",
       kidFit: { older: "yes", younger: "possible" },
       intro: "They are comfortable around other cats with a proper introduction. Their experience with dogs is unknown, so a dog household should check with the foster team and rescue before considering them.",
-      summary: "The more energetic, curious, outgoing pair. They bring plenty of play and activity, while being a little more independent than our very cuddly pair.",
-      reason: "You described a home looking for an active, playful pair with a little more independence. Diego and Valentina are outgoing, curious, and love exploring, playing, and being part of the action.",
+      summary: "The more energetic, curious, outgoing pair. They bring plenty of play and activity, and while both enjoy affection, they are a little more independent than Raymond and Wally.",
+      reason: "You described a home looking for an active, playful pair with a little more independence. Diego and Valentina are social and affectionate, but bring a little more independent energy alongside their curiosity and love of exploring.",
       caution: "Their dog compatibility is unknown — they have not had direct experience with dogs. A calm, cat-friendly dog may be a possibility, but this is not a confirmed match."
     },
     "harvey-melody": {
@@ -259,9 +259,17 @@
       if (state.residentCat === "social" && p.catFit === "yes") score += 1;
       if (state.residentEnergy === "bouncy" && p.energy === "high") score += 1;
       if (state.residentEnergy === "relaxed" && p.energy === "calm") score += 1;
+      if (state.residentEnergy === "lap" && p.affection === "middle") score += 1;
+      if (state.residentEnergy === "independent" && p.energy === "calm") score += 1;
+      if (state.residentEnergy === "mixed" && p.energy === "mixed") score += 1;
       if (state.intro === "quick" && p.catFit === "slow") score -= 5;
     }
     if (hasDogs()) score += p.dogFit === "unknown" ? 0 : -10;
+    if (hasCats() && state.residentCat === "solo") {
+      resultsHost.innerHTML = noMatchPanel("Your resident cat may prefer to be the only cat.", "Because your current cat prefers being the only cat, we cannot confidently recommend one of our available bonded pairs without a conversation first. Raymond and Wally also prefer to be the only cats, and even the pairs who are comfortable with other cats need gradual introductions. We recommend speaking with the rescue before deciding whether adding two kittens would be right for your household.");
+      return;
+    }
+
     if (state.children === "younger" || state.children === "mixed") {
       score += p.kidFit.younger === "yes" ? 2 : p.kidFit.younger === "possible" ? 0 : -8;
     }
