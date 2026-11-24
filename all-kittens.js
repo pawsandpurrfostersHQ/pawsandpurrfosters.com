@@ -126,11 +126,47 @@ function renderAllKittens() {
         ? highlightedNames.map(id => target.querySelector('.kitten-card[data-kitten-id="' + CSS.escape(id) + '"]')).filter(Boolean)
         : [];
       const highlightTargets = kittenCards.length ? kittenCards : [target];
-      highlightTargets.forEach(item => item.classList.add("is-highlighted"));
-      requestAnimationFrame(() => target.scrollIntoView({ behavior: "smooth", block: "start" }));
+      const cardsTrack = target.querySelector(".all-litters__cards");
+      let pairHighlight = null;
+      let resizeHighlight = null;
+
+      if (kittenCards.length > 1 && cardsTrack) {
+        pairHighlight = document.createElement("div");
+        pairHighlight.className = "kitten-pair-highlight";
+        pairHighlight.setAttribute("aria-hidden", "true");
+        cardsTrack.appendChild(pairHighlight);
+
+        const positionPairHighlight = () => {
+          if (!pairHighlight?.isConnected || !kittenCards.every(card => card.isConnected)) return;
+          const left = Math.min(...kittenCards.map(card => card.offsetLeft));
+          const top = Math.min(...kittenCards.map(card => card.offsetTop));
+          const right = Math.max(...kittenCards.map(card => card.offsetLeft + card.offsetWidth));
+          const bottom = Math.max(...kittenCards.map(card => card.offsetTop + card.offsetHeight));
+          pairHighlight.style.left = (left - 8) + "px";
+          pairHighlight.style.top = (top - 8) + "px";
+          pairHighlight.style.width = (right - left + 16) + "px";
+          pairHighlight.style.height = (bottom - top + 16) + "px";
+        };
+
+        resizeHighlight = positionPairHighlight;
+        requestAnimationFrame(positionPairHighlight);
+        window.addEventListener("resize", resizeHighlight);
+      } else {
+        highlightTargets.forEach(item => item.classList.add("is-highlighted"));
+      }
+
+      requestAnimationFrame(() => {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        if (cardsTrack && kittenCards.length) {
+          cardsTrack.scrollTo({ left: Math.max(0, kittenCards[0].offsetLeft - 8), behavior: "smooth" });
+        }
+      });
+
       const dismissHighlight = event => {
         if (!target.contains(event.target)) {
           highlightTargets.forEach(item => item.classList.remove("is-highlighted"));
+          pairHighlight?.remove();
+          if (resizeHighlight) window.removeEventListener("resize", resizeHighlight);
           document.removeEventListener("click", dismissHighlight, true);
           if (window.history?.replaceState) window.history.replaceState(null, "", window.location.pathname + window.location.search);
         }
