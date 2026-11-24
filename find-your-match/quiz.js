@@ -170,7 +170,7 @@
           ["slow","I can take it slowly","I can use separate spaces and gradual, supervised introductions."],
           ["moderate","I can allow some adjustment time","I can be patient, but I hope for a fairly straightforward transition."],
           ["quick","I need the easiest fit possible","I’m not in a position to manage a longer introduction."],
-          ["none","No resident pets","There are no existing pets to introduce."]
+          ...(state.pets === "none" ? [["none","No resident pets","There are no existing pets to introduce."]] : [])
         ]
       }
     );
