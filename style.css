@@ -5326,11 +5326,13 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
   text-align:center;
 }
 @media(max-width:760px) {
-  .graduate-grid { grid-template-columns:minmax(0,1fr); gap:16px; }
-  .graduate-card { padding:16px; }
+  .graduate-grid { display:flex; gap:14px; overflow-x:auto; padding:0 2px 10px; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; }
+  .graduate-card { flex:0 0 min(86vw,420px); padding:16px; scroll-snap-align:start; }
   .graduate-photo-slide { gap:10px; }
   .graduate-photo-slide figure:first-child:not(:only-child) { padding-right:10px; }
 }
+.graduate-card__name-link { color:inherit; text-decoration:none; text-underline-offset:4px; }
+.graduate-card__name-link:hover,.graduate-card__name-link:focus-visible { text-decoration:underline; }
 @media(prefers-reduced-motion:reduce) {
   .graduate-photo-slide { transition:none; }
 }
@@ -5676,4 +5678,15 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
 .all-litters__group .kitten-card.is-highlighted {
   outline:2px solid #6b9c70;
   outline-offset:2px;
+}
+
+
+/* Alumni name and status labels share one compact, responsive line. */
+.alumni-card-heading { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:7px 10px; margin:0 0 12px; }
+.alumni-card-heading h3 { flex:1 1 auto; min-width:0; margin:0; }
+.alumni-card-heading .alumni-card-badges { flex:0 1 auto; justify-content:flex-end; margin:0; }
+@media(max-width:560px) {
+  .alumni-card-heading { align-items:center; gap:6px; }
+  .alumni-card-heading h3 { font-size:clamp(19px,5.5vw,24px); }
+  .alumni-card-heading .alumni-card-badges { gap:4px; }
 }
