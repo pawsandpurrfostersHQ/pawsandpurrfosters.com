@@ -54,9 +54,7 @@
 
   function availableKittens() {
     const all = Array.isArray(window.PAWS_KITTENS) ? window.PAWS_KITTENS : [];
-    const allowed = window.PAWS_AVAILABLE_KITTEN_STATUSES instanceof Set
-      ? window.PAWS_AVAILABLE_KITTEN_STATUSES
-      : new Set(["Available", "Returned — Available", "Pending Interest"]);
+    const allowed = new Set(["Available", "Returned — Available"]);
     return all.filter(k => allowed.has(k.adoptionStatus || k.status));
   }
 
