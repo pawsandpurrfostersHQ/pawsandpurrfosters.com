@@ -136,24 +136,27 @@ function renderAllKittens() {
         pairHighlight = document.createElement("div");
         pairHighlight.className = "kitten-pair-highlight";
         pairHighlight.setAttribute("aria-hidden", "true");
-        cardsTrack.appendChild(pairHighlight);
+        // Place the frame on the litter section, not inside the horizontally
+        // scrolling track, whose overflow clips anything extending past its edges.
+        target.appendChild(pairHighlight);
 
         const positionPairHighlight = () => {
           if (!pairHighlight?.isConnected || !kittenCards.every(card => card.isConnected)) return;
-          const trackRect = cardsTrack.getBoundingClientRect();
+          const sectionRect = target.getBoundingClientRect();
           const cardRects = kittenCards.map(card => card.getBoundingClientRect());
-          const left = Math.min(...cardRects.map(rect => rect.left - trackRect.left + cardsTrack.scrollLeft));
-          const top = Math.min(...cardRects.map(rect => rect.top - trackRect.top + cardsTrack.scrollTop));
-          const right = Math.max(...cardRects.map(rect => rect.right - trackRect.left + cardsTrack.scrollLeft));
-          const bottom = Math.max(...cardRects.map(rect => rect.bottom - trackRect.top + cardsTrack.scrollTop));
-          pairHighlight.style.left = (left - 8) + "px";
-          pairHighlight.style.top = (top - 8) + "px";
-          pairHighlight.style.width = (right - left + 16) + "px";
-          pairHighlight.style.height = (bottom - top + 16) + "px";
+          const left = Math.min(...cardRects.map(rect => rect.left - sectionRect.left));
+          const top = Math.min(...cardRects.map(rect => rect.top - sectionRect.top));
+          const right = Math.max(...cardRects.map(rect => rect.right - sectionRect.left));
+          const bottom = Math.max(...cardRects.map(rect => rect.bottom - sectionRect.top));
+          pairHighlight.style.left = (left - 9) + "px";
+          pairHighlight.style.top = (top - 9) + "px";
+          pairHighlight.style.width = (right - left + 18) + "px";
+          pairHighlight.style.height = (bottom - top + 18) + "px";
         };
 
         resizeHighlight = positionPairHighlight;
-        requestAnimationFrame(positionPairHighlight);
+        requestAnimationFrame(() => requestAnimationFrame(positionPairHighlight));
+        cardsTrack.addEventListener("scroll", positionPairHighlight, { passive: true });
         window.addEventListener("resize", resizeHighlight);
       } else {
         highlightTargets.forEach(item => item.classList.add("is-highlighted"));
