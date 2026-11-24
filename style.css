@@ -5812,3 +5812,11 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
 @media(max-width:760px) {
   .alumni-temporary-notice--pair { width:min(100%,390px); flex:0 0 min(100%,390px); margin:0; padding:20px; }
 }
+
+@media(min-width:761px) {
+  .graduate-grid.has-single-graduate .graduate-card {
+    grid-column:1 / -1;
+    width:calc((100% - 22px) / 2);
+    justify-self:center;
+  }
+}
