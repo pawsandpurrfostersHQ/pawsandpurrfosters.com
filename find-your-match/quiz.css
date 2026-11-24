@@ -69,3 +69,5 @@
   .quiz-match-body h3{font-size:22px}
 }
 @media(prefers-reduced-motion:reduce){.match-progress span,.quiz-option{transition:none}}
+
+.quiz-restart-wrap{margin-top:20px;text-align:center}
