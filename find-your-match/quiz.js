@@ -2,7 +2,7 @@
   const root = document.querySelector("#match-quiz");
   if (!root) return;
   const RESCUE_PETFINDER = "https://www.petfinder.com/member/us/ca/oakley/no-paws-left-behind-kitty-rescue-ca3018/";
-  const RESCUE_SITE = "https://www.nopawsleftbehindkittyrescue.com/";
+  const RESCUE_SITE = "https://www.nopawsleftbehindkittyrescue.com/adopt";
   const stepHost = document.querySelector("#quiz-step-content");
   const resultsHost = document.querySelector("#quiz-results");
   const restartWrap = document.querySelector("#quiz-restart-wrap");
@@ -307,7 +307,7 @@
   }
 
   function noMatchPanel(title, message) {
-    return '<section class="quiz-no-match"><h3>' + escapeHtml(title) + '</h3><p>' + escapeHtml(message) + '</p><div class="quiz-external-links"><a href="' + RESCUE_PETFINDER + '" target="_blank" rel="noopener noreferrer">See all rescue pets on Petfinder</a><a href="' + RESCUE_SITE + '" target="_blank" rel="noopener noreferrer">Visit the rescue website</a></div></section>';
+    return '<section class="quiz-no-match"><h3>' + escapeHtml(title) + '</h3><p>' + escapeHtml(message) + '</p><div class="quiz-external-links"><a href="' + RESCUE_PETFINDER + '" target="_blank" rel="noopener noreferrer">See all rescue pets on Petfinder</a><a href="' + RESCUE_SITE + '" target="_blank" rel="noopener noreferrer">Visit the rescue’s adoption page</a></div></section>';
   }
 
   function renderResults() {
