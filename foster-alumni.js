@@ -203,36 +203,26 @@ function renderAlumniLitter(litter, kittens, alumniIds, today, paired = false, e
 }
 
 function renderTemporaryAlumniCard(litter, kittens) {
-  const preferredPairOrder = { raymond: 0, wally: 1, melody: 0, harvey: 1, diego: 0, valentina: 1 };
-  const orderedKittens = [...kittens].sort((a, b) =>
-    (preferredPairOrder[a.id] ?? 99) - (preferredPairOrder[b.id] ?? 99)
-  );
-  const names = orderedKittens.map(kitten => {
-    const href = kitten.profileUrl || "kittens/profile-template.html?id=" + encodeURIComponent(kitten.id);
-    return '<a class="text-link" href="' + escapeHTML(href) + '">' + escapeHTML(kitten.name) + '</a>';
-  });
-  const joinedNames = names.length > 1 ? names.slice(0,-1).join(", ") + " and " + names[names.length-1] : names[0] || "Our kittens";
-  const countWords = ["Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"];
-  const countText = (countWords[names.length] || names.length) + (names.length === 1 ? " kitten from this litter" : " kittens from this litter");
-  const verb = names.length === 1 ? "is" : "are";
-  const currentFostersLink = 'all-kittens/#litter-' + Number(litter);
-  const kittenNames = orderedKittens.map(kitten => kitten.name);
-  const meetLabel = kittenNames.length > 1
-    ? 'Meet ' + kittenNames.slice(0, -1).join(', ') + ' and ' + kittenNames[kittenNames.length - 1]
-    : 'Meet ' + (kittenNames[0] || 'these kittens');
-  return '<article class="alumni-temporary-notice alumni-temporary-notice--pair"><h3>Their Next Chapter Starts With You</h3>' +
-    '<p>' + countText + " " + verb + ' still in foster care and waiting for their forever homes. Meet ' + joinedNames + '.</p>' +
-    '<a class="alumni-current-fosters-link" href="' + currentFostersLink + '--' + orderedKittens.map(kitten => encodeURIComponent(kitten.id)).join(',') + '">' + escapeHTML(meetLabel) + ' →</a></article>';
+  const notice=(kittens.find(kitten=>kitten.alumniNotice)?.alumniNotice)||{};
+  if(notice.enabled===false)return "";
+  const preferredPairOrder={raymond:0,wally:1,melody:0,harvey:1,diego:0,valentina:1};
+  const orderedKittens=[...kittens].sort((a,b)=>(preferredPairOrder[a.id]??99)-(preferredPairOrder[b.id]??99));
+  const names=orderedKittens.map(kitten=>'<a class="text-link" href="'+escapeHTML(kitten.profileUrl||"kittens/profile-template.html?id="+encodeURIComponent(kitten.id))+'">'+escapeHTML(kitten.name)+'</a>');
+  const joinedNames=names.length>1?names.slice(0,-1).join(", ")+" and "+names[names.length-1]:names[0]||"Our kittens";
+  const countWords=["Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"];
+  const countText=(countWords[names.length]||names.length)+(names.length===1?" kitten from this litter":" kittens from this litter");
+  const verb=names.length===1?"is":"are",currentFostersLink="all-kittens/#litter-"+Number(litter);
+  const kittenNames=orderedKittens.map(kitten=>kitten.name);
+  const meetLabel=kittenNames.length>1?"Meet "+kittenNames.slice(0,-1).join(", ")+" and "+kittenNames[kittenNames.length-1]:"Meet "+(kittenNames[0]||"these kittens");
+  const title=notice.title||"Their Next Chapter Starts With You";
+  const message=notice.message||countText+" "+verb+" still in foster care and waiting for their forever homes. Meet "+joinedNames+".";
+  return '<article class="alumni-temporary-notice alumni-temporary-notice--pair"><h3>'+escapeHTML(title)+'</h3><p>'+escapeHTML(message)+'</p><a class="alumni-current-fosters-link" href="'+currentFostersLink+'--'+orderedKittens.map(kitten=>encodeURIComponent(kitten.id)).join(",")+'">'+escapeHTML(meetLabel)+' →</a></article>';
 }
 function renderTemporaryAlumniLitter(litter, kittens) {
-  const total = getAlumniLitterTotal(litter);
-  const heading = formatAlumniLitter(litter) + " — " + total + (total === 1 ? " kitten" : " kittens");
-  return '<section class="alumni-litter alumni-litter--temporary" aria-labelledby="alumni-litter-' + litter + '">' +
-    '<div class="alumni-litter-heading"><h2 id="alumni-litter-' + litter + '">' + escapeHTML(heading) + '</h2></div>' +
-    '<div class="alumni-cards" role="region" aria-label="' + escapeHTML(heading) + '">' + renderTemporaryAlumniCard(litter, kittens) + '</div>' +
-    '</section>';
+  const total=getAlumniLitterTotal(litter),heading=formatAlumniLitter(litter)+" — "+total+(total===1?" kitten":" kittens");
+  const card=renderTemporaryAlumniCard(litter,kittens);if(!card)return "";
+  return '<section class="alumni-litter alumni-litter--temporary" aria-labelledby="alumni-litter-'+litter+'"><div class="alumni-litter-heading"><h2 id="alumni-litter-'+litter+'">'+escapeHTML(heading)+'</h2></div><div class="alumni-cards" role="region" aria-label="'+escapeHTML(heading)+'">'+card+'</div></section>';
 }
-
 function renderFosterAlumni(kittenList, today = new Date()) {
   if (typeof document === "undefined") return;
   const container = document.querySelector("#foster-alumni");
