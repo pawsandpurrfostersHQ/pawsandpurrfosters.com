@@ -1,4 +1,6 @@
 (() => {
+  // Count only the live public website; Render preview and local testing are excluded.
+  if (window.location.hostname !== "pawsandpurrfostersHQ.github.io") return;
   const OPT_OUT_KEY = "paws_purr_analytics_opt_out";
   const OPT_OUT_PARAM = "analytics";
   const params = new URLSearchParams(window.location.search);
