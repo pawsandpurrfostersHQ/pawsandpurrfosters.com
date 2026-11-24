@@ -15,6 +15,7 @@
     if (value.events && typeof value.events === "object") window.PAWS_EVENT_DATA = value.events;
     if (Array.isArray(value.alumni)) window.PAWS_FOSTER_ALUMNI = value.alumni;
     if (Array.isArray(value.heroPhotos)) window.PAWS_FOSTER_CAROUSEL_PHOTOS = value.heroPhotos;
+    if (Array.isArray(value.litterNotices)) window.PAWS_LITTER_NOTICES = value.litterNotices;
     document.documentElement.classList.add("paws-preview-mode");
   }
 
