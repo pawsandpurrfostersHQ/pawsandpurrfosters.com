@@ -382,7 +382,6 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .alumni-temporary-notice--pair { max-width: none; flex: 0 0 calc(clamp(220px, calc((100% - 44px) / 3), 320px) + 32px); display: flex; flex-direction: column; }
 .alumni-temporary-notice--pair p { margin-bottom: 18px; }
 .alumni-temporary-notice--pair .button { align-self: flex-start; margin-top: auto; white-space: nowrap; }
-.alumni-temporary-notice--eleventh { flex: 0 0 calc(clamp(220px, calc((100% - 44px) / 3), 320px) + clamp(220px, calc((100% - 44px) / 3), 320px) + clamp(220px, calc((100% - 44px) / 3), 320px) + 44px); }
 .alumni-litter--temporary .alumni-cards { overflow-x: auto; }
 .foster-page-intro .page-actions { gap: 12px; flex-wrap: wrap; }
 .alumni-litter { min-width: 0; }
@@ -433,7 +432,6 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 
 @media (max-width: 500px) {
   .alumni-temporary-notice--pair { flex-basis: min(calc(76vw + 24px), 334px); }
-  .alumni-temporary-notice--eleventh { flex-basis: 100%; }
   .alumni-litter--paired .alumni-card { flex-basis: min(76vw, 310px); }
   .alumni-litter-heading { align-items: flex-start; }
   .alumni-carousel-controls { gap: 5px; }
@@ -509,7 +507,6 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .alumni-litter--temporary .alumni-temporary-notice { scroll-snap-align: start; }
 @media (max-width: 760px) {
   .alumni-litter--temporary .alumni-cards { padding-right: 20px; }
-  .alumni-temporary-notice--eleventh { flex: 0 0 min(84vw, 340px); }
 }
 
 @media (min-width: 761px) {
@@ -4825,7 +4822,6 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
   .alumni-cards { min-width: 0; width: 100%; }
   .alumni-card { flex: 0 0 min(100%, 420px); width: min(100%, 420px); min-width: 0; }
   .alumni-temporary-notice--pair,
-  .alumni-temporary-notice--eleventh { flex: 0 0 min(100%, 420px); width: min(100%, 420px); }
   .alumni-cards--single { grid-template-columns: minmax(0, 1fr) !important; }
   .alumni-cards--single > .alumni-card {
     grid-column: 1 !important;
