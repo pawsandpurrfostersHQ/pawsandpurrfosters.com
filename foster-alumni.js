@@ -208,7 +208,8 @@ function renderTemporaryAlumniCard(litter, kittens) {
   const preferredPairOrder={raymond:0,wally:1,melody:0,harvey:1,diego:0,valentina:1};
   const orderedKittens=[...kittens].sort((a,b)=>(preferredPairOrder[a.id]??99)-(preferredPairOrder[b.id]??99));
   const names=orderedKittens.map(kitten=>'<a class="text-link" href="'+escapeHTML(kitten.profileUrl||"kittens/profile-template.html?id="+encodeURIComponent(kitten.id))+'">'+escapeHTML(kitten.name)+'</a>');
-  const joinedNames=names.length>1?names.slice(0,-1).join(", ")+" and "+names[names.length-1]:names[0]||"Our kittens";
+  const plainNames=orderedKittens.map(kitten=>kitten.name);
+  const joinedNames=plainNames.length>1?plainNames.slice(0,-1).join(", ")+" and "+plainNames[plainNames.length-1]:plainNames[0]||"Our kittens";
   const countWords=["Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"];
   const countText=(countWords[names.length]||names.length)+(names.length===1?" kitten from this litter":" kittens from this litter");
   const verb=names.length===1?"is":"are",currentFostersLink="all-kittens/#litter-"+Number(litter);
