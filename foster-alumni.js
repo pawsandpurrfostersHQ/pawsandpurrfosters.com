@@ -275,8 +275,15 @@ function renderFosterAlumni(kittenList, today = new Date()) {
   }).join("");
 
   if (window.location.hash) {
-    const target = document.getElementById(window.location.hash.slice(1));
-    if (target) requestAnimationFrame(() => target.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" }));
+    const target = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
+    if (target) requestAnimationFrame(() => {
+      const track = target.closest(".alumni-cards");
+      if (track) {
+        const targetLeft = target.getBoundingClientRect().left - track.getBoundingClientRect().left + track.scrollLeft;
+        track.scrollTo({ left: Math.max(0, targetLeft - 8), behavior: "smooth" });
+      }
+      target.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+    });
   }
 
   container.querySelectorAll(".alumni-notice-carousel").forEach(carousel=>{
