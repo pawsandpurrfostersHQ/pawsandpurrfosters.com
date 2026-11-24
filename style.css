@@ -383,10 +383,10 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .alumni-temporary-notice--pair p { margin-bottom: 18px; }
 .alumni-temporary-notice--pair { min-height: 470px; }
 .alumni-temporary-notice--pair h3 { font-family:"Playfair Display",serif; }
-.alumni-notice-carousel { position:relative; display:grid; grid-template-columns:minmax(0,1fr); align-items:center; width:min(100%,230px); margin:8px auto 18px; }
+.alumni-notice-carousel { position:relative; display:grid; grid-template-columns:minmax(0,1fr); align-items:center; width:min(100%,270px); margin:8px auto 18px; }
 .alumni-notice-slide { grid-area:1/1; min-width:0; margin:0; opacity:0; visibility:hidden; transition:opacity .65s ease; text-align:center; }
 .alumni-notice-slide.is-active { opacity:1; visibility:visible; }
-.alumni-notice-slide img { display:block; width:100%; height:112px; object-fit:contain; border-radius:14px; background:rgba(255,255,255,.7); }
+.alumni-notice-slide img { display:block; width:100%; height:170px; object-fit:contain; border-radius:14px; background:rgba(255,255,255,.7); }
 .alumni-notice-slide figcaption { margin-top:5px; color:var(--purple-dark); font-family:"Playfair Display",serif; font-size:17px; font-weight:600; }
 .alumni-temporary-notice--pair .alumni-current-fosters-link { align-self:flex-start; margin-top:auto; }
 .alumni-litter--temporary .alumni-cards,
@@ -402,7 +402,9 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 .alumni-notice-stack .alumni-notice-slide { grid-area:1/1; }
 .alumni-temporary-notice--stacked p,.alumni-temporary-notice--alternating p { font-size:13px; line-height:1.45; margin-bottom:8px; }
 .alumni-temporary-notice--stacked { padding-top:24px; padding-bottom:24px; }
-.alumni-temporary-notice--alternating .alumni-notice-carousel { width:min(100%,250px); }
+.alumni-temporary-notice--alternating .alumni-notice-carousel { width:min(100%,270px); }
+.alumni-temporary-notice--alternating .alumni-notice-slide img { height:170px; }
+.alumni-temporary-notice--alternating .alumni-notice-slide figcaption { margin-top:8px; }
 .alumni-notice-slide figcaption { margin-top:5px; }
 
 .alumni-temporary-notice--pair .button { align-self: flex-start; margin-top: auto; white-space: nowrap; }
@@ -508,30 +510,7 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 }
 
 
-/* Prevent mobile carousel snapping from trapping temporary alumni notices */
-.alumni-litter--temporary .alumni-cards,
-.alumni-litter:has(.alumni-temporary-notice) .alumni-cards {
-  scroll-snap-type: none !important;
-  overscroll-behavior-x: contain;
-  touch-action: pan-x pan-y;
-  -webkit-overflow-scrolling: touch;
-}
-.alumni-litter--temporary .alumni-temporary-notice,
-.alumni-litter .alumni-temporary-notice {
-  scroll-snap-align: none !important;
-  flex-shrink: 0;
-}
-.alumni-litter--temporary .alumni-temporary-notice--pair {
-  flex-basis: min(84vw, 440px);
-}
 
-/* Mobile: allow natural horizontal swiping through every alumni notice/card */
-.alumni-cards { touch-action: pan-x pan-y; overscroll-behavior-x: contain; scroll-snap-stop: normal; }
-.alumni-litter--temporary .alumni-cards { scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; }
-.alumni-litter--temporary .alumni-temporary-notice { scroll-snap-align: start; }
-@media (max-width: 760px) {
-  .alumni-litter--temporary .alumni-cards { padding-right: 20px; }
-}
 
 @media (min-width: 761px) {
   #events #event-featured .event-card--compact { padding:17px 21px; }
@@ -539,9 +518,6 @@ footer strong { color: var(--purple-dark); font-family: "Playfair Display", seri
 #events #event-featured .event-card--compact h2 { font-size:23px; margin:3px 0 7px; }
 #events #event-featured .event-card--compact p { margin:4px 0; font-size:14px; }
 
-/* Temporary alumni notices should not be trapped by mandatory snap points on phones. */
-.alumni-litter--temporary .alumni-cards { scroll-snap-type: none; }
-.alumni-litter--temporary .alumni-cards > * { scroll-snap-align: none; }
 
 /* Events page cards follow the same wide, stacked rhythm as the rest of the site. */
 .events-page .event-panels { display:flex; flex-direction:column; gap:22px; }
@@ -5842,23 +5818,24 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
   }
 }
 
-/* Recent Graduate celebrations use the same soft blue family as their badge. */
+/* Keep the homepage graduate card white and its graduation date in the original purple palette. */
 .graduate-card { background:rgba(255,255,255,.88); border-color:rgba(117,98,141,.18); }
-.graduate-card .graduate-card__names { color:#426487; }
-.graduate-card .graduate-date { color:#557b9f; border-top-color:#d8e5f0; }
+.graduate-card .graduate-date { color:var(--purple-dark); border-top-color:rgba(87,69,111,.22); }
 @media(prefers-reduced-motion:reduce){.alumni-notice-slide{transition:none}}
 
-/* Final alumni carousel alignment: every litter track, including paired and temporary cards, snaps consistently. */
-.alumni-litter--paired .alumni-cards,
-.alumni-litter--temporary .alumni-cards {
+/* All alumni tracks use one consistent horizontal snap behavior, including notice cards. */
+.alumni-litter .alumni-cards {
   overflow-x:auto;
   scroll-snap-type:x mandatory;
   scroll-behavior:smooth;
+  scroll-padding-inline:2px;
+  overscroll-behavior-x:contain;
   -webkit-overflow-scrolling:touch;
 }
-.alumni-litter--paired .alumni-card,
-.alumni-litter--temporary .alumni-temporary-notice {
+.alumni-litter .alumni-cards > .alumni-card,
+.alumni-litter .alumni-cards > .alumni-temporary-notice {
   scroll-snap-align:start;
+  scroll-snap-stop:always;
 }
 .alumni-current-fosters-link {
   white-space:nowrap;
