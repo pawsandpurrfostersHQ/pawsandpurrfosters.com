@@ -256,7 +256,7 @@ function renderFosterAlumni(kittenList, today = new Date()) {
     const waiting = currentGroups.get(litter) || [];
     const configured=(Array.isArray(window.PAWS_LITTER_NOTICES)?window.PAWS_LITTER_NOTICES:[]).filter(n=>Number(n.litter)===Number(litter));
     const legacy=waiting.find(k=>k.alumniNotice)?.alumniNotice;
-    const notices=configured.length?configured:(legacy?[{...legacy,enabled:legacy.enabled!==false,kittenIds:waiting.map(k=>String(k.id))}]:[]);
+    const notices=configured.length?configured:(legacy?[{...legacy,enabled:legacy.enabled!==false,kittenIds:waiting.map(k=>String(k.id))}]:[{enabled:true,kittenIds:waiting.map(k=>String(k.id))}]);
     const noticeMarkup=waiting.length?notices.map(n=>renderTemporaryAlumniCard(litter,waiting,n)).join(""):"";
     if (kittens.length) return renderAlumniLitter(litter, kittens, alumniIds, today, false, noticeMarkup, kittens[kittens.length - 1]?.id || "");
     return renderTemporaryAlumniLitter(litter, waiting, notices);
