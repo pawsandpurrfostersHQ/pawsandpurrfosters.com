@@ -27,7 +27,7 @@
   function dateText(value){return new Intl.DateTimeFormat("en-US",{month:"long",day:"numeric",year:"numeric"}).format(new Date(value+"T12:00:00"));}
   function groupMarkup(group,groupIndex){
     var names=group.map(function(k){return k.name;}).join(" & ");
-    var linkedNames=group.map(function(k){return "<a class=\\"graduate-card__name-link\\" href=\\"foster-alumni/#alumni-"+esc(k.id)+"\\">"+esc(k.name)+"</a>";}).join(" &amp; ");
+    var linkedNames=group.map(function(k){return "<a class=\"graduate-card__name-link\" href=\"foster-alumni/#alumni-"+esc(k.id)+"\">"+esc(k.name)+"</a>";}).join(" &amp; ");
     var photoSets=group.map(photosFor);
     var frames=[];
     var count=Math.max.apply(null,photoSets.map(function(list){return list.length;}));
