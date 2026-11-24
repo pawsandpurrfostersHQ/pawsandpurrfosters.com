@@ -27,6 +27,7 @@
   function dateText(value){return new Intl.DateTimeFormat("en-US",{month:"long",day:"numeric",year:"numeric"}).format(new Date(value+"T12:00:00"));}
   function groupMarkup(group,groupIndex){
     var names=group.map(function(k){return k.name;}).join(" & ");
+    var linkedNames=group.map(function(k){return "<a class=\\"graduate-card__name-link\\" href=\\"foster-alumni/#alumni-"+esc(k.id)+"\\">"+esc(k.name)+"</a>";}).join(" &amp; ");
     var photoSets=group.map(photosFor);
     var frames=[];
     var count=Math.max.apply(null,photoSets.map(function(list){return list.length;}));
@@ -42,13 +43,13 @@
       ||(group.length>1?group.map(function(k){return k.description||k.bio||"";}).filter(Boolean).join(" "):(group[0].description||group[0].bio||""));
     return "<article class=\"graduate-card\" data-graduate-card=\""+groupIndex+"\">"
       +"<div class=\"graduate-photo-slides\" aria-label=\"Photos of "+esc(names)+"\">"+slides+"</div>"
-      +"<h3 class=\"graduate-card__names\">"+esc(names)+"</h3>"
+      +"<h3 class=\"graduate-card__names\">"+linkedNames+"</h3>"
       +"<p class=\"graduate-card__copy\">"+esc(description)+"</p>"
       +"<p class=\"graduate-date\">Graduated "+dateText(group[0].adoptionDate)+"</p>"
       +"</article>";
   }
   root.innerHTML="<div class=\"graduate-celebration__banner\">"
-    +"<div class=\"graduate-celebration__heading\"><p class=\"eyebrow\">A new chapter begins</p><h2>Celebrating Our Newest Graduates</h2><p>Celebrating the kittens who have recently found their forever homes.</p></div>"
+    +"<div class=\"graduate-celebration__heading\"><h2>Celebrating Our Newest Graduates</h2><p>We are celebrating our newest graduates all week as they begin their happy new chapters in their forever homes!</p></div>"
     +"<div class=\"graduate-grid\">"+groups.map(groupMarkup).join("")+"</div></div>";
   root.hidden=false;
   root.querySelectorAll(".graduate-card").forEach(function(card){
