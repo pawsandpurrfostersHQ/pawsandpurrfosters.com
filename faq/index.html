@@ -8,6 +8,7 @@
   <title>Frequently Asked Questions | Paws &amp; Purr Fosters</title>
   <link rel="icon" type="image/png" href="assets/main-logo.PNG">
   <link rel="stylesheet" href="style.css?v=20261115-faq-question-accordion1">
+  <link rel="stylesheet" href="faq-guide.css?v=20261124-guide1">
 </head>
 <body>
   <header class="site-header">
@@ -31,9 +32,10 @@
     <header class="page-intro foster-page-intro">
       <p class="eyebrow">A little more information</p>
       <h1>Frequently Asked Questions</h1>
-      <p>Have questions about our foster kittens or the adoption process? Here are a few helpful answers. If your question isn’t answered here, or you have a question about one of our kittens, you’re welcome to send us a message below.</p>
+      <p>Explore practical information shaped by our experience as foster parents, along with helpful guidance for welcoming a kitten into your home. Search in your own words or browse by topic. These are suggestions, not one-size-fits-all rules — every kitten and household is different.</p>
     </header>
-    <section class="faq-list" aria-label="Frequently asked questions">
+    <section id="foster-guide" class="foster-guide" aria-label="Searchable kitten care and adoption guide"></section>
+    <section class="faq-list" aria-label="Adoption and rescue frequently asked questions">
       <details class="faq-item"><summary>Do bonded pairs need to be adopted together?</summary>
         <p>Yes. Any kittens labeled as a <strong>bonded pair</strong> must be adopted together, regardless of age. These kittens have a strong bond and are required to go to the same home.</p>
         <p>Some kittens have a <strong>preferred pair</strong> listed on their profile. This means they may be able to go home with a particular sibling or foster sibling. This is most common with kittens five months old and younger, who are generally required to be adopted in pairs.</p>
@@ -198,7 +200,9 @@
   </footer>
   <script src="navigation.js"></script>
   <script src="kitten-data.js"></script>
+  <script src="event-data.js"></script>
   <script src="preview-bridge.js"></script>
+  <script src="faq-guide.js?v=20261124-guide1"></script>
   <script>
     (function () {
       const form = document.getElementById("faq-question-form");
