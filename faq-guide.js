@@ -161,8 +161,9 @@
   const closeButton = root.querySelector(".paw-help-close");
   const topicsToggle = root.querySelector(".paw-help-topics-toggle");
   const topicsBox = root.querySelector("#guide-topics");
-  function openSearch(){backdrop.hidden=false;launcher.setAttribute("aria-expanded","true");document.body.classList.add("paw-help-open");setTimeout(()=>input.focus(),80);}
-  function closeSearch(){backdrop.hidden=true;launcher.setAttribute("aria-expanded","false");document.body.classList.remove("paw-help-open");launcher.focus();}
+  let savedScrollY=0;
+  function openSearch(){savedScrollY=window.scrollY||window.pageYOffset||0;document.body.style.top=`-${savedScrollY}px`;document.body.classList.add("paw-help-open");backdrop.hidden=false;launcher.setAttribute("aria-expanded","true");setTimeout(()=>input.focus(),80);}
+  function closeSearch(){backdrop.hidden=true;launcher.setAttribute("aria-expanded","false");document.body.classList.remove("paw-help-open");document.body.style.top="";window.scrollTo(0,savedScrollY);launcher.focus();}
   launcher.addEventListener("click",openSearch);
   const nudge=root.querySelector(".paw-help-nudge");
   const nudgeOpen=root.querySelector(".paw-help-nudge-open");
@@ -174,18 +175,15 @@
   closeButton.addEventListener("click",closeSearch);
   backdrop.addEventListener("click",e=>{if(e.target===backdrop)closeSearch();});
   document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!backdrop.hidden)closeSearch();});
-  topicsToggle.addEventListener("click",()=>{const open=topicsBox.hidden;topicsBox.hidden=!open;categoryBox.hidden=!open;topicsToggle.setAttribute("aria-expanded",String(open));});
+  function showTopicChooser(){categoryBox.hidden=false;topicsBox.hidden=true;topicsToggle.hidden=false;topicsToggle.setAttribute("aria-expanded","true");topicsToggle.textContent="Browse by topic";topicsToggle.insertAdjacentHTML("beforeend",` <span aria-hidden="true">⌄</span>`);}
+  function showSelectedCategory(cat){categoryBox.hidden=true;topicsToggle.hidden=true;topicsBox.hidden=false;topicsBox.innerHTML=`<button type="button" class="guide-all-topics">← All topics</button><p class="guide-category-title">${esc(cat)}</p>`+articles.filter(a=>a.cat===cat).map(a=>`<button type="button" class="guide-topic" data-id="${a.id}"><span>${esc(a.q)}</span><span aria-hidden="true">›</span></button>`).join("");topicsBox.querySelector(".guide-all-topics").addEventListener("click",showTopicChooser);topicsBox.querySelectorAll("[data-id]").forEach(b=>b.addEventListener("click",()=>showArticle(articles.find(a=>a.id===b.dataset.id))));}
+  topicsToggle.addEventListener("click",()=>{const open=categoryBox.hidden;categoryBox.hidden=!open;topicsBox.hidden=true;topicsToggle.setAttribute("aria-expanded",String(open));});
   root.querySelector(".guide-search").addEventListener("submit",e=>{e.preventDefault();showResults(input.value);});
   input.addEventListener("input",()=>{if(input.value.trim().length>=3)showResults(input.value);else results.innerHTML="";});
-  function showCategory(cat) {
-    const list = cat==="All topics" ? articles : articles.filter(a=>a.cat===cat);
-    topicsBox.innerHTML = list.map(a=>`<button type="button" class="guide-topic" data-id="${a.id}"><span>${esc(a.q)}</span><span aria-hidden="true">›</span></button>`).join("");
-    topicsBox.querySelectorAll("[data-id]").forEach(b=>b.addEventListener("click",()=>showArticle(articles.find(a=>a.id===b.dataset.id))));
-  }
-  categories.forEach((cat,i)=>{
-    const b=document.createElement("button"); b.type="button"; b.className="guide-category"+(i===0?" is-active":""); b.textContent=cat;
-    b.addEventListener("click",()=>{root.querySelectorAll(".guide-category").forEach(x=>x.classList.remove("is-active"));b.classList.add("is-active");showCategory(cat);});
-    root.querySelector("#guide-categories").append(b);
+  categories.filter(cat=>cat!=="All topics").forEach(cat=>{
+    const b=document.createElement("button"); b.type="button"; b.className="guide-category"; b.textContent=cat;
+    b.addEventListener("click",()=>showSelectedCategory(cat));
+    categoryBox.append(b);
   });
-  showCategory("All topics");
+  categoryBox.hidden=true;topicsBox.hidden=true;topicsToggle.setAttribute("aria-expanded","false");
 })();
