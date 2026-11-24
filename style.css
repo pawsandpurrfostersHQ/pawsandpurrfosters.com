@@ -5547,7 +5547,6 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
   .alumni-litters { gap:30px; }
   .alumni-litter-heading { margin-bottom:12px; scroll-margin-top:94px; }
   .alumni-litter-heading h2 { font-size:clamp(22px,6vw,28px); }
-  .alumni-cards,.alumni-litter--paired .alumni-cards { display:grid!important; grid-template-columns:minmax(0,1fr); justify-items:center; gap:14px; overflow:visible!important; padding:0 0 4px!important; scroll-snap-type:none!important; }
   .alumni-card,.alumni-litter--paired .alumni-card { width:min(100%,390px)!important; max-width:390px!important; min-width:0; flex:none!important; margin:0 auto!important; scroll-snap-align:none!important; }
   .alumni-main-photo { aspect-ratio:4/3; }
   .alumni-photo-hint--desktop { display:none; }
