@@ -5942,16 +5942,16 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
 /* Make the shared paired-kitten frame easy to see, especially on phones. */
 .kitten-pair-highlight {
   z-index: 5;
-  border: 4px solid #5f9666;
+  border: 3px solid #5f9666;
   border-radius: 20px;
-  background: rgba(237, 246, 235, .10);
-  box-shadow: 0 0 0 5px rgba(95, 150, 102, .24), 0 8px 22px rgba(54, 95, 59, .18);
+  background: transparent;
+  box-shadow: 0 0 0 2px rgba(95, 150, 102, .16);
 }
 @media (max-width: 760px) {
   .kitten-pair-highlight {
-    border-width: 4px;
-    border-radius: 18px;
-    box-shadow: 0 0 0 5px rgba(95, 150, 102, .28), 0 6px 18px rgba(54, 95, 59, .20);
+    border-width: 3px;
+    border-radius: 16px;
+    box-shadow: 0 0 0 1px rgba(95, 150, 102, .14);
   }
 }
 
