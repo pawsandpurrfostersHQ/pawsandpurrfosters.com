@@ -13,6 +13,7 @@
   const state = {};
   let stepIndex = 0;
   let currentQuestions = [];
+  let quizStarted = false;
 
   const MATCH_PROFILES = {
     "diego-valentina": {
@@ -186,7 +187,7 @@
     questions.push({
       id: "pair",
       title: "Would you consider adopting a pair of kittens?",
-      hint: "All of the kittens currently featured in our foster program are in bonded pairs.",
+      hint: "All of our currently adoptable kittens are in bonded pairs.",
       options: [
         ["yes","Yes, I’m looking for a pair","I’m happy to welcome two kittens together."],
         ["single","I prefer one kitten","I’m specifically looking for a single kitten."],
@@ -226,6 +227,7 @@
     stepHost.querySelectorAll("[data-answer]").forEach(button => {
       button.addEventListener("click", () => {
         state[question.id] = button.dataset.answer;
+        if (!quizStarted) { quizStarted = true; document.dispatchEvent(new CustomEvent("paws:analytics", {detail:{event:"quiz_started", page_path:"/find-your-match/"}})); }
         renderQuestion();
       });
     });
@@ -278,7 +280,7 @@
     const names = pair.kittens.map(k => k.name);
     const photoHtml = pair.kittens.map(pairPhoto).join("");
     const profileLinks = pair.kittens.map(k => '<a href="' + escapeHtml(k.profileUrl || "all-kittens/") + '">Meet ' + escapeHtml(k.name) + '</a>').join("");
-    const inquiryLinks = pair.kittens.map(k => k.petfinderUrl ? '<a class="primary-link" href="' + escapeHtml(k.petfinderUrl) + '" target="_blank" rel="noopener noreferrer">Inquire about ' + escapeHtml(k.name) + '</a>' : "").join("");
+    const inquiryLinks = pair.kittens.map(k => k.petfinderUrl ? '<a class="primary-link" data-kitten-id="' + escapeHtml(k.id) + '" href="' + escapeHtml(k.petfinderUrl) + '" target="_blank" rel="noopener noreferrer">Inquire about ' + escapeHtml(k.name) + '</a>' : "").join("");
     return '<article class="quiz-match-card"><div class="quiz-match-photos">' + photoHtml + '</div><div class="quiz-match-body"><p class="quiz-match-kicker">Bonded pair · Must stay together</p><h3>' + escapeHtml(names.join(" & ")) + '</h3><p>' + escapeHtml(pair.profile.summary) + '</p><p class="quiz-match-reason">' + escapeHtml(pair.profile.reason) + '</p>' +
       (cautionOverride ? '<p class="quiz-match-caution">' + escapeHtml(cautionOverride) + '</p>' : '') +
       '<p>' + escapeHtml(pair.profile.intro) + '</p><div class="quiz-match-links">' + profileLinks + inquiryLinks + '</div></div></article>';
@@ -310,7 +312,7 @@
     document.dispatchEvent(new CustomEvent("paws:analytics", {detail:{event:"quiz_completed", page_path:"/find-your-match/"}}));
 
     if (state.pair === "single") {
-      resultsHost.innerHTML = noMatchPanel("Looking for one kitten?", "We completely understand. At the moment, the kittens featured in our foster program are bonded pairs, so we cannot offer one kitten from these pairs on their own. If you are set on adopting a single kitten, we recommend exploring the other cats and kittens available through No Paws Left Behind Kitty Rescue. Their Petfinder page includes the rescue’s wider listings, which may include a single cat who is a better fit for what you are looking for.");
+      resultsHost.innerHTML = noMatchPanel("Looking for one kitten?", "We completely understand. At the moment, the kittens currently available for adoption are bonded pairs, so we cannot offer one kitten from these pairs on their own. If you are set on adopting a single kitten, we recommend exploring the other cats and kittens available through No Paws Left Behind Kitty Rescue. Their Petfinder page includes the rescue’s wider listings, which may include a single cat who is a better fit for what you are looking for.");
       return;
     }
 
