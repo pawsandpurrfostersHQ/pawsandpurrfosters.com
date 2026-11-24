@@ -4,7 +4,7 @@
   if(!root)return;
   var now=new Date(),todayStart=new Date(now.getFullYear(),now.getMonth(),now.getDate());
   function daysSinceDate(value){
-    if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(String(value||"")))return -1;
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(String(value||"")))return -1;
     var parts=value.split("-").map(Number),adopted=new Date(parts[0],parts[1]-1,parts[2]);
     if(adopted.getFullYear()!==parts[0]||adopted.getMonth()!==parts[1]-1||adopted.getDate()!==parts[2])return -1;
     return Math.round((todayStart-adopted)/86400000);
