@@ -1,8 +1,11 @@
 (() => {
   "use strict";
-  const root = document.getElementById("foster-guide");
-  if (!root) return;
-  const eventData = window.PAWS_EVENT_DATA || {};
+  let root = document.getElementById("foster-guide-widget");
+  if (!root) {
+    root = document.createElement("div");
+    root.id = "foster-guide-widget";
+    document.body.appendChild(root);
+  }
   const articles = [
     {id:"supplies",cat:"Bringing a kitten home",q:"What supplies do I need before bringing my kitten home?",aliases:"what should i buy shopping list essentials things to get new cat kitten",body:`
       <p>Preparing a few essentials ahead of time can make your kitten's first days feel much calmer. The right setup can vary with a kitten's age, size, and individual needs.</p>
@@ -133,23 +136,23 @@
     return n;
   }
   root.innerHTML = `
-    <section class="guide-search-panel" aria-labelledby="guide-search-title">
-      <p class="eyebrow">Paws &amp; Purr Fosters · Learning center</p>
-      <h2 id="guide-search-title">What would you like to know?</h2>
-      <p>Type a question in your own words. We'll suggest the closest topic from our collection of foster-informed guides. This search matches questions to existing articles; it does not generate custom answers.</p>
-      <form class="guide-search" role="search">
-        <label class="sr-only" for="guide-search-input">Search kitten-care questions</label>
-        <input id="guide-search-input" type="search" placeholder="For example: What do I need before bringing home a kitten?" autocomplete="off">
-        <button class="button primary" type="submit">Find an answer</button>
-      </form>
-      <div id="guide-results" class="guide-results" aria-live="polite"></div>
-    </section>
-    <section class="guide-browse">
-      <div class="guide-section-heading"><p class="eyebrow">Explore the guide</p><h2>Browse by topic</h2><p>Choose a section to explore helpful information, suggestions, and things we've learned while fostering.</p></div>
-      <div class="guide-category-grid" id="guide-categories"></div>
-      <article class="guide-article" id="guide-article" hidden aria-live="polite"></article>
-    </section>
-    <section class="guide-event-note" id="guide-event-note"></section>
+    <button class="paw-help-launcher" type="button" aria-label="Open kitten care question search" aria-expanded="false" aria-controls="paw-help-dialog"><span aria-hidden="true">🐾</span></button>
+    <div class="paw-help-backdrop" hidden>
+      <section class="paw-help-dialog" id="paw-help-dialog" role="dialog" aria-modal="true" aria-labelledby="guide-search-title">
+        <div class="paw-help-heading"><div><p class="eyebrow">Paws &amp; Purr Fosters</p><h2 id="guide-search-title">Have a kitten question?</h2><p>Search our foster-informed care tips and adoption answers.</p></div><button class="paw-help-close" type="button" aria-label="Close question search">×</button></div>
+        <form class="guide-search" role="search">
+          <label class="sr-only" for="guide-search-input">Search kitten-care questions</label>
+          <input id="guide-search-input" type="search" placeholder="What would you like to know?" autocomplete="off">
+          <button class="button primary" type="submit">Search</button>
+        </form>
+        <p class="paw-help-note">Suggestions from our experience, not one-size-fits-all rules. Every kitten and household is different.</p>
+        <div id="guide-results" class="guide-results" aria-live="polite"></div>
+        <button class="paw-help-topics-toggle" type="button" aria-expanded="false">Browse by topic <span aria-hidden="true">⌄</span></button>
+        <div class="guide-category-grid" id="guide-categories" hidden></div>
+        <div id="guide-topics" class="paw-help-topics" hidden></div>
+        <article class="guide-article" id="guide-article" hidden aria-live="polite"></article>
+      </section>
+    </div>
   `;
   const input = root.querySelector("#guide-search-input");
   const results = root.querySelector("#guide-results");
@@ -159,7 +162,7 @@
     articleBox.hidden = false;
     articleBox.innerHTML = `<button class="guide-back" type="button">← Back to topics</button><p class="eyebrow">${esc(a.cat)}</p><h2>${esc(a.q)}</h2><div class="guide-article-copy">${a.body}</div><p class="guide-perspective">These articles share suggestions from our foster experience and commonly used cat-care practices. Every kitten and household is different, so take what is useful, consider your own pet's needs, and ask a veterinarian or the rescue when you need advice specific to your situation.</p>`;
     articleBox.querySelector(".guide-back").addEventListener("click", () => {articleBox.hidden=true; articleBox.innerHTML="";});
-    articleBox.scrollIntoView({behavior:"smooth",block:"start"});
+    articleBox.scrollIntoView({behavior:"smooth",block:"nearest"});
   }
   function showResults(query) {
     const matches = articles.map(a=>({a,s:score(a,query)})).filter(x=>x.s>0).sort((x,y)=>y.s-x.s).slice(0,4);
@@ -170,12 +173,24 @@
     results.innerHTML = `<p class="guide-results-label">Here are a few topics that may help:</p>`+matches.map((m,i)=>`<button type="button" class="guide-result ${i===0?"guide-result-best":""}" data-id="${m.a.id}"><span><strong>${esc(m.a.q)}</strong><small>${esc(m.a.cat)}</small></span><span aria-hidden="true">›</span></button>`).join("");
     results.querySelectorAll("[data-id]").forEach(b=>b.addEventListener("click",()=>showArticle(articles.find(a=>a.id===b.dataset.id))));
   }
+  const backdrop = root.querySelector(".paw-help-backdrop");
+  const launcher = root.querySelector(".paw-help-launcher");
+  const closeButton = root.querySelector(".paw-help-close");
+  const topicsToggle = root.querySelector(".paw-help-topics-toggle");
+  const topicsBox = root.querySelector("#guide-topics");
+  function openSearch(){backdrop.hidden=false;launcher.setAttribute("aria-expanded","true");document.body.classList.add("paw-help-open");setTimeout(()=>input.focus(),80);}
+  function closeSearch(){backdrop.hidden=true;launcher.setAttribute("aria-expanded","false");document.body.classList.remove("paw-help-open");launcher.focus();}
+  launcher.addEventListener("click",openSearch);
+  closeButton.addEventListener("click",closeSearch);
+  backdrop.addEventListener("click",e=>{if(e.target===backdrop)closeSearch();});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!backdrop.hidden)closeSearch();});
+  topicsToggle.addEventListener("click",()=>{const open=topicsBox.hidden;topicsBox.hidden=!open;categoryBox.hidden=!open;topicsToggle.setAttribute("aria-expanded",String(open));});
   root.querySelector(".guide-search").addEventListener("submit",e=>{e.preventDefault();showResults(input.value);});
   input.addEventListener("input",()=>{if(input.value.trim().length>=3)showResults(input.value);else results.innerHTML="";});
   function showCategory(cat) {
     const list = cat==="All topics" ? articles : articles.filter(a=>a.cat===cat);
-    categoryBox.innerHTML = list.map(a=>`<button type="button" class="guide-topic" data-id="${a.id}"><span>${esc(a.q)}</span><span aria-hidden="true">›</span></button>`).join("");
-    categoryBox.querySelectorAll("[data-id]").forEach(b=>b.addEventListener("click",()=>showArticle(articles.find(a=>a.id===b.dataset.id))));
+    topicsBox.innerHTML = list.map(a=>`<button type="button" class="guide-topic" data-id="${a.id}"><span>${esc(a.q)}</span><span aria-hidden="true">›</span></button>`).join("");
+    topicsBox.querySelectorAll("[data-id]").forEach(b=>b.addEventListener("click",()=>showArticle(articles.find(a=>a.id===b.dataset.id))));
   }
   categories.forEach((cat,i)=>{
     const b=document.createElement("button"); b.type="button"; b.className="guide-category"+(i===0?" is-active":""); b.textContent=cat;
@@ -183,13 +198,4 @@
     root.querySelector("#guide-categories").append(b);
   });
   showCategory("All topics");
-  const feature=eventData.featuredEvent||{};
-  const eventBox=root.querySelector("#guide-event-note");
-  const date=feature.dateISO ? new Date(feature.dateISO+"T23:59:59") : null;
-  const hasUpcoming=feature.active!==false && feature.status!=="wrapped" && date && date.getTime()>=Date.now() && feature.title && feature.location;
-  if(hasUpcoming){
-    eventBox.innerHTML=`<p class="eyebrow">Upcoming adoption event</p><h2>${esc(feature.title)}</h2><p><strong>${esc(feature.date||"")}</strong> · ${esc(feature.time||"")}</p><p>${esc(feature.location)}${feature.address?" · "+esc(feature.address):""}</p><p>Event details can change. Please check the <a href="events/">Events page</a> before heading out.</p>`;
-  } else {
-    eventBox.innerHTML=`<p class="eyebrow">Adoption events</p><h2>No upcoming event is currently listed here.</h2><p>Our schedule can change, and additional events or schedule adjustments may come up. We'll post confirmed information as soon as we know. Check the <a href="events/">Events &amp; Adoption Locations</a> page for the latest updates and regular schedule.</p>`;
-  }
 })();
