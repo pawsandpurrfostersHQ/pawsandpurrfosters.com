@@ -5,6 +5,7 @@
   const RESCUE_SITE = "https://www.nopawsleftbehindkittyrescue.com/";
   const stepHost = document.querySelector("#quiz-step-content");
   const resultsHost = document.querySelector("#quiz-results");
+  const restartWrap = document.querySelector("#quiz-restart-wrap");
   const nextButton = document.querySelector("#quiz-next");
   const backButton = document.querySelector("#quiz-back");
   const progressFill = document.querySelector("#quiz-progress-fill");
@@ -234,7 +235,7 @@
     backButton.disabled = stepIndex === 0;
     nextButton.disabled = !state[question.id];
     nextButton.textContent = stepIndex === currentQuestions.length - 1 ? "See my matches" : "Continue";
-    document.dispatchEvent(new CustomEvent("paws:analytics", {detail:{event:"quiz_step", page_path:"/find-your-match/", step:question.id}}));
+    if (quizStarted) document.dispatchEvent(new CustomEvent("paws:analytics", {detail:{event:"quiz_step", page_path:"/find-your-match/", step:question.id}}));
   }
 
   function getScore(pair) {
@@ -284,12 +285,12 @@
     return path ? '<img src="' + escapeHtml(path) + '" alt="' + escapeHtml(kitten.name) + '" loading="lazy">' : '<div class="photo-placeholder">Photo coming soon</div>';
   }
 
-  function pairCard(pair, cautionOverride = "") {
+  function pairCard(pair, cautionOverride = "", reasonOverride = "") {
     const names = pair.kittens.map(k => k.name);
     const photoHtml = pair.kittens.map(pairPhoto).join("");
     const profileLinks = pair.kittens.map(k => '<a href="' + escapeHtml(k.profileUrl || "all-kittens/") + '">Meet ' + escapeHtml(k.name) + '</a>').join("");
     const inquiryLinks = pair.kittens.map(k => k.petfinderUrl ? '<a class="primary-link" data-kitten-id="' + escapeHtml(k.id) + '" href="' + escapeHtml(k.petfinderUrl) + '" target="_blank" rel="noopener noreferrer">Inquire about ' + escapeHtml(k.name) + '</a>' : "").join("");
-    return '<article class="quiz-match-card"><div class="quiz-match-photos">' + photoHtml + '</div><div class="quiz-match-body"><p class="quiz-match-kicker">Bonded pair · Must stay together</p><h3>' + escapeHtml(names.join(" & ")) + '</h3><p>' + escapeHtml(pair.profile.summary) + '</p><p class="quiz-match-reason">' + escapeHtml(pair.profile.reason) + '</p>' +
+    return '<article class="quiz-match-card"><div class="quiz-match-photos">' + photoHtml + '</div><div class="quiz-match-body"><p class="quiz-match-kicker">Bonded pair · Must stay together</p><h3>' + escapeHtml(names.join(" & ")) + '</h3><p>' + escapeHtml(pair.profile.summary) + '</p><p class="quiz-match-reason">' + escapeHtml(reasonOverride || pair.profile.reason) + '</p>' +
       (cautionOverride ? '<p class="quiz-match-caution">' + escapeHtml(cautionOverride) + '</p>' : '') +
       '<p>' + escapeHtml(pair.profile.intro) + '</p><div class="quiz-match-links">' + profileLinks + inquiryLinks + '</div></div></article>';
   }
@@ -314,13 +315,14 @@
     stepHost.hidden = true;
     document.querySelector("#quiz-controls").hidden = true;
     resultsHost.hidden = false;
+    restartWrap.hidden = false;
     progressFill.style.width = "100%";
     stepCount.textContent = "Your results";
     progressLabel.textContent = "Here are the most useful next steps based on your answers.";
     document.dispatchEvent(new CustomEvent("paws:analytics", {detail:{event:"quiz_completed", page_path:"/find-your-match/"}}));
 
     if (state.pair === "single") {
-      resultsHost.innerHTML = noMatchPanel("Looking for one kitten?", "We completely understand. At the moment, the kittens currently available for adoption are bonded pairs, so we cannot offer one kitten from these pairs on their own. If you are set on adopting a single kitten, we recommend exploring the other cats and kittens available through No Paws Left Behind Kitty Rescue. Their Petfinder page includes the rescue’s wider listings, which may include a single cat who is a better fit for what you are looking for.");
+      resultsHost.innerHTML = pairInfoPanel() + noMatchPanel("Looking for one kitten?", "We completely understand. At the moment, the kittens currently available for adoption are bonded pairs, so we cannot offer one kitten from these pairs on their own. If you are set on adopting a single kitten, we recommend exploring the other cats and kittens available through No Paws Left Behind Kitty Rescue. Their Petfinder page includes the rescue’s wider listings, which may include a single cat who is a better fit for what you are looking for.");
       return;
     }
 
@@ -337,13 +339,13 @@
 
     if (hasDogs()) {
       const possible = pairs.find(p => p.key === "diego-valentina");
-      resultsHost.innerHTML = noMatchPanel("We don’t have a confirmed dog-household match right now.", "Harvey and Melody, and Raymond and Wally, are not recommended for homes with dogs. Diego and Valentina’s dog compatibility is unknown because they have not had direct experience with dogs. A calm, cat-friendly dog may be a possibility, but we cannot promise compatibility. Please ask the foster team and rescue before moving forward." ) + (possible ? pairCard(possible, possible.profile.caution) : "");
+      resultsHost.innerHTML = noMatchPanel("We don’t have a confirmed dog-household match right now.", "Harvey and Melody, and Raymond and Wally, are not recommended for homes with dogs. Diego and Valentina’s dog compatibility is unknown because they have not had direct experience with dogs. A calm, cat-friendly dog may be a possibility, but we cannot promise compatibility. Please ask the foster team and rescue before moving forward.") + (possible ? pairCard(possible, possible.profile.caution, "This is not a confirmed match. Diego and Valentina are the only pair whose dog compatibility is unknown, so the rescue would need to discuss your dog’s history before you consider applying.") : "");
       return;
     }
 
     if (state.children === "younger" || state.children === "mixed") {
       const possible = pairs.find(p => p.key === "diego-valentina");
-      resultsHost.innerHTML = noMatchPanel("We don’t have a confirmed match for a home with young children.", "Harvey and Melody, and Raymond and Wally, are not recommended for homes with young children. Diego and Valentina may be worth discussing, but their compatibility with younger children has not been directly established. Please ask the foster team and rescue before deciding." ) + (possible ? pairCard(possible, "Their profile lists younger-child compatibility as possible, with no direct experience. This is not a confirmed match.") : "");
+      resultsHost.innerHTML = noMatchPanel("We don’t have a confirmed match for a home with young children.", "Harvey and Melody, and Raymond and Wally, are not recommended for homes with young children. Diego and Valentina may be worth discussing, but their compatibility with younger children has not been directly established. Please ask the foster team and rescue before deciding.") + (possible ? pairCard(possible, "Their profile lists younger-child compatibility as possible, with no direct experience. This is not a confirmed match.", "Diego and Valentina are the only pair whose profiles leave room for a conversation about younger children; please confirm with the rescue before moving forward.") : "");
       return;
     }
 
@@ -358,6 +360,18 @@
     const header = '<div class="quiz-result-intro"><h3>Your potential matches</h3><p>These pairs best line up with the preferences you shared. Read each profile carefully, and reach out to the rescue with any questions about your household before applying.</p></div>';
     resultsHost.innerHTML = header + (state.pair === "depends" ? pairInfoPanel() : "") + '<div class="quiz-match-list">' + selected.map(item => pairCard(item.pair, hasCats() && item.pair.profile.catFit === "slow" ? "This pair prefers to be the only cats in the home. They may adjust to resident cats, but introductions should be especially slow and patient." : "")).join("") + '</div>';
   }
+
+  document.querySelector("#quiz-restart").addEventListener("click", () => {
+    Object.keys(state).forEach(key => delete state[key]);
+    stepIndex = 0;
+    quizStarted = false;
+    resultsHost.innerHTML = "";
+    resultsHost.hidden = true;
+    restartWrap.hidden = true;
+    stepHost.hidden = false;
+    document.querySelector("#quiz-controls").hidden = false;
+    renderQuestion();
+  });
 
   nextButton.addEventListener("click", () => {
     if (nextButton.disabled) return;
