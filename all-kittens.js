@@ -143,15 +143,31 @@ function renderAllKittens() {
         const positionPairHighlight = () => {
           if (!pairHighlight?.isConnected || !kittenCards.every(card => card.isConnected)) return;
           const sectionRect = target.getBoundingClientRect();
-          const cardRects = kittenCards.map(card => card.getBoundingClientRect());
+          const trackRect = cardsTrack.getBoundingClientRect();
+          const isMobile = window.matchMedia("(max-width: 760px)").matches;
+          const cardRects = kittenCards
+            .map(card => card.getBoundingClientRect())
+            .map(rect => isMobile ? ({
+              left: Math.max(rect.left, trackRect.left + 2),
+              right: Math.min(rect.right, trackRect.right - 2),
+              top: rect.top,
+              bottom: rect.bottom
+            }) : rect)
+            .filter(rect => rect.right > rect.left && rect.bottom > rect.top);
+          if (!cardRects.length) {
+            pairHighlight.style.opacity = "0";
+            return;
+          }
+          pairHighlight.style.opacity = "1";
           const left = Math.min(...cardRects.map(rect => rect.left - sectionRect.left));
           const top = Math.min(...cardRects.map(rect => rect.top - sectionRect.top));
           const right = Math.max(...cardRects.map(rect => rect.right - sectionRect.left));
           const bottom = Math.max(...cardRects.map(rect => rect.bottom - sectionRect.top));
-          pairHighlight.style.left = (left - 9) + "px";
-          pairHighlight.style.top = (top - 9) + "px";
-          pairHighlight.style.width = (right - left + 18) + "px";
-          pairHighlight.style.height = (bottom - top + 18) + "px";
+          const inset = isMobile ? 0 : 5;
+          pairHighlight.style.left = (left - inset) + "px";
+          pairHighlight.style.top = (top - 5) + "px";
+          pairHighlight.style.width = (right - left + inset * 2) + "px";
+          pairHighlight.style.height = (bottom - top + 10) + "px";
         };
 
         resizeHighlight = positionPairHighlight;
