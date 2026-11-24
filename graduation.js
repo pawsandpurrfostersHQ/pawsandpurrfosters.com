@@ -32,7 +32,7 @@
   function dateText(value){return new Intl.DateTimeFormat("en-US",{month:"long",day:"numeric",year:"numeric"}).format(new Date(value+"T12:00:00"));}
   function groupMarkup(group,groupIndex){
     var names=group.map(function(k){return k.name;}).join(" & ");
-    var linkedNames=group.map(function(k){return "<a class=\"graduate-card__name-link\" href=\"foster-alumni/#alumni-"+esc(k.id)+"\">"+esc(k.name)+"</a>";}).join("");
+    var linkedNames=group.map(function(k){return "<a class=\"graduate-card__name-link\" href=\"foster-alumni/#alumni-"+encodeURIComponent(k.id)+"\">"+esc(k.name)+"</a>";}).join("");
     var photoSets=group.map(photosFor);
     var frames=[];
     var count=Math.max.apply(null,photoSets.map(function(list){return list.length;}));
@@ -48,7 +48,7 @@
       ||(group.length>1?group.map(function(k){return k.description||k.bio||"";}).filter(Boolean).join(" "):(group[0].description||group[0].bio||""));
     return "<article class=\"graduate-card\" data-graduate-card=\""+groupIndex+"\">"
       +"<div class=\"graduate-photo-slides\" aria-label=\"Photos of "+esc(names)+"\">"+slides+"</div>"
-      +"<div class=\"graduate-card__names\" aria-label=\""+esc(names)+"\">"+group.map(function(k){return "<a class=\"graduate-card__name-link\" href=\"foster-alumni/#alumni-"+esc(k.id)+"\">"+esc(k.name)+"</a>";}).join("")+"</div>"
+      +"<div class=\"graduate-card__names\" aria-label=\""+esc(names)+"\">"+group.map(function(k){return "<a class=\"graduate-card__name-link\" href=\"foster-alumni/#alumni-"+encodeURIComponent(k.id)+"\">"+esc(k.name)+"</a>";}).join("")+"</div>"
       +"<p class=\"graduate-card__copy\">"+esc(description)+"</p>"
       +"<p class=\"graduate-date\">Graduated "+dateText(group[0].adoptionDate)+"</p>"
       +"</article>";
