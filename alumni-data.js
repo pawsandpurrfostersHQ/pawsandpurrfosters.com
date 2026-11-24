@@ -35,7 +35,7 @@ alumniRoot.PAWS_FOSTER_ALUMNI = [
     "description": "A sweet, affectionate kitten who loves people, playtime, and cuddles.",
     "whereToMeet": "",
     "adoptionDate": "2026-11-21",
-    "graduationDescription": "Claudia and Paloma are two sweet, affectionate kittens who love people, playtime, exploring, and plenty of cuddles and purrs. We're so happy they found their forever home together and couldn't be more excited for them!",
+    "graduationDescription": "Claudia and Paloma were two sweet, affectionate kittens who absolutely loved playing, cuddling, and spending time with people. They were such a joy to foster, and watching their personalities blossom was so special. We're so happy they found their forever home together, and we couldn't be more excited for their next chapter!",
     "fosterLitter": 11,
     "litterNumber": 11,
     "petfinderUrl": "https://www.petfinder.com/cat/claudia-ab77cbff-645f-41c9-9920-514a578d8796/ca/oakley/no-paws-left-behind-kitty-rescue-ca3018/details/",
