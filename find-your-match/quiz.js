@@ -295,7 +295,7 @@
       first: "Adopting two does mean caring for two cats, but a bonded pair already has a familiar companion. You will still want to build a relationship with each kitten individually.",
       benefits: "A bonded pair can play together, groom one another, and have a familiar companion while settling into a new home. They still need daily attention and care from their people; adopting two is not a substitute for interaction."
     }[concern] || "A bonded pair can play together, groom one another, and have a familiar companion while settling into a new home. They still need daily attention and care from their people.";
-    return '<section class="quiz-info-panel"><h3>A little about adopting a pair</h3><p>' + escapeHtml(detail) + '</p><p>Right now, all kittens featured in our foster program are bonded pairs. Bonded pairs must be adopted together, regardless of age. The rescue also requires kittens five months and younger to be adopted in pairs.</p></section>';
+    return '<section class="quiz-info-panel"><h3>A little about adopting a pair</h3><p>' + escapeHtml(detail) + '</p><p>Right now, all of our currently adoptable kittens are bonded pairs. Bonded pairs must be adopted together, regardless of age. The rescue also requires kittens five months and younger to be adopted in pairs.</p></section>';
   }
 
   function noMatchPanel(title, message) {
