@@ -41,3 +41,22 @@ if (nav) {
     document.head.appendChild(analyticsScript);
   }
 }
+
+// Load the compact kitten-question paw button on every page.
+if (nav && !document.querySelector('script[data-paws-question-helper]')) {
+  const homeLink = nav.querySelector('a[href="./"], a[href="../"]');
+  if (homeLink) {
+    const helperScript = document.createElement("script");
+    helperScript.src = new URL("faq-guide.js?v=20261124-paw-helper1", homeLink.href).href;
+    helperScript.defer = true;
+    helperScript.dataset.pawsQuestionHelper = "true";
+    document.body.appendChild(helperScript);
+    if (!document.querySelector('link[data-paws-question-helper-style]')) {
+      const helperStyle = document.createElement("link");
+      helperStyle.rel = "stylesheet";
+      helperStyle.href = new URL("faq-guide.css?v=20261124-paw-helper1", homeLink.href).href;
+      helperStyle.dataset.pawsQuestionHelperStyle = "true";
+      document.head.appendChild(helperStyle);
+    }
+  }
+}
