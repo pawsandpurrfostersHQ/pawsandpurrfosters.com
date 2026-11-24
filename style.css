@@ -5884,3 +5884,42 @@ body.events-page #event-featured .event-feature-details.event-coming-soon p.comi
   .alumni-temporary-notice--pair { justify-content:flex-start; padding-top:22px; }
   .alumni-temporary-notice--pair .alumni-pair-meet-button { align-self:center; }
 }
+
+
+/* Shared highlight frame for paired kittens reached from an alumni Next Chapter card. */
+.all-litters__cards { position:relative; }
+.all-litters__cards > .kitten-card { position:relative; z-index:1; }
+.kitten-pair-highlight {
+  position:absolute;
+  z-index:0;
+  box-sizing:border-box;
+  border:2px solid #6b9c70;
+  border-radius:18px;
+  background:rgba(237,246,235,.22);
+  box-shadow:0 0 0 3px rgba(107,156,112,.14);
+  pointer-events:none;
+  transition:opacity .2s ease;
+}
+@media(prefers-reduced-motion:reduce) {
+  .kitten-pair-highlight { transition:none; }
+}
+
+/* Celebration callouts: slightly smaller so the profile details stay visually dominant. */
+.alumni-celebration {
+  padding:8px 10px;
+  font-size:10px!important;
+  line-height:1.4;
+}
+
+/* Give taller Next Chapter cards a little more slideshow presence. */
+.alumni-temporary-notice--alternating .alumni-notice-carousel {
+  width:min(100%,320px);
+  margin:10px auto 14px;
+}
+.alumni-temporary-notice--alternating .alumni-notice-slide img {
+  height:210px;
+}
+@media(max-width:760px) {
+  .alumni-temporary-notice--alternating .alumni-notice-carousel { width:min(100%,300px); }
+  .alumni-temporary-notice--alternating .alumni-notice-slide img { height:190px; }
+}
