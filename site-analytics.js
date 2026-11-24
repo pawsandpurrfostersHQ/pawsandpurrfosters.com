@@ -8,6 +8,14 @@
     const cleanUrl = window.location.pathname + (params.toString() ? "?" + params.toString() : "") + window.location.hash;
     window.history.replaceState({}, document.title, cleanUrl);
   }
+  const footer = document.querySelector("footer");
+  if (footer && !footer.querySelector(".site-analytics-note")) {
+    const note = document.createElement("small");
+    note.className = "site-analytics-note";
+    note.textContent = "We use anonymous, aggregated site analytics to understand which pages are helpful. No names, email addresses, or IP addresses are collected.";
+    note.style.cssText = "display:block;max-width:760px;margin:12px auto 0;padding:0 12px;color:#777;font-size:10px;line-height:1.5;text-align:center;";
+    footer.appendChild(note);
+  }
   try { if (localStorage.getItem(OPT_OUT_KEY) === "true") return; } catch (_) { return; }
 
   const ENDPOINT = "https://ovnbbpcrwbvotyevghcx.supabase.co/functions/v1/site-analytics";
@@ -22,23 +30,28 @@
   } catch (_) { return; }
 
   function sourceFromReferrer() {
-    const referrer = document.referrer;
-    if (!referrer) return "direct";
     try {
-      const host = new URL(referrer).hostname.toLowerCase();
+      const stored = sessionStorage.getItem("paws_purr_analytics_source");
+      const tagged = new URLSearchParams(window.location.search).get("utm_source") || "";
+      const candidate = (tagged || document.referrer).toLowerCase();
+      if (!candidate) return stored || "direct";
+      const host = candidate.startsWith("http") ? new URL(candidate).hostname.toLowerCase() : candidate;
       if (host.includes("instagram.com")) return "instagram";
       if (host.includes("facebook.com") || host.includes("fb.com")) return "facebook";
       if (host.includes("google.")) return "google";
       if (host.includes("petfinder.com")) return "petfinder";
+      if (host === window.location.hostname) return stored || "direct";
       return "other";
     } catch (_) { return "other"; }
   }
+  const sessionSource = sourceFromReferrer();
+  try { if (!sessionStorage.getItem("paws_purr_analytics_source")) sessionStorage.setItem("paws_purr_analytics_source", sessionSource); } catch (_) {}
 
   function send(eventName, kittenId) {
     const payload = {
       event_name: eventName,
       page_path: window.location.pathname.slice(0, 180) || "/",
-      source: sourceFromReferrer(),
+      source: sessionSource,
       session_id: sessionId,
       kitten_id: kittenId || null
     };
