@@ -202,11 +202,13 @@ function renderAlumniLitter(litter, kittens, alumniIds, today, paired = false, e
   </section>`;
 }
 
-function renderTemporaryAlumniCard(litter, kittens) {
-  const notice=(kittens.find(kitten=>kitten.alumniNotice)?.alumniNotice)||{};
+function renderTemporaryAlumniCard(litter, kittens, notice={}) {
   if(notice.enabled===false)return "";
+  const selectedIds=Array.isArray(notice.kittenIds)?new Set(notice.kittenIds.map(String)):null;
+  const selectedKittens=selectedIds?kittens.filter(k=>selectedIds.has(String(k.id))):kittens;
+  if(!selectedKittens.length)return "";
   const preferredPairOrder={raymond:0,wally:1,melody:0,harvey:1,diego:0,valentina:1};
-  const orderedKittens=[...kittens].sort((a,b)=>(preferredPairOrder[a.id]??99)-(preferredPairOrder[b.id]??99));
+  const orderedKittens=[...selectedKittens].sort((a,b)=>(preferredPairOrder[a.id]??99)-(preferredPairOrder[b.id]??99));
   const kittenNames=orderedKittens.map(kitten=>kitten.name);
   const meetLabel=kittenNames.length>1?"Meet "+kittenNames.slice(0,-1).join(", ")+" and "+kittenNames[kittenNames.length-1]:"Meet "+(kittenNames[0]||"these kittens");
   const title="Their Next Chapter Starts With You";
@@ -216,10 +218,10 @@ function renderTemporaryAlumniCard(litter, kittens) {
   const currentFostersLink="all-kittens/#litter-"+Number(litter);
   return '<article class="alumni-temporary-notice alumni-temporary-notice--pair"><h3>'+escapeHTML(title)+'</h3><p>'+escapeHTML(message)+'</p>'+carousel+'<a class="alumni-current-fosters-link" href="'+currentFostersLink+'--'+orderedKittens.map(kitten=>encodeURIComponent(kitten.id)).join(",")+'">'+escapeHTML(meetLabel)+' →</a></article>';
 }
-function renderTemporaryAlumniLitter(litter, kittens) {
+function renderTemporaryAlumniLitter(litter, kittens, notices=[]) {
   const total=getAlumniLitterTotal(litter),heading=formatAlumniLitter(litter)+" — "+total+(total===1?" kitten":" kittens");
-  const card=renderTemporaryAlumniCard(litter,kittens);if(!card)return "";
-  return '<section class="alumni-litter alumni-litter--temporary" aria-labelledby="alumni-litter-'+litter+'"><div class="alumni-litter-heading"><h2 id="alumni-litter-'+litter+'">'+escapeHTML(heading)+'</h2></div><div class="alumni-cards" role="region" aria-label="'+escapeHTML(heading)+'">'+card+'</div></section>';
+  const cards=notices.map(notice=>renderTemporaryAlumniCard(litter,kittens,notice)).join("");if(!cards)return "";
+  return '<section class="alumni-litter alumni-litter--temporary" aria-labelledby="alumni-litter-'+litter+'"><div class="alumni-litter-heading"><h2 id="alumni-litter-'+litter+'">'+escapeHTML(heading)+'</h2></div><div class="alumni-cards" role="region" aria-label="'+escapeHTML(heading)+'">'+cards+'</div></section>';
 }
 function renderFosterAlumni(kittenList, today = new Date()) {
   if (typeof document === "undefined") return;
@@ -252,9 +254,12 @@ function renderFosterAlumni(kittenList, today = new Date()) {
   container.innerHTML = litterNumbers.map(litter => {
     const kittens = groups.get(litter) || [];
     const waiting = currentGroups.get(litter) || [];
-    const noticeMarkup = waiting.length ? renderTemporaryAlumniCard(litter, waiting) : "";
+    const configured=(Array.isArray(window.PAWS_LITTER_NOTICES)?window.PAWS_LITTER_NOTICES:[]).filter(n=>Number(n.litter)===Number(litter));
+    const legacy=waiting.find(k=>k.alumniNotice)?.alumniNotice;
+    const notices=configured.length?configured:(legacy?[{...legacy,enabled:legacy.enabled!==false,kittenIds:waiting.map(k=>String(k.id))}]:[]);
+    const noticeMarkup=waiting.length?notices.map(n=>renderTemporaryAlumniCard(litter,waiting,n)).join(""):"";
     if (kittens.length) return renderAlumniLitter(litter, kittens, alumniIds, today, false, noticeMarkup, kittens[kittens.length - 1]?.id || "");
-    return renderTemporaryAlumniLitter(litter, waiting);
+    return renderTemporaryAlumniLitter(litter, waiting, notices);
   }).join("");
 
   if (window.location.hash) {
