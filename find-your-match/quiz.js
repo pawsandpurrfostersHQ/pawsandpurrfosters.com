@@ -105,7 +105,7 @@
     if (hasCats()) {
       questions.push({
         id: "residentCat",
-        title: "How would you describe your current cat or cats?",
+        title: "How would you describe your resident cat(s)?",
         hint: "Choose the answer that best describes the resident cat(s), not the kitten you hope to adopt.",
         options: [
           ["social","Friendly and social","They enjoy other cats and usually welcome company."],
@@ -116,7 +116,7 @@
       });
       questions.push({
         id: "residentEnergy",
-        title: "What are your resident cats’ energy levels?",
+        title: "What are your resident cat(s) energy levels?",
         hint: "Select all that apply. If you have multiple cats, you can choose more than one personality or energy level.",
         multiple: true,
         options: [
@@ -347,7 +347,7 @@
 
     if (hasDogs()) {
       const possible = pairs.find(p => p.key === "diego-valentina");
-      resultsHost.innerHTML = '<section class="quiz-no-match"><h3>We don’t currently have a confirmed dog-friendly pair.</h3><p>Diego and Valentina may be the best pair to start a conversation about. They are outgoing, curious, and comfortable around other cats, but their experience with dogs is very limited or unknown. A calm, cat-friendly dog may be a possibility, but we cannot confirm that they will be comfortable living with one. Harvey and Melody, and Raymond and Wally, are not recommended for homes with dogs; they have little to no positive dog experience, and dogs at adoption events can make them nervous. These are only the kittens we personally foster; No Paws Left Behind Kitty Rescue has many other kittens cared for by wonderful fellow foster homes.</p><p><a href="./#contact">Contact us with questions about Diego and Valentina.</a></p></section>' + (possible ? pairCard(possible, "Not a confirmed match: Diego and Valentina have little to no direct experience living with dogs. A calm, cat-friendly dog may be a possibility, but their comfort around a dog cannot be guaranteed.", "They are the most promising pair among our current fosters to discuss for a dog household because they are outgoing and comfortable around other cats. Their dog compatibility remains unknown, so a conversation and careful planning would be essential.") : "");
+      resultsHost.innerHTML = (hasOtherPets() ? '<section class="quiz-info-panel"><h3>A note about other pets in your home</h3><p>We have limited information about how our foster kittens may do with other types of animals, including birds, small animals, and other pets. You are welcome to contact us with questions so we can talk through your household. The potential pair below is not a confirmed match for other species.</p></section>' : "") + '<section class="quiz-no-match"><h3>We don’t currently have a confirmed dog-friendly pair.</h3><p>Diego and Valentina may be the best pair to start a conversation about. They are outgoing, curious, and comfortable around other cats, but their experience with dogs is very limited or unknown. A calm, cat-friendly dog may be a possibility, but we cannot confirm that they will be comfortable living with one. Harvey and Melody, and Raymond and Wally, are not recommended for homes with dogs; they have little to no positive dog experience, and dogs at adoption events can make them nervous. These are only the kittens we personally foster; No Paws Left Behind Kitty Rescue has many other kittens cared for by wonderful fellow foster homes.</p><p><a href="./#contact">Contact us with questions about Diego and Valentina.</a></p></section>' + (possible ? pairCard(possible, "Not a confirmed match: Diego and Valentina have little to no direct experience living with dogs. A calm, cat-friendly dog may be a possibility, but their comfort around a dog cannot be guaranteed.", "They are the most promising pair among our current fosters to discuss for a dog household because they are outgoing and comfortable around other cats. Their dog compatibility remains unknown, so a conversation and careful planning would be essential.") : "");
       return;
     }
 
