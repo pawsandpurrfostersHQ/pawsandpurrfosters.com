@@ -635,30 +635,30 @@ window.PAWS_LITTER_NOTICES = [
     "id": "litter-11",
     "litter": 11,
     "enabled": true,
+    "message": "Some of this litter’s kittens are still waiting for a place to call home. Get to know them below.",
     "kittenIds": [
       "diego",
       "valentina"
-    ],
-    "message": "Some of this litter’s kittens are still waiting for a place to call home. Get to know them below."
+    ]
   },
   {
     "id": "litter-12",
     "litter": 12,
     "enabled": true,
+    "message": "Some of this litter’s kittens are still waiting for a place to call home. Get to know them below.",
     "kittenIds": [
       "harvey",
       "melody"
-    ],
-    "message": "Some of this litter’s kittens are still waiting for a place to call home. Get to know them below."
+    ]
   },
   {
     "id": "litter-10",
     "litter": 10,
     "enabled": true,
+    "message": "Some of this litter’s kittens are still waiting for a place to call home. Get to know them below.",
     "kittenIds": [
       "wally",
       "raymond"
-    ],
-    "message": "Some of this litter’s kittens are still waiting for a place to call home. Get to know them below."
+    ]
   }
 ];
