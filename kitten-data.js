@@ -144,16 +144,18 @@ appRoot.PAWS_KITTENS = [
     "id": "harvey",
     "bio": "Meet Harvey! Harvey is a very affectionate kitten who loves people and is happiest when he is being held or included in whatever is going on around him. He loves to play and enjoys just about every toy you can offer, but once he has worn himself out, he is happiest making biscuits on a soft blanket nearby. He is very food motivated and gets super excited for mealtimes.",
     "name": "Harvey",
-    "image": "blob:https://pawsandpurrfostershq.github.io/4f7e59f1-ef53-4682-a24d-b2b2667a340e",
+    "image": "assets/kittens/harvey-1795722335296-1.jpg",
     "gender": "Male",
     "photos": [
       "assets/kittens/harvey-1795047984455-5.jpg",
+      "assets/kittens/harvey-1795722335319-1.jpg",
       "assets/kittens/harvey-main.png",
       "assets/kittens/harvey-1793504031862-3.jpg",
       "assets/kittens/harvey-photo-2.png",
       "assets/kittens/harvey-photo-3.png",
       "assets/kittens/harvey-photo-4.png",
-      "assets/kittens/harvey-photo-5.png"
+      "assets/kittens/harvey-photo-5.png",
+      "assets/kittens/harvey-1795722335296-1.jpg"
     ],
     "status": "Available",
     "pairing": {
@@ -202,16 +204,18 @@ appRoot.PAWS_KITTENS = [
     "id": "melody",
     "bio": "Meet Melody! Melody is a sweet, confident, and incredibly affectionate kitten who absolutely adores people—they are her whole world. She loves being involved in whatever you are doing, being held, and following her people around. Although she is smaller than her siblings, her tiny size does not hold her back in the slightest. She is fearless, playful, and always ready to join in the fun.",
     "name": "Melody",
-    "image": "assets/kittens/Melody-halloween.jpg",
+    "image": "assets/kittens/melody-1795722335368-3.jpg",
     "gender": "Female",
     "photos": [
       "assets/kittens/melody-1795047984472-6.jpg",
+      "assets/kittens/melody-1795722335337-3.jpg",
       "assets/kittens/melody-main.png",
       "assets/kittens/melody-photo-2.png",
       "assets/kittens/melody-photo-3.png",
       "assets/kittens/melody-photo-4.png",
       "assets/kittens/melody-photo-5.png",
-      "assets/kittens/melody-photo-6.png"
+      "assets/kittens/melody-photo-6.png",
+      "assets/kittens/melody-1795722335368-3.jpg"
     ],
     "status": "Available",
     "pairing": {
